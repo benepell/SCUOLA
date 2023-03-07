@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import online.vrscuola.utilities.FileUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +27,9 @@ public class ResourceController {
                 File[] files = directory.listFiles();
                 if (files != null) {
                     for (File file : files) {
+                        String hash = FileUtils.calculateHash(file);
                         if (file.isFile()) {
-                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file)));
+                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash));
                         }
                     }
                 }
@@ -50,10 +53,13 @@ public class ResourceController {
         private long size;
         private String type;
 
-        public ResourceInfo(String name, long size, String type) {
+        private String hash;
+
+        public ResourceInfo(String name, long size, String type, String hash) {
             this.name = name;
             this.size = size;
             this.type = type;
+            this.hash = hash;
         }
 
         public String getName() {
@@ -66,6 +72,10 @@ public class ResourceController {
 
         public String getType() {
             return type;
+        }
+
+        public String getHash() {
+            return hash;
         }
     }
 }
