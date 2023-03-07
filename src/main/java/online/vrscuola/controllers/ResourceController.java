@@ -29,7 +29,7 @@ public class ResourceController {
                     for (File file : files) {
                         String hash = FileUtils.calculateHash(file);
                         if (file.isFile()) {
-                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash));
+                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
                         }
                     }
                 }
@@ -39,6 +39,53 @@ public class ResourceController {
         }
         return ResponseEntity.ok(resources);
     }
+
+    @GetMapping(value = "/resources/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ResourceInfo>> getAllResources() {
+        List<ResourceInfo> resources = new ArrayList<>();
+        try {
+            File directory = RESOURCE_DIR.toFile();
+            if (directory.isDirectory()) {
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        String hash = FileUtils.calculateHash(file);
+                        if (file.isFile()) {
+                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                        } else if (file.isDirectory()) {
+                            resources.addAll(getAllResourcesInDirectory(file));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Gestione dell'eccezione
+        }
+        return ResponseEntity.ok(resources);
+    }
+
+    private List<ResourceInfo> getAllResourcesInDirectory(File directory) {
+        List<ResourceInfo> resources = new ArrayList<>();
+        try {
+            if (directory.isDirectory()) {
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        String hash = FileUtils.calculateHash(file);
+                        if (file.isFile()) {
+                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                        } else if (file.isDirectory()) {
+                            resources.addAll(getAllResourcesInDirectory(file));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Gestione dell'eccezione
+        }
+        return resources;
+    }
+
 
     private String getMimeType(File file) {
         // Recupera il tipo MIME del file a partire dal nome del file o dall'estensione
@@ -55,11 +102,14 @@ public class ResourceController {
 
         private String hash;
 
-        public ResourceInfo(String name, long size, String type, String hash) {
+        private String dir;
+
+        public ResourceInfo(String name, long size, String type, String hash, String dir) {
             this.name = name;
             this.size = size;
             this.type = type;
             this.hash = hash;
+            this.dir = dir;
         }
 
         public String getName() {
@@ -76,6 +126,10 @@ public class ResourceController {
 
         public String getHash() {
             return hash;
+        }
+
+        public String getDir() {
+            return dir;
         }
     }
 }
