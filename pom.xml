@@ -81,6 +81,12 @@
 			<version>8.0.32</version>
 		</dependency>
 
+		<!-- Dipendenze per MediaTypeFactory -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
+		</dependency>
+
 		<!-- TEST -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
