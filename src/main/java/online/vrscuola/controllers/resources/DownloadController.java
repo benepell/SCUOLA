@@ -1,4 +1,4 @@
-package online.vrscuola.controllers;
+package online.vrscuola.controllers.resources;
 
 import java.io.IOException;
 import java.nio.file.Files;

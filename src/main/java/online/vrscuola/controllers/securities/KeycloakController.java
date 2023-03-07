@@ -1,4 +1,4 @@
-package online.vrscuola.controllers;
+package online.vrscuola.controllers.securities;
 
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;

@@ -1,7 +1,7 @@
 package online.vrscuola.services.log;
 
 import online.vrscuola.entities.log.EventLog;
-import online.vrscuola.repositories.log.EventLogsRepository;
+import online.vrscuola.repositories.log.EventLogRepository;
 import online.vrscuola.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class EventLogsService {
+public class EventLogService {
 
-    private static final Logger Log = LogManager.getLogger(EventLogsService.class.getName());
+    private static final Logger Log = LogManager.getLogger(EventLogService.class.getName());
 
     @Autowired
-    EventLogsRepository eventLogsRepository;
+    EventLogRepository eventLogsRepository;
 
     public void sendLog(Utilities utilities, String username, String evt){
         EventLog eventLogs = new EventLog();

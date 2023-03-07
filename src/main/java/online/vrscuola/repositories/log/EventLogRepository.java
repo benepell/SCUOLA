@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @SuppressWarnings("unused")
 @Repository
-public interface EventLogsRepository extends JpaRepository<EventLog, Long> {
+public interface EventLogRepository extends JpaRepository<EventLog, Long> {
 }
 

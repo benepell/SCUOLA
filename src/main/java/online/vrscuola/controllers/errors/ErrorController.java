@@ -1,4 +1,4 @@
-package online.vrscuola.controllers;
+package online.vrscuola.controllers.errors;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
