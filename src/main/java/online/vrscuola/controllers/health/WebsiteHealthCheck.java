@@ -19,11 +19,8 @@ public class WebsiteHealthCheck {
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
         try {
-            if (url.equals(Constants.HEALTH_DATASOURCE_WEBSITE_KEYCLOAK) || url.equals(Constants.HEALTH_DATASOURCE_WEBSITE)) {
-                // disable ssl cert validation
-                HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
-
-            }
+            // disable ssl cert validation
+            HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 
             HttpResponse httpResponse = client.execute(request);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
