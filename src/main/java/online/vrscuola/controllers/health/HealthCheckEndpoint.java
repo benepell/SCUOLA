@@ -16,6 +16,7 @@ public class HealthCheckEndpoint {
         healthStatus.put("database", DatabaseHealthCheck.checkDatabase());
         healthStatus.put("resourceDirectory", ResourceDirectoryHealthCheck.checkResourceDirectory());
         healthStatus.put("website", WebsiteHealthCheck.checkWebsite());
+        healthStatus.put("operatingSystem", OperatingSystemHealthCheck.checkOperatingSystem());
         return healthStatus.toMap();
     }
 
