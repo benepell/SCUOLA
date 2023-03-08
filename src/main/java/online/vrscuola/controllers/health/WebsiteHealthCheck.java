@@ -12,10 +12,10 @@ import java.io.InputStreamReader;
 
 public class WebsiteHealthCheck {
 
-    public static JSONObject checkWebsite() {
+    public static JSONObject checkWebsite(String url) {
         JSONObject response = new JSONObject();
         HttpClient client = HttpClientBuilder.create().build();
-        HttpGet request = new HttpGet(Constants.HEALTH_DATASOURCE_WEBSITE);
+        HttpGet request = new HttpGet(url);
         try {
             HttpResponse httpResponse = client.execute(request);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
