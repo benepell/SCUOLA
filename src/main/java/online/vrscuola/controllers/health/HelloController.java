@@ -1,4 +1,4 @@
-package online.vrscuola.controllers.test;
+package online.vrscuola.controllers.health;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
