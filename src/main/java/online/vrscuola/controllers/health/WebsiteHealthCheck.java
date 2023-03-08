@@ -6,6 +6,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +19,12 @@ public class WebsiteHealthCheck {
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
         try {
+            if (url.equals(Constants.HEALTH_DATASOURCE_WEBSITE_KEYCLOAK) || url.equals(Constants.HEALTH_DATASOURCE_WEBSITE)) {
+                // disable ssl cert validation
+                HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
+
+            }
+
             HttpResponse httpResponse = client.execute(request);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
             if (statusCode >= 200 && statusCode < 300) {
