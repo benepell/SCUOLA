@@ -5,11 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import online.vrscuola.utilities.Constants;
 import org.json.JSONObject;
 
 public class ResourceDirectoryHealthCheck {
 
-    private static final Path RESOURCE_DIR = Paths.get("/var/lib/tomcat9/resources");
+    private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
 
     public static JSONObject checkResourceDirectory() {
         JSONObject response = new JSONObject();

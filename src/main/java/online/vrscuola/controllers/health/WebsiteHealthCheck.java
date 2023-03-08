@@ -1,5 +1,6 @@
 package online.vrscuola.controllers.health;
 
+import online.vrscuola.utilities.Constants;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -14,7 +15,7 @@ public class WebsiteHealthCheck {
     public static JSONObject checkWebsite() {
         JSONObject response = new JSONObject();
         HttpClient client = HttpClientBuilder.create().build();
-        HttpGet request = new HttpGet("https://scuola.vrscuola.online:8443");
+        HttpGet request = new HttpGet(Constants.HEALTH_DATASOURCE_WEBSITE);
         try {
             HttpResponse httpResponse = client.execute(request);
             int statusCode = httpResponse.getStatusLine().getStatusCode();

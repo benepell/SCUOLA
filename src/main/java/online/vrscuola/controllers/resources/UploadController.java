@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import online.vrscuola.utilities.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -16,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
     @RestController
     public class UploadController {
 
-        private static final String UPLOAD_DIR = "/var/lib/tomcat9/resources";
+        private static final String UPLOAD_DIR = Constants.PATH_RESOURCE_DIR;
 
         @PostMapping("/upload")
         public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {

@@ -7,6 +7,6 @@ public class HelloController
 @GetMapping("/hello")
 public String hello() 
 {
-return "Hello Test vrscuola";
+return "Hello Test Vr Scuola";
 }
 }

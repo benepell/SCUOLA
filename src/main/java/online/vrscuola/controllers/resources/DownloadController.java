@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
+
+import online.vrscuola.utilities.Constants;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DownloadController {
 
-    private static final Path RESOURCE_DIR = Paths.get("/var/lib/tomcat9/resources");
+    private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
     private static final CacheControl CACHE_CONTROL = CacheControl.maxAge(10, TimeUnit.MINUTES);
 
     @GetMapping("/resources/{fileName:.+}")

@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.FileUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceController {
 
-    private static final Path RESOURCE_DIR = Paths.get("/var/lib/tomcat9/resources");
+    private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
 
     @GetMapping(value = "/resources/files", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResourceInfo>> getResourcesFiles() {
