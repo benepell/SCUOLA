@@ -12,6 +12,9 @@ import javax.transaction.Transactional;
 @Repository
 public interface InitRepository extends JpaRepository<Init, Long> {
 
+    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init c WHERE ( c.macAddress = :mac )")
+    Boolean existsByMacAddress(@Param("mac") String mac);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note WHERE  i.macAddress = :oldmac  ")
