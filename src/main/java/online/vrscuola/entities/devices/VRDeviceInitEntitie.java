@@ -15,7 +15,6 @@ public class VRDeviceInitEntitie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String macAddress;
     private String label;
     private Instant initDate;

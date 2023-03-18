@@ -3,9 +3,14 @@ package online.vrscuola.repositories.devices;
 
 import online.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
+import java.time.Instant;
+import java.util.Date;
 
 @Repository
 public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceConnectivityEntitie, Long> {
@@ -15,5 +20,10 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
 
     @Query(value = "SELECT username FROM connect c WHERE ( c.macAddress = :mac )")
     String existsUsername(@Param("mac") String mac);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note WHERE  c.macAddress = :macAddress  ")
+    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress );
 
 }

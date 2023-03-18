@@ -6,17 +6,16 @@ import org.apache.logging.log4j.Logger;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 @Data
-public class VRDeviceConnectivityRequest {
+public class VRDeviceConnectivityConnectRequest {
     private static final Logger Log = LogManager.getLogger(VRDeviceInitRequest.class.getName());
 
     @NotBlank
     @Size(max = 17)
     private String macAddress;
     @NotBlank
-    @Size(max = 15)
-    private String label;
+    @Size(max = 255)
+    private String username;
     @NotBlank
     @Size(max = 50)
     private String code;

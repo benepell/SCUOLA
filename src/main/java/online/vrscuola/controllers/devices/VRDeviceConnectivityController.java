@@ -1,6 +1,7 @@
 package online.vrscuola.controllers.devices;
 
 
+import online.vrscuola.payload.request.VRDeviceConnectivityConnectRequest;
 import online.vrscuola.payload.request.VRDeviceConnectivityRequest;
 import online.vrscuola.payload.response.MessageResponse;
 import online.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
@@ -45,6 +46,24 @@ public class VRDeviceConnectivityController {
         String username = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
 
         return ResponseEntity.ok(new MessageResponse(username));
+
+    }
+
+    @PostMapping(value = "/connect")
+    public ResponseEntity<?> connect(@Valid VRDeviceConnectivityConnectRequest request) {
+
+        String username = request.getUsername();
+        String macAddress = request.getMacAddress();
+        String note = request.getNote();
+        String usernameexist = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
+
+        if(usernameexist != null &&usernameexist.equals(username)){
+            cService.connect(true ,utilities,macAddress,username,note);
+        } else {
+            cService.connect(false ,utilities,macAddress,username,note);
+        }
+
+        return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.connect")));
 
     }
 

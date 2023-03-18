@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntitie, Long> {
 
-    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init c WHERE ( c.macAddress = :mac )")
+    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init i WHERE i.macAddress =:mac")
     Boolean existsByMacAddress(@Param("mac") String mac);
 
     @Transactional
