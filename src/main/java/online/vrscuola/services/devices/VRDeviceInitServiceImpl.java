@@ -17,7 +17,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     VRDeviceInitRepository VRDeviceInitRepository;
 
     @Override
-    public void addInit(Utilities utilities, String macAddress, String label){
+    public void addInit(Utilities utilities, String macAddress, String label, String note){
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());

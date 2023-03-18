@@ -43,7 +43,7 @@ public class VRDeviceInitController {
         }
 
         if(code.equals(request.getCode())){
-            initService.addInit(utilities,request.getMacAddress(), request.getLabel());
+            initService.addInit(utilities,request.getMacAddress(), request.getLabel(), request.getNote());
             return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));
         }
         return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.failed")));
