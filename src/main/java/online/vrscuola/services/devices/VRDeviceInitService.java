@@ -7,5 +7,6 @@ public interface VRDeviceInitService {
 
     void updateInit(Utilities utilities, String macAddress, String label , String oldMacAddress, String note);
 
+    boolean valid(String macAddress, String code);
 
 }

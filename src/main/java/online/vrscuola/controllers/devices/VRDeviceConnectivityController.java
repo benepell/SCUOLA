@@ -5,6 +5,7 @@ import online.vrscuola.payload.request.VRDeviceConnectivityConnectRequest;
 import online.vrscuola.payload.request.VRDeviceConnectivityRequest;
 import online.vrscuola.payload.response.MessageResponse;
 import online.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
+import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.utilities.MessageServiceImpl;
 import online.vrscuola.utilities.UtilServiceImpl;
 import online.vrscuola.utilities.Utilities;
@@ -25,6 +26,10 @@ public class VRDeviceConnectivityController {
 
     @Autowired
     VRDeviceConnectivityServiceImpl cService;
+
+
+    @Autowired
+    VRDeviceInitServiceImpl iService;
 
     @Autowired
     Utilities utilities;
@@ -55,6 +60,12 @@ public class VRDeviceConnectivityController {
         String username = request.getUsername();
         String macAddress = request.getMacAddress();
         String note = request.getNote();
+
+        // dispositivo registrato
+        if(!iService.valid(macAddress,code)){
+            return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.device.not.connect"));
+        }
+
         String usernameexist = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
 
         if(usernameexist != null &&usernameexist.equals(username)){
