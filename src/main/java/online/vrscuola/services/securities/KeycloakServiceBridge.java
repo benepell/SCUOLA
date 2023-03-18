@@ -37,7 +37,7 @@ public class KeycloakServiceBridge {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
-                "https://keycloak.vrscuola.online:9443/api/users",
+                bridgeUrl.concat("/api/users"),
                 HttpMethod.POST,
                 request,
                 String.class);

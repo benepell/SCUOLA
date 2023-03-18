@@ -38,9 +38,6 @@ public class KeycloakUserController {
 
         String otp = kService.generateKeycloakCredentials(resource,username);
 
-
-
-
         String userInfos = keycloakService.getKeycloakUserInfos(username,otp).toString();
         ObjectMapper objectMapper = new ObjectMapper();
         Object json;
