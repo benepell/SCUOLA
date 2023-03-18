@@ -66,7 +66,7 @@ echo.
 goto error
 
 :OkJHome
-if exist "%JAVA_HOME%\bin\java.exe" goto init
+if exist "%JAVA_HOME%\bin\java.exe" goto VRDeviceInitEntitie
 
 echo.
 echo Error: JAVA_HOME is set to an invalid directory. >&2
@@ -78,7 +78,7 @@ goto error
 
 @REM ==== END VALIDATION ====
 
-:init
+:VRDeviceInitEntitie
 
 @REM Find the project base dir, i.e. the directory that contains the folder ".mvn".
 @REM Fallback to current working directory if not found.

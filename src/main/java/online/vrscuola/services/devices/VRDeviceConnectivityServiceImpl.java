@@ -1,24 +1,23 @@
-package online.vrscuola.services.connect;
+package online.vrscuola.services.devices;
 
-import online.vrscuola.payload.response.ConnectResponse;
-import online.vrscuola.repositories.connect.ConnectRepository;
-import online.vrscuola.repositories.init.InitRepository;
+import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
+import online.vrscuola.repositories.devices.VRDeviceInitRepository;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConnectServiceImpl implements  ConnectService{
+public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityService {
 
     @Value("${keycloak.credentials.secret}")
     private String code;
 
     @Autowired
-    ConnectRepository cRepository;
+    VRDeviceConnectivityRepository cRepository;
 
     @Autowired
-    InitRepository iRepository;
+    VRDeviceInitRepository iRepository;
 
     @Override
     public String viewConnect(Utilities utilities, String macAddress, String note) {

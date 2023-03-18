@@ -1,14 +1,14 @@
-package online.vrscuola.repositories.connect;
+package online.vrscuola.repositories.devices;
 
 
-import online.vrscuola.entities.connect.Connect;
+import online.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConnectRepository extends JpaRepository<Connect, Long> {
+public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceConnectivityEntitie, Long> {
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM connect c WHERE ( c.macAddress = :mac )")
     Boolean existsByMacAddress(@Param("mac") String mac);

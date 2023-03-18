@@ -1,4 +1,4 @@
-package online.vrscuola.entities.init;
+package online.vrscuola.entities.devices;
 
 import lombok.Data;
 
@@ -9,15 +9,15 @@ import javax.persistence.Id;
 import java.time.Instant;
 
 @SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
-@Entity(name = "init")
+@Entity(name = "connect")
 @Data
-public class Init {
+public class VRDeviceConnectivityEntitie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String macAddress;
     private Instant initDate;
-
+    private String username;
     private String note;
+
 }

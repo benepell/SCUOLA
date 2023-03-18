@@ -1,8 +1,8 @@
-package online.vrscuola.controllers.init;
+package online.vrscuola.controllers.devices;
 
-import online.vrscuola.payload.request.InitRequest;
+import online.vrscuola.payload.request.VRDeviceInitRequest;
 import online.vrscuola.payload.response.MessageResponse;
-import online.vrscuola.services.init.InitServiceImpl;
+import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.utilities.MessageServiceImpl;
 import online.vrscuola.utilities.UtilServiceImpl;
 import online.vrscuola.utilities.Utilities;
@@ -16,14 +16,14 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/initdevice")
-public class InitController {
+@RequestMapping("/initialize-devices")
+public class VRDeviceInitController {
 
     @Value("${keycloak.credentials.secret}")
     private String code;
 
     @Autowired
-    InitServiceImpl initService;
+    VRDeviceInitServiceImpl initService;
 
     @Autowired
     Utilities utilities;
@@ -35,23 +35,22 @@ public class InitController {
     @Autowired
     UtilServiceImpl uService;
 
-
     @PostMapping("/add")
-    public ResponseEntity<?> add(@Valid InitRequest request) {
+    public ResponseEntity<?> add(@Valid VRDeviceInitRequest request) {
 
         if (!utilities.isValidMacAddr(request.getMacAddress())) {
             return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.error.macaddress"));
         }
 
         if(code.equals(request.getCode())){
-            initService.addInit(utilities,request.getMacAddress());
+            initService.addInit(utilities,request.getMacAddress(), request.getLabel());
             return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));
         }
         return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.failed")));
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@Valid InitRequest request) {
+    public ResponseEntity<?> update(@Valid VRDeviceInitRequest request) {
 
         if (!utilities.isValidMacAddr(request.getMacAddress())) {
             return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.error.macaddress"));
@@ -59,7 +58,7 @@ public class InitController {
 
         if(code.equals(request.getCode())){
             if(request.getOldMacAddress() != null){
-                initService.updateInit(utilities,request.getOldMacAddress(),request.getMacAddress(), request.getNote());
+                initService.updateInit(utilities,request.getOldMacAddress(),request.getMacAddress(), request.getLabel(), request.getNote());
                 return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.update")));
             }
         }

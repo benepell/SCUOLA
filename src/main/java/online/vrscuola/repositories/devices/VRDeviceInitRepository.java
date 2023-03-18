@@ -1,6 +1,6 @@
-package online.vrscuola.repositories.init;
+package online.vrscuola.repositories.devices;
 
-import online.vrscuola.entities.init.Init;
+import online.vrscuola.entities.devices.VRDeviceInitEntitie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface InitRepository extends JpaRepository<Init, Long> {
+public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntitie, Long> {
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init c WHERE ( c.macAddress = :mac )")
     Boolean existsByMacAddress(@Param("mac") String mac);

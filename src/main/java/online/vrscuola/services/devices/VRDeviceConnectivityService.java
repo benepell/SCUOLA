@@ -1,9 +1,8 @@
-package online.vrscuola.services.connect;
+package online.vrscuola.services.devices;
 
-import online.vrscuola.payload.response.ConnectResponse;
 import online.vrscuola.utilities.Utilities;
 
-public interface ConnectService {
+public interface VRDeviceConnectivityService {
 
     String viewConnect(Utilities utilities, String macAddress, String note);
 

@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-public class ConnectRequest {
-    private static final Logger Log = LogManager.getLogger(InitRequest.class.getName());
+public class VRDeviceConnectivityRequest {
+    private static final Logger Log = LogManager.getLogger(VRDeviceInitRequest.class.getName());
 
     @NotBlank
     @Size(max = 17)
