@@ -15,6 +15,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init i WHERE i.macAddress =:mac")
     Boolean existsByMacAddress(@Param("mac") String mac);
 
+    @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac")
+    String labelByMacAddress(@Param("mac") String mac);
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note WHERE  i.macAddress = :oldmac  ")

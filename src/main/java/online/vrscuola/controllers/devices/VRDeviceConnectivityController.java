@@ -67,15 +67,16 @@ public class VRDeviceConnectivityController {
         }
 
         String usernameexist = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
-
         if(usernameexist != null &&usernameexist.equals(username)){
             cService.connect(true ,utilities,macAddress,username,note);
         } else {
             cService.connect(false ,utilities,macAddress,username,note);
         }
 
-        return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.connect")));
+        // ritorna label visore
+        String visore = iService.label(macAddress);
 
+        return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.connect") + " [" + visore + "]"));
     }
 
 }

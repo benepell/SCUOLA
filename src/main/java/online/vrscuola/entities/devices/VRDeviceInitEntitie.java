@@ -18,6 +18,5 @@ public class VRDeviceInitEntitie {
     private String macAddress;
     private String label;
     private Instant initDate;
-
     private String note;
 }

@@ -51,5 +51,10 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         return false;
     }
 
+    @Override
+    public String label(String macAddress) {
+        return iRepository.labelByMacAddress(macAddress);
+    }
+
 
 }

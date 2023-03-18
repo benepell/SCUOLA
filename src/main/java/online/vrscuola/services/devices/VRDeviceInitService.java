@@ -9,4 +9,6 @@ public interface VRDeviceInitService {
 
     boolean valid(String macAddress, String code);
 
+    String label(String macAddress);
+
 }
