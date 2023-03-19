@@ -23,76 +23,58 @@
     <title><tiles:insertAttribute name="titolo" /></title>
   </head>
   <body>
-  <!-- Navigation Bar --> 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    		<span class="navbar-toggler-icon"></span>
-  		</button>
-  		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-  		
-  			 <a class="navbar-brand" href="<spring:url value="/webstore/lastart"/>">Vr Scuola</a>
-  			     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      				<li class="nav-item active">
-        				<a class="nav-link" href="#">
-        					<span class="oi oi-home" title="home" aria-hidden="true"></span>
-        					Home 
-        					<span class="sr-only">(current)</span>
-        				</a>
-      				</li>
-      				<li class="nav-item">
-        				<a class="nav-link" href="#">
-        					<span class="oi oi-box" title="box" aria-hidden="true"></span>
-        					Abilitazione Visori
-        				</a>
-      				</li>
-      				<li class="nav-item">
-        				<a class="nav-link" href="#">
-        					<span class="oi oi-bullhorn" title="bullhorn" aria-hidden="true"></span>
-        					Gestione Contenuti Multimediali
-        				</a>
-      				</li>
-      				<li class="nav-item">
-        				<a class="nav-link" href="#">
-        					<span class="oi oi-credit-card" title="credit-card" aria-hidden="true"></span>
-        					Configurazione Visori
-        				</a>
-      				</li>
-      				<li class="nav-item">
-        				<a class="nav-link" href="#">
-        					<span class="oi oi-cart" title="cart" aria-hidden="true"></span>
-        					<span class="badge"></span>
-        					Assistenza Remota
-        				</a>
-      				</li>
-    			</ul>
-    			
-    			<!-- Search Box -->
-    			<form class="form-inline my-2 my-lg-0" id="search" role="search">
-      				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
-    			</form>
-    			
-    			<!-- dropdown menu -->
-    			<div class="dropdown">
-    				<button class="btn btn-default dropdown-toggle thumbnail"
-    					type="button"
-    					id="dropdownMenu1"
-    					data-toggle="dropdown"
-    					aria-haspopup="true" 
-    					aria-expanded="true">
-    					<img class="img-circle" src="<c:url value="/static/images/offline_user.png" />">
-    					<span class="caret"></span>
-    				</button>
-    				<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    					<a class="dropdown-item" href="#">Accedi</a>
-    					<a class="dropdown-item" href="#">Registrati</a>
-    					<div class="dropdown-divider"></div>
-    					<a class="dropdown-item disabled" href="#">Log out</a>
-    				</div>
-    			</div>
-  		</div>
-    </nav> 
-    
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <a class="navbar-brand" href="#">Vr Scuola</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav mr-auto">
+             <li class="nav-item active">
+                 <a class="nav-link" href="#">
+                     Home
+                 </a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">
+                     Abilitazione Visori
+                 </a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">
+                     Gestione Contenuti Multimediali
+                 </a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">
+                     Configurazione Visori
+                 </a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">
+                     Assistenza Remota
+                 </a>
+             </li>
+         </ul>
+         <form class="form-inline my-2 my-lg-0 mr-3">
+             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
+         </form>
+         <div class="dropdown">
+             <button class="btn btn-default dropdown-toggle thumbnail" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                 <img class="img-circle" src="<c:url value="/static/images/offline_user.png" />">
+                 <span class="caret"></span>
+             </button>
+             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                 <a class="dropdown-item" href="#">Accedi</a>
+                 <a class="dropdown-item" href="#">Registrati</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item disabled" href="#">Log out</a>
+             </div>
+         </div>
+     </div>
+ </nav>
+
      <tiles:insertAttribute name="content" /> 
      
      <tiles:insertAttribute name="footer" />  
