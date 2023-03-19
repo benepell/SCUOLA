@@ -1,4 +1,4 @@
-package online.vrscuola.securities;
+package online.vrscuola.config;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
