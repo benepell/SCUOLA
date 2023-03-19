@@ -2,14 +2,13 @@ package online.vrscuola.controllers.securities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import online.vrscuola.models.KeycloakUserInfo;
 import online.vrscuola.services.securities.KeycloakCredentialService;
 import online.vrscuola.services.securities.KeycloakServiceBridge;
-import org.json.JSONArray;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +29,7 @@ public class KeycloakUserController {
     KeycloakCredentialService kService;
 
     @GetMapping("/keycloak-users")
+    @Cacheable(value = "keycloakUserInfos", key = "#username")
     public ResponseEntity<Object> getKeycloakUsers(Principal principal) {
 
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
