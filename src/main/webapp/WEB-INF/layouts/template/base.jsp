@@ -20,6 +20,10 @@
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/main.css" />" rel="stylesheet">
 
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+
     <title><tiles:insertAttribute name="titolo" /></title>
   </head>
   <body>
@@ -60,17 +64,18 @@
              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
          </form>
-         <div class="dropdown">
-             <button class="btn btn-default dropdown-toggle thumbnail" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                 <img class="img-circle" src="<c:url value="/static/images/offline_user.png" />">
-                 <span class="caret"></span>
-             </button>
-             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                 <a class="dropdown-item" href="#">Accedi</a>
-                 <a class="dropdown-item" href="#">Registrati</a>
-                 <div class="dropdown-divider"></div>
-                 <a class="dropdown-item disabled" href="#">Log out</a>
-             </div>
+        <div class="dropdown">
+          <button class="btn btn-custom dropdown-toggle thumbnail" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <img class="img-circle" src="<c:url value='/static/images/offline_user.png' />">
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="dropdownMenu1">
+            <a class="dropdown-item" href="#">Accedi</a>
+            <a class="dropdown-item" href="#">Registrati</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item disabled" href="#">Log out</a>
+          </div>
+        </div>
          </div>
      </div>
  </nav>

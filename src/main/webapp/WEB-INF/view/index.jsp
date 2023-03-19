@@ -18,7 +18,7 @@
   <body>
     
     <div class="jumbotron">
-		<h1>${intestazione}</h1>
+        <h1 class="display-4 text-center special-title">${intestazione}</h1>
 		<p>${saluti}</p>
 	</div>
 
