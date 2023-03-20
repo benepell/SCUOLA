@@ -36,7 +36,7 @@ public class KeycloakUserController {
         AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
         String username = accessToken.getPreferredUsername();
 
-        String otp = kService.generateKeycloakCredentials(resource,username);
+        String otp = kService.generateKeycloakBridgeCredentials(resource,username);
 
         String userInfos = keycloakService.getKeycloakUserInfos(username,otp).toString();
         ObjectMapper objectMapper = new ObjectMapper();
