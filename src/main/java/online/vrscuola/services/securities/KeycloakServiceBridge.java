@@ -37,7 +37,7 @@ public class KeycloakServiceBridge {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
-                bridgeUrl.concat("/api/users"),
+                bridgeUrl.concat("/bridge/users"),
                 HttpMethod.POST,
                 request,
                 String.class);
