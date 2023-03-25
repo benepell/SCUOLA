@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% response.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://keycloak.vrscuola.online:9443;"); %>
 
 <div class="jumbotron jumbotron-billboard">
   <div class="img"></div>
@@ -9,8 +11,7 @@
                 <p>
                     ${saluti}
                 </p>
-                <a href="#" id="SignUp" class="btn btn btn-primary btn-lg">Accedi</a>
-                <a href="#" id="SignIn" class="btn btn-success btn-lg">Registrati</a>
+                <a href="/api/homepage" id="SignUp" class="btn btn btn-success btn-lg">Accedi</a>
             </div>
         </div>
     </div>

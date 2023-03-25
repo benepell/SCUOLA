@@ -70,10 +70,9 @@
             <span class="caret"></span>
           </button>
           <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="dropdownMenu1">
-            <a class="dropdown-item" href="#">Accedi</a>
-            <a class="dropdown-item" href="#">Registrati</a>
+            <a class="dropdown-item" href="/api/homepage">Accedi</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item disabled" href="#">Log out</a>
+            <a class="dropdown-item disabled" href="/api/logout">Log out</a>
           </div>
         </div>
          </div>
