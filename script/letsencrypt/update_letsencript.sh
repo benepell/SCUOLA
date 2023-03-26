@@ -7,8 +7,8 @@ source ../env_vars.sh
 systemctl stop tomcat9
 
 # vai a percorso cert
-CERT_PATH=$a12_(sudo find /etc/letsencrypt/live/ -name "${a12_DOMAIN}*")
-cd "${a12_CERT_PATH}"
+CERT_PATH=$(sudo ls -1d /etc/letsencrypt/live/"${a12_DOMAIN}"* | sort -r | head -1)
+cd "${CERT_PATH}"
 
 # Verificare se il file del certificato esiste
 if [ ! -f "$a12_CERT_FILE" ]; then
@@ -23,28 +23,28 @@ if [ ! -f "$a12_PRIVKEY_FILE" ]; then
 fi
 
 # Calcolare la data di scadenza del certificato
-notAfter=$a12_(openssl x509 -in "$a12_CERT_FILE" -noout -enddate | cut -d= -f2)
-if [ -z "$a12_notAfter" ]; then
+notAfter=$(openssl x509 -in "$a12_CERT_FILE" -noout -enddate | cut -d= -f2)
+if [ -z "$notAfter" ]; then
   echo "Errore durante la lettura della data di scadenza del certificato"
   exit 1
 fi
 
-expiration=$a12_(date -d "$a12_notAfter" +"%s")
-now=$a12_(date +"%s")
-days_left=$a12_(( (expiration - now) / 86400 ))
+expiration=$(date -d "$notAfter" +"%s")
+now=$(date +"%s")
+days_left=$(( (expiration - now) / 86400 ))
 
 # Verificare se il certificato è in scadenza (meno di 15 giorni)
-if [ $a12_days_left -lt 15 ]; then
+if [ $days_left -lt 15 ]; then
   in_scadenza=true
 else
   in_scadenza=false
 fi
 
-echo "Il certificato scade in $a12_days_left giorni"
-echo "In scadenza: $a12_in_scadenza"
+echo "Il certificato scade in $days_left giorni"
+echo "In scadenza: $in_scadenza"
 
 # Se il certificato non è in scadenza e non è richiesto un nuovo certificato, terminare lo script
-if [ "$a12_in_scadenza" = false ] && [ "$a12_CERT_OPTION" = "2" ]; then
+if [ "$in_scadenza" = false ] && [ "$a12_CERT_OPTION" = "2" ]; then
   echo "Il certificato non è in scadenza e non è richiesto un nuovo certificato"
   exit 0
 fi
@@ -60,6 +60,25 @@ if certbot certonly --standalone --preferred-challenges http -d "${a12_DOMAIN}" 
 	rm -f *.p12
 	rm -f *.jks
 
+		# Imposta il tempo massimo di attesa in secondi (10 minuti = 600 secondi)
+  MAX_WAIT_TIME=600
+  WAIT_TIME=0
+
+  # Esegui il ciclo while finché il file non è presente e non è stato raggiunto il tempo massimo di attesa
+  while [ ! -f "${CERT_PATH}/${a10_PRIVKEY_FILE}" ] && [ ${WAIT_TIME} -lt ${MAX_WAIT_TIME} ]; do
+      # Stampa un messaggio di attesa
+      echo "Il file ${a10_PRIVKEY_FILE} non è presente in ${CERT_PATH}. Attendo 5 secondi..."
+
+      # Attendi 5 secondi
+      sleep 5
+
+      # Aggiorna il tempo di attesa trascorso
+      WAIT_TIME=$((WAIT_TIME + 5))
+  done
+
+  # Verifica se il file è presente
+  if [ -f "${CERT_PATH}/${a12_PRIVKEY_FILE}" ]; then
+      # Se il file è presente, procedi con le altre operazioni
 	# Convertire il certificato e la chiave privata in un file PKCS12
 	openssl pkcs12 -export -in "$a12_CERT_FILE" -inkey "$a12_PRIVKEY_FILE" -out "$a12_P12_FILE" -name "$a12_ALIAS" -passout pass:"$a12_PASSWORD_P12"
 
@@ -78,7 +97,14 @@ if certbot certonly --standalone --preferred-challenges http -d "${a12_DOMAIN}" 
 	# gestione permessi permette a tutti di leggere i file
 	chmod -R 644 /etc/certs/scuola
 
-    exit 0
+    exit 0  
+	
+ else
+      # Se il file non è presente entro il tempo massimo, stampa un messaggio di errore e termina lo script
+      echo "Il file ${a12_PRIVKEY_FILE} non è stato trovato in ${CERT_PATH} entro il tempo massimo di attesa di ${MAX_WAIT_TIME} secondi. Impossibile procedere."
+      exit 1
+  fi
+
 else
     echo "letsencrypt ${a12_DOMAIN} failed."
     exit 1
