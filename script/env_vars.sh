@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # -- START GLOBAL Variabili d'ambiente per cartella di lavoro apache --
@@ -169,7 +168,6 @@ a12_ALIAS="$CERT_ALIAS_SCUOLA"  # Nome dell'alias utilizzato per il certificato 
 
 # Definire i parametri  [spring.bridge.update_war_bridge.sh] ID: 13
 a13_WAR_FILE="bridge.war"
-a13_WAR_DIR="./spring/bridge"
 a13_TOMCAT_WEBAPPS_DIR="/var/lib/tomcat9/webapps"
 a13_APP_NAME="bridge"
 a13_KEYCLOAK_RESOURCE="$KEYCLOAK_CLIENT_ID"
