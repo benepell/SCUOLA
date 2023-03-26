@@ -17,8 +17,8 @@ CERT_ALIAS_SCUOLA="vrscuola"
 CERT_ALIAS_KEYCLOAK="keycloak"
 
 # DATABASES
-DB_SCUOLA_NAME="vrscuola"
-DB_SCUOLA_USERNAME="keycloak"
+DB_SCUOLA_NAME="vrscuoladb"
+DB_SCUOLA_USERNAME="vrscuola"
 DB_SCUOLA_PASSWORD="vrscuola!!!!"
 
 DB_SCUOLA_BRIDGE_USERNAME="keycloakread"
@@ -88,7 +88,7 @@ a4_URL="$BASE_WORDPRESS"
 a5_KEYCLOAK_BASE="$KEYCLOAK_DIR"
 a5_DB_USERNAME="$DB_KEYCLOAK_USERNAME"
 a5_DB_PASSWORD="$DB_KEYCLOAK_PASSWORD"
-a5_DB_URL="jdbc:mysql://localhost1/$DB_KEYCLOAK_NAME"
+a5_DB_URL="jdbc:mysql://localhost:3306/$DB_KEYCLOAK_NAME"
 a5_HOSTNAME="$DOMAIN_KEYCLOAK"
 
 # Imposta i valori delle variabili [keycloak.init_start.sh] ID: 6
@@ -182,10 +182,9 @@ a13_THYMELEAF_PREFIX="classpath:/templates/"
 a13_THYMELEAF_SUFFIX=".html"
 
 # Definire i parametri [spring.bridge.update_war_scuola.sh] ID: 14
-a14_WAR_FILE="app.war"
-a14_WAR_DIR="./spring/scuola"
+a14_WAR_FILE="api.war"
 a14_TOMCAT_WEBAPPS_DIR="/var/lib/tomcat9/webapps"
-a14_APP_NAME="app"
+a14_APP_NAME="api"
 a14_KEYCLOAK_REALM="scuola"
 a14_KEYCLOAK_AUTH_SERVER_URL="$BASE_KEYCLOAK/auth"
 a14_KEYCLOAK_RESOURCE="scuola-secondaria-primo-grado"
