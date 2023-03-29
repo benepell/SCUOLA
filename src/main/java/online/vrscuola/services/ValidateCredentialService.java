@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidateCredentialService {
 
-    @Value("${school.config.key}")
+    @Value("${school.setup.key}")
     private String key;
 
     public String generateCredentials(String resource)

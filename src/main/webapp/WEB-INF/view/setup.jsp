@@ -1,28 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!doctype html>
-<html lang="it">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
-
-    <!-- open-iconic -->
-    <link href="<c:url value="/static/css/open-iconic-bootstrap.css" />" rel="stylesheet">
-
-    <!-- Altri CSS -->
-    <link href="<c:url value="/static/css/config.css" />" rel="stylesheet">
-
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
-
-
-  <h1 class="title">Configurazione Vr-Scuola</h1>
   <form action="/api/update-env" method="POST">
-
     <div class="card-container sortable">
       <div class="card">
         <div class="card-body">
@@ -284,11 +262,3 @@
     });
   }
 </script>
-
-  <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script type="text/javascript" src="<c:url value="/static/js/jquery-3.2.1.min.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/static/js/bootstrap.min.js" />"></script>
-     <script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
-  </body>
-</html>

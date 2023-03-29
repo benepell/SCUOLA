@@ -89,7 +89,7 @@
 
 <body>
   <h1 class="title">Configurazione Vr-Scuola</h1>
-  <form id="config-form" action="/update-env" method="POST">
+  <form id="setupModel-form" action="/update-env" method="POST">
 
 
     <div class="card-container">
@@ -321,7 +321,7 @@
       modal.show();
     });
     // Aggiungi un ascoltatore di eventi al form di configurazione
-    const configForm = document.getElementById("config-form");
+    const configForm = document.getElementById("setupModel-form");
     configForm.addEventListener("submit", function (event) {
       // Impedisci l'invio del form e apri la finestra modale di conferma per "Salva"
       event.preventDefault();
@@ -334,7 +334,7 @@
     const saveConfirmButton = document.getElementById("saveConfirmButton");
     saveConfirmButton.addEventListener("click", function () {
       // Invia il form tramite AJAX
-      const configForm = document.getElementById("config-form");
+      const configForm = document.getElementById("setupModel-form");
       const xhr = new XMLHttpRequest();
       xhr.open(configForm.method, configForm.action);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

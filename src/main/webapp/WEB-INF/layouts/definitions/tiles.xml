@@ -5,10 +5,38 @@
 
 <tiles-definitions>
 
+	<definition name="minimalLayout" template="/WEB-INF/layouts/template/minimal-base.jsp">
+		<put-attribute name="titolo" value="" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/template/minimal-footer.jsp" />
+	</definition>
+
 	<definition name="baseLayout" template="/WEB-INF/layouts/template/base.jsp">
 		<put-attribute name="titolo" value="" />
 		<put-attribute name="content" value="" />
 		<put-attribute name="footer" value="/WEB-INF/layouts/template/footer.jsp" />
+	</definition>
+
+	<definition name="setup" extends="minimalLayout">
+		<put-attribute name="titolo"  value="Setup" />
+		<put-attribute name="content" value="/WEB-INF/view/setup.jsp" />
+	</definition>
+
+	<definition name="setup-success" extends="minimalLayout">
+		<put-attribute name="titolo"  value="Setup Success" />
+		<put-attribute name="content" value="/WEB-INF/view/setup-success.jsp" />
+	</definition>
+
+	<definition name="setup-unsuccess" extends="minimalLayout">
+		<put-attribute name="titolo"  value="Setup UnSuccess" />
+		<put-attribute name="content" value="/WEB-INF/view/setup-unsuccess.jsp" />
+	</definition>
+
+
+
+	<definition name="abilita-visori" extends="baseLayout">
+		<put-attribute name="titolo"  value="Abilita Visori" />
+		<put-attribute name="content" value="/WEB-INF/view/abilita-visori.jsp" />
 	</definition>
 	
 	<definition name="index" extends="baseLayout">

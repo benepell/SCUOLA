@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class Config {
+public class SetupModel {
     private String passwordServerScuola;
     private String codiceDiRegistrazioneScuola;
     private String versioneScuola;

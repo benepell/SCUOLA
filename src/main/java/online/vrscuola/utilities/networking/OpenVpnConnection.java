@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 @Component
 public class OpenVpnConnection {
 
-    @Value("${openvpn.path}") // percorso del file openvpn
+    @Value("${openvpn.school.path}") // percorso del file openvpn
     private String openVpnPath;
 
     @Value("${openvpn.school.config}") // percorso del file di configurazione per la scuola A

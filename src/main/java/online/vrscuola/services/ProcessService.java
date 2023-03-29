@@ -9,10 +9,10 @@ import java.io.IOException;
 @Service
 public class ProcessService {
 
-    @Value("${school.config.pathcmdsh}")
+    @Value("${school.setup.pathcmdsh}")
     private String pathcmd;
 
-    @Value("${school.config.path}")
+    @Value("${school.setup.path}")
     private String path;
 
     public void initProcess(String passwordRoot) {

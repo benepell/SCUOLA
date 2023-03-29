@@ -1,6 +1,6 @@
 package online.vrscuola.services;
 
-import online.vrscuola.models.Config;
+import online.vrscuola.models.SetupModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,16 +12,16 @@ import java.io.IOException;
 import java.util.Map;
 
 @Service
-public class ConfigService {
+public class SetupService {
 
-    @Value("${school.config.file}")
+    @Value("${school.setup.file}")
     private String configFile;
 
     @Autowired
     private ServletContext context;
 
-    // scrive un file di configurazione a partire dal modello di config
-    public void writeConfig(Config config) {
+    // scrive un file di configurazione a partire dal modello di setupModel
+    public void writeConfig(SetupModel setupModel) {
         try {
             String webInfPath = context.getRealPath("/scripts/");
             String filePath = webInfPath +  configFile;
@@ -29,8 +29,8 @@ public class ConfigService {
             // file di testo in modalità scrittura
             BufferedWriter writer = new BufferedWriter(new FileWriter(configFile));
 
-            // tutti i campi dell'oggetto "Config"
-            Map<String, String> fields = config.toMap();
+            // tutti i campi dell'oggetto "SetupModel"
+            Map<String, String> fields = setupModel.toMap();
 
             // aggiungi riga bash
             writer.write("#!/bin/bash" + "\n");
