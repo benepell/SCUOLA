@@ -16,4 +16,9 @@
 		<put-attribute name="content" value="/WEB-INF/view/welcome.jsp" />  
 	</definition>
 
+	<definition name="abilita-visori" extends="baseLayout">
+		<put-attribute name="titolo"  value="Abilita Visori" />
+		<put-attribute name="content" value="/WEB-INF/view/abilita-visori.jsp" />
+	</definition>
+
 </tiles-definitions>
