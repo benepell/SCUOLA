@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +68,18 @@ public class HibernateConfig {
         dataSource.setUrl(env.getProperty("second.datasource.url"));
         dataSource.setUsername(env.getProperty("second.datasource.username"));
         dataSource.setPassword(env.getProperty("second.datasource.password"));
+
+        // Set connection in read-only mode
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setReadOnly(true);
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         return dataSource;
     }
