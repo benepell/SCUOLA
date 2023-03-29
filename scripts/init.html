@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Configurazione Vr-Scuola</title>
+  <style>
+    .card-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: -4px;
+
+    }
+
+    .card {
+      width: 550px;
+      height: 550px;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      margin: 20px;
+      flex-basis: calc(33.333% - 8px);
+      /* 3 card per riga con 8px di spazio tra di esse */
+      margin: 4px;
+      /* spazio tra le card */
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease-in-out;
+
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      flex-grow: 1;
+    }
+
+    input[type="submit"] {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0062cc;
+    }
+
+    .title {
+      text-align: center;
+    }
+  </style>
+  <!-- Inclusione di Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Inclusione di jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+
+  <!-- Inclusione di Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+
+  <!-- Inclusione di Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <h1 class="title">Configurazione Vr-Scuola</h1>
+  <form id="config-form" action="/update-env" method="POST">
+
+
+    <div class="card-container">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Autenticazione</h5>
+          <div class="form-group">
+            <label for="PASSWORD_SERVER_SCUOLA">PASSWORD_SERVER_SCUOLA:</label>
+            <input type="text" class="form-control" id="PASSWORD_SERVER_SCUOLA" name="PASSWORD_SERVER_SCUOLA"
+              value="vrscuola!!!">
+          </div>
+          <div class="form-group">
+            <label for="CODICE_DI_REGISTRAZIONE_SCUOLA">CODICE_DI_REGISTRAZIONE_SCUOLA:</label>
+            <input type="text" class="form-control" id="CODICE_DI_REGISTRAZIONE_SCUOLA"
+              name="CODICE_DI_REGISTRAZIONE_SCUOLA" value="akkqqiji$$55ga">
+          </div>
+          <div class="form-group">
+            <label for="VERSIONE_SCUOLA">VERSIONE_SCUOLA:</label>
+            <input type="text" class="form-control" id="VERSIONE_SCUOLA" name="VERSIONE_SCUOLA" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Configurazione Base</h5>
+            <div class="form-group">
+              <label for="BASE_SCUOLA">BASE_SCUOLA:</label>
+              <input type="text" class="form-control" id="BASE_SCUOLA" name="BASE_SCUOLA"
+                value="https://scuola.vrscuola.online">
+            </div>
+            <div class="form-group">
+              <label for="BASE_KEYCLOAK">BASE_KEYCLOAK:</label>
+              <input type="text" class="form-control" id="BASE_KEYCLOAK" name="BASE_KEYCLOAK"
+                value="https://keycloak.vrscuola.online:9443">
+            </div>
+            <div class="form-group">
+              <label for="BASE_WORDPRESS">BASE_WORDPRESS:</label>
+              <input type="text" class="form-control" id="BASE_WORDPRESS" name="BASE_WORDPRESS"
+                value="https://scuola.vrscuola.online:8443">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Configurazione Certificati</h5>
+            <div class="form-group">
+              <label for="CERT_SCUOLA">CERT_SCUOLA:</label>
+              <input type="text" class="form-control" id="CERT_SCUOLA" name="CERT_SCUOLA" value="/etc/certs/scuola">
+            </div>
+            <div class="form-group">
+              <label for="CERT_KEYCLOAK">CERT_KEYCLOAK:</label>
+              <input type="text" class="form-control" id="CERT_KEYCLOAK" name="CERT_KEYCLOAK"
+                value="/etc/certs/keycloak">
+            </div>
+            <div class="form-group">
+              <label for="DOMAIN_SCUOLA">DOMAIN_SCUOLA:</label>
+              <input type="text" class="form-control" id="DOMAIN_SCUOLA" name="DOMAIN_SCUOLA"
+                value="scuola.vrscuola.online">
+            </div>
+            <div class="form-group">
+              <label for="DOMAIN_KEYCLOAK">DOMAIN_KEYCLOAK:</label>
+              <input type="text" class="form-control" id="DOMAIN_KEYCLOAK" name="DOMAIN_KEYCLOAK"
+                value="keycloak.vrscuola.online">
+            </div>
+            <div class="form-group">
+              <label for="CERT_PASSWORD">CERT_PASSWORD:</label>
+              <input type="text" class="form-control" id="CERT_PASSWORD" name="CERT_PASSWORD" value="vrscuola!!!">
+            </div>
+            <div class="form-group">
+              <label for="CERT_ALIAS_SCUOLA">CERT_ALIAS_SCUOLA:</label>
+              <input type="text" class="form-control" id="CERT_ALIAS_SCUOLA" name="CERT_ALIAS_SCUOLA" value="vrscuola">
+            </div>
+            <div class="form-group">
+              <label for="CERT_ALIAS_KEYCLOAK">CERT_ALIAS_KEYCLOAK:</label>
+              <input type="text" class="form-control" id="CERT_ALIAS_KEYCLOAK" name="CERT_ALIAS_KEYCLOAK"
+                value="keycloak">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Configurazioni Basedati</h5>
+            <div class="form-group">
+              <label for="DB_SCUOLA_NAME">DB_SCUOLA_NAME:</label>
+              <input type="text" class="form-control" id="DB_SCUOLA_NAME" name="DB_SCUOLA_NAME" value="vrscuoladb">
+            </div>
+            <div class="form-group">
+              <label for="DB_SCUOLA_USERNAME">DB_SCUOLA_USERNAME:</label>
+              <input type="text" class="form-control" id="DB_SCUOLA_USERNAME" name="DB_SCUOLA_USERNAME"
+                value="vrscuola">
+            </div>
+            <div class="form-group">
+              <label for="DB_SCUOLA_PASSWORD">DB_SCUOLA_PASSWORD:</label>
+              <input type="text" class="form-control" id="DB_SCUOLA_PASSWORD" name="DB_SCUOLA_PASSWORD"
+                value="vrscuola!!!!">
+            </div>
+            <div class="form-group">
+              <label for="DB_SCUOLA_BRIDGE_USERNAME">DB_SCUOLA_BRIDGE_USERNAME:</label>
+              <input type="text" class="form-control" id="DB_SCUOLA_BRIDGE_USERNAME" name="DB_SCUOLA_BRIDGE_USERNAME"
+                value="keycloakread">
+            </div>
+            <div class="form-group">
+              <label for="DB_SCUOLA_BRIDGE_PASSWORD">DB_SCUOLA_BRIDGE_PASSWORD:</label>
+              <input type="text" class="form-control" id="DB_SCUOLA_BRIDGE_PASSWORD" name="DB_SCUOLA_BRIDGE_PASSWORD"
+                value="vrscuolaread!!">
+            </div>
+            <div class="form-group">
+              <label for="DB_KEYCLOAK_NAME">DB_KEYCLOAK_NAME:</label>
+              <input type="text" class="form-control" id="DB_KEYCLOAK_NAME" name="DB_KEYCLOAK_NAME" value="keycloakdb">
+            </div>
+            <div class="form-group">
+              <label for="DB_KEYCLOAK_USERNAME">DB_KEYCLOAK_USERNAME:</label>
+              <input type="text" class="form-control" id="DB_KEYCLOAK_USERNAME" name="DB_KEYCLOAK_USERNAME"
+                value="keycloak">
+            </div>
+            <div class="form-group">
+              <label for="DB_KEYCLOAK_PASSWORD">DB_KEYCLOAK_PASSWORD:</label>
+              <input type="text" class="form-control" id="DB_KEYCLOAK_PASSWORD" name="DB_KEYCLOAK_PASSWORD"
+                value="vrscuola!!!">
+            </div>
+            <div class="form-group">
+              <label for="DB_WORDPRESS_NAME">DB_WORDPRESS_NAME:</label>
+              <input type="text" class="form-control" id="DB_WORDPRESS_NAME" name="DB_WORDPRESS_NAME" value="wpdb">
+            </div>
+            <div class="form-group">
+              <label for="DB_WORDPRESS_USERNAME">DB_WORDPRESS_USERNAME:</label>
+              <input type="text" class="form-control" id="DB_WORDPRESS_USERNAME" name="DB_WORDPRESS_USERNAME"
+                value="wp">
+            </div>
+            <div class="form-group">
+              <label for="DB_WORDPRESS_PASSWORD">DB_WORDPRESS_PASSWORD:</label>
+              <input type="text" class="form-control" id="DB_WORDPRESS_PASSWORD" name="DB_WORDPRESS_PASSWORD"
+                value="vrscuola!!!">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Configurazione Login - Keycloak</h5>
+            <div class="form-group">
+              <label for="KEYCLOAK_DIR">KEYCLOAK_DIR:</label>
+              <input type="text" class="form-control" id="KEYCLOAK_DIR" name="KEYCLOAK_DIR"
+                value="/opt/keycloak-21.0.0">
+            </div>
+            <div class="form-group">
+              <label for="KEYCLOAK_ADMIN_USERNAME">KEYCLOAK_ADMIN_USERNAME:</label>
+              <input type="text" class="form-control" id="KEYCLOAK_ADMIN_USERNAME" name="KEYCLOAK_ADMIN_USERNAME"
+                value="admin">
+            </div>
+            <div class="form-group">
+              <label for="KEYCLOAK_ADMIN_PASSWORD">KEYCLOAK_ADMIN_PASSWORD:</label>
+              <input type="text" class="form-control" id="KEYCLOAK_ADMIN_PASSWORD" name="KEYCLOAK_ADMIN_PASSWORD"
+                value="vrscuola!!!">
+            </div>
+            <div class="form-group">
+              <label for="KEYCLOAK_CLIENT_ID">KEYCLOAK_CLIENT_ID:</label>
+              <input type="text" class="form-control" id="KEYCLOAK_CLIENT_ID" name="KEYCLOAK_CLIENT_ID"
+                value="scuolaelementare">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">Annulla</button>
+          <button type="button" class="btn btn-primary ml-2" id="saveButton">Registra</button>
+        </div>
+  </form>
+
+  <!-- Modale di conferma per Annulla -->
+  <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cancelModalLabel">Annullare le modifiche?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Sei sicuro di voler annullare le modifiche apportate?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-danger" onclick="location.href='init.html'">Annulla Modifiche</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale di conferma per Salva -->
+  <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveModalLabel">Salvare le modifiche?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Sei sicuro di voler salvare le modifiche apportate?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+          <button type="button" id="saveConfirmButton" class="btn btn-primary">Salva Modifiche</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  </form>
+
+  <script>
+    // Aggiungi un ascoltatore di eventi al bottone "Salva"
+    const saveButton = document.getElementById("saveButton");
+    saveButton.addEventListener("click", function () {
+      // Apri la finestra modale di conferma per "Salva"
+      const saveModal = document.getElementById("saveModal");
+      const modal = new bootstrap.Modal(saveModal);
+      modal.show();
+    });
+    // Aggiungi un ascoltatore di eventi al form di configurazione
+    const configForm = document.getElementById("config-form");
+    configForm.addEventListener("submit", function (event) {
+      // Impedisci l'invio del form e apri la finestra modale di conferma per "Salva"
+      event.preventDefault();
+      const saveModal = document.getElementById("saveModal");
+      const modal = new bootstrap.Modal(saveModal);
+      modal.show();
+    });
+
+    // Aggiungi un ascoltatore di eventi al pulsante di conferma del modale "Salva"
+    const saveConfirmButton = document.getElementById("saveConfirmButton");
+    saveConfirmButton.addEventListener("click", function () {
+      // Invia il form tramite AJAX
+      const configForm = document.getElementById("config-form");
+      const xhr = new XMLHttpRequest();
+      xhr.open(configForm.method, configForm.action);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          // Se l'invio del form ha avuto successo, chiudi la finestra modale e aggiorna la pagina
+          const saveModal = document.getElementById("saveModal");
+          const modal = new bootstrap.Modal(saveModal);
+          modal.hide();
+          location.reload();
+        } else {
+          // In caso di errore, visualizza un messaggio di errore
+          alert("Errore durante l'invio del form: " + xhr.statusText);
+        }
+      };
+      xhr.send(new FormData(configForm));
+    });
+
+  </script>
+</body>
+
+</html>

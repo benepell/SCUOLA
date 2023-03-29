@@ -1,53 +1,7 @@
 #!/bin/bash
 
-# -- START GLOBAL Variabili d'ambiente per cartella di lavoro apache --
-#BASE
-BASE_SCUOLA="https://scuola.vrscuola.online"
-BASE_KEYCLOAK="https://keycloak.vrscuola.online:9443"
-BASE_WORDPRESS="https://scuola.vrscuola.online:8443"
-
-# CERTS
-CERT_SCUOLA="/etc/certs/scuola"
-CERT_KEYCLOAK="/etc/certs/keycloak"
-DOMAIN_SCUOLA="scuola.vrscuola.online"
-DOMAIN_KEYCLOAK="keycloak.vrscuola.online"
-CERT_PASSWORD="vrscuola!!!" #usa per semplificare stessa password
-CERT_ALIAS_SCUOLA="vrscuola"
-CERT_ALIAS_KEYCLOAK="keycloak"
-
-# DATABASES
-DB_SCUOLA_NAME="vrscuoladb"
-DB_SCUOLA_USERNAME="vrscuola"
-DB_SCUOLA_PASSWORD="vrscuola!!!!"
-
-DB_SCUOLA_BRIDGE_USERNAME="keycloakread"
-DB_SCUOLA_BRIDGE_PASSWORD="vrscuolaread!!"
-
-DB_KEYCLOAK_NAME="keycloakdb"
-DB_KEYCLOAK_USERNAME="keycloak"
-DB_KEYCLOAK_PASSWORD="vrscuola!!!"
-
-DB_WORDPRESS_NAME="wpdb"
-DB_WORDPRESS_USERNAME="wp"
-DB_WORDPRESS_PASSWORD="vrscuola!!!"
-
-# KEYCLOAK
-KEYCLOAK_DIR="/opt/keycloak-21.0.0"
-KEYCLOAK_ADMIN_USERNAME="admin"
-KEYCLOAK_ADMIN_PASSWORD="vrscuola!!!"
-KEYCLOAK_CLIENT_ID="scuolaelementare" #indicare il nome della scuola per il client
-
-# -- END Variabili d'ambiente per cartella di lavoro apache --
-
-# -- START Variabili d'ambiente per cartella di lavoro apache --
-
-# Definire i parametri [apache.update_default_apache2_conf.sh] ID: 1
-a1_CERTS_DIR="$CERT_SCUOLA"
-a1_SSL_CERT_FILE="$CERT_SCUOLA/fullchain.pem"
-a1_SSL_CERT_PK="$CERT_SCUOLA/privkey.pem"
-a1_SSL_CERT_CHAIN="$CERT_SCUOLA/chain.pem"
-
-# -- END Variabili d'ambiente per cartella di lavoro keycloak --
+# Caricare le variabili d'ambiente globali generate dal file global_env.sh
+source global_env.sh
 
 # -- START Variabili d'ambiente per cartella di lavoro database --
 
