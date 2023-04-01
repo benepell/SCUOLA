@@ -29,9 +29,9 @@ public class KeycloakUserController {
         this.dataSource = dataSource;
         this.usernamePattern = Pattern.compile("\\d+-[a-z]+-[a-z]+-[a-z]+");
     }
-    @GetMapping( {"/keycloak-users","/keycloak-users/{classe}", "/keycloak-users/{classe}/{sezione}"})
+    @GetMapping( {"/keycloak-users","/keycloak-users/{filter:filter}","/keycloak-users/{filter:filter}/{classe}", "/keycloak-users/{filter:filter}/{classe}/{sezione}"})
     @Cacheable("usersCache")
-    public List<Map<String, String>> getUsers(@PathVariable(required = false) String classe, @PathVariable(required = false) String sezione) {
+    public List<Map<String, String>> getUsers(@PathVariable(required = false) String filter,@PathVariable(required = false) String classe, @PathVariable(required = false) String sezione) {
         List<Map<String, String>> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
@@ -50,7 +50,7 @@ public class KeycloakUserController {
                         String cognome = parts[3]; // "pell"
 
                         // caso tutti i valori
-                        if (classe == null && sezione == null) {
+                        if (filter == null) {
                             // ritorna tutti i valori
                             user.put("classe", cl);
                             user.put("sezione", sez);
@@ -58,11 +58,20 @@ public class KeycloakUserController {
                             user.put("cognome",cognome);
                             user.put("username", username);
                             users.add(user);
-                        } else if (classe != null && sezione == null) { // caso solo classe ritorna tutti gli utenti della classi
+                        } else if (classe == null && sezione == null){
+                            user.put("classe", cl);
+                            // se classe non e'presente nella lista aggiungilo
+                            if(!users.contains(user)){
+                                users.add(user);
+                            }
+                        }
+                        else if (classe != null && sezione == null) { // caso solo classe ritorna tutti gli utenti della classi
                             if (cl.equals(classe)) {
                                 user.put("sezione", sez);
-                                user.put("username", username);
-                                users.add(user);
+                                // se sezione non e'presente nella lista aggiungilo
+                                if(!users.contains(user)){
+                                    users.add(user);
+                                }
                             }
                         } else if (classe != null && sezione != null) { // caso classe e sezione ritorna solo utenti in base alla classe e sezione
                             if(cl.equals(classe) && sez.equals(sezione)){
@@ -71,7 +80,6 @@ public class KeycloakUserController {
                             }
                         }
                     }
-
                 }
             }
         } catch (SQLException e) {
