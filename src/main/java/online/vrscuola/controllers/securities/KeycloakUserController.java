@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
@@ -28,12 +29,10 @@ public class KeycloakUserController {
         this.dataSource = dataSource;
         this.usernamePattern = Pattern.compile("\\d+-[a-z]+-[a-z]+-[a-z]+");
     }
-
-    @GetMapping("/keycloak-users")
+    @GetMapping( {"/keycloak-users","/keycloak-users/{classe}", "/keycloak-users/{classe}/{sezione}"})
     @Cacheable("usersCache")
-    public List<Map<String, String>> getUsers() {
+    public List<Map<String, String>> getUsers(@PathVariable(required = false) String classe, @PathVariable(required = false) String sezione) {
         List<Map<String, String>> users = new ArrayList<>();
-
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
 
@@ -43,19 +42,36 @@ public class KeycloakUserController {
                 String username = resultSet.getString("username");
                 if (usernamePattern.matcher(username).matches()) {
                     Map<String, String> user = new HashMap<>();
-                    user.put("username", username);
                     String[] parts = username.split("-");
                     if(parts.length == 4){
-                        String classe = parts[0]; // "1"
-                        String sezione = parts[1]; // "a"
+                        String cl = parts[0]; // "1"
+                        String sez = parts[1]; // "a"
                         String nome = parts[2]; // "ben"
                         String cognome = parts[3]; // "pell"
-                        user.put("classe", classe);
-                        user.put("sezione", sezione);
-                        user.put("nome",nome);
-                        user.put("cognome",cognome);
+
+                        // caso tutti i valori
+                        if (classe == null && sezione == null) {
+                            // ritorna tutti i valori
+                            user.put("classe", cl);
+                            user.put("sezione", sez);
+                            user.put("nome",nome);
+                            user.put("cognome",cognome);
+                            user.put("username", username);
+                            users.add(user);
+                        } else if (classe != null && sezione == null) { // caso solo classe ritorna tutti gli utenti della classi
+                            if (cl.equals(classe)) {
+                                user.put("sezione", sez);
+                                user.put("username", username);
+                                users.add(user);
+                            }
+                        } else if (classe != null && sezione != null) { // caso classe e sezione ritorna solo utenti in base alla classe e sezione
+                            if(cl.equals(classe) && sez.equals(sezione)){
+                                user.put("username", username);
+                                users.add(user);
+                            }
+                        }
                     }
-                    users.add(user);
+
                 }
             }
         } catch (SQLException e) {
