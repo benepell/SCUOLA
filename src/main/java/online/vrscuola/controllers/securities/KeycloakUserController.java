@@ -36,7 +36,7 @@ public class KeycloakUserController {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
 
-            ResultSet resultSet = statement.executeQuery("SELECT username FROM USER_ENTITY");
+            ResultSet resultSet = statement.executeQuery("SELECT username FROM USER_ENTITY WHERE enabled = 1");
 
             while (resultSet.next()) {
                 String username = resultSet.getString("username");
