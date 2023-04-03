@@ -13,20 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseHealthCheck {
 
-    @Value("${health.datasource.url}")
-    private static String healthDataSourceUrl;
-    @Value("${health.datasource.username}")
-    private static String healthDatasourceUsername;
-    @Value("${health.datasource.password}")
-    private static String healthDatasourcePassword;
-
-    public static JSONObject checkDatabase() {
+    public static JSONObject checkDatabase(String url, String username, String password) {
         JSONObject response = new JSONObject();
-        try {
-            Connection conn = DriverManager.getConnection(healthDataSourceUrl, healthDatasourceUsername, healthDatasourcePassword);
-            if (conn != null) {
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            if (conn.isValid(5)) {
                 response.put("status", "ok");
-                conn.close();
             } else {
                 response.put("status", "error");
             }

@@ -13,21 +13,27 @@ import java.util.Map;
 public class HealthCheckEndpoint {
 
     @Value("${health.datasource.website}")
-    private static String healthDataSourceWebsite;
+    private String healthDataSourceWebsite;
     @Value("${health.datasource.website.keycloak}")
-    private static String healthDataSourceWebsiteKeycloak;
+    private String healthDataSourceWebsiteKeycloak;
     @Value("${health.datasource.website.risorse}")
-    private static String healthdataSourceWebsiteRisorse;
+    private String healthdataSourceWebsiteRisorse;
+    @Value("${health.datasource.url}")
+    private String healthDataSourceUrl;
 
+    @Value("${health.datasource.username}")
+    private String healthDatasourceUsername;
+    @Value("${health.datasource.password}")
+    private String healthDatasourcePassword;
 
     @GetMapping("/health")
     public Map<String, Object> health() {
         JSONObject healthStatus = new JSONObject();
-        healthStatus.put("database", DatabaseHealthCheck.checkDatabase());
+        healthStatus.put("database", DatabaseHealthCheck.checkDatabase(healthDataSourceUrl, healthDatasourceUsername, healthDatasourcePassword));
         healthStatus.put("resourceDirectory", ResourceDirectoryHealthCheck.checkResourceDirectory());
         healthStatus.put("website", WebsiteHealthCheck.checkWebsite(healthDataSourceWebsite));
         healthStatus.put("websiteKeycloak", WebsiteHealthCheck.checkWebsite(healthDataSourceWebsiteKeycloak));
-        healthStatus.put("websiteRisorse", WebsiteHealthCheck.checkWebsite(healthdataSourceWebsiteRisorse));
+        healthStatus.put("websiteRisorse", WebsiteHealthCheck.checkWebsite(healthdataSourceWebsiteRisorse,"vrscuola","vrscuola!!!"));
         healthStatus.put("operatingSystem", OperatingSystemHealthCheck.checkOperatingSystem());
         return healthStatus.toMap();
     }

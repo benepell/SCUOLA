@@ -6,4 +6,6 @@ public interface Constants {
     String RESOURCE_TRASH = ".trash";
     String RESOURCE_TMB= ".tmb";
 
+    int SCHEDULE_HEALTH = 60*60*1000;
+
 }
