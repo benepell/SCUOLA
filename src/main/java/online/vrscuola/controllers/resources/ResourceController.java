@@ -28,9 +28,12 @@ public class ResourceController {
                 File[] files = directory.listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        String hash = FileUtils.calculateHash(file);
-                        if (file.isFile()) {
-                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                        if(!file.getAbsolutePath().contains(Constants.RESOURCE_TRASH) &&
+                                !file.getAbsolutePath().contains(Constants.RESOURCE_TMB)) {
+                            String hash = FileUtils.calculateHash(file);
+                            if (file.isFile()) {
+                                resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                            }
                         }
                     }
                 }
@@ -76,11 +79,14 @@ public class ResourceController {
                 File[] files = directory.listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        String hash = FileUtils.calculateHash(file);
-                        if (file.isFile()) {
-                            resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
-                        } else if (file.isDirectory()) {
-                            resources.addAll(getAllResourcesInDirectory(file));
+                        if(!file.getAbsolutePath().contains(Constants.RESOURCE_TRASH) &&
+                                !file.getAbsolutePath().contains(Constants.RESOURCE_TMB)) {
+                            String hash = FileUtils.calculateHash(file);
+                            if (file.isFile()) {
+                                resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                            } else if (file.isDirectory()) {
+                                resources.addAll(getAllResourcesInDirectory(file));
+                            }
                         }
                     }
                 }
