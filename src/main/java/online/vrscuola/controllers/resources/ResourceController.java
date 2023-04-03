@@ -5,6 +5,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.FileUtils;
@@ -27,14 +31,25 @@ public class ResourceController {
             if (directory.isDirectory()) {
                 File[] files = directory.listFiles();
                 if (files != null) {
+                    List<Thread> threads = new ArrayList<>();
                     for (File file : files) {
                         if(!file.getAbsolutePath().contains(Constants.RESOURCE_TRASH) &&
                                 !file.getAbsolutePath().contains(Constants.RESOURCE_TMB)) {
-                            String hash = FileUtils.calculateHash(file);
-                            if (file.isFile()) {
-                                resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
-                            }
+                            Thread thread = new Thread(() -> {
+                                String hash = FileUtils.calculateHash(file);
+                                if (file.isFile()) {
+                                    ResourceInfo resource = new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath());
+                                    synchronized (resources) {
+                                        resources.add(resource);
+                                    }
+                                }
+                            });
+                            threads.add(thread);
+                            thread.start();
                         }
+                    }
+                    for (Thread thread : threads) {
+                        thread.join();
                     }
                 }
             }
@@ -52,17 +67,33 @@ public class ResourceController {
             if (directory.isDirectory()) {
                 File[] files = directory.listFiles();
                 if (files != null) {
+                    // Creazione del pool di thread
+                    ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+                    List<Callable<List<ResourceInfo>>> tasks = new ArrayList<>();
                     for (File file : files) {
                         if(!file.getAbsolutePath().contains(Constants.RESOURCE_TRASH) &&
                                 !file.getAbsolutePath().contains(Constants.RESOURCE_TMB)) {
-                            String hash = FileUtils.calculateHash(file);
-                            if (file.isFile()) {
-                                resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
-                            } else if (file.isDirectory()) {
-                                resources.addAll(getAllResourcesInDirectory(file));
-                            }
+                            Callable<List<ResourceInfo>> task = () -> {
+                                List<ResourceInfo> results = new ArrayList<>();
+                                String hash = FileUtils.calculateHash(file);
+                                if (file.isFile()) {
+                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                                } else if (file.isDirectory()) {
+                                    results.addAll(getAllResourcesInDirectory(file));
+                                }
+                                return results;
+                            };
+                            tasks.add(task);
                         }
                     }
+                    // Esecuzione dei task in parallelo
+                    List<Future<List<ResourceInfo>>> futures = executorService.invokeAll(tasks);
+                    for (Future<List<ResourceInfo>> future : futures) {
+                        resources.addAll(future.get());
+                    }
+                    // Shutdown del pool di thread
+                    executorService.shutdown();
                 }
             }
         } catch (Exception e) {
@@ -71,24 +102,39 @@ public class ResourceController {
         return ResponseEntity.ok(resources);
     }
 
-
     private List<ResourceInfo> getAllResourcesInDirectory(File directory) {
         List<ResourceInfo> resources = new ArrayList<>();
         try {
             if (directory.isDirectory()) {
                 File[] files = directory.listFiles();
                 if (files != null) {
+                    // Creazione del pool di thread
+                    ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+                    List<Callable<List<ResourceInfo>>> tasks = new ArrayList<>();
                     for (File file : files) {
                         if(!file.getAbsolutePath().contains(Constants.RESOURCE_TRASH) &&
                                 !file.getAbsolutePath().contains(Constants.RESOURCE_TMB)) {
-                            String hash = FileUtils.calculateHash(file);
-                            if (file.isFile()) {
-                                resources.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
-                            } else if (file.isDirectory()) {
-                                resources.addAll(getAllResourcesInDirectory(file));
-                            }
+                            Callable<List<ResourceInfo>> task = () -> {
+                                List<ResourceInfo> results = new ArrayList<>();
+                                String hash = FileUtils.calculateHash(file);
+                                if (file.isFile()) {
+                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                                } else if (file.isDirectory()) {
+                                    results.addAll(getAllResourcesInDirectory(file));
+                                }
+                                return results;
+                            };
+                            tasks.add(task);
                         }
                     }
+                    // Esecuzione dei task in parallelo
+                    List<Future<List<ResourceInfo>>> futures = executorService.invokeAll(tasks);
+                    for (Future<List<ResourceInfo>> future : futures) {
+                        resources.addAll(future.get());
+                    }
+                    // Shutdown del pool di thread
+                    executorService.shutdown();
                 }
             }
         } catch (Exception e) {
