@@ -123,20 +123,6 @@
               <input type="text" class="form-control" id="DB_KEYCLOAK_PASSWORD" name="dbKeycloakPassword"
                 value="vrscuola!!!">
             </div>
-            <div class="form-group">
-              <label for="DB_WORDPRESS_NAME">DB_WORDPRESS_NAME:</label>
-              <input type="text" class="form-control" id="DB_WORDPRESS_NAME" name="dbWordpressName" value="wpdb">
-            </div>
-            <div class="form-group">
-              <label for="DB_WORDPRESS_USERNAME">DB_WORDPRESS_USERNAME:</label>
-              <input type="text" class="form-control" id="DB_WORDPRESS_USERNAME" name="dbWordpressUsername"
-                value="wp">
-            </div>
-            <div class="form-group">
-              <label for="DB_WORDPRESS_PASSWORD">DB_WORDPRESS_PASSWORD:</label>
-              <input type="text" class="form-control" id="DB_WORDPRESS_PASSWORD" name="dbWordpressPassword"
-                value="vrscuola!!!">
-            </div>
           </div>
         </div>
 
