@@ -13,5 +13,7 @@ public interface Constants {
     String HEALTH_DATASOURCE_WEBSITE_KEYCLOAK = "https://keycloak.vrscuola.online";
     String HEALTH_DATASOURCE_WEBSITE_WORDPRESS = "https://scuola.vrscuola.online:8443";
     String PATH_RESOURCE_DIR = "/var/www/html/risorse/files/";
+    String RESOURCE_TRASH = ".trash";
+    String RESOURCE_TMB= ".tmb";
 
 }
