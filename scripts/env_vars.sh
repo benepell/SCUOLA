@@ -24,14 +24,6 @@ a3_DB_NAME="$DB_SCUOLA_NAME"
 a3_DB_USER="$DB_SCUOLA_USERNAME"
 a3_DB_PASSWORD="$DB_SCUOLA_PASSWORD"
 
-# Parametri di inizializzazione [database.wpdb.sh] ID: 4
-a4_USER="root"
-a4_PASSWORD="vrscuola!!!"
-a4_DB_NAME="$DB_WORDPRESS_NAME"
-a4_DB_USER="$DB_WORDPRESS_USERNAME"
-a4_DB_PASSWORD="$DB_WORDPRESS_PASSWORD"
-a4_URL="$BASE_WORDPRESS"
-
 # -- START Variabili d'ambiente per cartella di lavoro database --
 
 # -- START Variabili d'ambiente per cartella di lavoro keycloak --
