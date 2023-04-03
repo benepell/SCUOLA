@@ -16,8 +16,8 @@
               name="codiceDiRegistrazioneScuola" value="akkqqiji$$55ga">
           </div>
           <div class="form-group">
-            <label for="VERSIONE_SCUOLA">VERSIONE_SCUOLA:</label>
-            <input type="text" class="form-control" id="VERSIONE_SCUOLA" name="versioneScuola" value="1">
+            <label for="VERSIONE_SOFTWARE">VERSIONE_SOFTWARE:</label>
+            <input type="text" class="form-control" id="VERSIONE_SOFTWARE" name="versioneSoftware" value="1">
           </div>
         </div>
       </div>

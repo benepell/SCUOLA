@@ -9,7 +9,7 @@ import java.util.Map;
 public class SetupModel {
     private String passwordServerScuola;
     private String codiceDiRegistrazioneScuola;
-    private String versioneScuola;
+    private String versioneSoftware;
     private String baseScuola;
     private String baseKeycloak;
     private String baseRisorse;
@@ -37,7 +37,7 @@ public class SetupModel {
         Map<String, String> fields = new HashMap<>();
         fields.put("passwordServerScuola", passwordServerScuola);
         fields.put("codiceDiRegistrazioneScuola", codiceDiRegistrazioneScuola);
-        fields.put("versioneScuola", versioneScuola);
+        fields.put("versioneSoftware", versioneSoftware);
         fields.put("baseScuola", baseScuola);
         fields.put("baseKeycloak", baseKeycloak);
         fields.put("baseRisorse", baseRisorse);
