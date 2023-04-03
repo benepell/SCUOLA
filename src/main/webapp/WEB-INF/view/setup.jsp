@@ -37,8 +37,8 @@
                 value="https://keycloak.vrscuola.online:9443">
             </div>
             <div class="form-group">
-              <label for="BASE_WORDPRESS">BASE_WORDPRESS:</label>
-              <input type="text" class="form-control" id="BASE_WORDPRESS" name="baseWordpress"
+              <label for="BASE_RISORSE">BASE_RISORSE:</label>
+              <input type="text" class="form-control" id="BASE_RISORSE" name="baseRisorse"
                 value="https://scuola.vrscuola.online:8443">
             </div>
           </div>

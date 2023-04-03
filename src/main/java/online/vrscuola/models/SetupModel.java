@@ -12,7 +12,7 @@ public class SetupModel {
     private String versioneScuola;
     private String baseScuola;
     private String baseKeycloak;
-    private String baseWordpress;
+    private String baseRisorse;
     private String certScuola;
     private String certKeycloak;
     private String domainScuola;
@@ -28,9 +28,6 @@ public class SetupModel {
     private String dbKeycloakName;
     private String dbKeycloakUsername;
     private String dbKeycloakPassword;
-    private String dbWordpressName;
-    private String dbWordpressUsername;
-    private String dbWordpressPassword;
     private String keycloakDir;
     private String keycloakAdminUsername;
     private String keycloakAdminPassword;
@@ -43,7 +40,7 @@ public class SetupModel {
         fields.put("versioneScuola", versioneScuola);
         fields.put("baseScuola", baseScuola);
         fields.put("baseKeycloak", baseKeycloak);
-        fields.put("baseWordpress", baseWordpress);
+        fields.put("baseRisorse", baseRisorse);
         fields.put("certScuola", certScuola);
         fields.put("certKeycloak", certKeycloak);
         fields.put("domainScuola", domainScuola);
@@ -59,9 +56,6 @@ public class SetupModel {
         fields.put("dbKeycloakName", dbKeycloakName);
         fields.put("dbKeycloakUsername", dbKeycloakUsername);
         fields.put("dbKeycloakPassword", dbKeycloakPassword);
-        fields.put("dbWordpressName", dbWordpressName);
-        fields.put("dbWordpressUsername", dbWordpressUsername);
-        fields.put("dbWordpressPassword", dbWordpressPassword);
         fields.put("keycloakDir", keycloakDir);
         fields.put("keycloakAdminUsername", keycloakAdminUsername);
         fields.put("keycloakAdminPassword", keycloakAdminPassword);
