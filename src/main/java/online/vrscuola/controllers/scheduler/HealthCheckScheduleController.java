@@ -12,7 +12,7 @@ public class HealthCheckScheduleController {
     @Value("${health.datasource.website}")
     private String healthDatasourceWebsite;
 
-    @Scheduled(fixedDelay = Constants.SCHEDULE_HEALTH) // ogni ora
+   // @Scheduled(fixedDelay = Constants.SCHEDULE_HEALTH) // ogni ora
     public void checkHealth() {
         RestTemplate restTemplate = new RestTemplate();
         String url = healthDatasourceWebsite.concat("/api/health");
