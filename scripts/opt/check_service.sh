@@ -12,9 +12,18 @@ if [[ ! -d /opt/script/log/ ]]; then
   mkdir -p /opt/script/log/
 fi
 
+# Ottieni l'ora corrente in formato 24 ore
+hour=$(date +%H)
+
+# Verifica se l'ora corrente è compresa tra le 1:00 e le 05:59 (ora di backup)
+if [[ $hour -eq 1 || $hour -eq 2 || $hour -eq 3 || $hour -eq 4 || $hour -eq 5 ]]; then
+  echo "$timestamp [info] L'ora corrente è compresa tra le 1:00 e le 05:59. Durante le ore di backup non si procede con il ripristino automatico " >> "$logfile"
+  exit 0
+fi
+
 # Controlla se l'applicazione è presente nella directory /var/lib/tomcat9/webapps/api/
 if [[ ! -e /var/lib/tomcat9/webapps/api/ ]]; then
-  echo "$timestamp [error] L'applicazione non è presente nella directory /var/lib/tomcat9/webapps/api/. Eseguo il comando per riavviare il servizio Tomcat9 e attendo 3 minuti prima di riavviare lo script." >> /var/log/myapp.log
+  echo "$timestamp [error] L'applicazione non è presente nella directory /var/lib/tomcat9/webapps/api/. Eseguo il comando per riavviare il servizio Tomcat9 e attendo 3 minuti prima di riavviare lo script." >> "$logfile"
   exit 1
 fi
 
@@ -38,7 +47,7 @@ WAIT_TIME=0
 while ! pgrep -f tomcat9 > /dev/null && [ ${WAIT_TIME} -lt ${MAX_WAIT_TIME} ]; do
     # Controlla se la risposta dall'endpoint è null
     if [ -z "$response" ]; then
-      echo "$timestamp [error] La risposta dall'endpoint è null. Eseguo il comando per riavviare il servizio Tomcat9 e attendo 3 minuti prima di riavviare lo script." >> /var/log/myapp.log
+      echo "$timestamp [error] La risposta dall'endpoint è null. Eseguo il comando per riavviare il servizio Tomcat9 e attendo 3 minuti prima di riavviare lo script." >> "$logfile"
       echo "$timestamp [error] La risposta dall'endpoint è null. Eseguo il comando per riavviare il servizio Tomcat9." >> "$logfile"
       systemctl restart tomcat9
       exec "$0"
