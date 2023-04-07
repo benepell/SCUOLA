@@ -41,6 +41,9 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/connectivity-devices/**").permitAll()
                 .antMatchers("/generate-keycloak-credentials/**").hasRole("admins")
                 .antMatchers("/keycloak-users/**").permitAll()
+                .antMatchers("/setup").permitAll()
+                .antMatchers("/setup/**").permitAll()
+                .antMatchers("/basesetup").permitAll()
                 .antMatchers("/upload/**").hasRole( "admins")
                 .antMatchers("/resources/**").hasRole("admins")
                 .anyRequest().permitAll();

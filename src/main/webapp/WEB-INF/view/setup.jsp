@@ -8,16 +8,16 @@
           <div class="form-group">
             <label for="PASSWORD_SERVER_SCUOLA">PASSWORD_SERVER_SCUOLA:</label>
             <input type="text" class="form-control" id="PASSWORD_SERVER_SCUOLA" name="passwordServerScuola"
-              value="vrscuola!!!">
+              value="">
           </div>
           <div class="form-group">
             <label for="CODICE_DI_REGISTRAZIONE_SCUOLA">CODICE_DI_REGISTRAZIONE_SCUOLA:</label>
             <input type="text" class="form-control" id="CODICE_DI_REGISTRAZIONE_SCUOLA"
-              name="codiceDiRegistrazioneScuola" value="akkqqiji$$55ga">
+              name="codiceDiRegistrazioneScuola" value="">
           </div>
           <div class="form-group">
             <label for="VERSIONE_SOFTWARE">VERSIONE_SOFTWARE:</label>
-            <input type="text" class="form-control" id="VERSIONE_SOFTWARE" name="versioneSoftware" value="1">
+            <input type="text" class="form-control" id="VERSIONE_SOFTWARE" name="versioneSoftware" value="">
           </div>
         </div>
       </div>
@@ -29,17 +29,17 @@
             <div class="form-group">
               <label for="BASE_SCUOLA">BASE_SCUOLA:</label>
               <input type="text" class="form-control" id="BASE_SCUOLA" name="baseScuola"
-                value="https://scuola.vrscuola.online">
+                value="">
             </div>
             <div class="form-group">
               <label for="BASE_KEYCLOAK">BASE_KEYCLOAK:</label>
               <input type="text" class="form-control" id="BASE_KEYCLOAK" name="baseKeycloak"
-                value="https://keycloak.vrscuola.online:9443">
+                value="">
             </div>
             <div class="form-group">
               <label for="BASE_RISORSE">BASE_RISORSE:</label>
               <input type="text" class="form-control" id="BASE_RISORSE" name="baseRisorse"
-                value="https://scuola.vrscuola.online:8443">
+                value="">
             </div>
           </div>
         </div>
@@ -49,35 +49,35 @@
             <h5 class="card-title">Configurazione Certificati</h5>
             <div class="form-group">
               <label for="CERT_SCUOLA">CERT_SCUOLA:</label>
-              <input type="text" class="form-control" id="CERT_SCUOLA" name="certScuola" value="/etc/certs/scuola">
+              <input type="text" class="form-control" id="CERT_SCUOLA" name="certScuola" value="">
             </div>
             <div class="form-group">
               <label for="CERT_KEYCLOAK">CERT_KEYCLOAK:</label>
               <input type="text" class="form-control" id="CERT_KEYCLOAK" name="certKeycloak"
-                value="/etc/certs/keycloak">
+                value="">
             </div>
             <div class="form-group">
               <label for="DOMAIN_SCUOLA">DOMAIN_SCUOLA:</label>
               <input type="text" class="form-control" id="DOMAIN_SCUOLA" name="domainScuola"
-                value="scuola.vrscuola.online">
+                value="">
             </div>
             <div class="form-group">
               <label for="DOMAIN_KEYCLOAK">DOMAIN_KEYCLOAK:</label>
               <input type="text" class="form-control" id="DOMAIN_KEYCLOAK" name="domainKeycloak"
-                value="keycloak.vrscuola.online">
+                value="">
             </div>
             <div class="form-group">
               <label for="CERT_PASSWORD">CERT_PASSWORD:</label>
-              <input type="text" class="form-control" id="CERT_PASSWORD" name="certPassword" value="vrscuola!!!">
+              <input type="text" class="form-control" id="CERT_PASSWORD" name="certPassword" value="">
             </div>
             <div class="form-group">
               <label for="CERT_ALIAS_SCUOLA">CERT_ALIAS_SCUOLA:</label>
-              <input type="text" class="form-control" id="CERT_ALIAS_SCUOLA" name="certAliasScuola" value="vrscuola">
+              <input type="text" class="form-control" id="CERT_ALIAS_SCUOLA" name="certAliasScuola" value="">
             </div>
             <div class="form-group">
               <label for="CERT_ALIAS_KEYCLOAK">CERT_ALIAS_KEYCLOAK:</label>
               <input type="text" class="form-control" id="CERT_ALIAS_KEYCLOAK" name="certAliasKeycloak"
-                value="keycloak">
+                value="">
             </div>
           </div>
         </div>
@@ -87,41 +87,41 @@
             <h5 class="card-title">Configurazioni Basedati</h5>
             <div class="form-group">
               <label for="DB_SCUOLA_NAME">DB_SCUOLA_NAME:</label>
-              <input type="text" class="form-control" id="DB_SCUOLA_NAME" name="dbScuolaName" value="vrscuoladb">
+              <input type="text" class="form-control" id="DB_SCUOLA_NAME" name="dbScuolaName" value="">
             </div>
             <div class="form-group">
               <label for="DB_SCUOLA_USERNAME">DB_SCUOLA_USERNAME:</label>
               <input type="text" class="form-control" id="DB_SCUOLA_USERNAME" name="dbScuolaUsername"
-                value="vrscuola">
+                value="">
             </div>
             <div class="form-group">
               <label for="DB_SCUOLA_PASSWORD">DB_SCUOLA_PASSWORD:</label>
               <input type="text" class="form-control" id="DB_SCUOLA_PASSWORD" name="dbScuolaPassword"
-                value="vrscuola!!!!">
+                value="">
             </div>
             <div class="form-group">
               <label for="DB_SCUOLA_BRIDGE_USERNAME">DB_SCUOLA_BRIDGE_USERNAME:</label>
               <input type="text" class="form-control" id="DB_SCUOLA_BRIDGE_USERNAME" name="dbScuolaBridgeUsername"
-                value="keycloakread">
+                value="">
             </div>
             <div class="form-group">
               <label for="DB_SCUOLA_BRIDGE_PASSWORD">DB_SCUOLA_BRIDGE_PASSWORD:</label>
               <input type="text" class="form-control" id="DB_SCUOLA_BRIDGE_PASSWORD" name="dbScuolaBridgePassword"
-                value="vrscuolaread!!">
+                value="">
             </div>
             <div class="form-group">
               <label for="DB_KEYCLOAK_NAME">DB_KEYCLOAK_NAME:</label>
-              <input type="text" class="form-control" id="DB_KEYCLOAK_NAME" name="dbKeycloakName" value="keycloakdb">
+              <input type="text" class="form-control" id="DB_KEYCLOAK_NAME" name="dbKeycloakName" value="">
             </div>
             <div class="form-group">
               <label for="DB_KEYCLOAK_USERNAME">DB_KEYCLOAK_USERNAME:</label>
               <input type="text" class="form-control" id="DB_KEYCLOAK_USERNAME" name="dbKeycloakUsername"
-                value="keycloak">
+                value="">
             </div>
             <div class="form-group">
               <label for="DB_KEYCLOAK_PASSWORD">DB_KEYCLOAK_PASSWORD:</label>
               <input type="text" class="form-control" id="DB_KEYCLOAK_PASSWORD" name="dbKeycloakPassword"
-                value="vrscuola!!!">
+                value="">
             </div>
           </div>
         </div>
@@ -132,22 +132,22 @@
             <div class="form-group">
               <label for="KEYCLOAK_DIR">KEYCLOAK_DIR:</label>
               <input type="text" class="form-control" id="KEYCLOAK_DIR" name="keycloakDir"
-                value="/opt/keycloak-21.0.0">
+                value="">
             </div>
             <div class="form-group">
               <label for="KEYCLOAK_ADMIN_USERNAME">KEYCLOAK_ADMIN_USERNAME:</label>
               <input type="text" class="form-control" id="KEYCLOAK_ADMIN_USERNAME" name="keycloakAdminUsername"
-                value="admin">
+                value="">
             </div>
             <div class="form-group">
               <label for="KEYCLOAK_ADMIN_PASSWORD">KEYCLOAK_ADMIN_PASSWORD:</label>
               <input type="text" class="form-control" id="KEYCLOAK_ADMIN_PASSWORD" name="keycloakAdminPassword"
-                value="vrscuola!!!">
+                value="">
             </div>
             <div class="form-group">
               <label for="KEYCLOAK_CLIENT_ID">KEYCLOAK_CLIENT_ID:</label>
               <input type="text" class="form-control" id="KEYCLOAK_CLIENT_ID" name="keycloakClientId"
-                value="scuolaelementare">
+                value="">
             </div>
           </div>
         </div>
@@ -247,4 +247,42 @@
       }
     });
   }
+</script>
+<script>
+const basePath = '<%= request.getContextPath() %>'; // Recupera la base URL dalla richiesta HTTP
+const apiEndpoint = `${basePath}/api/basesetup`; // Concatena la base URL con l'endpoint dell'API
+
+fetch(apiEndpoint)
+    .then(response => response.json()) // Parse la risposta HTTP come JSON
+    .then(data => {
+      // Utilizza i campi del JSON per impostare il valore dell'input HTML
+      document.getElementById('PASSWORD_SERVER_SCUOLA').value = data.PASSWORD_SERVER_SCUOLA;
+      document.getElementById('CODICE_DI_REGISTRAZIONE_SCUOLA').value = data.CODICE_DI_REGISTRAZIONE_SCUOLA;
+      document.getElementById('VERSIONE_SOFTWARE').value = data.VERSIONE_SOFTWARE;
+      document.getElementById('BASE_SCUOLA').value = data.BASE_SCUOLA;
+      document.getElementById('BASE_KEYCLOAK').value = data.BASE_KEYCLOAK;
+      document.getElementById('BASE_RISORSE').value = data.BASE_RISORSE;
+      document.getElementById('CERT_SCUOLA').value = data.CERT_SCUOLA;
+      document.getElementById('CERT_KEYCLOAK').value = data.CERT_KEYCLOAK;
+      document.getElementById('DOMAIN_SCUOLA').value = data.DOMAIN_SCUOLA;
+      document.getElementById('DOMAIN_KEYCLOAK').value = data.DOMAIN_KEYCLOAK;
+      document.getElementById('CERT_PASSWORD').value = data.CERT_PASSWORD;
+      document.getElementById('CERT_ALIAS_SCUOLA').value = data.CERT_ALIAS_SCUOLA;
+      document.getElementById('CERT_ALIAS_KEYCLOAK').value = data.CERT_ALIAS_KEYCLOAK;
+      document.getElementById('DB_SCUOLA_NAME').value = data.DB_SCUOLA_NAME;
+      document.getElementById('DB_SCUOLA_USERNAME').value = data.DB_SCUOLA_USERNAME;
+      document.getElementById('DB_SCUOLA_PASSWORD').value = data.DB_SCUOLA_PASSWORD;
+      document.getElementById('DB_SCUOLA_BRIDGE_USERNAME').value = data.DB_SCUOLA_BRIDGE_USERNAME;
+      document.getElementById('DB_SCUOLA_BRIDGE_PASSWORD').value = data.DB_SCUOLA_BRIDGE_PASSWORD;
+      document.getElementById('DB_KEYCLOAK_NAME').value = data.DB_KEYCLOAK_NAME;
+      document.getElementById('DB_KEYCLOAK_USERNAME').value = data.DB_KEYCLOAK_USERNAME;
+      document.getElementById('DB_KEYCLOAK_PASSWORD').value = data.DB_KEYCLOAK_PASSWORD;
+      document.getElementById('KEYCLOAK_DIR').value = data.KEYCLOAK_DIR;
+      document.getElementById('KEYCLOAK_ADMIN_USERNAME').value = data.KEYCLOAK_ADMIN_USERNAME;
+      document.getElementById('KEYCLOAK_ADMIN_PASSWORD').value = data.KEYCLOAK_ADMIN_PASSWORD;
+      document.getElementById('KEYCLOAK_CLIENT_ID').value = data.KEYCLOAK_CLIENT_ID;
+    })
+    .catch(error => {
+      console.error('Errore durante il recupero del JSON:', error);
+    });
 </script>

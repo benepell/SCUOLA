@@ -5,11 +5,19 @@ import online.vrscuola.models.SetupModel;
 import online.vrscuola.services.SetupService;
 import online.vrscuola.services.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/")
@@ -48,4 +56,12 @@ public class SetupController {
 
     }
 
+    @GetMapping("/basesetup")
+    public ResponseEntity<String> getSetupJson() throws IOException {
+        // Leggi il contenuto del file JSON
+        InputStream inputStream = new ClassPathResource("base_setup.json").getInputStream();
+        byte[] bytes = inputStream.readAllBytes();
+        String json = new String(bytes, StandardCharsets.UTF_8);
+        return ResponseEntity.ok(json);
+    }
 }
