@@ -16,8 +16,10 @@ VBoxManage export %VMNAME% -o %EXPORTFILE%  --vsys 0 --eula accept
 
 REM Controllare se il file di esportazione esiste
 if exist %EXPORTFILE% (
+    set "log_file=%base%\LOG\vm_export_%current_time%.log"
     echo %current_time% - Esportazione completata con successo. >> %log_file%
 ) else (
+    set "log_file=%base%\LOG\vm_export_%current_time%.log"
     echo %current_time% - Si è verificato un errore durante l'esportazione. >> %log_file%
 )
 
@@ -26,7 +28,9 @@ VBoxManage import --dry-run %EXPORTFILE%
 
 REM Controllare il codice di uscita del comando precedente
 if %errorlevel% equ 0 (
+    set "log_file=%base%\LOG\vm_export_%current_time%.log"
     echo %current_time% -  Il file di esportazione è valido e corretto. >> %log_file%
 ) else (
+    set "log_file=%base%\LOG\vm_export_%current_time%.log"
     echo %current_time% -  Si è verificato un errore durante il controllo del file di esportazione. >> %log_file%
 )
