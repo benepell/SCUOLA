@@ -87,6 +87,15 @@ if %errorLevel% neq 0 (
 set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
 echo %current_time% - Avvio della macchina virtuale... >> %log_file%
 
+rem abilita nat nella eth0
+VBoxManage modifyvm "scuola" --nic1 nat
+
+rem abilita port-forwarding tcp/5555
+VBoxManage modifyvm "scuola" --natpf1 "tcp-port5555,tcp,,5555,,5555"
+
+rem aggiungi al firewall di windows tcp/5555
+netsh advfirewall firewall add rule name="scuola" dir=in action=allow protocol=TCP localport=5555
+
 VBoxManage startvm "scuola" --type headless
 if %errorLevel% neq 0 (
     echo %current_time% - Avvio della macchina virtuale... >> %log_file%

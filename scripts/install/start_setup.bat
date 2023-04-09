@@ -13,12 +13,12 @@ for /f "tokens=1-4 delims=:.," %%a in ("%TIME%") do (
 )
 
 :loop
-set response=
 echo Contatto il server %url%...
-powershell -Command "& { try { $response = Invoke-WebRequest -Uri '%url%' -UseBasicParsing -TimeoutSec 5; exit $response.StatusCode } catch { exit 0 } }"
-if %errorlevel% EQU 200 (
+wget -q --spider %url%
+if %errorlevel% EQU 0 (
     echo La pagina è stata trovata, aprendo il browser...
     start "" %url%
+    exit /b 0
 ) else (
     for /f "tokens=1-4 delims=:.," %%a in ("%TIME%") do (
         set /a "CurrentTime=(((%%a*60)+1%%b %% 100)*60)+1%%c %% 100+1%%d %% 10000"
