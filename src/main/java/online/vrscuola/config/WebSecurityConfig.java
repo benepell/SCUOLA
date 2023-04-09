@@ -42,6 +42,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/generate-keycloak-credentials/**").hasRole("admins")
                 .antMatchers("/keycloak-users/**").permitAll()
                 .antMatchers("/setup").permitAll()
+                .antMatchers("/setup-state").permitAll()
                 .antMatchers("/setup/**").permitAll()
                 .antMatchers("/basesetup").permitAll()
                 .antMatchers("/upload/**").hasRole( "admins")

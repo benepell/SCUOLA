@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -23,8 +25,8 @@ public class SetupService {
     // scrive un file di configurazione a partire dal modello di setupModel
     public void writeConfig(SetupModel setupModel) {
         try {
-            String webInfPath = context.getRealPath("/scripts/");
-            String filePath = webInfPath +  configFile;
+            // Percorso completo del file di configurazione
+            String filePath = "/" + configFile;
 
             // file di testo in modalità scrittura
             BufferedWriter writer = new BufferedWriter(new FileWriter(configFile));
@@ -51,5 +53,23 @@ public class SetupService {
                 IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // verifica l'esistenza del file di configurazione e ritorna un JSON con lo stato "ok" se il file esiste e "ko" se il file non esiste
+    public Map<String, String> checkConfigFile() {
+
+        // Percorso completo del file di configurazione
+        String filePath = "/var/lib/tomcat9/" + configFile;
+
+        File file = new File(filePath);
+
+        Map<String, String> result = new HashMap<>();
+        if (file.exists() && !file.isDirectory()) {
+            result.put("state", "ok");
+        } else {
+            result.put("state", "ko");
+        }
+
+        return result;
     }
 }

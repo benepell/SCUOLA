@@ -6,18 +6,15 @@ import online.vrscuola.services.SetupService;
 import online.vrscuola.services.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -28,7 +25,7 @@ public class SetupController {
     @Autowired
     private ValidateCredentialService vService;
 
-    @RequestMapping(value="setup")
+    @RequestMapping(value="setup", method= RequestMethod.GET, headers="Host=localhost:5555")
     public String getIndex(Model model)
     {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
@@ -36,6 +33,13 @@ public class SetupController {
 
         return "setup";
     }
+
+    @RequestMapping(value="setup-state", method= RequestMethod.GET, headers="Host=localhost:5555")
+    @ResponseBody
+    public Map<String, String> getSetupState() {
+        return cService.checkConfigFile();
+    }
+
     @PostMapping("/update-env")
     public String updateConfig(@ModelAttribute("setupModel") SetupModel setupModel, Model model) {
 
