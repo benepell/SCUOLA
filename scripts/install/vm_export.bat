@@ -2,11 +2,11 @@
 setlocal
 
 set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
-set "base=d:\install"
+set "base=C:\vrscuola"
 set "log_file=%base%\LOG\vm_export_%current_time%.log"
 
 REM Impostare il percorso e il nome del file di esportazione
-set EXPORTFILE=d:\install\VM\scuola.ova
+set EXPORTFILE=C:\vrscuola\VM\scuola.ova
 
 REM Impostare il nome della macchina virtuale da esportare
 set VMNAME=scuola
