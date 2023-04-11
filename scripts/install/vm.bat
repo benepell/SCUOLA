@@ -107,7 +107,11 @@ netsh advfirewall firewall delete rule name="vrscuola-cert"
 rem aggiungi al firewall di windows tcp/80
 netsh advfirewall firewall add rule name="vrscuola-cert" dir=in action=allow protocol=TCP localport=80
 
-VBoxManage startvm "scuola" --type headless
+set vm_name=scuola
+set timeout=15
+
+start "" /B VBoxManage startvm %vm_name% --type headless
+
 if %errorLevel% neq 0 (
     echo %current_time% - Avvio della macchina virtuale... >> %log_file%
     echo %current_time% - Errore durante l'avvio della macchina virtuale! >> %log_file%
@@ -115,10 +119,14 @@ if %errorLevel% neq 0 (
 ) else (
     echo %current_time% - Avvio della macchina virtuale... >> %log_file%
     echo %current_time% - Avvio della macchina virtuale completato con successo. >> %log_file%
-)
 
-echo %current_time% - Avvio della macchina virtuale... >> %log_file%
-echo %current_time% - Installazione completata con successo! >> %log_file%
+    echo Waiting %timeout% seconds before restarting...
+    ping -n %timeout% 127.0.0.1 > nul
+
+    echo Restarting VM %vm_name%...
+    VBoxManage controlvm %vm_name% reset
+
+)
 
 :errore
 
