@@ -14,7 +14,68 @@ if %errorLevel% == 0 (
 )
 
 :start
+
 set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
+
+echo %current_time% - Controlla requisiti minimi. >> %log_file%
+echo Verifica della porta 80... >> %log_file%
+netstat -ano | find /I ":80 " | findstr LISTENING > nul
+if %errorlevel% equ 0 (
+    echo La porta 80 non e' libera. >> %log_file%
+    echo La porta 80 non e' libera.
+    pause
+    exit /B 1
+) 
+
+echo Verifica della porta 5555... >> %log_file%
+netstat -ano | find /I ":5555 " | findstr LISTENING > nul
+if %errorlevel% equ 0 (
+    echo La porta 5555 non e' libera. >> %log_file%
+    echo La porta 5555 non e' libera. 
+    pause
+    exit /B 1
+) 
+
+for /f "tokens=2 delims=:" %%a in ('systeminfo ^| findstr /C:"Memoria fisica totale:"') do set "RAM=%%a"
+set "RAM=%RAM:~1%"
+set "RAM=%RAM: =%"
+set "RAM=%RAM:.=%"
+set "RAM=%RAM:MB=%"
+echo RAM totale: %RAM% >> %log_file%
+
+if %RAM% lss 8192 (
+    echo La RAM totale e' inferiore ai 8GB. >> %log_file%
+    echo La RAM totale e' inferiore ai 8GB. 
+    pause
+    exit /B 1
+)
+
+rem Recupera il numero di core della CPU
+for /f "tokens=2 delims==" %%a in ('wmic cpu get NumberOfCores /VALUE') do set numberOfCores=%%a
+set "numberOfCores=%numberOfCores:~0,-1%"
+echo Numero di core: %numberOfCores% >> %log_file%
+
+if %numberOfCores% lss 2 (
+    echo Il numero di core e' inferiore a 2. >> %log_file%
+    echo Il numero di core e' inferiore a 2. 
+    pause
+    exit /B 1
+)
+
+
+rem Recupera il numero di core della CPU
+for /f "tokens=2 delims==" %%a in ('wmic cpu get NumberOfCores /VALUE') do set numberOfCores=%%a
+set "numberOfCores=%numberOfCores:~0,-1%"
+echo Numero di core: %numberOfCores% 
+
+if %numberOfCores% lss 2 (
+    echo Il numero di core e' inferiore a 2.
+    echo Il numero di core e' inferiore a 2. >> %log_file%
+    exit /B 1
+    pause
+)
+
+
 echo %current_time% - Avvio installazione. >> %log_file%
 
 echo %current_time% - Verifica presenza di VirtualBox... >> %log_file%
@@ -25,13 +86,13 @@ REM Rimuovi l'installazione utilizzando l'IdentifyingNumber
 if defined ID (
     set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
     echo %current_time% - Disinstallazione di Oracle VM VirtualBox in corso... >> %log_file%
-    msiexec /x %ID% /quiet
+   rem msiexec /x %ID% /quiet
 
     set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
     echo %current_time% - Disinstallazione completata. >> %log_file%
 ) else (
     set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
-    echo %current_time% - Oracle VM VirtualBox non è installato sul sistema. >> %log_file%
+    echo %current_time% - Oracle VM VirtualBox non e' installato sul sistema. >> %log_file%
 )
 
 set "installer_path=%~dp0SOFTWARE\VirtualBox-7.0.6-155176-Win.exe"
@@ -89,6 +150,31 @@ if %errorLevel% neq 0 (
 set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
 echo %current_time% - Avvio della macchina virtuale... >> %log_file%
 
+echo ottimizzazione macchina virtuale in corso... >> %log_file%
+
+rem Recupera il valore della memoria RAM totale
+for /f "tokens=2 delims=:" %%a in ('systeminfo ^| findstr /C:"Memoria fisica totale:"') do set "RAM=%%a"
+set "RAM=%RAM:~1%"
+set "RAM=%RAM: =%"
+set "RAM=%RAM:.=%"
+set "RAM=%RAM:MB=%"
+echo RAM totale: %RAM% >> %log_file%
+
+rem Recupera il numero di core della CPU
+for /f "tokens=2 delims==" %%a in ('wmic cpu get NumberOfCores /VALUE') do set numberOfCores=%%a
+set "numberOfCores=%numberOfCores:~0,-1%"
+echo Numero di core: %numberOfCores% >> %log_file%
+
+rem Calcola il 60% dei valori della RAM e dei core
+set /a VBOX_MEMORY=%RAM%*60/100
+set /a VBOX_CPU=%numberOfCores%*60/100
+echo Memory 60%: %VBOX_MEMORY% >> %log_file%
+echo CPU 60%: %VBOX_CPU% >> %log_file%
+
+rem Modifica la configurazione della VM con i nuovi valori
+VBoxManage modifyvm "scuola" --memory %VBOX_MEMORY%
+VBoxManage modifyvm "scuola" --cpus %VBOX_CPU%
+
 rem abilita nat nella eth0
 VBoxManage modifyvm "scuola" --nic1 nat
 
@@ -108,8 +194,6 @@ rem aggiungi al firewall di windows tcp/80
 netsh advfirewall firewall add rule name="vrscuola-cert" dir=in action=allow protocol=TCP localport=80
 
 set vm_name=scuola
-set timeout=15
-
 start "" /B VBoxManage startvm %vm_name% --type headless
 
 if %errorLevel% neq 0 (
@@ -120,15 +204,9 @@ if %errorLevel% neq 0 (
     echo %current_time% - Avvio della macchina virtuale... >> %log_file%
     echo %current_time% - Avvio della macchina virtuale completato con successo. >> %log_file%
 
-    echo Waiting %timeout% seconds before restarting...
-    ping -n %timeout% 127.0.0.1 > nul
-
-    echo Restarting VM %vm_name%...
-    VBoxManage controlvm %vm_name% reset
-
 )
 
 :errore
 
 echo %current_time% - Avvio della macchina virtuale... >> %log_file%
-echo %current_time% - Installazione completata con errori. >> %
+echo %current_time% - Installazione completata con errori. >> %log_file%
