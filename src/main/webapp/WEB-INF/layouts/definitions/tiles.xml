@@ -5,16 +5,22 @@
 
 <tiles-definitions>
 
+	<definition name="baseLayout" template="/WEB-INF/layouts/template/base.jsp">
+		<put-attribute name="titolo" value="" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/template/footer.jsp" />
+	</definition>
+
 	<definition name="minimalLayout" template="/WEB-INF/layouts/template/minimal-base.jsp">
 		<put-attribute name="titolo" value="" />
 		<put-attribute name="content" value="" />
 		<put-attribute name="footer" value="/WEB-INF/layouts/template/minimal-footer.jsp" />
 	</definition>
 
-	<definition name="baseLayout" template="/WEB-INF/layouts/template/base.jsp">
+	<definition name="emptyBaseLayout" template="/WEB-INF/layouts/template/empty-base.jsp">
 		<put-attribute name="titolo" value="" />
 		<put-attribute name="content" value="" />
-		<put-attribute name="footer" value="/WEB-INF/layouts/template/footer.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/template/empty-footer.jsp" />
 	</definition>
 
 	<definition name="setup" extends="minimalLayout">
@@ -37,9 +43,18 @@
 		<put-attribute name="content" value="/WEB-INF/view/welcome.jsp" />  
 	</definition>
 
-	<definition name="abilita-visori" extends="baseLayout">
-		<put-attribute name="titolo"  value="Abilita Visori" />
-		<put-attribute name="content" value="/WEB-INF/view/abilita-visori.jsp" />
+	<definition name="abilita-classe" extends="emptyBaseLayout">
+		<put-attribute name="titolo"  value="Abilita Classe" />
+		<put-attribute name="content" value="/WEB-INF/view/abilita-classe.jsp" />
 	</definition>
 
+	<definition name="abilita-sezione" extends="emptyBaseLayout">
+		<put-attribute name="titolo"  value="Abilita Sezione" />
+		<put-attribute name="content" value="/WEB-INF/view/abilita-sezione.jsp" />
+	</definition>
+
+	<definition name="abilita-visore" extends="emptyBaseLayout">
+		<put-attribute name="titolo"  value="Abilita Visore" />
+		<put-attribute name="content" value="/WEB-INF/view/abilita-visore.jsp" />
+	</definition>
 </tiles-definitions>

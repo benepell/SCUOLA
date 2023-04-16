@@ -35,6 +35,11 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/update-env").permitAll()
                 .antMatchers("/test").hasRole("admins")
                 .antMatchers("/test1").hasRole("users")
+
+                .antMatchers("/abilita-classe").permitAll()
+                .antMatchers("/abilita-sezione").permitAll()
+                .antMatchers("/abilita-visore").permitAll()
+
                 .antMatchers("/vpnconnect").hasRole("admins")
                 .antMatchers("/vpndisconnect").hasRole("admins")
                 .antMatchers("/initialize-devices/**").permitAll()
