@@ -27,9 +27,7 @@
   </head>
   <body>
      <tiles:insertAttribute name="content" /> 
-     
-     <tiles:insertAttribute name="footer" />  
-      
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="<c:url value="/static/js/jquery-3.6.4.min.js" />"></script>
@@ -37,4 +35,5 @@
      <script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
      <script type="text/javascript" src="<c:url value="/static/js/Sortable.min.js" />"></script>
   </body>
+
 </html>

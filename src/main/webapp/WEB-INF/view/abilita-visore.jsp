@@ -24,6 +24,7 @@
         <div class="col-md-3">
           <jsp:include page="include/card-visore.jsp">
               <jsp:param name="nome_allievo" value="Nome Allievo " />
+              <jsp:param name="codice_visore" value="<%=i%>" />
           </jsp:include>
         </div>
       <%
@@ -41,16 +42,13 @@
           <div class="col-md-3">
             <jsp:include page="include/card-visore.jsp">
                 <jsp:param name="nome_allievo" value="Nome Allievo " />
+                <jsp:param name="codice_visore" value="<%=i+4%>" />
             </jsp:include>
           </div>
         <%
             }
         %>
-
     </div>
-
-
-
 
     <script src="static/js/jquery-3.6.4.min.js"></script>
     <script>
