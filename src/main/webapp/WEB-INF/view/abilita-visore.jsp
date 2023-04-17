@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-              <h3 style="color: white;">${intestazione}</h3>
+              <h3 style="color: white;">${intestazione} Classe: ${classSelected} Sezione: ${sectionSelected} </h3>
             </div>
         </div>
     </div>
@@ -16,39 +16,24 @@
     </div>
 
   <div class="container">
-    <div class="row">
-      <%
-          // Ripeti il codice per 4 celle della tabella
-          for (int i = 1; i <= 4; i++) {
-      %>
+    <div class="container">
+  <% int margin = 0; %>
+  <% for (int j = 0; j < 2; j++) { %>
+    <div class="row" style="margin-top:<%=margin%>px;">
+      <% for (int i = 1 + j*4; i <= 4 + j*4; i++) { %>
         <div class="col-md-3">
           <jsp:include page="include/card-visore.jsp">
-              <jsp:param name="nome_allievo" value="Nome Allievo " />
-              <jsp:param name="codice_visore" value="<%=i%>" />
+            <jsp:param name="nome_allievo" value="Nome Allievo " />
+            <jsp:param name="codice_visore" value="<%=i%>" />
           </jsp:include>
         </div>
-      <%
-          }
-      %>
+      <% } %>
+    </div>
+    <% margin += 325; %>
+  <% } %>
+</div>
 
   </div>
-
-  <div class="container" style="margin-top:325px">
-      <div class="row">
-        <%
-            // Ripeti il codice per 4 celle della tabella
-            for (int i = 1; i <= 4; i++) {
-        %>
-          <div class="col-md-3">
-            <jsp:include page="include/card-visore.jsp">
-                <jsp:param name="nome_allievo" value="Nome Allievo " />
-                <jsp:param name="codice_visore" value="<%=i+4%>" />
-            </jsp:include>
-          </div>
-        <%
-            }
-        %>
-    </div>
 
     <script src="static/js/jquery-3.6.4.min.js"></script>
     <script>

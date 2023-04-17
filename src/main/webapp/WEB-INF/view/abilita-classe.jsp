@@ -5,78 +5,65 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-              <h3 style="color: white;">${intestazione}</h3>
+                <h3 style="color: white;">${intestazione}</h3>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Form per inviare il valore della classe selezionata -->
 <form id="form" method="post" action="/classe">
-  <input type="hidden" id="classSelected" name="classSelected" value="${classSelected}" />
+    <input type="hidden" id="classSelected" name="classSelected" value="${classSelected}" />
 
-<!-- codice classe -->
-	<section class="my-card-container">
-        <div class="my-card">
-          <div class="my-card-front">
-            <h3>Classe Prima</h3>
-          </div>
-          <div class="my-card-back">
-            <h3>Classe Prima</h3>
-            <button onclick="setClassSelected('1')">Seleziona</button>
-          </div>
-        </div>
+    <section class="my-card-container">
 
-        <div class="my-card">
-          <div class="my-card-front">
-            <h3>Classe Seconda</h3>
-          </div>
-          <div class="my-card-back">
-            <h3>Classe Seconda</h3>
-            <button onclick="setClassSelected('2')">Seleziona</button>
-          </div>
-        </div>
 
-        <div class="my-card">
-          <div class="my-card-front">
-            <h3>Classe Terza</h3>
-          </div>
-          <div class="my-card-back">
-            <h3>Classe Terza</h3>
-            <button onclick="setClassSelected('3')">Seleziona</button>
-          </div>
-        </div>
-
-        <div class="my-card">
-          <div class="my-card-front">
-            <h3>Classe Quarta</h3>
-          </div>
-          <div class="my-card-back">
-            <h3>Classe Quarta</h3>
-                <button onclick="setClassSelected('4')">Seleziona</button>
-          </div>
-        </div>
-
-        <div class="my-card">
-          <div class="my-card-front">
-            <h3>Classe Quinta</h3>
-          </div>
-          <div class="my-card-back">
-            <h3>Classe Quinta</h3>
-                <button onclick="setClassSelected('5')">Seleziona</button>
-          </div>
-        </div>
-      </section>
+  <c:forEach var="i" begin="1" end="5">
+    <div class="my-card">
+      <div class="my-card-front">
+        <h3>Classe ${i}</h3>
+      </div>
+      <div class="my-card-back">
+        <h3>Classe ${i}</h3>
+        <!-- Aggiungi l'attributo data-classe con il valore della classe -->
+        <button data-classe="${i}" onclick="setClassSelected('${i}')">Seleziona</button>
+      </div>
+    </div>
+  </c:forEach>
+</section>
 
     <div class="my-classe">
         <img src="static/images/classe.png" alt="classe" width="100%">
     </div>
-    </form>
+</form>
 
-    <!-- Script per impostare il valore della classe selezionata e inviare il form -->
-    <script>
-      function setClassSelected(className) {
+<script src="static/js/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: '/keycloak-users/filter',
+        type: 'GET',
+        success: function(data) {
+          var classi = [];
+          for (var i = 0; i < data.length; i++) {
+            var classe = data[i].classe;
+            classi.push(classe);
+          }
+          // Disabilita i pulsanti delle classi non presenti nell'array
+          $("button").each(function() {
+            var classe = $(this).attr("data-classe");
+            if (classi.indexOf(classe) === -1) {
+              $(this).css("display", "none");
+            }
+          });
+        }
+      });
+    });
+
+  </script>
+
+<script>
+    function setClassSelected(className) {
         document.getElementById('classSelected').value = className;
         document.getElementById('form').submit();
-      }
-    </script>
+    }
+</script>
