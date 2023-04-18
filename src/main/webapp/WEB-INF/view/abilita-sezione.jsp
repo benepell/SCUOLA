@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-              <h3 style="color: white;">${intestazione}</h3>
+              <h3 style="color: white;">${intestazione} </h3>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
   <input type="hidden" id="sectionSelected" name="sectionSelected" value="${sectionSelected}" />
 
 <%
-    String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    String[] letters = (String[])session.getAttribute("allSections");;
 %>
 
 <!-- codice sezione -->
