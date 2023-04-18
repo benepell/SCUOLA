@@ -68,6 +68,8 @@ public class KeycloakUserService {
                         } else if (classe != null && sezione != null) {
                             if(cl.equals(classe) && sez.equals(sezione)){
                                 user.put("username", username);
+                                user.put("nome",nome);
+                                user.put("cognome",cognome);
                                 users.add(user);
                             }
                         }
@@ -82,5 +84,21 @@ public class KeycloakUserService {
         }
 
         return users;
+    }
+
+    public String[] filterClasses(String classSelected){
+        List<Map<String, String>> users = getUsers("filter", classSelected, null);
+
+        return classSelected != null ? users.stream()
+                .map(user -> user.get("sezione"))
+                .toArray(String[]::new) : null;
+    }
+
+    public String[] filterSections(String classSelected, String sectionSelected){
+        List<Map<String, String>> users = getUsers("filter", classSelected, sectionSelected);
+
+        return classSelected != null ? users.stream()
+                .map(user -> user.get("nome").concat(" ").concat(user.get("cognome")))
+                .toArray(String[]::new) : null;
     }
 }

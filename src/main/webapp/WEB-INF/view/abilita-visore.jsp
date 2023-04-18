@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%
+    String[] allievi = (String[])session.getAttribute("alunni");;
+%>
+
 <div class="jumbotron jumbotron-billboard">
     <div class="container">
         <div class="row">
@@ -23,7 +27,7 @@
       <% for (int i = 1 + j*4; i <= 4 + j*4; i++) { %>
         <div class="col-md-3">
           <jsp:include page="include/card-visore.jsp">
-            <jsp:param name="nome_allievo" value="Nome Allievo " />
+            <jsp:param name="nome_allievo" value="<%=allievi[0]%>" />
             <jsp:param name="codice_visore" value="<%=i%>" />
           </jsp:include>
         </div>

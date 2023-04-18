@@ -17,18 +17,13 @@ import java.util.Map;
 public class ClasseController {
 
     @Autowired
-    KeycloakUserController keycloakUserService;
+    KeycloakUserService keycloakUserService;
 
 
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
-        List<Map<String, String>> users = keycloakUserService.getUsers("filter", classSelected, null);
-
-        String[] letters = users.stream()
-                .map(user -> user.get("sezione"))
-                .toArray(String[]::new);
-        session.setAttribute("allSections",letters);
+        session.setAttribute("allSections",keycloakUserService.filterClasses(classSelected));
         return "redirect:/abilita-sezione";
     }
 

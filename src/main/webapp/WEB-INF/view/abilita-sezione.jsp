@@ -27,6 +27,7 @@
 
   <!-- barra centrale -->
   <div class="mysez-barra-centrale">
+
     <%
       for(String letter : letters) {
     %>
