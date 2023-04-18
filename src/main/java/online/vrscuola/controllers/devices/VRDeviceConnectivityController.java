@@ -27,7 +27,6 @@ public class VRDeviceConnectivityController {
     @Autowired
     VRDeviceConnectivityServiceImpl cService;
 
-
     @Autowired
     VRDeviceInitServiceImpl iService;
 

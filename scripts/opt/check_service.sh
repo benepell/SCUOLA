@@ -89,7 +89,7 @@ if [ "$status_websiteKeycloak" != "ok" ]; then
    killall -9 java
    systemctl restart tomcat9
    cd /opt/keycloak/bin/
-./start.sh &
+   ./start.sh &
 fi
 
 echo "$timestamp [info] Stato dei servizi: website=$status_website, database=$status_database, websiteRisorse=$status_websiteRisorse, resourceDirectory=$status_resourceDirectory, websiteKeycloak=$status_websiteKeycloak, operatingSystem=$status_operatingSystem." >> "$logfile"
