@@ -297,3 +297,20 @@
   }
 
 }
+
+.setup_visore_text {
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+  z-index: 100;
+  color: yellowgreen;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.tick {
+  position: absolute;
+  top: 55px;
+  left: 130px;
+  z-index: 1;
+}

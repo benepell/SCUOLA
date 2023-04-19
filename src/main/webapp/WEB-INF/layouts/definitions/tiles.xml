@@ -57,4 +57,10 @@
 		<put-attribute name="titolo"  value="Abilita Visore" />
 		<put-attribute name="content" value="/WEB-INF/view/abilita-visore.jsp" />
 	</definition>
+
+	<definition name="setup-visore" extends="emptyBaseLayout">
+		<put-attribute name="titolo"  value="Setup Visore" />
+		<put-attribute name="content" value="/WEB-INF/view/setup-visore.jsp" />
+	</definition>
+
 </tiles-definitions>
