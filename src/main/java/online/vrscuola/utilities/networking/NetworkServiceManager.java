@@ -44,7 +44,7 @@ public class NetworkServiceManager {
                 Matcher matcher = macPattern.matcher(s);
                 if (matcher.find()) {
                     String macAddress = matcher.group();
-                    if (macAddress.toLowerCase().startsWith(networkFilterOculus)) {
+                    if (macAddress.startsWith(networkFilterOculus)) {
                         macAddresses.add(macAddress);
                     }
                 }

@@ -2,8 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%
-   //String[] setupVisori = (String[])session.getAttribute("setup-visori");
-   String[] setupVisori = new String[]{
+   String[] setupVisori = (String[])session.getAttribute("macs");
+
+   if(setupVisori == null){
+
+   setupVisori = new String[]{
        "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:40:00",
        "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00",
        "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:20:00",
@@ -11,6 +14,7 @@
        "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:30:02",
        "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:03"
    };
+   }
 %>
 
 <div class="jumbotron jumbotron-billboard">
@@ -54,6 +58,13 @@
 <% } %>
 
 <div>
+<a href="scan-visore" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px;" data-toggle="tooltip" data-placement="left" title="Procedi alla ricerca dei nuovi device">
+  <img src="static/images/scroll-up-arrow.png" alt="Vai in alto" width="80" height="80">
+</a>
+</div>
+
+
+<div>
     <a href="#" id="scrollUpArrow" style="position: fixed; bottom: 110px; right: 35px;">
       <img src="static/images/scroll-up-arrow.png" alt="Vai sopra" width="80" height="80">
     </a>
@@ -95,4 +106,10 @@ $(document).ready(function() {
     $('html, body').animate({scrollTop: $(document).height()}, 150);
   });
 });
+    </script>
+
+    <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
     </script>
