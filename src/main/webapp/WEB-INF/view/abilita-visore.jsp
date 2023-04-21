@@ -50,12 +50,22 @@
              <script>
              // Array per memorizzare le altezze del visore
              var altezzaVisore = [];
-              // Chiamata alla funzione per memorizzare l'altezza del visore
-                memorizzaAltezzaVisore();
              </script>
         <% } %>
     </div>
 <% } %>
+
+<div id="demo-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Seleziona un argomento</h2>
+    <ul>
+      <li><a href="#">Argomento demo 1</a></li>
+      <li><a href="#">Argomento demo 2</a></li>
+      <li><a href="#">Argomento demo 3</a></li>
+    </ul>
+  </div>
+</div>
 
 <div>
     <a href="#" id="scrollUpArrow" style="position: fixed; bottom: 110px; right: 35px;">
@@ -71,16 +81,41 @@
 
     <script src="static/js/jquery-3.6.4.min.js"></script>
     <script>
-        // Modifica la funzione di gestione dell'evento click della carta
-        $('.card').click(function () {
+    var showmod = false;
+    $('.hexagon-inset').click(function () {
+           //var card = $(this);
+          // card.toggleClass('flipped');
+          // alert('click bp');
+           showDemoModal(); // Mostra la finestra modale per selezionare i form demo
+           showmod = true;
+       });
+
+    // Modifica la funzione di gestione dell'evento click della carta
+     $('.card').click(function () {
             var card = $(this);
-            card.toggleClass('flipped');
+            if(showmod == false){
+                card.toggleClass('flipped');
+            }
             showLoader(); // Mostra il loader
             setTimeout(function () {
                 hideLoader(); // Nascondi il loader dopo 2 secondi
             }, 2000);
         });
-    </script>
+
+
+    function showDemoModal() {
+        // Mostra la finestra modale
+        var modal = $('#demo-modal');
+        modal.show();
+
+        // Aggiungi un gestore di eventi per la chiusura della finestra modale
+        modal.find('.close-btn').click(function () {
+            showmod = false;
+            modal.hide();
+        });
+    }
+</script>
+
 
     <script>
         // Seleziona il contenitore del caricamento

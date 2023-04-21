@@ -314,3 +314,51 @@
   left: 130px;
   z-index: 1;
 }
+
+/* Stile per il contenuto della finestra modale */
+.modal-content {
+  background-color:#79656580;
+  margin: 15% auto; /* Posiziona il contenuto della finestra modale al centro della pagina */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  max-width: 500px;
+  color: greenyellow;
+}
+
+.modal-content ul{
+    background: #d5e9d2;
+    line-height: 4rem;
+    color: black;
+    border: 5px solid gray;
+    font-size: 24px;
+
+}
+
+/* Stile per il pulsante di chiusura */
+.close-btn {
+    color: #fff;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: gray;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Effetto 3D alla modale quando viene aperta */
+.modal.show {
+  display: flex;
+}
+
+.modal.show .modal-content {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
