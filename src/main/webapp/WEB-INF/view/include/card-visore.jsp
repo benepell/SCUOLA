@@ -6,6 +6,9 @@
                 </div>
                 <div class="visore_small">
                     <img src="static/images/visore_small.png" alt="Visore">
+                     <jsp:include page="lampeggio.jsp">
+                        <jsp:param name="enable" value="true" />
+                     </jsp:include>
                 </div>
                 <div class="visore_text">
                     <span>${param.codice_visore}</span>

@@ -283,12 +283,12 @@
   }
 
   .visore_text {
-    margin-top: 20px;
+    margin-top: 0;
     font-size: 40px;
   }
 
   .visore_small {
-    margin-top: 16px;
+    margin-top: 8px;
   }
 
   .loader {
@@ -301,7 +301,7 @@
 .setup_visore_text {
   position: relative;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 0;
   z-index: 100;
   color: yellowgreen;
   font-size: 40px;

@@ -4,11 +4,11 @@ import online.vrscuola.utilities.networking.NetworkServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SetupVisoreController {
-
     @Autowired
     NetworkServiceManager networkServiceManager;
 
@@ -20,12 +20,16 @@ public class SetupVisoreController {
         return "setup-visore";
     }
 
-    @RequestMapping(value="scan-visore")
-    public String getScanVisoreClasse(Model model)
+    @PostMapping("/setup-visore")
+    public String postScanVisoreClasse(Model model)
     {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
-        model.addAttribute("macs", networkServiceManager.scanOculusNetwork());
-        return  "redirect:/setup-visore";
+        String str = String.join(",", networkServiceManager.scanOculusNetwork());
+
+        model.addAttribute("macs", str );
+        return  "setup-visore";
     }
+
+
 }

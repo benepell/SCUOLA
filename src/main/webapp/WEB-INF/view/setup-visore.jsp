@@ -1,20 +1,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<!-- Form per inviare il valore della classe selezionata -->
+<form id="form" method="post" action="/setup-visore">
+
 <%
-   String[] setupVisori = (String[])session.getAttribute("macs");
+    String[] setupVisori;
 
-   if(setupVisori == null){
+        if (request.getAttribute("macs") != null) {
+            setupVisori = request.getAttribute("macs").toString().split(",");
 
-   setupVisori = new String[]{
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:40:00",
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00",
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:20:00",
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:31:00",
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:30:02",
-       "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:03"
-   };
-   }
+        } else {
+            setupVisori = new String[]{
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:40:00",
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00",
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:20:00",
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:31:00",
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:30:02",
+            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:03"
+            };
+
+        }
 %>
 
 <div class="jumbotron jumbotron-billboard">
@@ -27,9 +33,6 @@
     </div>
 </div>
 
-    <div class="loader-container">
-        <div class="loader"></div>
-    </div>
 
 <% if (setupVisori != null && setupVisori.length > 0) { %>
 
@@ -50,16 +53,14 @@
              <script>
              // Array per memorizzare le altezze del visore
              var altezzaVisore = [];
-              // Chiamata alla funzione per memorizzare l'altezza del visore
-                memorizzaAltezzaVisore();
              </script>
         <% } %>
     </div>
 <% } %>
 
 <div>
-<a href="scan-visore" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px;" data-toggle="tooltip" data-placement="left" title="Procedi alla ricerca dei nuovi device">
-  <img src="static/images/scroll-up-arrow.png" alt="Vai in alto" width="80" height="80">
+<a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla ricerca dei nuovi device">
+  <img src="static/images/scroll-up-arrow.png" alt="Cerca" width="80" height="80">
 </a>
 </div>
 
@@ -74,6 +75,7 @@
       <img src="static/images/scroll-up-arrow.png" alt="Vai sopra" width="80" height="80">
     </a>
 </div>
+</script>
 
 
     <script src="static/js/jquery-3.6.4.min.js"></script>
@@ -112,4 +114,9 @@ $(document).ready(function() {
     $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
+
+          function send() {
+            document.getElementById('form').submit();
+          }
+
     </script>
