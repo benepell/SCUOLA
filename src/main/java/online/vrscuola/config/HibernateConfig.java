@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfig {
@@ -102,7 +100,7 @@ public class HibernateConfig {
     }
 
     private Map<String, ?> getHibernateProperties() {
-        Map<String,String > properties = new HashMap<>();
+        Map<String, String> properties = new HashMap<>();
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
@@ -112,11 +110,13 @@ public class HibernateConfig {
     }
 
     private Map<String, ?> getSecondHibernateProperties() {
-        Map<String,String > properties = new HashMap<>();
+        Map<String, String> properties = new HashMap<>();
         properties.put("hibernate.dialect", env.getProperty("second.hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getProperty("second.hibernate.show_sql"));
         properties.put("hibernate.format_sql", env.getProperty("second.hibernate.format_sql"));
-        properties.put("hibernate.hbm2ddl.auto", env.getProperty("second.hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.hbm2ddl.auto", "none");
+        properties.put("hibernate.connection.read_only", "true");
+
 
         return properties;
     }
