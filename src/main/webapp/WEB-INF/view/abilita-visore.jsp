@@ -1,18 +1,23 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib
-prefix="spring" uri="http://www.springframework.org/tags"%> <% //String[]
-allievi = (String[])session.getAttribute("alunni"); String[] allievi = new
-String[]{ "Mario Rossi", "Luigi Bianchi", "Giuseppe Verdi", "Carlo Rossi",
-"Andrea Bianchi", "Paolo Neri", "Marco Bianco", "Simone Gialli", "Francesco
-Rosso", "Fabio Verdi", "Giovanni Marroni", "Roberto Blu", "Alberto Arancio",
-"Antonio Verde", "Nicola Magenta", "Riccardo Celeste", "Davide Oro", "Federico
-Rosa", "Stefano Viola", "Enrico Rossetti", "Gabriele Indaco", "Massimo Azzurro",
-"Mattia Turchese", "Pietro Malva", "Vincenzo Beige", "Alessio Ciano", "Daniele
-Avorio", "Sergio Cielo", "Giacomo Cobalto", "Emanuele Fucsia", "Leonardo Lilla",
-"Maurizio Malachite", "Raffaele Perla", "Salvatore Smeraldo", "Bruno Ciano",
-"Gianluca Zaffiro", "Oscar Magenta", "Angelo Zolfo", "Carmine Ambra", "Alberto
-Ametista", "Diego Topazio", "Pasquale Turchese", "Angelo Lavanda", "Giancarlo
-Zafferano", "Ivan Ciano", "Domenico Rubino", "Valerio Giallo", "Lorenzo
-Cobalto", "Marcello Bronzo", "Flavio Smeraldo" }; %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<%
+    //String[] allievi = (String[])session.getAttribute("alunni");
+
+    String[] allievi = new String[]{
+        "Mario Rossi", "Luigi Bianchi", "Giuseppe Verdi", "Carlo Rossi",
+        "Andrea Bianchi", "Paolo Neri", "Marco Bianco", "Simone Gialli", "Francesco
+        Rosso", "Fabio Verdi", "Giovanni Marroni", "Roberto Blu", "Alberto Arancio",
+        "Antonio Verde", "Nicola Magenta", "Riccardo Celeste", "Davide Oro", "Federico
+        Rosa", "Stefano Viola", "Enrico Rossetti", "Gabriele Indaco", "Massimo Azzurro",
+        "Mattia Turchese", "Pietro Malva", "Vincenzo Beige", "Alessio Ciano", "Daniele
+        Avorio", "Sergio Cielo", "Giacomo Cobalto", "Emanuele Fucsia", "Leonardo Lilla",
+        "Maurizio Malachite", "Raffaele Perla", "Salvatore Smeraldo", "Bruno Ciano",
+        "Gianluca Zaffiro", "Oscar Magenta", "Angelo Zolfo", "Carmine Ambra", "Alberto
+        Ametista", "Diego Topazio", "Pasquale Turchese", "Angelo Lavanda", "Giancarlo
+        Zafferano", "Ivan Ciano", "Domenico Rubino", "Valerio Giallo", "Lorenzo
+        Cobalto", "Marcello Bronzo", "Flavio Smeraldo" };
+%>
 
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
