@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%
+    int codiceVisore = 0;
     //String[] allievi = (String[])session.getAttribute("alunni");
 
     String[] allievi = new String[]{
@@ -49,7 +50,7 @@
         <jsp:param name="codice_visore" value="<%=i%>" />
       </jsp:include>
     </div>
-    <% } %>
+    <%} %>
   </div>
   <% margin = 325; %>
   <script>
@@ -62,6 +63,7 @@
 
 <div id="demo-modal" class="modal">
   <div class="modal-content">
+  <div class="cerchio" id="cerchio">&nbsp;</div>
     <span class="close-btn">&times;</span>
     <h2>Seleziona un argomento</h2>
     <div class="iframe-container">
@@ -104,6 +106,7 @@
                     </style>
                   </head>
                   <body>
+
                     <ul>
                       <li><a href="#">Argomento demo 1</a></li>
                       <li><a href="#">Argomento demo 2</a></li>
@@ -162,7 +165,7 @@
     //var card = $(this);
     // card.toggleClass('flipped');
     // alert('click bp');
-    showDemoModal(); // Mostra la finestra modale per selezionare i form demo
+    showDemoModal('<%=codiceVisore%>'); // Mostra la finestra modale per selezionare i form demo
     showmod = true;
   });
 
@@ -178,10 +181,16 @@
     }, 2000);
   });
 
-  function showDemoModal() {
+  function showDemoModal(valoreCerchio) {
     // Mostra la finestra modale
     var modal = $("#demo-modal");
     modal.show();
+
+    // Seleziona l'elemento del cerchio
+    var cerchio = document.getElementById('cerchio');
+
+    // Imposta il contenuto dell'elemento con il valore della variabile
+    cerchio.innerHTML = valoreCerchio;
 
     // Aggiungi un gestore di eventi per la chiusura della finestra modale
     modal.find(".close-btn").click(function () {
