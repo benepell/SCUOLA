@@ -1,4 +1,15 @@
   var showmod = false;
+  var codice_visore;
+
+  // set codice_visore
+    function setCodiceVisore(value) {
+        codice_visore = value;
+    }
+
+  // get codice_visore
+    function getCodiceVisore() {
+        return codice_visore;
+    }
 
   function getShowmod() {
     return showmod;
@@ -12,7 +23,7 @@
     //var card = $(this);
     // card.toggleClass('flipped');
     // alert('click bp');
-    showDemoModal('<%=codiceVisore%>'); // Mostra la finestra modale per selezionare i form demo
+    showDemoModal(getCodiceVisore()); // Mostra la finestra modale per selezionare i form demo
     setShowmod(true);
   });
 

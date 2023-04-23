@@ -25,8 +25,7 @@
         </div>
       </div>
       <span class="see-more" style="transform: rotate(0) !important"
-        >${param.codice_visore}</span
-      >
+        >${param.codice_visore}</span>
     </figure>
   </div>
 </section>

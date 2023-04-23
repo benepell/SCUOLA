@@ -42,11 +42,6 @@
   <div class="loader"></div>
 </div>
 
-<%
-  response.setHeader("Content-Security-Policy", "frame-ancestors *");
-%>
-
-
 <% if (allievi != null && allievi.length > 0) { %>
 
 <div class="container">
