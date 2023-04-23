@@ -279,14 +279,12 @@ window.addEventListener("message", function(event) {
     // Aggiungi un'immagine di una barra di avanzamento
     var progressBar = document.createElement("img");
     progressBar.src = "static/images/animazione-loading.gif";
-    // padding 20px
+    progressBar.style.border = "3px solid #C5E1A5";
     progressBar.style.padding = "20px";
     progressBar.style.width = "350px";
     progressBar.style.height = "350px";
-    //
     progressBar.style.borderRadius = "60%";
     progressBar.style.filter = "brightness(75%)";
-    // trasparente
     progressBar.style.opacity = 0.7;
     loading.appendChild(progressBar);
 
