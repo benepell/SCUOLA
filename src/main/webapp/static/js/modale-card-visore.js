@@ -65,9 +65,30 @@ window.addEventListener("message", function(event) {
 
     document.body.appendChild(loading);
 
+        var formData = new FormData();
+          // aggiungi i dati da inviare
+          formData.append('argomento', event.data.argomento);
+          formData.append('visore', event.data.visore);
+          fetch('argomento-visore', {
+            method: 'POST',
+            body: formData
+          }).then(function(response) {
+             if (response !== null && response.status === 200) {
+                 setTimeout(function() {
+                   document.body.removeChild(loading);
+                 }, 3000);
+             } else {  // aggiungi questo blocco else
+                document.body.removeChild(loading);
+                alert("Errore di caricamento ( " + response.status + " )" );
+             }
+
+            // gestisci la risposta della pagina di destinazione qui
+          }).catch(function(error) {
+            document.body.removeChild(loading);
+            alert("Errore di caricamento ( " + response.status + " )" );
+          });
+
     // remove loading
-    setTimeout(function() {
-        document.body.removeChild(loading);
-    }, 5000);
+
   }
 });

@@ -1,5 +1,10 @@
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 
 <%
     int codiceVisore = 0;
@@ -37,6 +42,11 @@
   <div class="loader"></div>
 </div>
 
+<%
+  response.setHeader("Content-Security-Policy", "frame-ancestors *");
+%>
+
+
 <% if (allievi != null && allievi.length > 0) { %>
 
 <div class="container">
@@ -61,9 +71,19 @@
 </div>
 <% } %>
 
-      <jsp:include page="include/modale-abilita-visore.jsp"></jsp:include>
+<%-- Modale per la visualizzazione del visore --%>
+<%
+    Map<String, String> linkMap = new HashMap<String, String>();
+    linkMap.put("classe1", "classeEsempio di link");
+    linkMap.put("classe2", "Google");
+    request.setAttribute("linkMap", linkMap);
+%>
 
-      <jsp:include page="include/scroll-page.jsp"></jsp:include>
+<jsp:include page="include/modale-abilita-visore.jsp">
+      <jsp:param name="linkMap" value="<%= linkMap %>"/>
+</jsp:include>
+
+<jsp:include page="include/scroll-page.jsp"></jsp:include>
 
 <script src="static/js/jquery-3.6.4.min.js"></script>
 <script src="static/js/card-visore.js"></script>

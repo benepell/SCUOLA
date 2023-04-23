@@ -1,3 +1,7 @@
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+
+
 <div id="demo-modal" class="modal">
   <div class="modal-content">
   <div class="cerchio" id="cerchio">&nbsp;</div>
@@ -45,23 +49,21 @@
                   <body>
 
                     <ul>
-                      <li><a href="#" onclick="clicktrasporto()">Argomento demo 1</a></li>
-                      <li><a href="#">Argomento demo 2</a></li>
-                      <li><a href="#">Argomento demo 3</a></li>
-                      <li><a href="#">Argomento demo 4</a></li>
-                      <li><a href="#">Argomento demo 5</a></li>
-                      <li><a href="#">Argomento demo 6</a></li>
-                      <li><a href="#">Argomento demo 7</a></li>
-                      <li><a href="#">Argomento demo 8</a></li>
-                      <li><a href="#">Argomento demo 9</a></li>
+                      <%
+                        Map<String, String> linkMap = (Map<String, String>) request.getAttribute("linkMap");
+                        for (Map.Entry<String, String> entry : linkMap.entrySet()) { %>
+                        <li><a onclick="clicktrasporto(&apos;<%= entry.getKey() %>&apos;,&apos;<%= entry.getValue() %>&apos;)" href="<%= entry.getKey() %>"><%= entry.getValue() %></a></li>
+                      <% } %>
                     </ul>
 
                     <script>
-                       function clicktrasporto() {
+                       function clicktrasporto(arg, vis) {
                          var message = {
-                           action: "linkClicked"
+                           action: "linkClicked",
+                           argomento: arg,
+                           visore: vis
                          };
-                         parent.postMessage(message, "http://localhost:8080");
+                         parent.postMessage(message, "*");
                        }
                     </script>
                   </body>
