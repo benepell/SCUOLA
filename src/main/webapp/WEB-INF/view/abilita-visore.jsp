@@ -265,14 +265,12 @@ window.addEventListener("message", function(event) {
     loading.style.justifyContent = "center";
     loading.style.alignItems = "center";
 
-    // Aggiungi il testo "Trasferimento in corso..."
     var message = document.createElement("p");
     message.style.color = "yellow";
     message.style.fontFamily = "Arial, sans-serif";
     message.style.fontSize = "50px";
     message.style.textAlign = "left";
     message.textContent = "Caricamento in corso...";
-    // inserisci il testo a capo
 
     loading.appendChild(message);
 
@@ -298,4 +296,3 @@ window.addEventListener("message", function(event) {
   }
 });
 </script>
-
