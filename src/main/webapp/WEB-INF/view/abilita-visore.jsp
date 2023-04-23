@@ -108,7 +108,7 @@
                   <body>
 
                     <ul>
-                      <li><a href="#">Argomento demo 1</a></li>
+                      <li><a href="#" onclick="clicktrasporto()">Argomento demo 1</a></li>
                       <li><a href="#">Argomento demo 2</a></li>
                       <li><a href="#">Argomento demo 3</a></li>
                       <li><a href="#">Argomento demo 4</a></li>
@@ -118,6 +118,15 @@
                       <li><a href="#">Argomento demo 8</a></li>
                       <li><a href="#">Argomento demo 9</a></li>
                     </ul>
+
+                    <script>
+                       function clicktrasporto() {
+                         var message = {
+                           action: "linkClicked"
+                         };
+                         parent.postMessage(message, "http://localhost:8080");
+                       }
+                    </script>
                   </body>
                 </html>'></iframe>
         </div>
@@ -184,6 +193,10 @@
   function showDemoModal(valoreCerchio) {
     // Mostra la finestra modale
     var modal = $("#demo-modal");
+    // set display modal
+    modal.css("display", "block");
+    // reload iframe
+    modal.find("iframe").attr("srcdoc", modal.find("iframe").attr("srcdoc"));
     modal.show();
 
     // Seleziona l'elemento del cerchio
@@ -229,3 +242,61 @@
     });
   });
 </script>
+
+<script>
+// Aggiungi un listener per ricevere i messaggi dall'iframe
+window.addEventListener("message", function(event) {
+
+  if (event.data.action === "linkClicked") {
+    var modal = document.getElementById("demo-modal");
+    modal.style.display = "none";
+    showmod = false;
+
+    var loading = document.createElement("div");
+
+    // Aggiungi la finestra di caricamento
+    loading.style.position = "fixed";
+    loading.style.top = 0;
+    loading.style.left = 0;
+    loading.style.width = "100%";
+    loading.style.height = "100%";
+    loading.style.background = "rgba(0, 0, 0, 0.5)";
+    loading.style.display = "flex";
+    loading.style.justifyContent = "center";
+    loading.style.alignItems = "center";
+
+    // Aggiungi il testo "Trasferimento in corso..."
+    var message = document.createElement("p");
+    message.style.color = "yellow";
+    message.style.fontFamily = "Arial, sans-serif";
+    message.style.fontSize = "50px";
+    message.style.textAlign = "left";
+    message.textContent = "Caricamento in corso... ";
+    // inserisci il testo a capo
+
+    loading.appendChild(message);
+
+    // Aggiungi un'immagine di una barra di avanzamento
+    var progressBar = document.createElement("img");
+    progressBar.src = "static/images/animazione-loading.gif";
+    // padding 20px
+    progressBar.style.padding = "20px";
+    progressBar.style.width = "350px";
+    progressBar.style.height = "350px";
+    //
+    progressBar.style.borderRadius = "60%";
+    progressBar.style.filter = "brightness(75%)";
+    // trasparente
+    progressBar.style.opacity = 0.7;
+    loading.appendChild(progressBar);
+
+    document.body.appendChild(loading);
+
+    // remove loading
+    setTimeout(function() {
+        document.body.removeChild(loading);
+    }, 5000);
+  }
+});
+</script>
+

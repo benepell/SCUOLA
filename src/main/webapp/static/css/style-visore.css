@@ -391,3 +391,18 @@ border: 3px solid;
     left: 435px;
     top: 10px;
 }
+
+.cerchio.teletrasporto {
+  animation: teletrasporto 0.5s ease-in-out;
+}
+
+@keyframes teletrasporto {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
