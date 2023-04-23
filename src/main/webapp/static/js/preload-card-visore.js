@@ -1,4 +1,4 @@
-  // Seleziona il contenitore del caricamento
+ // Seleziona il contenitore del caricamento
   var loaderContainer = document.querySelector(".loader-container");
 
   // Mostra la finestra modale del caricamento
