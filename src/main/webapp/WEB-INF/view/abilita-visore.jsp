@@ -271,7 +271,7 @@ window.addEventListener("message", function(event) {
     message.style.fontFamily = "Arial, sans-serif";
     message.style.fontSize = "50px";
     message.style.textAlign = "left";
-    message.textContent = "Caricamento in corso... ";
+    message.textContent = "Caricamento in corso...";
     // inserisci il testo a capo
 
     loading.appendChild(message);
@@ -281,6 +281,7 @@ window.addEventListener("message", function(event) {
     progressBar.src = "static/images/animazione-loading.gif";
     progressBar.style.border = "3px solid #C5E1A5";
     progressBar.style.padding = "20px";
+    progressBar.style.margin = "16px";
     progressBar.style.width = "350px";
     progressBar.style.height = "350px";
     progressBar.style.borderRadius = "60%";
