@@ -52,14 +52,15 @@
                       <%
                         Map<String, String> linkMap = (Map<String, String>) request.getAttribute("linkMap");
                         for (Map.Entry<String, String> entry : linkMap.entrySet()) { %>
-                        <li><a onclick="clicktrasporto(&apos;<%= entry.getValue() %>&apos;)" href="<%= entry.getKey() %>"><%= entry.getValue() %></a></li>
+                        <li><a onclick="clicktrasporto(&apos;<%= entry.getKey() %>&apos;,&apos;<%= entry.getValue() %>&apos;)" href="<%= entry.getKey() %>"><%= entry.getValue() %></a></li>
                       <% } %>
                     </ul>
 
                     <script>
-                       function clicktrasporto(arg, vis) {
+                       function clicktrasporto(id_arg,arg) {
                          var message = {
                            action: "linkClicked",
+                           id_argomento: id_arg,
                            argomento: arg
                          };
                          parent.postMessage(message, "*");

@@ -19,7 +19,8 @@ public class VisoreController {
     }
 
     @PostMapping(value = "argomento-visore")
-    public String argomentoVisoreSelection(@RequestParam("argomento") String argomento, @RequestParam("visore") String visore, HttpSession session) {
+    public String argomentoVisoreSelection(@RequestParam("argomento") String argomento, @RequestParam("id_argomento") String ìd_argomento, @RequestParam("visore") String visore, HttpSession session) {
+        session.setAttribute("id_argomento", ìd_argomento);
         session.setAttribute("argomento", argomento);
         session.setAttribute("visore", visore);
         return "abilita-visore";

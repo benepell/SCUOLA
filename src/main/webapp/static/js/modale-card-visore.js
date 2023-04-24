@@ -68,6 +68,7 @@ window.addEventListener("message", function(event) {
         var formData = new FormData();
           // aggiungi i dati da inviare
           formData.append('argomento', event.data.argomento);
+          formData.append('id_argomento', event.data.id_argomento);
           formData.append('visore', getCodiceVisore());
           fetch('argomento-visore', {
             method: 'POST',
