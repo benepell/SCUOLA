@@ -21,6 +21,9 @@
 
  $("figure").click(function() {
    var codiceVisore = $(this).find('.visore_text span').text();
+   if (codiceVisore == '') {
+       codiceVisore = $(this).find('.valore').text();
+   }
    setCodiceVisore(codiceVisore);
    console.log(codiceVisore);
  });
