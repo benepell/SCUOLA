@@ -19,13 +19,21 @@
     showmod = value;
   }
 
+ $("figure").click(function() {
+   var codiceVisore = $(this).find('.visore_text span').text();
+   setCodiceVisore(codiceVisore);
+   console.log(codiceVisore);
+ });
+
+
   $(".hexagon-inset").click(function () {
-    showDemoModal(getCodiceVisore()); // Mostra la finestra modale per selezionare i form demo
     setShowmod(true);
+    showDemoModal(getCodiceVisore());
   });
 
   // Modifica la funzione di gestione dell'evento click della carta
   $(".card").click(function () {
+
     var card = $(this);
     if (getShowmod() == false) {
       card.toggleClass("flipped");

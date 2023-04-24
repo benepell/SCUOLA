@@ -24,7 +24,7 @@
           <img src="static/images/profile.png" />
         </div>
       </div>
-      <span class="see-more" style="transform: rotate(0) !important"
+      <span class="see-more valore" style="transform: rotate(0) !important"
         >${param.codice_visore}</span>
     </figure>
   </div>
