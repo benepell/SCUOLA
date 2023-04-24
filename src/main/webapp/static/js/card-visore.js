@@ -27,8 +27,7 @@
    setCodiceVisore(codiceVisore);
  });
 
-
-  $(".hexagon-inset").click(function () {
+ $(".hexagon-inset").click(function () {
     setShowmod(true);
     showDemoModal(getCodiceVisore());
   });

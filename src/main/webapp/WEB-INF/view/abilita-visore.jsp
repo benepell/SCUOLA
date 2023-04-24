@@ -66,13 +66,22 @@
 </div>
 <% } %>
 
+<script src="static/js/jquery-3.6.4.min.js"></script>
+<script src="static/js/card-visore.js"></script>
+<script src="static/js/modale-card-visore.js"></script>
+<script src="static/js/preload-card-visore.js"></script>
+<script src="static/js/scroll-card-visore.js"></script>
+
+
 <%-- Modale per la visualizzazione del visore --%>
 <%
     Map<String, String> linkMap = new HashMap<String, String>();
-    linkMap.put("classe1", "classeEsempio di link");
-    linkMap.put("classe2", "Google");
+    linkMap.put("1","classe1");
+    linkMap.put("2","classe2");
     request.setAttribute("linkMap", linkMap);
+
 %>
+
 
 <jsp:include page="include/modale-abilita-visore.jsp">
       <jsp:param name="linkMap" value="<%= linkMap %>"/>
@@ -80,8 +89,3 @@
 
 <jsp:include page="include/scroll-page.jsp"></jsp:include>
 
-<script src="static/js/jquery-3.6.4.min.js"></script>
-<script src="static/js/card-visore.js"></script>
-<script src="static/js/modale-card-visore.js"></script>
-<script src="static/js/preload-card-visore.js"></script>
-<script src="static/js/scroll-card-visore.js"></script>
