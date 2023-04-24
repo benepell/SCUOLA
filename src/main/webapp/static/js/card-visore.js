@@ -25,7 +25,6 @@
        codiceVisore = $(this).find('.valore').text();
    }
    setCodiceVisore(codiceVisore);
-   console.log(codiceVisore);
  });
 
 
