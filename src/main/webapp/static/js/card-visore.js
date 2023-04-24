@@ -20,9 +20,6 @@
   }
 
   $(".hexagon-inset").click(function () {
-    //var card = $(this);
-    // card.toggleClass('flipped');
-    // alert('click bp');
     showDemoModal(getCodiceVisore()); // Mostra la finestra modale per selezionare i form demo
     setShowmod(true);
   });
