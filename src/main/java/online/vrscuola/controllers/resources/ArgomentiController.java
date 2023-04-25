@@ -24,7 +24,7 @@ public class ArgomentiController {
             String basePath = Constants.PATH_RESOURCE_DIR;
             List<String> argomenti = new ArrayList<>();
             File argomentiDirectory = new File(basePath, "ARGOMENTI");
-            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().matches("^aula\\d+$"))) {
+            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory()&& !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
                 argomenti.add(argomentoDirectory.getName());
             }
             if (argomentiDirectory.exists() && argomentiDirectory.isDirectory()) {
@@ -66,7 +66,9 @@ public class ArgomentiController {
         File[] argomentiDirectories = directory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-"));
         if (argomentiDirectories != null) {
             for (File argomentoDirectory : argomentiDirectories) {
-                argomenti.add(argomentoDirectory.getName());
+                if (argomentoDirectory.isDirectory() && !argomentoDirectory.getName().startsWith("-")) {
+                    argomenti.add(argomentoDirectory.getName());
+                }
             }
         }
         return argomenti;
