@@ -31,7 +31,8 @@ public class ArgomentiDirService {
                     }
                 }
             }
-            return null;
+
+            return argomenti;
     }
 
     private File findDirectory(File directory, String name) {
