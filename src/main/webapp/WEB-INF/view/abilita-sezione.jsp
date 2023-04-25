@@ -12,7 +12,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
 </div>
 
 <!-- Form per inviare il valore della classe selezionata -->
-<form id="form" method="post" action="/sezione">
+<form id="form" method="post" action="/api/sezione">
   <input
     type="hidden"
     id="classSelected"

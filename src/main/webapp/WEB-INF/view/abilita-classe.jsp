@@ -11,7 +11,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   </div>
 </div>
 
-<form id="form" method="post" action="/classe">
+<form id="form" method="post" action="/api/classe">
   <input
     type="hidden"
     id="classSelected"
