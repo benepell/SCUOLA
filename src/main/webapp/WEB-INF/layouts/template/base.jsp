@@ -23,66 +23,17 @@
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 
-
     <title><tiles:insertAttribute name="titolo" /></title>
   </head>
+
   <body>
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-     <a class="navbar-brand" href="#">Vr Scuola</a>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-     </button>
-     <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <a class="nav-link" href="#">
-                     Home
-                 </a>
-             </li>
-             <li class="nav-item">
-                 <a class="nav-link" href="#">
-                     Abilitazione Visori
-                 </a>
-             </li>
-             <li class="nav-item">
-                 <a class="nav-link" href="#">
-                     Gestione Contenuti Multimediali
-                 </a>
-             </li>
-             <li class="nav-item">
-                 <a class="nav-link" href="#">
-                     Configurazione Visori
-                 </a>
-             </li>
-             <li class="nav-item">
-                 <a class="nav-link" href="#">
-                     Assistenza Remota
-                 </a>
-             </li>
-         </ul>
-         <form class="form-inline my-2 my-lg-0 mr-3">
-             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
-         </form>
-        <div class="dropdown">
-          <button class="btn btn-custom dropdown-toggle thumbnail" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <img class="img-circle" src="<c:url value='/static/images/offline_user.png' />">
-            <span class="caret"></span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="dropdownMenu1">
-            <a class="dropdown-item" href="/api/homepage">Accedi</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item disabled" href="/api/logout">Log out</a>
-          </div>
-        </div>
-         </div>
-     </div>
- </nav>
+
+   <div class="content" style="background-image: url(&quot;/static/svg/background.svg&quot;);">
 
      <tiles:insertAttribute name="content" /> 
      
      <tiles:insertAttribute name="footer" />  
-      
+   </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="<c:url value="/static/js/jquery-3.2.1.min.js" />"></script>

@@ -1,14 +1,19 @@
 package online.vrscuola.controllers.base;
 
+import online.vrscuola.services.ArgomentiDirService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class VisoreController {
+
+
 
     @PostMapping(value = "/visore")
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected,@RequestParam("visorSelected") String visorSelected, HttpSession session) {

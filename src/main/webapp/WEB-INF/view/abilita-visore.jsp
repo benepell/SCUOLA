@@ -1,10 +1,10 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
-
 
 <%
     int codiceVisore = 0;
@@ -75,13 +75,21 @@
 
 <%-- Modale per la visualizzazione del visore --%>
 <%
-    Map<String, String> linkMap = new HashMap<String, String>();
-    linkMap.put("1","classe1");
-    linkMap.put("2","classe2");
+    List<String> linkList = (List<String>) session.getAttribute("argoments");
+
+    if(linkList == null) {
+        linkList = new ArrayList<>();
+    }
+    Map<String, String> linkMap = new HashMap<>();
+    int i = 1;
+
+    for (String link : linkList) {
+        linkMap.put(String.valueOf(i), link);
+        i++;
+    }
+
     request.setAttribute("linkMap", linkMap);
-
 %>
-
 
 <jsp:include page="include/modale-abilita-visore.jsp">
       <jsp:param name="linkMap" value="<%= linkMap %>"/>

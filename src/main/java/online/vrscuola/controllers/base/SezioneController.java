@@ -1,5 +1,6 @@
 package online.vrscuola.controllers.base;
 
+import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.KeycloakUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,14 @@ public class SezioneController {
 
     @Autowired
     KeycloakUserService keycloakUserService;
-
+    @Autowired
+    private ArgomentiDirService argomentiDirService;
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
         session.setAttribute("sectionSelected", sectionSelected);
         session.setAttribute("alunni",keycloakUserService.filterSections(classSelected,sectionSelected));
+        session.setAttribute("argoments", argomentiDirService.getArgomentiAll("aula01",classSelected,sectionSelected));
         return "redirect:/abilita-visore";
     }
 

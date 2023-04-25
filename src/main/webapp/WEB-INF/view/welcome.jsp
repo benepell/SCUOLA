@@ -1,10 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="jumbotron jumbotron-billboard">
-  <div class="img"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-6" style="margin-top: 20px !important;">
               <h2>${intestazione}</h2>
                 <p>
                     ${saluti}
@@ -13,4 +11,3 @@
             </div>
         </div>
     </div>
-</div>
