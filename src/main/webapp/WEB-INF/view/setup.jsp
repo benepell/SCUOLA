@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-  <form action="/api/update-env" method="POST">
+  <form action="/update-env" method="POST">
     <div class="card-container sortable">
       <div class="card">
         <div class="card-body">
@@ -250,7 +250,7 @@
 </script>
 <script>
 const basePath = '<%= request.getContextPath() %>'; // Recupera la base URL dalla richiesta HTTP
-const apiEndpoint = `${basePath}/api/basesetup`; // Concatena la base URL con l'endpoint dell'API
+const apiEndpoint = `${basePath}/basesetup`; // Concatena la base URL con l'endpoint dell'API
 
 fetch(apiEndpoint)
     .then(response => response.json()) // Parse la risposta HTTP come JSON

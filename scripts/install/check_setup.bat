@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 set /a max_attempts=240
 set /a attempt=0
-set "url=http://localhost:5555/api/setup-state"
+set "url=http://localhost:5555/setup-state"
 
 :loop
 set /a attempt+=1

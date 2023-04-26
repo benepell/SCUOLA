@@ -171,7 +171,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>api</finalName>
+	<finalName>ROOT</finalName>
 	 	<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

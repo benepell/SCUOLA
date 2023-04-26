@@ -1,6 +1,6 @@
 @echo off
 
-set url=http://localhost:5555/api/setup
+set url=http://localhost:5555/setup
 set timeout=1200
 
 setlocal enableDelayedExpansion

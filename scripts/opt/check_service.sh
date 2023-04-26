@@ -2,7 +2,7 @@
 
 # Definisci il formato del timestamp
 timestamp=$(date +"[%Y-%m-%d %T]")
-baseurl=https://scuola.vrscuola.online/api/health
+baseurl=https://scuola.vrscuola.online/health
 
 # Definisci il nome del file di log
 logfile="/opt/script/log/$(date +'%Y_%m_%d')_service.log"
@@ -21,8 +21,8 @@ if [[ $hour -eq 1 || $hour -eq 2 || $hour -eq 3 || $hour -eq 4 || $hour -eq 5 ]]
   exit 0
 fi
 
-# Controlla se l'applicazione è presente nella directory /var/lib/tomcat9/webapps/api/
-if [[ ! -e /var/lib/tomcat9/webapps/api/ ]]; then
+# Controlla se l'applicazione è presente nella directory /var/lib/tomcat9/webapps/ROOT/
+if [[ ! -e /var/lib/tomcat9/webapps/ROOT/ ]]; then
   echo "$timestamp [error] L'applicazione non è presente nella directory /var/lib/tomcat9/webapps/api/. Eseguo il comando per riavviare il servizio Tomcat9 e attendo 3 minuti prima di riavviare lo script." >> "$logfile"
   exit 1
 fi

@@ -15,7 +15,7 @@ public class HealthCheckScheduleController {
    // @Scheduled(fixedDelay = Constants.SCHEDULE_HEALTH) // ogni ora
     public void checkHealth() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = healthDatasourceWebsite.concat("/api/health");
+        String url = healthDatasourceWebsite.concat("/health");
 
         try {
             String response = restTemplate.getForObject(url, String.class);

@@ -12,7 +12,7 @@
         CODICE DI REGISTRAZIONE SCUOLA: ${config.codiceDiRegistrazioneScuola}
       </div>
       <div class="form-group">
-        Si prega di <a href="/api/setup">riprovare</a> o contattare assistenza
+        Si prega di <a href="/setup">riprovare</a> o contattare assistenza
       </div>
     </div>
   </div>
