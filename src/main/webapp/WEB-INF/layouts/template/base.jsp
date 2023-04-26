@@ -28,7 +28,7 @@
 
   <body>
 
-   <div class="content" style="background-image: url(&quot;/api/static/svg/background.svg&quot;);">
+   <div class="content" style="background-image: url(&quot;/static/svg/background.svg&quot;);">
 
      <tiles:insertAttribute name="content" /> 
      

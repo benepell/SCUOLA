@@ -47,7 +47,7 @@ a6_HTTPS_KEY_STORE_PASSWORD="$CERT_PASSWORD"
 # Definire i parametri [keycloak.generate_client_id.sh] ID: 7
 a7_KEYCLOAK_URL="$BASE_KEYCLOAK/auth"
 a7_REALM_NAME="scuola"
-a7_CLIENT_ID="scuola-secondaria-primo-grado"
+a7_CLIENT_ID="client"
 a7_NEW_CLIENT_ID="$KEYCLOAK_CLIENT_ID"
 a7_ADMIN_USERNAME="$KEYCLOAK_ADMIN_USERNAME"
 a7_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
@@ -55,7 +55,7 @@ a7_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
 # Definire i parametri [keycloak.generate_secret_id.sh] ID: 8
 a8_KEYCLOAK_URL="$BASE_KEYCLOAK/auth"
 a8_REALM_NAME="scuola"
-a8_CLIENT_ID="scuola-secondaria-primo-grado" # inserire il client ID del nuovo client
+a8_CLIENT_ID="client" # inserire il client ID del nuovo client
 a8_ADMIN_USERNAME="$KEYCLOAK_ADMIN_USERNAME"
 a8_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
 
@@ -131,7 +131,7 @@ a14_TOMCAT_WEBAPPS_DIR="/var/lib/tomcat9/webapps"
 a14_APP_NAME="api"
 a14_KEYCLOAK_REALM="scuola"
 a14_KEYCLOAK_AUTH_SERVER_URL="$BASE_KEYCLOAK/auth"
-a14_KEYCLOAK_RESOURCE="scuola-secondaria-primo-grado"
+a14_KEYCLOAK_RESOURCE="client"
 a14_KEYCLOAK_CREDENTIALS_SECRET="MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A"
 a14_KEYCLOAK_USE_RESOURCE_ROLE_MAPPINGS="false"
 a14_SCHOOL_BRIDGE_URL="$BASE_SCUOLA"

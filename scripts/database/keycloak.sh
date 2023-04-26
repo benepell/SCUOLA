@@ -33,8 +33,8 @@ mysql -u "${a2_USER}" -p"${a2_PASSWORD}" -e "GRANT SELECT ON ${a2_DB_NAME}.* TO 
 # Aggiornamento dei privilegi
 mysql -u "${a2_USER}" -p"${a2_PASSWORD}" -e "FLUSH PRIVILEGES;"
 
-# sostituisci scuola-secondaria-primo-grado con valore da scuola TODO sospeso per ora
-#sed -i 's/scuola-secondaria-primo-grado/$SQL_SCUOLA/g' data-keycloak.sql
+# sostituisci client con valore da scuola TODO sospeso per ora
+#sed -i 's/client/$SQL_SCUOLA/g' data-keycloak.sql
 
 # importa database 
 mysql -u "${a2_USER}" -p"${a2_PASSWORD}" "${a2_DB_NAME}"  < data-keycloak.sql
