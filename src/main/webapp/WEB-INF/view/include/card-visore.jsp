@@ -11,7 +11,7 @@
         </jsp:include>
       </div>
       <div class="visore_text">
-        <span>${param.codice_visore}</span>
+        <span>-</span>
       </div>
       <span class="see-more"><i class="fa fa-repeat"></i></span>
     </figure>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <span class="see-more valore" style="transform: rotate(0) !important"
-        >${param.codice_visore}</span>
+        >&nbsp;</span>
     </figure>
   </div>
 </section>

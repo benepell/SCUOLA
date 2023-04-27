@@ -20,15 +20,37 @@
   }
 
  $("figure").click(function() {
-   var codiceVisore = $(this).find('.visore_text span').text();
-   if (codiceVisore == '') {
-       codiceVisore = $(this).find('.valore').text();
+    var $figure = $(this);
+    var codiceVisore = $figure.find('.visore_text span').text();
+    var nomeAllievo = $figure.find(".card-content h1").text().toLowerCase();
+   if (codiceVisore == '' && nomeAllievo != '') {
+        // sono qui quando clicco per chiudere esagono
+        nomeAllievo = nomeAllievo.replace(" attivo", "");
+       $.post("/visore-remove", { allievo: nomeAllievo }, function(data) {
+           setCodiceVisore(data.visore);
+
+       });
+   } else {
+           // sono qui quando clicco per aprire esagono
+          var nomeAllievo = $figure.find(".card-content a").text().toLowerCase();
+
+           $.post("/visore-selection", { allievo: nomeAllievo }, function(data) {
+             setCodiceVisore(data.visore);
+             $('figure.hexagon').each(function() {
+               var $figure = $(this);
+               var $cardContent = $figure.find('.card-content');
+               if (($cardContent.find('h1').text().toLowerCase())  === data.allievo.toLowerCase() + " attivo") {
+                 $figure.find('.see-more.valore').text(data.visore);
+               }
+             });
+           });
    }
-   setCodiceVisore(codiceVisore);
+
  });
 
  $(".hexagon-inset").click(function () {
     setShowmod(true);
+    alert(getCodiceVisore());
     showDemoModal(getCodiceVisore());
   });
 

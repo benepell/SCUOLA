@@ -1,26 +1,65 @@
 package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
+import online.vrscuola.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class VisoreController {
 
+    @Autowired
+    StudentService studentService;
 
+    @PostMapping(value = "/visore-selection")
+    @ResponseBody
+    public Map<String, String> handleVisoreSelection(@RequestParam("allievo") String allievo, HttpSession session) {
+        studentService.setVisore(allievo);
+        Optional<String> res = studentService.getVisore(allievo);
 
-    @PostMapping(value = "/visore")
-    public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected,@RequestParam("visorSelected") String visorSelected, HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+        if (res.isPresent()) {
+            response.put("visore", res.get());
+            response.put("allievo", allievo);
+
+        } else {
+            response.put("visore", "-1");
+        }
+
+        return response;
+    }
+
+    @PostMapping(value = "/visore-remove")
+    @ResponseBody
+    public Map<String, String> handleVisoreRemove(@RequestParam("allievo") String allievo, HttpSession session) {
+        studentService.freeVisore(allievo);
+        Optional<String> res = studentService.getVisore(allievo);
+
+        Map<String, String> response = new HashMap<>();
+        if (res.isPresent()) {
+            response.put("visore", res.get());
+            response.put("allievo", allievo);
+        } else {
+            response.put("visore", "-1");
+        }
+
+        return response;
+    }
+
+    @PostMapping(value = "/allievo-visore")
+    public String handleAllievoVisoreSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected, @RequestParam("visorSelected") String visorSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
         session.setAttribute("sectionSelected", sectionSelected);
         session.setAttribute("visorSelected", visorSelected);
-        return "redirect:/abilita-visore";
+
+        return "abilita-visore";
     }
 
     @PostMapping(value = "argomento-visore")

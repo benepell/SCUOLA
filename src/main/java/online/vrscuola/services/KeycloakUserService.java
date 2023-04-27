@@ -59,13 +59,13 @@ public class KeycloakUserService {
                             }
                         } else if (classe != null && sezione == null) {
                             if (cl.equals(classe)) {
-                                user.put("sezione", sez);
+                                user.put("sezione", sez.toLowerCase());
                                 if (!users.contains(user)) {
                                     users.add(user);
                                 }
                             }
                         } else if (classe != null && sezione != null) {
-                            if (cl.equals(classe) && sez.equals(sezione)) {
+                            if (cl.equals(classe) && sez.equals(sezione.toLowerCase())) {
                                 user.put("username", username);
                                 user.put("nome", nome);
                                 user.put("cognome", cognome);

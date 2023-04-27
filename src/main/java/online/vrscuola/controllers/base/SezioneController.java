@@ -22,7 +22,8 @@ public class SezioneController {
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
         session.setAttribute("sectionSelected", sectionSelected);
-        session.setAttribute("alunni",keycloakUserService.filterSections(classSelected,sectionSelected));
+        String[] alunni = keycloakUserService.filterSections(classSelected,sectionSelected);
+        session.setAttribute("alunni",alunni);
         session.setAttribute("argoments", argomentiDirService.getArgomentiAll("aula01",classSelected,sectionSelected));
         return "redirect:/abilita-visore";
     }
