@@ -27,7 +27,6 @@
         // sono qui quando clicco per chiudere esagono
         nomeAllievo = nomeAllievo.replace(" attivo", "");
        $.post("/visore-remove", { allievo: nomeAllievo }, function(data) {
-        //   setCodiceVisore(data.visore);
 
        });
    } else {
