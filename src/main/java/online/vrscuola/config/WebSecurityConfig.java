@@ -42,6 +42,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
                 .antMatchers("/setup-visore").permitAll()
                 .antMatchers("/scan-visore").permitAll()
+                .antMatchers("/sezione").permitAll()
 
                 .antMatchers("/vpnconnect").hasRole("admins")
                 .antMatchers("/vpndisconnect").hasRole("admins")
