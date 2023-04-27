@@ -23,11 +23,11 @@
     var $figure = $(this);
     var codiceVisore = $figure.find('.visore_text span').text();
     var nomeAllievo = $figure.find(".card-content h1").text().toLowerCase();
-   if (codiceVisore == '' && nomeAllievo != '') {
+   if (nomeAllievo != '' && getShowmod() == false) {
         // sono qui quando clicco per chiudere esagono
         nomeAllievo = nomeAllievo.replace(" attivo", "");
        $.post("/visore-remove", { allievo: nomeAllievo }, function(data) {
-           setCodiceVisore(data.visore);
+        //   setCodiceVisore(data.visore);
 
        });
    } else {
@@ -50,7 +50,6 @@
 
  $(".hexagon-inset").click(function () {
     setShowmod(true);
-    alert(getCodiceVisore());
     showDemoModal(getCodiceVisore());
   });
 
