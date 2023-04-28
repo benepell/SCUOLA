@@ -46,6 +46,9 @@ public class VisoreController {
         if (res.isPresent()) {
             response.put("visore", res.get());
             response.put("allievo", allievo);
+            response.put("num_visore", studentService.getNumVisori());
+            response.put("num_visore_disp", studentService.getNumVisoriLiberi());
+            response.put("num_visore_occup", studentService.getNumVisoriOccupati());
         } else {
             response.put("visore", "-1");
         }

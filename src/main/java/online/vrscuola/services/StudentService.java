@@ -41,4 +41,16 @@ public class StudentService {
     public Optional<String> getVisore(String allievo) {
         return Optional.ofNullable(visoreAllievo.get(allievo));
     }
+
+    public String getNumVisori(){
+        return String.valueOf(visori.size());
+    }
+
+    public String getNumVisoriOccupati(){
+        return String.valueOf(visoreAllievo.size());
+    }
+
+    public String getNumVisoriLiberi(){
+        return String.valueOf(visori.size()-visoreAllievo.size());
+    }
 }

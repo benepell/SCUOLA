@@ -86,7 +86,7 @@ REM Rimuovi l'installazione utilizzando l'IdentifyingNumber
 if defined ID (
     set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
     echo %current_time% - Disinstallazione di Oracle VM VirtualBox in corso... >> %log_file%
-   rem msiexec /x %ID% /quiet
+    msiexec /x %ID% /quiet
 
     set "current_time=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
     echo %current_time% - Disinstallazione completata. >> %log_file%
