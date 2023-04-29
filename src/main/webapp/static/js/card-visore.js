@@ -19,7 +19,6 @@ function setShowmod(value) {
   showmod = value;
 }
 
-
 $("figure.hexagon.front").click(function() {
   var input_id = $(this).parent().parent().find('input[type=hidden]').attr('id');
   var index = input_id.split("-")[1];
@@ -67,8 +66,6 @@ $(".hexagon-inset").click(function () {
    showDemoModal($('#' + "codicevisore" + "-" + inset_index).val());
 });
 
-
-
 // Modifica la funzione di gestione dell'evento click della carta
 $(".card").click(function () {
   var card = $(this);
@@ -80,5 +77,3 @@ $(".card").click(function () {
     hideLoader(); // Nascondi il loader dopo 2 secondi
   }, 2000);
 });
-
-

@@ -89,7 +89,5 @@ window.addEventListener("message", function(event) {
             alert("Errore di caricamento ( " + response.status + " )" );
           });
 
-    // remove loading
-
   }
 });
