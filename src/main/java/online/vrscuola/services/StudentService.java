@@ -43,14 +43,14 @@ public class StudentService {
     }
 
     public String getNumVisori(){
-        return String.valueOf(visori.size());
+        return visori != null ?  String.valueOf(visori.size()) : "";
     }
 
     public String getNumVisoriOccupati(){
-        return String.valueOf(visoreAllievo.size());
+        return visoreAllievo != null ? String.valueOf(visoreAllievo.size()) : "";
     }
 
     public String getNumVisoriLiberi(){
-        return String.valueOf(visori.size()-visoreAllievo.size());
+        return visori != null && visoreAllievo != null ? String.valueOf(visori.size()-visoreAllievo.size()) : "";
     }
 }

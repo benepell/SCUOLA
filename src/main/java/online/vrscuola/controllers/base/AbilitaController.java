@@ -45,8 +45,9 @@ public class AbilitaController
 
         String[] alu = (String[])session.getAttribute("alunni");
         String[] vis = new String[]{
-                "1", "2", "3", "4",
-                "5", "6", "7", "8"
+                "1", "2"
+                // , "3", "4",
+                //"5", "6", "7", "8"
         };
         studentService.init(Arrays.asList(alu),Arrays.asList(vis));
 
