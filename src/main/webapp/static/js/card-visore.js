@@ -46,10 +46,10 @@ $("figure").click(function () {
           $figure.find('.see-more.valore').text(data.visore);
         }
 
-        if (data.visore === '1'){
+        if (data.visore === data.primo_visore){
             setTimeout(function () {
                 showDemoModal(getCodiceVisore());
-            }, 2000);
+            }, 2300);
         }
         
       });

@@ -53,4 +53,9 @@ public class StudentService {
     public String getNumVisoriLiberi(){
         return visori != null && visoreAllievo != null ? String.valueOf(visori.size()-visoreAllievo.size()) : "";
     }
+
+    // primo visore
+    public String getFirstVisore() {
+        return visori.stream().findFirst().get();
+    }
 }

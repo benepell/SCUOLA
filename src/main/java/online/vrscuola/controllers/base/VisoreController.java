@@ -31,6 +31,7 @@ public class VisoreController {
             response.put("num_visore", studentService.getNumVisori());
             response.put("num_visore_disp", studentService.getNumVisoriLiberi());
             response.put("num_visore_occup", studentService.getNumVisoriOccupati());
+            response.put("primo_visore", studentService.getFirstVisore());
 
         } else {
             response.put("visore", "0");
