@@ -1,5 +1,6 @@
 var showmod = false;
 var codice_visore;
+var isShowModal = false;
 
 // set codice_visore
 function setCodiceVisore(value) {
@@ -39,11 +40,20 @@ $("figure.hexagon.front").click(function() {
                 var $alert = $('<div class="alert alert-warning" style="width:80%;padding-inline-start: 30px;background-color: #79656580;font-size: 20px;color: yellowgreen; border: 2px solid #C5E1A5" role="alert">Non ci sono visori disponibili.</div>');
                 $('body').append($alert);
                 setTimeout(function () {
-                  $alert.alert('close'); // Chiudi l'alert dopo 3 secondi
+                  $alert.alert('close'); // Chiudi l'alert dopo 5 secondi
+                    $clicked_figure.next('.hexagon.back').click();
                 }, 5000);
         }
     });
 
+});
+
+$(".hexagon-inset").click(function () {
+  setShowmod(true);
+   var inset_input_id = $(this).parent().parent().parent().find('input[type=hidden]').attr('id');
+   var inset_index = inset_input_id.split("-")[1];
+   showDemoModal($('#' + "codicevisore" + "-" + inset_index).val());
+   isShowModal= true;
 });
 
 $("figure.hexagon.back").click(function() {
@@ -54,23 +64,16 @@ $("figure.hexagon.back").click(function() {
 
   var $clicked_figure = $(this);
     // Chiamata AJAX per ottenere il codice del visore
-    if(!getShowmod){
+    if(!isShowModal){
         $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
             $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
         });
     }
-
-});
-
-$(".hexagon-inset").click(function () {
-  setShowmod(true);
-   var inset_input_id = $(this).parent().parent().parent().find('input[type=hidden]').attr('id');
-   var inset_index = inset_input_id.split("-")[1];
-   showDemoModal($('#' + "codicevisore" + "-" + inset_index).val());
 });
 
 // Modifica la funzione di gestione dell'evento click della carta
 $(".card").click(function () {
+   isShowModal = false;
   var card = $(this);
   if (getShowmod() == false) {
     card.toggleClass("flipped");
