@@ -54,9 +54,12 @@ $("figure.hexagon.back").click(function() {
 
   var $clicked_figure = $(this);
     // Chiamata AJAX per ottenere il codice del visore
-    $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
-        $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
-    });
+    if(!getShowmod){
+        $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
+            $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
+        });
+    }
+
 });
 
 $(".hexagon-inset").click(function () {

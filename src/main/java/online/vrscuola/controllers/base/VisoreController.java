@@ -21,16 +21,16 @@ public class VisoreController {
     @PostMapping(value = "/visore-selection")
     @ResponseBody
     public Map<String, String> handleVisoreSelection(@RequestParam("allievo") String allievo, HttpSession session) {
-        studentService.setVisore(allievo);
-        Optional<String> res = studentService.getVisore(allievo);
+        studentService.setVisore(allievo, session);
+        Optional<String> res = studentService.getVisore(allievo, session);
 
         Map<String, String> response = new HashMap<>();
         if (res.isPresent()) {
             response.put("visore", res.get());
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
-            response.put("num_visore_disp", studentService.getNumVisoriLiberi());
-            response.put("num_visore_occup", studentService.getNumVisoriOccupati());
+            response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
+            response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
             response.put("primo_visore", studentService.getFirstVisore());
 
         } else {
@@ -43,16 +43,16 @@ public class VisoreController {
     @PostMapping(value = "/visore-remove")
     @ResponseBody
     public Map<String, String> handleVisoreRemove(@RequestParam("allievo") String allievo, HttpSession session) {
-        studentService.freeVisore(allievo);
-        Optional<String> res = studentService.getVisore(allievo);
+        studentService.freeVisore(allievo, session);
+        Optional<String> res = studentService.getVisore(allievo, session);
 
         Map<String, String> response = new HashMap<>();
         if (res.isPresent()) {
             response.put("visore", res.get());
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
-            response.put("num_visore_disp", studentService.getNumVisoriLiberi());
-            response.put("num_visore_occup", studentService.getNumVisoriOccupati());
+            response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
+            response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
         } else {
             response.put("visore", "-1");
         }

@@ -43,7 +43,7 @@ public class AbilitaController
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
 
-        String[] alu = (String[])session.getAttribute("alunni");
+        String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = new String[]{
                 "1", "2"
                 // , "3", "4",
