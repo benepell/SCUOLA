@@ -9,6 +9,7 @@
 <%
     int codiceVisore = 0;
     String[] allievi = (String[])session.getAttribute("alunni");
+    String[] username = (String[])session.getAttribute("username");
 %>
 
 <div class="jumbotron jumbotron-billboard">
@@ -37,6 +38,8 @@
     <div class="col-md-3">
       <jsp:include page="include/card-visore.jsp">
         <jsp:param name="nome_allievo" value="<%=allievi[i-1]%>" />
+        <jsp:param name="username_allievo" value="<%=username[i-1]%>" />
+        <jsp:param name="index" value="<%=i%>" />
       </jsp:include>
     </div>
     <%} %>

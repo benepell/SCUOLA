@@ -19,60 +19,46 @@ function setShowmod(value) {
   showmod = value;
 }
 
-$("figure").click(function () {
-  var $figure = $(this);
-  var codiceVisore = $figure.find('.visore_text span').text();
-  var nomeAllievo = $figure.find(".card-content h1").text().toLowerCase();
-  if (nomeAllievo != '' && getShowmod() == false) {
-    // sono qui quando clicco per chiudere esagono
-    nomeAllievo = nomeAllievo.replace(" attivo", "");
-    $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
-      $figure.find('.see-more.valore').text('')
 
-    });
-  } else {
-    // sono qui quando clicco per aprire esagono
-    var nomeAllievo = $figure.find(".card-content a").text().toLowerCase();
+$("figure.hexagon.front").click(function() {
+  var input_id = $(this).parent().parent().find('input[type=hidden]').attr('id');
+  var index = input_id.split("-")[1];
+  var usernameAllievo = $('#' + "username" + "-" + index).val()
+  var nomeAllievo = $('#' + "nome" + "-" + index).val();
+  var codiceVisore = $('#' + "codicevisore" + "-" + index).val();
 
+  var $clicked_figure = $(this);
+
+    // Chiamata AJAX per ottenere il codice del visore
     $.post("/visore-selection", { allievo: nomeAllievo }, function (data) {
-      setCodiceVisore(data.visore);
-      $('figure.hexagon').each(function () {
-        var $figure = $(this);
-        var $cardContent = $figure.find('.card-content');
-
-        if (data != null &&
-          data.allievo != null &&
-          ($cardContent.find('h1').text().toLowerCase()) === data.allievo.toLowerCase() + " attivo") {
-          $figure.find('.see-more.valore').text(data.visore);
-        }
-
-        if (data.visore === data.primo_visore){
-            setTimeout(function () {
-                showDemoModal(getCodiceVisore());
-            }, 2300);
-        }
-        
-      });
-
-      if (data.num_visore_occup === undefined && !getShowmod()) {
-        // Non ci sono visori disponibili, mostra l'alert
-        var $alert = $('<div class="alert alert-warning" style="width:80%;padding-inline-start: 30px;background-color: #79656580;font-size: 20px;color: yellowgreen; border: 2px solid #C5E1A5" role="alert">Non ci sono visori disponibili.</div>');
-        $('body').append($alert);
-        setTimeout(function () {
-          $alert.alert('close'); // Chiudi l'alert dopo 3 secondi
-
-          $figure.find('.card-container.card.flipped').toggleClass("flipped");
-        }, 6000);
-      }
+        setCodiceVisore(data.visore);
+        $clicked_figure.next('.hexagon.back').find('.see-more.valore').text(data.visore);
+        $('#' + "codicevisore" + "-" + index).val(data.visore);
     });
-  }
-  setCodiceVisore(codiceVisore);
+});
+
+$("figure.hexagon.back").click(function() {
+  var input_id = $(this).parent().parent().find('input[type=hidden]').attr('id');
+  var index = input_id.split("-")[1];
+  var usernameAllievo = $('#' + "username" + "-" + index).val()
+  var nomeAllievo = $('#' + "nome" + "-" + index).val();
+
+  var $clicked_figure = $(this);
+    // Chiamata AJAX per ottenere il codice del visore
+    $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
+        $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
+    });
 });
 
 $(".hexagon-inset").click(function () {
   setShowmod(true);
-  showDemoModal(getCodiceVisore());
+   var inset_input_id = $(this).parent().parent().parent().find('input[type=hidden]').attr('id');
+   var inset_index = inset_input_id.split("-")[1];
+   var codiceVisore = $('#' + "codicevisore" + "-" + inset_index).val();
+   showDemoModal($(codiceVisore);
 });
+
+
 
 // Modifica la funzione di gestione dell'evento click della carta
 $(".card").click(function () {

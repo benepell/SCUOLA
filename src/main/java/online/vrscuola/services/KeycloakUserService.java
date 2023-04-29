@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 public class KeycloakUserService {
     private final DataSource dataSource;
     private final Pattern usernamePattern;
+    private List<Map<String, String>> users;
 
     @Autowired
     public KeycloakUserService(@Qualifier("secondDataSource") DataSource dataSource) {
@@ -93,11 +94,20 @@ public class KeycloakUserService {
                 .toArray(String[]::new) : null;
     }
 
-    public String[] filterSections(String classSelected, String sectionSelected) {
-        List<Map<String, String>> users = getUsers("filter", classSelected, sectionSelected);
+    public void initFilterSections(String classSelected, String sectionSelected) {
+        users = getUsers("filter", classSelected, sectionSelected);
 
-        return classSelected != null ? users.stream()
+    }
+
+    public String[] filterSectionsAllievi() {
+        return users != null ? users.stream()
                 .map(user -> user.get("nome").concat(" ").concat(user.get("cognome")))
                 .toArray(String[]::new) : null;
+    }
+
+    public String[] filterSectionsUsername() {
+        return  users != null ? users.stream()
+                .map(user -> user.get("username"))
+                .toArray(String[]::new): null;
     }
 }

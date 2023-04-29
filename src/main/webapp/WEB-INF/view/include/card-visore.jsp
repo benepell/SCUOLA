@@ -1,5 +1,10 @@
 <section class="card-container">
   <div class="card">
+    <input type="hidden" id="username-${param.index}" value="${param.username_allievo}">
+    <input type="hidden" id="nome-${param.index}" value="${param.nome_allievo}">
+    <input type="hidden" id="codicevisore-${param.index}" value="">
+
+
     <figure class="hexagon front">
       <div class="card-content">
         <a href="#">${param.nome_allievo}</a>
