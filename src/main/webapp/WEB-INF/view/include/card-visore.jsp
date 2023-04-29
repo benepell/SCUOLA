@@ -22,7 +22,7 @@
     </figure>
     <figure class="hexagon back">
       <div class="card-content">
-        <h1>${param.nome_allievo} Attivo</h1>
+        <h1>${param.nome_allievo}</h1>
       </div>
       <div class="hexagon-inset">
         <div class="card-content">

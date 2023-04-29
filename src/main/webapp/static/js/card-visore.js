@@ -34,7 +34,17 @@ $("figure.hexagon.front").click(function() {
         setCodiceVisore(data.visore);
         $clicked_figure.next('.hexagon.back').find('.see-more.valore').text(data.visore);
         $('#' + "codicevisore" + "-" + index).val(data.visore);
+
+        if (data.num_visore_occup === undefined) {
+                // Non ci sono visori disponibili, mostra l'alert
+                var $alert = $('<div class="alert alert-warning" style="width:80%;padding-inline-start: 30px;background-color: #79656580;font-size: 20px;color: yellowgreen; border: 2px solid #C5E1A5" role="alert">Non ci sono visori disponibili.</div>');
+                $('body').append($alert);
+                setTimeout(function () {
+                  $alert.alert('close'); // Chiudi l'alert dopo 3 secondi
+                }, 5000);
+        }
     });
+
 });
 
 $("figure.hexagon.back").click(function() {
@@ -54,8 +64,7 @@ $(".hexagon-inset").click(function () {
   setShowmod(true);
    var inset_input_id = $(this).parent().parent().parent().find('input[type=hidden]').attr('id');
    var inset_index = inset_input_id.split("-")[1];
-   var codiceVisore = $('#' + "codicevisore" + "-" + inset_index).val();
-   showDemoModal($(codiceVisore);
+   showDemoModal($('#' + "codicevisore" + "-" + inset_index).val());
 });
 
 
