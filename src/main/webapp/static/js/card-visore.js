@@ -41,7 +41,12 @@ $("figure.hexagon.front").click(function() {
                 $('body').append($alert);
                 setTimeout(function () {
                   $alert.alert('close'); // Chiudi l'alert dopo 5 secondi
-                    $clicked_figure.next('.hexagon.back').click();
+                    // forza chiusura modale
+                    $("span.close-btn").click();
+                    // inserisci 0.5 secondi di ritardo per permettere la chiusura della modale
+                    setTimeout(function () {
+                        $clicked_figure.next('.hexagon.back').click();
+                    }, 500);
                 }, 5000);
         }
     });
