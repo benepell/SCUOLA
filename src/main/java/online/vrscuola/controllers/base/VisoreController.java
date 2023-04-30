@@ -30,7 +30,7 @@ public class VisoreController {
 
         String visore = res.isPresent() ? res.get() : "0";
 
-        boolean state = manageService.enableDevice(visore,username);
+        boolean state = manageService.enableDevice(visore,username, session);
 
         Map<String, String> response = new HashMap<>();
         if (res.isPresent() && state) {
@@ -86,7 +86,7 @@ public class VisoreController {
         session.setAttribute("id_argomento", ìd_argomento);
         session.setAttribute("argomento", argomento);
         session.setAttribute("visore", visore);
-        manageService.updateArgoment(visore,argomento);
+        manageService.updateArgoment(visore,argomento, session);
         return "abilita-visore";
     }
 

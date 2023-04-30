@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -30,7 +31,7 @@ public class VRDeviceManageService {
     @Autowired
     Utilities utilities;
 
-    public boolean enableDevice(String label, String username) {
+    public boolean enableDevice(String label, String username, HttpSession session) {
         // controlla se macAddress ha un visore associato
         String macAddress = iRepository.findMac(label);
         if (macAddress == null) {
@@ -49,8 +50,20 @@ public class VRDeviceManageService {
         // controlla da keycloak se l'utente esiste ed e' abilitato
         if (kService.existUser(username)) {
 
+            String arg = null ;
+            if (!label.equals("0")|| !label.equals("1")) {
+                // recupera argomento del visore da session
+                arg = (String) session.getAttribute("arg");
+                // se non e' presente in session usa quello di default
+                arg = arg != null ? arg : defaultArgoment;
+            }
+
             if (updating) {
-                cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_PENDING);
+                if(arg != null){
+                    cRepository.updateByMacAddress2(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_PENDING, arg);
+                } else {
+                    cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_PENDING);
+                }
             } else {
                 VRDeviceConnectivityEntitie vrDeviceConnectivityEntitie = new VRDeviceConnectivityEntitie();
                 vrDeviceConnectivityEntitie.setInitDate(utilities.getEpoch());
@@ -58,6 +71,10 @@ public class VRDeviceManageService {
                 vrDeviceConnectivityEntitie.setUsername(username);
                 vrDeviceConnectivityEntitie.setNote(note);
                 vrDeviceConnectivityEntitie.setConnected(Constants.CONNECTED_IN_PENDING);
+
+                if(arg != null){
+                    vrDeviceConnectivityEntitie.setArgoment(arg);
+                }
                 cRepository.save(vrDeviceConnectivityEntitie);
             }
 
@@ -82,18 +99,27 @@ public class VRDeviceManageService {
         return true;
     }
 
-    public boolean updateArgoment(String label, String argoment) {
+    public void updateArgoment(String label, String argoment, HttpSession session) {
         // controlla se macAddress ha un visore associato
         String macAddress = iRepository.findMac(label);
         if (macAddress == null) {
-            return false;
+            return;
         }
 
-        // aggiorna argomento del visore
-        String arg = argoment != null ? argoment : defaultArgoment;
-        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+        String arg = "" ;
+        if (argoment == null) {
+            // recupera argomento del visore da session
+            arg = (String) session.getAttribute("arg");
+            // se non e' presente in session usa quello di default
+            arg = arg != null ? arg : defaultArgoment;
+        } else {
+            arg = argoment;
+            // imposta una variabile di sessione per l'argomento
+            session.setAttribute("arg", argoment);
 
-        return true;
+        }
+
+        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
     }
 
     public boolean deleteArgoment(String label) {
