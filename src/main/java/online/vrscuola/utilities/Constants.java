@@ -8,6 +8,11 @@ public interface Constants {
     String RESOURCE_TRASH = ".trash";
     String RESOURCE_TMB= ".tmb";
 
-    int SCHEDULE_HEALTH = 60*60*1000;
+    String CONNECTED_IN_PENDING = "in_pending";
+    String CONNECTED_IN_CONNECTED = "connected";
+    String CONNECTED_IN_DISCONNECTED = "disconnected";
+    String CONNECTED_IN_RECONNECTED = "reconnected";
+    String CONNECTED_IN_RECONNECTING = "reconnecting";
+    String CONNECTED_IN_RECONNECTING_ERROR = "reconnecting_error";
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntitie, Long> {
@@ -17,6 +18,12 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac")
     String labelByMacAddress(@Param("mac") String mac);
+
+    @Query(value = "SELECT label FROM init i ")
+    List<String> labels();
+
+    @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")
+    String findMac(@Param("label") String label);
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note WHERE  i.macAddress = :oldmac  ")

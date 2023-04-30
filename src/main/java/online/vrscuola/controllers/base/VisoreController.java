@@ -2,6 +2,7 @@ package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.StudentService;
+import online.vrscuola.services.devices.VRDeviceManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +19,22 @@ public class VisoreController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    VRDeviceManageService manageService;
+
     @PostMapping(value = "/visore-selection")
     @ResponseBody
-    public Map<String, String> handleVisoreSelection(@RequestParam("allievo") String allievo, HttpSession session) {
+    public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
         studentService.setVisore(allievo, session);
         Optional<String> res = studentService.getVisore(allievo, session);
 
+        String visore = res.isPresent() ? res.get() : "0";
+
+        boolean state = manageService.enableDevice(visore,username);
+
         Map<String, String> response = new HashMap<>();
-        if (res.isPresent()) {
-            response.put("visore", res.get());
+        if (res.isPresent() && state) {
+            response.put("visore", visore);
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
             response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
@@ -42,19 +50,24 @@ public class VisoreController {
 
     @PostMapping(value = "/visore-remove")
     @ResponseBody
-    public Map<String, String> handleVisoreRemove(@RequestParam("allievo") String allievo, HttpSession session) {
-        studentService.freeVisore(allievo, session);
+    public Map<String, String> handleVisoreRemove(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
+
         Optional<String> res = studentService.getVisore(allievo, session);
+        String visore = res.isPresent() ? res.get() : "0";
+
+        studentService.freeVisore(allievo, session);
+
+        boolean state = manageService.removeDevice(visore,username);
 
         Map<String, String> response = new HashMap<>();
-        if (res.isPresent()) {
-            response.put("visore", res.get());
+        if (res.isPresent() && state) {
+            response.put("visore", "0");
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
             response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
             response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
         } else {
-            response.put("visore", "-1");
+            response.put("visore", "0");
         }
 
         return response;

@@ -110,4 +110,23 @@ public class KeycloakUserService {
                 .map(user -> user.get("username"))
                 .toArray(String[]::new): null;
     }
+
+    public boolean existUser(String username) {
+        boolean exist = false;
+        if(username == null) return exist;
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery("SELECT username FROM USER_ENTITY WHERE username = '" + username + "'");
+
+            while (resultSet.next()) {
+                exist = true;
+            }
+        } catch (SQLException e) {
+            // handle the exception appropriately
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+        }
+        return exist;
+    }
 }

@@ -6,6 +6,7 @@ import online.vrscuola.payload.request.VRDeviceConnectivityRequest;
 import online.vrscuola.payload.response.MessageResponse;
 import online.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
+import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.MessageServiceImpl;
 import online.vrscuola.utilities.UtilServiceImpl;
 import online.vrscuola.utilities.Utilities;
@@ -66,11 +67,8 @@ public class VRDeviceConnectivityController {
         }
 
         String usernameexist = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
-        if(usernameexist != null &&usernameexist.equals(username)){
-            cService.connect(true ,utilities,macAddress,username,note);
-        } else {
-            cService.connect(false ,utilities,macAddress,username,note);
-        }
+            cService.connect(utilities,macAddress,username,note, Constants.CONNECTED_IN_CONNECTED);
+
 
         // ritorna label visore
         String visore = iService.label(macAddress);

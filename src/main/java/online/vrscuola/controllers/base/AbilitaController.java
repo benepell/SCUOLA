@@ -1,6 +1,7 @@
 package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.StudentService;
+import online.vrscuola.services.devices.VRDeviceManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ public class AbilitaController
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    VRDeviceManageService manageService;
 
     @RequestMapping(value="abilita-classe")
     public String getAbilitaClasse(Model model)
@@ -44,11 +48,7 @@ public class AbilitaController
         model.addAttribute("response", "stringaresponse");
 
         String[] alu = (String[]) session.getAttribute("alunni");
-        String[] vis = new String[]{
-                "1", "2"
-                // , "3", "4",
-                //"5", "6", "7", "8"
-        };
+        String[] vis = manageService.allDevices();
         studentService.init(Arrays.asList(alu),Arrays.asList(vis));
 
         return "abilita-visore";

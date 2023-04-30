@@ -21,9 +21,12 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query(value = "SELECT username FROM connect c WHERE ( c.macAddress = :mac )")
     String existsUsername(@Param("mac") String mac);
 
+    @Query("SELECT c.macAddress FROM connect c WHERE c.macAddress = :mac")
+    String findMac(@Param("mac") String mac);
+
     @Transactional
     @Modifying
-    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note WHERE  c.macAddress = :macAddress  ")
-    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress );
+    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note, c.connected = :connected WHERE  c.macAddress = :macAddress  ")
+    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress, @Param("connected") String connected );
 
 }

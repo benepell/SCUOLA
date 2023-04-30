@@ -22,8 +22,6 @@ public class ClasseController {
     @Autowired
     KeycloakUserService keycloakUserService;
 
-
-
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);

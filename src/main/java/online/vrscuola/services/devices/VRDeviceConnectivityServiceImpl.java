@@ -3,6 +3,7 @@ package online.vrscuola.services.devices;
 import online.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
+import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,17 +45,8 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     }
 
     @Override
-    public void connect(boolean updating, Utilities utilities, String macAddress, String username, String note) {
-        if (updating) {
-            cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress);
-        } else {
-            VRDeviceConnectivityEntitie vrDeviceConnectivityEntitie = new VRDeviceConnectivityEntitie();
-            vrDeviceConnectivityEntitie.setInitDate(utilities.getEpoch());
-            vrDeviceConnectivityEntitie.setMacAddress(macAddress);
-            vrDeviceConnectivityEntitie.setUsername(username);
-            vrDeviceConnectivityEntitie.setNote(note);
-            cRepository.save(vrDeviceConnectivityEntitie);
-        }
+    public void connect(Utilities utilities, String macAddress, String username, String note, String connected) {
+            cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, connected);
 
     }
 }

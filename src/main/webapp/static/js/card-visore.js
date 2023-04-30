@@ -30,7 +30,7 @@ $("figure.hexagon.front").click(function() {
   var $clicked_figure = $(this);
 
     // Chiamata AJAX per ottenere il codice del visore
-    $.post("/visore-selection", { allievo: nomeAllievo }, function (data) {
+    $.post("/visore-selection", { username: usernameAllievo, allievo: nomeAllievo }, function (data) {
         setCodiceVisore(data.visore);
         $clicked_figure.next('.hexagon.back').find('.see-more.valore').text(data.visore);
         $('#' + "codicevisore" + "-" + index).val(data.visore);
@@ -70,7 +70,7 @@ $("figure.hexagon.back").click(function() {
   var $clicked_figure = $(this);
     // Chiamata AJAX per ottenere il codice del visore
     if(!isShowModal){
-        $.post("/visore-remove", { allievo: nomeAllievo }, function (data) {
+        $.post("/visore-remove", { username: usernameAllievo, allievo: nomeAllievo }, function (data) {
             $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
         });
     }

@@ -8,5 +8,5 @@ public interface VRDeviceConnectivityService {
 
     boolean valid(String macAddress, String code);
 
-    void connect(boolean updating,Utilities utilities, String macAddress, String username, String note);
+    void connect(Utilities utilities, String macAddress, String username, String note, String connected);
 }
