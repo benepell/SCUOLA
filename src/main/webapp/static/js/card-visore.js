@@ -2,16 +2,6 @@ var showmod = false;
 var codice_visore;
 var isShowModal = false;
 
-// set codice_visore
-function setCodiceVisore(value) {
-  codice_visore = value;
-}
-
-// get codice_visore
-function getCodiceVisore() {
-  return codice_visore;
-}
-
 function getShowmod() {
   return showmod;
 }
@@ -31,7 +21,6 @@ $("figure.hexagon.front").click(function() {
 
     // Chiamata AJAX per ottenere il codice del visore
     $.post("/visore-selection", { username: usernameAllievo, allievo: nomeAllievo }, function (data) {
-        setCodiceVisore(data.visore);
         $clicked_figure.next('.hexagon.back').find('.see-more.valore').text(data.visore);
         $('#' + "codicevisore" + "-" + index).val(data.visore);
 

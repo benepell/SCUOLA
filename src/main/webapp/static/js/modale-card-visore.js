@@ -64,12 +64,12 @@ window.addEventListener("message", function(event) {
     loading.appendChild(progressBar);
 
     document.body.appendChild(loading);
-
+        var visore = window.parent.document.getElementById("cerchio").innerHTML;
         var formData = new FormData();
           // aggiungi i dati da inviare
           formData.append('argomento', event.data.argomento);
           formData.append('id_argomento', event.data.id_argomento);
-          formData.append('visore', getCodiceVisore());
+          formData.append('visore', visore);
           fetch('argomento-visore', {
             method: 'POST',
             body: formData
