@@ -30,25 +30,13 @@ $("figure.hexagon.front").click(function() {
                 $('body').append($alert);
                 setTimeout(function () {
                   $alert.alert('close'); // Chiudi l'alert dopo 5 secondi
-
-                    var hexagonInset = document.querySelector('.hexagon-inset');
-                    var hexagonBack = document.querySelector('.hexagon.back');
-
-                    var hexagonInsetStyle = getComputedStyle(hexagonInset);
-                    var hexagonBackStyle = getComputedStyle(hexagonBack);
-
-                    var hexagonInsetZIndex = parseInt(hexagonInsetStyle.getPropertyValue('z-index'));
-                    var hexagonBackZIndex = parseInt(hexagonBackStyle.getPropertyValue('z-index'));
-
-                    // evita di chiudere la modale se è già chiusa
-                    if (hexagonInsetZIndex < hexagonBackZIndex) {
                     // forza chiusura modale
-                        $("span.close-btn").click();
-                        // inserisci 0.5 secondi di ritardo per permettere la chiusura della modale
-                        setTimeout(function () {
-                            $clicked_figure.next('.hexagon.back').click();
-                        }, 500);
-                    }
+                    $("span.close-btn").click();
+                    // inserisci 0.5 secondi di ritardo per permettere la chiusura della modale
+                    setTimeout(function () {
+                        $clicked_figure.next('.hexagon.back').click();
+                    }, 500);
+
                 }, 5000);
         }
     });
