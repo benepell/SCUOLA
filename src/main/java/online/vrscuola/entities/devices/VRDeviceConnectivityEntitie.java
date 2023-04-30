@@ -20,5 +20,6 @@ public class VRDeviceConnectivityEntitie {
     private String username;
     private String note;
     private String connected;
+    private String argoment;
 
 }

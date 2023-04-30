@@ -78,7 +78,6 @@ public class VisoreController {
         session.setAttribute("classSelected", classSelected);
         session.setAttribute("sectionSelected", sectionSelected);
         session.setAttribute("visorSelected", visorSelected);
-
         return "abilita-visore";
     }
 
@@ -87,6 +86,7 @@ public class VisoreController {
         session.setAttribute("id_argomento", ìd_argomento);
         session.setAttribute("argomento", argomento);
         session.setAttribute("visore", visore);
+        manageService.updateArgoment(visore,argomento);
         return "abilita-visore";
     }
 

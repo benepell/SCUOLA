@@ -7,12 +7,16 @@ import online.vrscuola.services.KeycloakUserService;
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class VRDeviceManageService {
+
+    @Value("${school.argoment.default}")
+    private String defaultArgoment;
 
     @Autowired
     VRDeviceInitRepository iRepository;
@@ -73,8 +77,36 @@ public class VRDeviceManageService {
         // controlla da keycloak se l'utente esiste ed e' abilitato
         if (kService.existUser(username)) {
             cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_DISCONNECTED);
-
+            deleteArgoment(label);
         }
+        return true;
+    }
+
+    public boolean updateArgoment(String label, String argoment) {
+        // controlla se macAddress ha un visore associato
+        String macAddress = iRepository.findMac(label);
+        if (macAddress == null) {
+            return false;
+        }
+
+        // aggiorna argomento del visore
+        String arg = argoment != null ? argoment : defaultArgoment;
+        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+
+        return true;
+    }
+
+    public boolean deleteArgoment(String label) {
+        // controlla se macAddress ha un visore associato
+        String macAddress = iRepository.findMac(label);
+        if (macAddress == null) {
+            return false;
+        }
+
+        // aggiorna argomento del visore
+        String arg = "";
+        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+
         return true;
     }
 
