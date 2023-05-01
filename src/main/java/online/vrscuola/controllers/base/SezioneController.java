@@ -2,6 +2,8 @@ package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.KeycloakUserService;
+import online.vrscuola.services.devices.VRDeviceManageDetailService;
+import online.vrscuola.services.devices.VRDeviceManagerOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,13 @@ public class SezioneController {
     KeycloakUserService keycloakUserService;
     @Autowired
     private ArgomentiDirService argomentiDirService;
+
+    @Autowired
+    VRDeviceManagerOrderService orderService;
+
+    @Autowired
+    VRDeviceManageDetailService detailService;
+
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
@@ -25,8 +34,11 @@ public class SezioneController {
         keycloakUserService.initFilterSections(classSelected,sectionSelected);
         String[] alunni = keycloakUserService.filterSectionsAllievi();
         String[] username = keycloakUserService.filterSectionsUsername();
-        session.setAttribute("alunni",alunni);
-        session.setAttribute("username",username);
+        orderService.initOrder(alunni,username,detailService);
+        String[] alunniOrdinati = orderService.getAlunni();
+        String[] usernameOrdinati = orderService.getUsername();
+        session.setAttribute("alunni",alunniOrdinati);
+        session.setAttribute("username",usernameOrdinati);
         session.setAttribute("argoments", argomentiDirService.getArgomentiAll("aula01",classSelected,sectionSelected));
         return "redirect:/abilita-visore";
     }

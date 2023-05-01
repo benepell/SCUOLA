@@ -2,6 +2,7 @@ package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.StudentService;
+import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import online.vrscuola.services.devices.VRDeviceManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class VisoreController {
     @Autowired
     VRDeviceManageService manageService;
 
+    @Autowired
+    VRDeviceManageDetailService manageDetailService;
+
     @PostMapping(value = "/visore-selection")
     @ResponseBody
     public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
@@ -30,7 +34,10 @@ public class VisoreController {
 
         String visore = res.isPresent() ? res.get() : "0";
 
-        boolean state = manageService.enableDevice(visore,username, session);
+        boolean state = manageService.enableDevice(visore, username, session);
+        if (state) {
+            manageDetailService.startTime(username);
+        }
 
         Map<String, String> response = new HashMap<>();
         if (res.isPresent() && state) {
@@ -57,7 +64,10 @@ public class VisoreController {
 
         studentService.freeVisore(allievo, session);
 
-        boolean state = manageService.removeDevice(visore,username);
+        boolean state = manageService.removeDevice(visore, username);
+        if (state) {
+            manageDetailService.endTime(username);
+        }
 
         Map<String, String> response = new HashMap<>();
         if (res.isPresent() && state) {
@@ -86,7 +96,7 @@ public class VisoreController {
         session.setAttribute("id_argomento", ìd_argomento);
         session.setAttribute("argomento", argomento);
         session.setAttribute("visore", visore);
-        manageService.updateArgoment(visore,argomento, session);
+        manageService.updateArgoment(visore, argomento, session);
         return "abilita-visore";
     }
 
