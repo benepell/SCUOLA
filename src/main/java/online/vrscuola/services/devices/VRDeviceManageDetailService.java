@@ -53,7 +53,11 @@ public class VRDeviceManageDetailService {
     }
 
     public Long getMinutes(String username) {
-        return username != null ? dRepository.findMinutes(username) : 0;
+        return username != null ? dRepository.findMinutes(username) : null;
+    }
+
+    public Long recordExist() {
+        return dRepository.countRecord();
     }
 
     public void resetDate(String username) {

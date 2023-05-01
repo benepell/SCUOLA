@@ -38,7 +38,9 @@ public class VRDeviceManagerOrderService {
 
         executorService.shutdown();
 
-        sortArrays();
+        if(detailService.recordExist() > 1){
+            sortArrays();
+        }
     }
 
     private void sortArrays() {

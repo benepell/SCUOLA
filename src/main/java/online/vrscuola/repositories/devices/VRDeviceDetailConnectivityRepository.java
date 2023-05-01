@@ -15,6 +15,9 @@ import java.util.List;
 @Repository
 public interface VRDeviceDetailConnectivityRepository extends JpaRepository<VRDeviceDetailConnectivityEntitie, Long> {
 
+    @Query(value = "SELECT COUNT(*) FROM detailconnect d ")
+    Long countRecord();
+
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM detailconnect d WHERE d.username = :username")
     Boolean usernameExist(@Param("username") String username);
 
