@@ -3,6 +3,7 @@ package online.vrscuola.controllers.base;
 import online.vrscuola.controllers.securities.KeycloakUserController;
 import online.vrscuola.services.KeycloakUserService;
 import online.vrscuola.services.StudentService;
+import online.vrscuola.services.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,11 @@ public class ClasseController {
     @Autowired
     KeycloakUserService keycloakUserService;
 
+    @Autowired
+    ValidateCredentialService v;
+
     @PostMapping
-    public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) {
+    public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) throws Exception {
         session.setAttribute("classSelected", classSelected);
         session.setAttribute("allSections",keycloakUserService.filterClasses(classSelected));
         return "redirect:/abilita-sezione";

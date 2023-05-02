@@ -19,4 +19,5 @@ public class VRDeviceInitEntitie {
     private String label;
     private Instant initDate;
     private String note;
+    private String code;
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -32,21 +33,16 @@ public class ValidateCredentialService {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest((key + resource).getBytes(StandardCharsets.UTF_8));
 
-        // Genera una chiave segreta per la crittografia simmetrica
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(128);
-        SecretKey secretKey = keyGen.generateKey();
-
-        // Cifra l'hash con la chiave segreta utilizzando AES
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedHash = cipher.doFinal(hash);
-
         // Codifica il risultato in Base64
-        String encodedHash = Base64.getEncoder().encodeToString(encryptedHash);
+        String encodedHash = Base64.getEncoder().encodeToString(hash);
+
+        // Esegue l'URL encoding del risultato
+        String encodedResult = URLEncoder.encode(encodedHash, StandardCharsets.UTF_8.toString());
 
         // Restituisce il codice visore
-        return key.charAt(0) + encodedHash;
+        return key.charAt(0) + encodedResult;
     }
+
+
 
 }

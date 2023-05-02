@@ -1,7 +1,11 @@
 package online.vrscuola.controllers.devices;
 
+import online.vrscuola.models.InitParamModel;
 import online.vrscuola.payload.request.VRDeviceInitRequest;
 import online.vrscuola.payload.response.MessageResponse;
+import online.vrscuola.repositories.devices.VRDeviceInitRepository;
+import online.vrscuola.services.ValidateCredentialService;
+import online.vrscuola.services.conf.ReadOculusServices;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.utilities.MessageServiceImpl;
 import online.vrscuola.utilities.UtilServiceImpl;
@@ -12,15 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/initialize-devices")
 public class VRDeviceInitController {
-
-    @Value("${keycloak.credentials.secret}")
-    private String code;
 
     @Autowired
     VRDeviceInitServiceImpl initService;
@@ -33,35 +35,49 @@ public class VRDeviceInitController {
     private MessageServiceImpl messageServiceImpl;
 
     @Autowired
+    ReadOculusServices rService;
+
+    @Autowired
+    ValidateCredentialService vService;
+
+    @Autowired
+    VRDeviceInitRepository repository;
+
+    @Autowired
     UtilServiceImpl uService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@Valid VRDeviceInitRequest request) {
+    public ResponseEntity<?> add() {
 
-        if (!utilities.isValidMacAddr(request.getMacAddress())) {
-            return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.error.macaddress"));
+        List<InitParamModel> macs = rService.addOculus(vService);
+        String note = "aggiunta visore";
+        for (InitParamModel p : macs) {
+            initService.addInit(utilities, p.getMacAddress(), note, p.getCode());
         }
 
-        if(code.equals(request.getCode())){
-            initService.addInit(utilities,request.getMacAddress(), request.getLabel(), request.getNote());
-            return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));
-        }
-        return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.failed")));
+        return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@Valid VRDeviceInitRequest request) {
+    public ResponseEntity<?> update() throws Exception {
 
-        if (!utilities.isValidMacAddr(request.getMacAddress())) {
-            return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.error.macaddress"));
-        }
+        List<InitParamModel> paramModels = rService.changeOculus(repository);
 
-        if(code.equals(request.getCode())){
-            if(request.getOldMacAddress() != null){
-                initService.updateInit(utilities,request.getOldMacAddress(),request.getMacAddress(), request.getLabel(), request.getNote());
-                return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.update")));
+        for (InitParamModel p : paramModels) {
+            boolean valid = initService.valid(p.getOldMacAddress(), p.getCode());
+            if (valid) {
+                try {
+                    String note = "modifica visore con vecchio mac: " + p.getOldMacAddress();
+                    String code = vService.generateVisorCode(p.getMacAddress());
+                    initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code);
+                    return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.update")));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
+
         }
+
         return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.failed")));
     }
 

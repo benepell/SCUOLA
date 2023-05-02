@@ -26,24 +26,24 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     VRDeviceInitRepository VRDeviceInitRepository;
 
     @Override
-    public void addInit(Utilities utilities, String macAddress, String label, String note){
+    public void addInit(Utilities utilities, String macAddress, String note, String paramCode){
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());
+        String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
+        VRDeviceInitEntitie.setLabel(label);
+        VRDeviceInitEntitie.setNote(note);
+        VRDeviceInitEntitie.setCode(paramCode);
         VRDeviceInitRepository.save(VRDeviceInitEntitie);
     }
 
     @Override
-    public void updateInit(Utilities utilities, String macAddress, String label ,String oldMacAddress, String note) {
-        VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note);
+    public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode){
+            VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode);
     }
 
     @Override
     public boolean valid(String macAddress, String code) {
-        // codice di verifica
-        if (!this.code.equals(code)) {
-            return false;
-        }
         // apparato registrato
         if (iRepository.existsByMacAddress(macAddress)) {
             return true;

@@ -5,29 +5,19 @@
 <form id="form" method="post" action="/setup-visore">
 
 <%
-    String[] setupVisori;
+    String[] setupVisori = null;
 
-        if (request.getAttribute("macs") != null) {
-            setupVisori = request.getAttribute("macs").toString().split(",");
+    if (request.getAttribute("macs") != null) {
+        setupVisori = request.getAttribute("macs").toString().split(",");
+    }
 
-        } else {
-            setupVisori = new String[]{
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:40:00",
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00",
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:20:00",
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:31:00",
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:30:02",
-            "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:00", "00:58:5a:00:00:03"
-            };
-
-        }
 %>
 
 <div class="jumbotron jumbotron-billboard">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-              <h3 style="color: white;">${intestazione} Aula: ?? </h3>
+              <h3 style="color: white;">${intestazione} Gestione Dispositivi </h3>
             </div>
         </div>
     </div>

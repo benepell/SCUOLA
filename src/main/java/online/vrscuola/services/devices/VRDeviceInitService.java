@@ -3,9 +3,9 @@ package online.vrscuola.services.devices;
 import online.vrscuola.utilities.Utilities;
 
 public interface VRDeviceInitService {
-    void addInit(Utilities utilities, String macAddress, String label, String note);
+    void addInit(Utilities utilities, String macAddress,  String note, String paramCode);
 
-    void updateInit(Utilities utilities, String macAddress, String label , String oldMacAddress, String note);
+    void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode);
 
     boolean valid(String macAddress, String code);
 
