@@ -6,9 +6,11 @@
 
 <%
     String[] setupVisori = null;
+    String[] labelVisori = null;
 
-    if (request.getAttribute("macs") != null) {
+    if (request.getAttribute("macs") != null && request.getAttribute("labels") != null) {
         setupVisori = request.getAttribute("macs").toString().split(",");
+        labelVisori = request.getAttribute("labels").toString().split(",");
     }
 
 %>
@@ -23,8 +25,8 @@
     </div>
 </div>
 
-
-<% if (setupVisori != null && setupVisori.length > 0) { %>
+<% if (setupVisori != null && setupVisori.length > 0 &&
+        labelVisori != null && labelVisori.length > 0) { %>
 
     <div class="container">
         <% int margin = 0; %>
@@ -34,7 +36,7 @@
                     <div class="col-md-3">
                         <jsp:include page="include/setup-card-visore.jsp">
                             <jsp:param name="nome_visore" value="<%=setupVisori[i-1]%>" />
-                            <jsp:param name="codice_visore" value="<%=i%>" />
+                            <jsp:param name="codice_visore" value="<%=labelVisori[i-1]%>" />
                         </jsp:include>
                     </div>
                 <% } %>

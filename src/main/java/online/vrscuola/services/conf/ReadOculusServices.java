@@ -41,7 +41,7 @@ public class ReadOculusServices {
                 if (matcher.find()) {
                     String macAddress = matcher.group();
                     // validation code here
-                    String  s = validateCredentialService.generateVisorCode(mac);
+                    String s = validateCredentialService.generateVisorCode(mac);
                     if (code.equals(s)) {
                         InitParamModel initParamModel = new InitParamModel();
                         initParamModel.setMacAddress(macAddress);
@@ -101,6 +101,21 @@ public class ReadOculusServices {
 
         return param;
     }
+
+    public boolean existAddFile() {
+        return checkFileExists(confPath + "add_oculus.conf");
+    }
+
+    public boolean existUpdateFile() {
+        return checkFileExists(confPath + "change_oculus.conf");
+    }
+
+
+    private boolean checkFileExists(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
+
 
     private void renameFile(String oldName, String newName) {
         File oldFile = new File(oldName);
