@@ -11,8 +11,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 20 20">
                           <path fill="#4CAF50" d="M18.3 3.3c-.4-.4-1-.4-1.4 0L7 13.6 3.1 9.7c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l4 4c.2.2.5.3.7.3s.5-.1.7-.3l12-12c.4-.4.4-1 0-1.4z"/>
                         </svg> -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 20 20">
-                          <path fill="#F44336" d="M18.3 3.3c-.4-.4-1-.4-1.4 0L10 10.6 3.1 3.7c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4L8.6 10 2.7 16.9c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3L10 11.4l6.9 6.9c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L11.4 10l6.9-6.9c.4-.4.4-1 0-1.4z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 20 20">
+                         <path d="M6 0v1h-6v1h6v1l2-1.5-2-1.5zm-4 4l-2 1.5 2 1.5v-1h6v-1h-6v-1z" fill="yellowgreen" />
                         </svg>
                       </span>
                        <jsp:include page="lampeggio.jsp">
