@@ -33,7 +33,6 @@ public class AbilitaController
     @RequestMapping(value="abilita-sezione")
     public String getAbilitaSezione(Model model)
     {
-
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -49,6 +48,9 @@ public class AbilitaController
 
         String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = manageService.allDevices();
+        if (alu == null || vis == null) {
+            return "redirect:/abilita-classe";
+        }
         studentService.init(Arrays.asList(alu),Arrays.asList(vis));
 
         return "abilita-visore";

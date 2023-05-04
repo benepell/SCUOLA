@@ -26,9 +26,9 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     value="${sectionSelected}"
   />
 
-  <% //String[] letters = (String[])session.getAttribute("allSections");
-  String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-  "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}; %>
+  <%
+    String[] letters = session.getAttribute("allSections") != null ? (String[])session.getAttribute("allSections") : new String[0];
+  %>
 
   <!-- codice sezione -->
 
