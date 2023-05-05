@@ -29,6 +29,7 @@ public interface VRDeviceDetailConnectivityRepository extends JpaRepository<VRDe
 
     @Transactional
     default void insertStartDate(String username) {
+        if(username == null) return;
         VRDeviceDetailConnectivityEntitie entity = new VRDeviceDetailConnectivityEntitie();
         entity.setUsername(username);
         entity.setStartDate(Instant.now());

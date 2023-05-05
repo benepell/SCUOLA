@@ -19,7 +19,7 @@ public class VRDeviceManagerOrderService {
         this.alunni = alunni;
         this.username = username;
         this.detailService = detailService;
-        this.minutes = new Long[alunni.length];
+        this.minutes = new Long[username.length];
         addMinutesAsync();
     }
 
@@ -44,12 +44,12 @@ public class VRDeviceManagerOrderService {
     }
 
     private void sortArrays() {
-        Integer[] indices = new Integer[minutes.length];
+        Integer[] indices = new Integer[username.length];
         for (int i = 0; i < indices.length; i++) {
             indices[i] = i;
         }
 
-        Arrays.sort(indices, (a, b) -> Long.compare(minutes[a], minutes[b]));
+        Arrays.sort(indices, (a, b) -> Long.compare(minutes[a] != null ? minutes[a] : 0 , minutes[b] != null ? minutes[b] : 0));
 
         String[] sortedAlunni = new String[alunni.length];
         String[] sortedUsername = new String[username.length];
