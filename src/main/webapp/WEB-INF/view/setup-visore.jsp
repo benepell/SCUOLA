@@ -25,6 +25,8 @@
     </div>
 </div>
 
+<jsp:include page="include/menu-alto.jsp"></jsp:include>
+
 <% if (setupVisori != null && setupVisori.length > 0 &&
         labelVisori != null && labelVisori.length > 0) { %>
 

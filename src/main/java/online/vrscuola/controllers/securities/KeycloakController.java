@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,17 +39,21 @@ public class KeycloakController {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
-    @GetMapping("/homepage")
-    public String homepage(Principal principal) {
+    @GetMapping("/login")
+    public RedirectView login(Principal principal) {
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
         AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
-        return  "Welcome to homepage, " + accessToken.getPreferredUsername() + " successfully logged in";
+        if (accessToken != null) {
+            return new RedirectView("/abilita-classe");
+        } else {
+            return new RedirectView("/logout");
+        }
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) throws ServletException {
+    public RedirectView logout(HttpServletRequest request) throws ServletException {
         request.logout();
-        return "Successfully logged out";
+        return new RedirectView("/");
     }
 
     @GetMapping("/test")

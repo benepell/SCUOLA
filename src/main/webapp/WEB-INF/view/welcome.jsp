@@ -7,7 +7,7 @@
                 <p>
                     ${saluti}
                 </p>
-                <a href="/homepage" id="SignUp" class="btn btn btn-success btn-lg">Accedi</a>
+                <a href="/login" id="SignUp" class="btn btn btn-success btn-lg">Accedi</a>
             </div>
         </div>
     </div>

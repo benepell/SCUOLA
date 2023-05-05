@@ -24,6 +24,8 @@
   </div>
 </div>
 
+<jsp:include page="include/menu-alto.jsp"></jsp:include>
+
 <div class="loader-container">
   <div class="loader"></div>
 </div>

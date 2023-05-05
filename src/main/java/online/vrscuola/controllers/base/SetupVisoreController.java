@@ -7,6 +7,7 @@ import online.vrscuola.services.conf.ReadOculusServices;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,13 @@ import java.util.List;
 
 @Controller
 public class SetupVisoreController {
+
+    @Value("${health.datasource.website.keycloak}")
+    private String linkKeycloak;
+
+    @Value("${health.datasource.website.risorse}")
+    private String linkRisorse;
+
     @Autowired
     ReadOculusServices readOculusServices;
 
@@ -43,6 +51,10 @@ public class SetupVisoreController {
 
             model.addAttribute("macs", String.join(",", macs));
             model.addAttribute("labels", String.join(",", labels));
+
+            model.addAttribute("utenti", linkKeycloak);
+            model.addAttribute("risorse", linkRisorse);
+
 
         } catch (Exception e) {
             System.out.println("Errore: " + e.getMessage()

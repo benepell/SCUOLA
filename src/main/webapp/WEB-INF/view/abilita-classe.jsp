@@ -11,6 +11,8 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   </div>
 </div>
 
+<jsp:include page="include/menu-alto.jsp"></jsp:include>
+
 <form id="form" method="post" action="/classe">
   <input
     type="hidden"

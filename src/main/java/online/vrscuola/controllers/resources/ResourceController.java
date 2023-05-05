@@ -12,11 +12,13 @@ import java.util.concurrent.Future;
 
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.FileUtils;
+import org.apache.http.impl.client.RedirectLocations;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.result.view.RedirectView;
 
 @RestController
 public class ResourceController {

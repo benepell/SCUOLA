@@ -11,6 +11,9 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   </div>
 </div>
 
+<jsp:include page="include/menu-alto.jsp"></jsp:include>
+
+
 <!-- Form per inviare il valore della classe selezionata -->
 <form id="form" method="post" action="/sezione">
   <input
@@ -42,6 +45,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
       <% } %>
     </div>
   </div>
+
 
   <-- collegamento lettera corrispondente -->
   <div class="mysez-container">

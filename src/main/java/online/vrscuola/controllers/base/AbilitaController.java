@@ -3,6 +3,7 @@ package online.vrscuola.controllers.base;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,12 @@ import java.util.Arrays;
 public class AbilitaController
 {
 
+    @Value("${health.datasource.website.keycloak}")
+    private String linkKeycloak;
+
+    @Value("${health.datasource.website.risorse}")
+    private String linkRisorse;
+
     @Autowired
     StudentService studentService;
 
@@ -24,10 +31,13 @@ public class AbilitaController
     @RequestMapping(value="abilita-classe")
     public String getAbilitaClasse(Model model)
     {
-
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
+
+        model.addAttribute("utenti", linkKeycloak);
+        model.addAttribute("risorse", linkRisorse);
+
         return "abilita-classe";
     }
     @RequestMapping(value="abilita-sezione")
@@ -36,6 +46,10 @@ public class AbilitaController
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
+
+        model.addAttribute("utenti", linkKeycloak);
+        model.addAttribute("risorse", linkRisorse);
+
         return "abilita-sezione";
     }
 
@@ -45,6 +59,9 @@ public class AbilitaController
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
+
+        model.addAttribute("utenti", linkKeycloak);
+        model.addAttribute("risorse", linkRisorse);
 
         String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = manageService.allDevices();
