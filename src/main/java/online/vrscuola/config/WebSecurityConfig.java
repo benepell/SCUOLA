@@ -56,10 +56,10 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/setup-state").hasRole("admins")
                 .antMatchers("/setup/**").hasRole("admins")
                 .antMatchers("/basesetup").permitAll()
-                .antMatchers("/upload/**").hasRole( "admins")
+                .antMatchers("/upload/**").hasRole("admins")
                 .antMatchers("/resources/**").hasRole("admins")
                 .anyRequest().permitAll();
-
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Autowired

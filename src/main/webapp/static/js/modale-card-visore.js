@@ -4,7 +4,8 @@
     // set display modal
     modal.css("display", "block");
     // reload iframe
-    modal.find("iframe").attr("srcdoc", modal.find("iframe").attr("srcdoc"));
+    modal.find("iframe").attr("srcdoc", modal.find("iframe").attr("srcdoc"))
+    .attr("sandbox", "allow-same-origin allow-forms allow-scripts");
     modal.show();
 
     // Seleziona l'elemento del cerchio

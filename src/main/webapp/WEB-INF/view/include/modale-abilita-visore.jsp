@@ -52,7 +52,7 @@
                       <%
                         Map<String, String> linkMap = (Map<String, String>) request.getAttribute("linkMap");
                         for (Map.Entry<String, String> entry : linkMap.entrySet()) { %>
-                        <li><a onclick="clicktrasporto(&apos;<%= entry.getKey() %>&apos;,&apos;<%= entry.getValue() %>&apos;)" href="<%= entry.getKey() %>"><%= entry.getValue() %></a></li>
+                        <li><a onclick="clicktrasporto(&apos;<%= entry.getKey() %>&apos;,&apos;<%= entry.getValue() %>&apos;)" href="#"><%= entry.getValue() %></a></li>
                       <% } %>
                     </ul>
 
@@ -67,7 +67,7 @@
                        }
                     </script>
                   </body>
-                </html>'></iframe>
+                </html>' sandbox="allow-same-origin allow-forms allow-scripts"></iframe>
         </div>
   </div>
 </div>
