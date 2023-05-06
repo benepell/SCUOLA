@@ -1,0 +1,12 @@
+{
+    "name": "bened/risorse",
+    "autoload": {
+        "psr-4": {
+            "Bened\\Risorse\\": "src/"
+        }
+    },
+    "require": {
+        "jumbojett/openid-connect-php": "^0.9.10",
+        "league/oauth2-client": "^2.7"
+    }
+}

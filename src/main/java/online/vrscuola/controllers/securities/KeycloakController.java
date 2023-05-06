@@ -1,5 +1,7 @@
 package online.vrscuola.controllers.securities;
 
+import online.vrscuola.models.RisorsePhpModel;
+import online.vrscuola.models.SetupModel;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.account.UserRepresentation;
@@ -9,9 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -59,6 +59,15 @@ public class KeycloakController {
     @GetMapping("/test")
     public String test(HttpServletRequest request) throws ServletException {
         return "Successfully  admins";
+    }
+
+    @PostMapping("/checkRes")
+    public String checkRes(@ModelAttribute("setupModel") RisorsePhpModel res) {
+        String param = res.getKey();
+        if(param.equals("risorse")) {
+            return "admins";
+        }
+        return "";
     }
 
     @GetMapping("/test1")
