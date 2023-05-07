@@ -20,6 +20,9 @@
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/main.css" />" rel="stylesheet">
 
+    <!-- Altri CSS -->
+    <link href="<c:url value="/static/css/cookie.css" />" rel="stylesheet">
+
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 
@@ -39,5 +42,41 @@
     <script type="text/javascript" src="<c:url value="/static/js/jquery-3.2.1.min.js" />"></script>
     <script type="text/javascript" src="<c:url value="/static/js/bootstrap.min.js" />"></script>
      <script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+     <script type="text/javascript" src="<c:url value="/static/js/cookiechoices.js" />"></script>
+      <script type="text/javascript" src="<c:url value="/static/js/bootstrap-cookie-consent-settings.js" />"></script>
+
+     !-- Aggiungi uno script per inizializzare il popup e gestire l'evento di selezione -->
+     <script>
+         const cookieSettings = new BootstrapCookieConsentSettings({
+             contentURL: "<c:url value="/static/page/cookie/cookie-consent-content"/>",
+             privacyPolicyUrl: "<c:url value="/static/page/cookie/privacy-policy.html"/>",
+             legalNoticeUrl: "<c:url value="/static/page/cookie/legal-notice.html"/>",
+             postSelectionCallback: function () {
+                 location.reload(); // ricarica la pagina dopo la selezione
+             }
+         });
+
+         function showSettingsDialog() {
+             cookieSettings.showDialog();
+         }
+
+         $(document).ready(function () {
+             $("#settingsOutput").text(JSON.stringify(cookieSettings.getSettings()));
+             $("#settingsAnalysisOutput").text(cookieSettings.getSettings("statistics"));
+         });
+
+         // Aggiungi uno script per gestire il toggle delle card
+         const cards = document.querySelectorAll('.card');
+
+         cards.forEach(function(card) {
+             const cardHeader = card.querySelector('.card-header');
+             const cardBody = card.querySelector('.card-body');
+
+             cardHeader.addEventListener('click', function() {
+                 cardBody.classList.toggle('d-none');
+             });
+         });
+
+     </script>
   </body>
 </html>

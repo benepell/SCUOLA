@@ -6,6 +6,6 @@
 		<a href="#"><small>Termini &amp; Condizioni</small> </a>
 	</p>
 	<p class="text-muted">
-		<a href="#"><small>Chi Siamo</small></a>
+		<a href="javascript:showSettingsDialog()"><small>Privacy</small></a>
 	</p>
 </footer>
