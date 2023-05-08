@@ -39,6 +39,12 @@ public class KeycloakController {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
+
+    @GetMapping("/sso/login")
+    public RedirectView ssoLogin() {
+        return new RedirectView("/abilita-classe");
+    }
+
     @GetMapping("/login")
     public RedirectView login(Principal principal) {
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
