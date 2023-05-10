@@ -29,27 +29,45 @@ public class VisoreController {
     @PostMapping(value = "/visore-selection")
     @ResponseBody
     public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
-        studentService.setVisore(allievo, session);
-        Optional<String> res = studentService.getVisore(allievo, session);
-
-        String visore = res.isPresent() ? res.get() : "0";
-
-        boolean state = manageService.enableDevice(visore, username, session);
-        if (state) {
-            manageDetailService.startTime(username);
-        }
-
         Map<String, String> response = new HashMap<>();
-        if (res.isPresent() && state) {
-            response.put("visore", visore);
+        String dbVisore = studentService.dbVisori(username);
+
+        if (dbVisore != null) {
+            response.put("visore", dbVisore);
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
             response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
             response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
-            response.put("primo_visore", studentService.getFirstVisore());
 
-        } else {
-            response.put("visore", "0");
+            String firstVisore = studentService.getFirstVisore();
+            if (firstVisore != null) {
+                response.put("primo_visore", firstVisore);
+            } else {
+                response.put("primo_visore", "0");
+            }
+
+        }else {
+            studentService.setVisore(allievo, session);
+            Optional<String> res = studentService.getVisore(allievo, session);
+
+            String visore = res.isPresent() ? res.get() : "0";
+
+            boolean state = manageService.enableDevice(visore, username, session);
+            if (state) {
+                manageDetailService.startTime(username);
+            }
+
+            if (res.isPresent() && state) {
+                response.put("visore", visore);
+                response.put("allievo", allievo);
+                response.put("num_visore", studentService.getNumVisori());
+                response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
+                response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
+                response.put("primo_visore", studentService.getFirstVisore());
+
+            } else {
+                response.put("visore", "0");
+            }
         }
 
         return response;
@@ -62,6 +80,12 @@ public class VisoreController {
         Optional<String> res = studentService.getVisore(allievo, session);
         String visore = res.isPresent() ? res.get() : "0";
 
+        if(visore.equals("0")) {
+            String dbVisore = studentService.dbVisori(username);
+            if (dbVisore != null) {
+                visore = dbVisore;
+            }
+        }
         studentService.freeVisore(allievo, session);
 
         boolean state = manageService.removeDevice(visore, username);

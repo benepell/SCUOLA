@@ -1,6 +1,7 @@
 package online.vrscuola.repositories.devices;
 
 import online.vrscuola.entities.devices.VRDeviceInitEntitie;
+import online.vrscuola.utilities.Constants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,6 +34,18 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT MAX(id) + 1 FROM init i")
     int getNextAvailableId();
+
+    @Query(value = "SELECT i.label "
+            + "FROM init i "
+            + "JOIN connect c ON i.macAddress = c.macAddress "
+            + "WHERE c.username = :username and c.connected != 'disconnected'")
+    String findLabelByUsername(@Param("username") String username);
+
+    @Query(value = "SELECT i.label "
+            + "FROM init i "
+            + "JOIN connect c ON i.macAddress = c.macAddress "
+            + "WHERE i.label = :label and c.connected != 'disconnected'")
+    String findLabelAvailable(@Param("label") String label);
 
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")
     String findMac(@Param("label") String label);

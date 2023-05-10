@@ -4,8 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.Instant;
-
-@SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
+import java.util.List;
 @Entity(name = "init")
 @Data
 public class VRDeviceInitEntitie {
@@ -20,4 +19,9 @@ public class VRDeviceInitEntitie {
     private Instant initDate;
     private String note;
     private String code;
+
+    @OneToMany(mappedBy = "init", fetch = FetchType.LAZY)
+    private List<VRDeviceConnectivityEntitie> connectivities;
+
+    // Metodi getter e setter
 }

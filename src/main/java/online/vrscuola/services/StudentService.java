@@ -1,5 +1,7 @@
 package online.vrscuola.services;
 
+import online.vrscuola.repositories.devices.VRDeviceInitRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,10 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
+
+    @Autowired
+    VRDeviceInitRepository iRepository;
+
     private List<String> allievi;
     private List<String> visori;
 
@@ -56,26 +62,44 @@ public class StudentService {
         return Optional.ofNullable(visoreAllievo.get(allievo));
     }
 
-    public String getNumVisori(){
-        return visori != null ?  String.valueOf(visori.size()) : "";
+    public String getNumVisori() {
+        return visori != null ? String.valueOf(visori.size()) : "";
     }
 
-    public String getNumVisoriOccupati(HttpSession session){
+    public String getNumVisoriOccupati(HttpSession session) {
         Map<String, String> visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
         return visoreAllievo != null ? String.valueOf(visoreAllievo.size()) : "";
     }
 
-    public String getNumVisoriLiberi(HttpSession session){
+    public String getNumVisoriLiberi(HttpSession session) {
         Map<String, String> visoreAllievo = new HashMap<>();
         visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
         if (visoreAllievo == null) {
             visoreAllievo = new HashMap<>();
         }
-        return visori != null && visoreAllievo != null ? String.valueOf(visori.size()-visoreAllievo.size()) : "";
+        return visori != null && visoreAllievo != null ? String.valueOf(visori.size() - visoreAllievo.size()) : "";
     }
 
     // primo visore
     public String getFirstVisore() {
         return visori.stream().findFirst().get();
+    }
+
+    public String dbVisori(String username) {
+            return iRepository.findLabelByUsername(username);
+    }
+
+    public String dbFirstVisore() {
+        // while su tutti i visori
+        // se non è occupato, ritorna il primo
+        int i = 0;
+        while (visori.size() > 0) {
+            if (iRepository.findLabelAvailable(visori.get(i)) != null) {
+                i++;
+            } else {
+                return visori.get(i);
+            }
+        }
+        return null;
     }
 }
