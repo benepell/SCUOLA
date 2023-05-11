@@ -84,6 +84,12 @@ public class StudentService {
         return visori != null && visoreAllievo != null ? String.valueOf(visori.size() - visoreAllievo.size()) : "";
     }
 
+    public void cleanVisori(HttpSession session) {
+        if (session != null && session.getAttribute("visoreAllievo") != null){
+            session.removeAttribute("visoreAllievo");
+        }
+    }
+
     // primo visore
     public String getFirstVisore() {
         return visori.stream().findFirst().get();
@@ -107,15 +113,16 @@ public class StudentService {
         return null;
     }
 
-    public void deleteUserNotClass(String username) {
+    public int deleteUserNotClass(String username) {
         if(username != null) {
            String [] cs = username.split("-");
            if(cs.length > 1) {
                String classe = cs[0];
                String sezione = cs[1];
                String str = classe + "-" + sezione + "-" + "%";
-               cRepository.deleteByUsernameNotLike(str);
+               return cRepository.deleteByUsernameNotLike(str);
            }
         }
+        return 0;
     }
 }
