@@ -1,5 +1,6 @@
 package online.vrscuola.services;
 
+import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class StudentService {
 
     @Autowired
     VRDeviceInitRepository iRepository;
+
+    @Autowired
+    VRDeviceConnectivityRepository cRepository;
 
     private List<String> allievi;
     private List<String> visori;
@@ -101,5 +105,17 @@ public class StudentService {
             }
         }
         return null;
+    }
+
+    public void deleteUserNotClass(String username) {
+        if(username != null) {
+           String [] cs = username.split("-");
+           if(cs.length > 1) {
+               String classe = cs[0];
+               String sezione = cs[1];
+               String str = classe + "-" + sezione + "-" + "%";
+               cRepository.deleteByUsernameNotLike(str);
+           }
+        }
     }
 }

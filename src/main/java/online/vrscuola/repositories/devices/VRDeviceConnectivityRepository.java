@@ -38,5 +38,10 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Modifying
     @Query(value = "UPDATE connect c set c.initDate=:initDate, c.argoment = :argoment WHERE c.macAddress = :macAddress  ")
     void updateArgomentByVisore(@Param("initDate") Instant initDate, @Param("argoment") String argoment,  @Param("macAddress") String macAddress);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM connect c WHERE c.username NOT LIKE :prefix")
+    void deleteByUsernameNotLike(@Param("prefix") String prefix);
 }
 

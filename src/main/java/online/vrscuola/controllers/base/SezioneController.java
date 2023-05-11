@@ -2,6 +2,7 @@ package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.KeycloakUserService;
+import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import online.vrscuola.services.devices.VRDeviceManagerOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class SezioneController {
     @Autowired
     VRDeviceManageDetailService detailService;
 
+    @Autowired
+    StudentService studentService;
+
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected,@RequestParam("sectionSelected") String sectionSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);
@@ -34,6 +38,13 @@ public class SezioneController {
         keycloakUserService.initFilterSections(classSelected,sectionSelected);
         String[] alunni = keycloakUserService.filterSectionsAllievi();
         String[] username = keycloakUserService.filterSectionsUsername();
+
+        // cancella i dati precedenti se cambia classe in connec
+        if(username != null && username.length > 0){
+            studentService.deleteUserNotClass(username[0]);
+
+        }
+
         orderService.initOrder(alunni,username,detailService);
         String[] alunniOrdinati = orderService.getAlunni();
         String[] usernameOrdinati = orderService.getUsername();

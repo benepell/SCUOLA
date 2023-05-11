@@ -1,5 +1,6 @@
 package online.vrscuola.controllers.base;
 
+import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageService;
 import org.springframework.beans.factory.annotation.Autowired;
