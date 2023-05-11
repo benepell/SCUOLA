@@ -14,8 +14,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/")
-public class AbilitaController
-{
+public class AbilitaController {
 
     @Value("${health.datasource.website.keycloak}")
     private String linkKeycloak;
@@ -29,9 +28,8 @@ public class AbilitaController
     @Autowired
     VRDeviceManageService manageService;
 
-    @RequestMapping(value="abilita-classe")
-    public String getAbilitaClasse(Model model)
-    {
+    @RequestMapping(value = "abilita-classe")
+    public String getAbilitaClasse(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -41,9 +39,9 @@ public class AbilitaController
 
         return "abilita-classe";
     }
-    @RequestMapping(value="abilita-sezione")
-    public String getAbilitaSezione(Model model)
-    {
+
+    @RequestMapping(value = "abilita-sezione")
+    public String getAbilitaSezione(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -54,9 +52,8 @@ public class AbilitaController
         return "abilita-sezione";
     }
 
-    @RequestMapping(value="abilita-visore")
-    public String getAbilitaVisore(Model model, HttpSession session)
-    {
+    @RequestMapping(value = "abilita-visore")
+    public String getAbilitaVisore(Model model, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -66,10 +63,11 @@ public class AbilitaController
 
         String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = manageService.allDevices();
+        String[] users = session.getAttribute("usernameSelected") != null ? session.getAttribute("usernameSelected").toString().split(",") : null;
         if (alu == null || vis == null) {
             return "redirect:/abilita-classe";
         }
-        studentService.init(Arrays.asList(alu),Arrays.asList(vis));
+        studentService.init(Arrays.asList(alu), Arrays.asList(vis));
 
         return "abilita-visore";
     }
