@@ -2,9 +2,9 @@
 <%
     String risorse = request.getAttribute("risorse") != null ? (String)request.getAttribute("risorse") : "";
     String utenti = request.getAttribute("utenti") != null ? (String)request.getAttribute("utenti") : "";
-    String[] lbls = new String[] { "CLASSE", "VISORI", "RISORSE", "UTENTI","REPORT","DIAGNOSI","LOGOUT"};
-    String[] li = new String[] { "/abilita-classe","/setup-visore", risorse, utenti + "/admin/master/console/#/scuola/users","/report","/diagnosi" ,"/logout" };
-    String[] targets = new String[] { "_self", "_self", "_blank", "_blank", "_self", "_self", "_self" };
+    String[] lbls = new String[] { "CLASSE", "VISORI", "RISORSE", "UTENTI", "DIAGNOSI","LOGOUT"};
+    String[] li = new String[] { "/abilita-classe","/setup-visore", risorse, utenti + "/admin/master/console/#/scuola/users","/diagnosi" ,"/logout" };
+    String[] targets = new String[] { "_self", "_self", "_blank", "_blank", "_self", "_self" };
 %>
   <div class="mysez-sezione">
     <!-- barra centrale -->
