@@ -10,6 +10,7 @@
     int codiceVisore = 0;
     String[] allievi = (String[])session.getAttribute("alunni");
     String[] username = (String[])session.getAttribute("username");
+    String users = username != null ? String.join(",", username) : "";
 %>
 
 <div class="jumbotron jumbotron-billboard">
@@ -26,9 +27,21 @@
 
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
 
+<!-- Form per inviare il valore della classe selezionata -->
+<form id="form" method="post" action="/chiudi-visore">
+
+    <input type="hidden" name="username" value="<%=users%>" />
+
 <div class="loader-container">
   <div class="loader"></div>
 </div>
+
+<div>
+    <a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla chiusura di tutti i visori">
+      <img src="static/images/scroll-up-arrow.png" alt="Cerca" width="80" height="80">
+    </a>
+</div>
+
 
 <% if (allievi != null && allievi.length > 0) { %>
 
@@ -55,12 +68,17 @@
 </div>
 <% } %>
 
+<script>
+    function send() {
+        document.getElementById("form").submit();
+    }
+</script>
+
 <script src="static/js/jquery-3.6.4.min.js"></script>
 <script src="static/js/card-visore.js"></script>
 <script src="static/js/modale-card-visore.js"></script>
 <script src="static/js/preload-card-visore.js"></script>
 <script src="static/js/scroll-card-visore.js"></script>
-
 
 <%-- Modale per la visualizzazione del visore --%>
 <%
@@ -86,3 +104,5 @@
 
 <jsp:include page="include/scroll-page.jsp"></jsp:include>
 
+
+</form>

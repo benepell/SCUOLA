@@ -82,7 +82,6 @@ public class VRDeviceManageDetailService {
     private void addMinutes(String username) {
 
         List<Object[]> results = dRepository.findValues(username);
-        List<DetailConnectInfoModel> detailConnectInfoList = new ArrayList<>();
 
         for (Object[] result : results) {
             Instant startDate = (Instant) result[0];

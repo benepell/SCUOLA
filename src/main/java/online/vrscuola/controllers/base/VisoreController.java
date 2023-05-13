@@ -107,6 +107,16 @@ public class VisoreController {
         return response;
     }
 
+    @PostMapping(value = "/chiudi-visore")
+    public String handleCloseAllVisor(@RequestParam("username") String username, HttpSession session) {
+        if (username != null) {
+            String [] users = username.split(",");
+            studentService.closeAllVisor(users, manageDetailService, session);
+        }
+
+        return "abilita-classe";
+    }
+
     @PostMapping(value = "/allievo-visore")
     public String handleAllievoVisoreSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected, @RequestParam("visorSelected") String visorSelected, HttpSession session) {
         session.setAttribute("classSelected", classSelected);

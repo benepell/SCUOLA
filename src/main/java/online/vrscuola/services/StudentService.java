@@ -2,6 +2,7 @@ package online.vrscuola.services;
 
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
+import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,5 +125,23 @@ public class StudentService {
            }
         }
         return 0;
+    }
+
+    public void closeAllVisor(String[] users, VRDeviceManageDetailService detailService, HttpSession session){
+
+        if (users == null || users.length == 0){
+            return;
+        }
+
+        for(String user : users){
+            // aggiorna orario di fine utilizzo e monteore in dettaglio connessione
+            detailService.endTime(user);
+        }
+
+        // rimuove gli allievi da sessione
+        session.removeAttribute("visoreAllievo");
+
+        // rimuove i visori da connect
+        cRepository.removeAll();
     }
 }

@@ -13,11 +13,14 @@ public class VRDeviceConnectivityEntitie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true) // Impedisce l'inserimento di valori duplicati
+    @Column(unique = true) // Impedisce l'inserimento di valori duplicati a macAddress
     private String macAddress;
 
     private Instant initDate;
+
+    @Column(unique = true) // Impedisce l'inserimento di valori duplicati a username
     private String username;
+
     private String note;
     private String connected;
     private String argoment;

@@ -64,6 +64,8 @@ public class AbilitaController {
         String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = manageService.allDevices();
         String[] users = session.getAttribute("usernameSelected") != null ? session.getAttribute("usernameSelected").toString().split(",") : null;
+
+        model.addAttribute("username", users);
         if (alu == null || vis == null) {
             return "redirect:/abilita-classe";
         }
