@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -47,17 +48,25 @@ public class KeycloakController {
 
     @GetMapping("/login")
     public RedirectView login(Principal principal) {
-        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
-        AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
-        if (accessToken != null) {
-            return new RedirectView("/abilita-classe");
-        } else {
-            return new RedirectView("/logout");
+        try{
+            KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
+            AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
+            if (accessToken != null) {
+                return new RedirectView("/abilita-classe");
+            } else {
+                return new RedirectView("/logout");
+            }
+        } catch (Exception e) {
+            return new RedirectView("/login");
         }
+
     }
 
     @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request) throws ServletException {
+    public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException {
+        if (session != null){
+            session.invalidate();
+        }
         request.logout();
         return new RedirectView("/");
     }
