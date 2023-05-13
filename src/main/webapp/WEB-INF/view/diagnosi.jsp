@@ -9,8 +9,8 @@
     String[] state = null;
 
    if (request != null) {
-       String strService = "Database,Risorse-Directory,Website-1,SSO-Keycloak,Web-Risorse,SistemaOperativo";
-       String strState = request.getAttribute("databaseStatus") + "," + request.getAttribute("resourceDirectoryStatus") + "," + request.getAttribute("websiteStatus") + "," + request.getAttribute("websiteKeycloakStatus") + "," + request.getAttribute("websiteRisorseStatus") + "," + request.getAttribute("operatingSystemStatus");
+       String strService = "Database,SSO-Keycloak,Web-Risorse,SistemaOperativo";
+       String strState = request.getAttribute("databaseStatus") + ","+ request.getAttribute("websiteKeycloakStatus") + "," + request.getAttribute("websiteRisorseStatus") + "," + request.getAttribute("operatingSystemStatus");
 
        service = strService.split(",");
        state = strState.split(",");
