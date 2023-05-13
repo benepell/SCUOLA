@@ -1,4 +1,4 @@
-package online.vrscuola.controllers.health;
+package online.vrscuola.services.health;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 
 import online.vrscuola.utilities.Constants;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
-public class ResourceDirectoryHealthCheck {
+@Service
+public class ResourceDirectoryHealthCheckService {
 
-    private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
+    private final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
 
-    public static JSONObject checkResourceDirectory() {
+    public JSONObject checkResourceDirectory() {
         JSONObject response = new JSONObject();
         if (Files.exists(RESOURCE_DIR) && Files.isDirectory(RESOURCE_DIR) && Files.isReadable(RESOURCE_DIR)) {
             response.put("status", "ok");

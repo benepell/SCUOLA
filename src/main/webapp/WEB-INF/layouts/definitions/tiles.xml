@@ -48,4 +48,9 @@
 		<put-attribute name="titolo" value="Setup Visore" />
 		<put-attribute name="content" value="/WEB-INF/view/setup-visore.jsp" />
 	</definition>
+	<definition name="diagnosi" extends="emptyBaseLayout">
+		<put-attribute name="titolo" value="Diagnose" />
+		<put-attribute name="content" value="/WEB-INF/view/diagnosi.jsp" />
+	</definition>
+
 </tiles-definitions>

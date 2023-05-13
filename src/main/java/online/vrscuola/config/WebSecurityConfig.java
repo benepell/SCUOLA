@@ -47,6 +47,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
                 .antMatchers("/checkRes").hasRole("admins")
                 .antMatchers("/chiudi-visore").hasRole("admins")
+                .antMatchers("/diagnosi").hasRole("admins")
 
                 .antMatchers("/vpnconnect").hasRole("admins")
                 .antMatchers("/vpndisconnect").hasRole("admins")

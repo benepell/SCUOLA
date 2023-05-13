@@ -1,4 +1,5 @@
 package online.vrscuola.utilities;
+import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +24,6 @@ public class Utilities {
         Pattern pattern = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
         return pattern.matcher(mac).matches();
     }
+
 
 }

@@ -1,12 +1,14 @@
-package online.vrscuola.controllers.health;
+package online.vrscuola.services.health;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class OperatingSystemHealthCheck {
+@Service
+public class OperatingSystemHealthCheckService {
 
     public static JSONObject checkOperatingSystem() {
         JSONObject response = new JSONObject();

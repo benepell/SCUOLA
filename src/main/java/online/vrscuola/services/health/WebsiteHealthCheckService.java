@@ -1,6 +1,5 @@
-package online.vrscuola.controllers.health;
+package online.vrscuola.services.health;
 
-import online.vrscuola.utilities.Constants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -8,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -15,9 +15,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-public class WebsiteHealthCheck {
+@Service
+public class WebsiteHealthCheckService {
 
-    public static JSONObject checkWebsite(String url) {
+    public JSONObject checkWebsite(String url) {
         JSONObject response = new JSONObject();
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
@@ -46,7 +47,7 @@ public class WebsiteHealthCheck {
         return response;
     }
 
-    public static JSONObject checkWebsite(String url, String username, String password) {
+    public JSONObject checkWebsite(String url, String username, String password) {
         JSONObject response = new JSONObject();
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);

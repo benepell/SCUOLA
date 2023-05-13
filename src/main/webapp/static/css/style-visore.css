@@ -309,7 +309,19 @@
   margin-top: 0;
   z-index: 100;
   color: yellowgreen;
-  font-size: 40px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.ok {
+  color: yellowgreen !important;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.error {
+  color: red !important;
+  font-size: 32px;
   font-weight: bold;
 }
 
