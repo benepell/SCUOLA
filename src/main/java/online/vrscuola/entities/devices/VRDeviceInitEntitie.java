@@ -20,6 +20,9 @@ public class VRDeviceInitEntitie {
     private String note;
     private String code;
 
+    @Column(columnDefinition = "INTEGER DEFAULT 100")
+    private Integer batteryLevel;
+
     @OneToMany(mappedBy = "init", fetch = FetchType.LAZY)
     private List<VRDeviceConnectivityEntitie> connectivities;
 

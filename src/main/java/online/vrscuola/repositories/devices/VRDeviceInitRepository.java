@@ -17,24 +17,30 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init i WHERE i.macAddress =:mac")
     Boolean existsByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac")
+    @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac and i.batteryLevel > " + Constants.BATTERY_LEVEL)
     String labelByMacAddress(@Param("mac") String mac);
 
     @Query(value = "SELECT code FROM init i WHERE i.macAddress =:mac")
     String codeByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i ")
+    @Query(value = "SELECT label FROM init i  WHERE i.batteryLevel > " + Constants.BATTERY_LEVEL)
     List<String> labels();
 
-    @Query(value = "SELECT i.macAddress FROM init i")
+    @Query(value = "SELECT i.macAddress FROM init i WHERE i.batteryLevel > " + Constants.BATTERY_LEVEL)
     List<String> macs();
+
+    @Query(value = "SELECT label FROM init i ")
+    List<String> labelsSetup();
+
+    @Query(value = "SELECT i.macAddress FROM init i")
+    List<String> macsSetup();
+
 
     @Query(value = "SELECT COUNT(*) FROM init i")
     int getCount();
 
     @Query(value = "SELECT MAX(id) + 1 FROM init i")
     int getNextAvailableId();
-
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
@@ -44,7 +50,7 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
-            + "WHERE i.label = :label and c.connected != 'disconnected'")
+            + "WHERE ( i.label = :label and c.connected != 'disconnected' and i.batteryLevel > " + Constants.BATTERY_LEVEL +")")
     String findLabelAvailable(@Param("label") String label);
 
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")

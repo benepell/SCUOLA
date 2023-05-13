@@ -15,4 +15,5 @@ public interface Constants {
     String CONNECTED_IN_RECONNECTING = "reconnecting";
     String CONNECTED_IN_RECONNECTING_ERROR = "reconnecting_error";
 
+    int BATTERY_LEVEL = 15;
 }

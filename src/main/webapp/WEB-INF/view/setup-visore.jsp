@@ -8,9 +8,9 @@
     String[] setupVisori = null;
     String[] labelVisori = null;
 
-    if (request.getAttribute("macs") != null && request.getAttribute("labels") != null) {
-        setupVisori = request.getAttribute("macs").toString().split(",");
-        labelVisori = request.getAttribute("labels").toString().split(",");
+    if (request.getAttribute("macsSetup") != null && request.getAttribute("labelsSetup") != null) {
+        setupVisori = request.getAttribute("macsSetup").toString().split(",");
+        labelVisori = request.getAttribute("labelsSetup").toString().split(",");
     }
 
 %>

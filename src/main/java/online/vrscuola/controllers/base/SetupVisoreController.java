@@ -46,11 +46,11 @@ public class SetupVisoreController {
         model.addAttribute("saluti", "Gestione dei visori");
 
         try {
-            List<String> labels = repository.labels();
-            List<String> macs = repository.macs();
+            List<String> labelsSetup = repository.labelsSetup();
+            List<String> macsSetup = repository.macsSetup();
 
-            model.addAttribute("macs", String.join(",", macs));
-            model.addAttribute("labels", String.join(",", labels));
+            model.addAttribute("macsSetup", String.join(",", macsSetup));
+            model.addAttribute("labelsSetup", String.join(",", labelsSetup));
 
             model.addAttribute("utenti", linkKeycloak);
             model.addAttribute("risorse", linkRisorse);
