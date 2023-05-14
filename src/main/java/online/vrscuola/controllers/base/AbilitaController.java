@@ -63,6 +63,8 @@ public class AbilitaController {
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
 
+        session.setAttribute("isCloseVisorLogout", true);
+
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 

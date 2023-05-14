@@ -2,6 +2,9 @@ package online.vrscuola.controllers.securities;
 
 import online.vrscuola.models.RisorsePhpModel;
 import online.vrscuola.models.SetupModel;
+import online.vrscuola.services.StudentService;
+import online.vrscuola.services.devices.VRDeviceManageDetailService;
+import online.vrscuola.services.devices.VRDeviceManageService;
 import online.vrscuola.services.log.EventLogService;
 import online.vrscuola.utilities.Constants;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -46,6 +49,12 @@ public class KeycloakController {
     @Autowired
     EventLogService logService;
 
+    @Autowired
+    StudentService studentService;
+
+    @Autowired
+    VRDeviceManageDetailService manageDetailService;
+
     @GetMapping("/sso/login")
     public RedirectView ssoLogin() {
         return new RedirectView("/abilita-classe");
@@ -73,6 +82,18 @@ public class KeycloakController {
     @GetMapping("/logout")
     public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException {
         logService.sendLog(session, Constants.EVENT_LOG_OUT);
+
+        // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
+        boolean closeVisors = session.getAttribute("isCloseVisorLogout") != null ? (Boolean) session.getAttribute("isCloseVisorLogout") : false;
+        if (closeVisors) {
+          // effettua la chiamata a chiudi i visori
+            String[] username = session.getAttribute("username") != null ? (String[])session.getAttribute("username") : null;
+            if (username != null && username.length > 0) {
+                // chiude tutti i visori
+                studentService.closeAllVisor(username, manageDetailService, session);
+            }
+        }
+
         if (session != null){
             session.invalidate();
         }

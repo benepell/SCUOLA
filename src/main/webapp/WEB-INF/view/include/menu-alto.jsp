@@ -1,5 +1,7 @@
 <!-- codice menu -->
 <%
+    Boolean isCloseVisorLogout = request.getAttribute("isCloseVisorLogout") != null ? (Boolean)request.getAttribute("isCloseVisorLogout") : false;
+    String scuola = request.getAttribute("scuola") != null ? (String)request.getAttribute("scuola") : "";
     String risorse = request.getAttribute("risorse") != null ? (String)request.getAttribute("risorse") : "";
     String utenti = request.getAttribute("utenti") != null ? (String)request.getAttribute("utenti") : "";
     String[] lbls = new String[] { "CLASSE", "VISORI", "RISORSE", "UTENTI", "DIAGNOSI","LOGOUT"};
