@@ -31,6 +31,13 @@ public class DiagnoseController {
     @Value("${health.datasource.password}")
     private String healthDatasourcePassword;
 
+    @Value("${health.datasource.website.keycloak}")
+    private String linkKeycloak;
+
+    @Value("${health.datasource.website.risorse}")
+    private String linkRisorse;
+
+
     @Autowired
     DatabaseHealthCheckService databaseHealthCheckService;
 
@@ -60,6 +67,10 @@ public class DiagnoseController {
         model.addAttribute("websiteKeycloakStatus", websiteKeycloakStatus);
         model.addAttribute("websiteRisorseStatus", websiteRisorseStatus);
         model.addAttribute("operatingSystemStatus", operatingSystemStatus);
+
+        model.addAttribute("utenti", linkKeycloak);
+        model.addAttribute("risorse", linkRisorse);
+
 
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
