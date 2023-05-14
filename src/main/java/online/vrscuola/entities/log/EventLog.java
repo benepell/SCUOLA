@@ -19,4 +19,6 @@ public class EventLog {
 
     private Instant eventDate;
 
+    private String note;
+
 }

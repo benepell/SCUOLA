@@ -3,6 +3,8 @@ package online.vrscuola.controllers.base;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageService;
+import online.vrscuola.services.log.EventLogService;
+import online.vrscuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,9 @@ public class AbilitaController {
 
     @Autowired
     VRDeviceManageService manageService;
+
+    @Autowired
+    EventLogService logService;
 
     @RequestMapping(value = "abilita-classe")
     public String getAbilitaClasse(Model model) {
@@ -70,6 +75,8 @@ public class AbilitaController {
             return "redirect:/abilita-classe";
         }
         studentService.init(Arrays.asList(alu), Arrays.asList(vis));
+
+        logService.sendLog(session, Constants.EVENT_LOG_ADD_VISOR);
 
         return "abilita-visore";
     }

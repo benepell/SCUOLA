@@ -2,9 +2,12 @@ package online.vrscuola.controllers.securities;
 
 import online.vrscuola.models.RisorsePhpModel;
 import online.vrscuola.models.SetupModel;
+import online.vrscuola.services.log.EventLogService;
+import online.vrscuola.utilities.Constants;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.account.UserRepresentation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -40,6 +43,8 @@ public class KeycloakController {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
+    @Autowired
+    EventLogService logService;
 
     @GetMapping("/sso/login")
     public RedirectView ssoLogin() {
@@ -47,13 +52,16 @@ public class KeycloakController {
     }
 
     @GetMapping("/login")
-    public RedirectView login(Principal principal) {
+    public RedirectView login(Principal principal, HttpSession session) {
         try{
             KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
             AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
             if (accessToken != null) {
+                session.setAttribute("main_username", accessToken.getPreferredUsername());
+                logService.sendLog(session, Constants.EVENT_LOG_IN);
                 return new RedirectView("/abilita-classe");
             } else {
+                session.removeAttribute("main_username");
                 return new RedirectView("/logout");
             }
         } catch (Exception e) {
@@ -64,6 +72,7 @@ public class KeycloakController {
 
     @GetMapping("/logout")
     public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException {
+        logService.sendLog(session, Constants.EVENT_LOG_OUT);
         if (session != null){
             session.invalidate();
         }
@@ -77,9 +86,10 @@ public class KeycloakController {
     }
 
     @PostMapping("/checkRes")
-    public String checkRes(@ModelAttribute("setupModel") RisorsePhpModel res) {
+    public String checkRes(@ModelAttribute("setupModel") RisorsePhpModel res, HttpSession session) {
         String param = res.getKey();
         if(param.equals("risorse")) {
+            logService.sendLog(session, Constants.EVENT_LOG_CHECK_RES);
             return "admins";
         }
         return "";
@@ -92,7 +102,7 @@ public class KeycloakController {
 
     // A new endpoint to get the user's information in JSON format
     @GetMapping("/userinfo")
-    public Map<String, Object> getUserInfo(Principal principal) {
+    public Map<String, Object> getUserInfo(Principal principal, HttpSession session) {
         KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
         AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
 
@@ -111,6 +121,8 @@ public class KeycloakController {
             }
         });
         userInfo.put("resource_roles", resourceRoles);
+
+        logService.sendLog(session, Constants.EVENT_LOG_CHECK_INFO);
 
         return userInfo;
     }
