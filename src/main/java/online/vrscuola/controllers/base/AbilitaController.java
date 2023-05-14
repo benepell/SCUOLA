@@ -76,7 +76,7 @@ public class AbilitaController {
         }
         studentService.init(Arrays.asList(alu), Arrays.asList(vis));
 
-        logService.sendLog(session, Constants.EVENT_LOG_ADD_VISOR);
+        logService.sendLog(session, Constants.EVENT_LOG_ENABLE_VISOR);
 
         return "abilita-visore";
     }

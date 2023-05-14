@@ -23,6 +23,8 @@ public interface Constants {
     String EVENT_LOG_DISCONNECT = "disconnect";
     String EVENT_LOG_ADD_VISOR = "add_visor";
     String EVENT_LOG_REMOVE_VISOR = "remove_visor";
+    String EVENT_LOG_ENABLE_VISOR = "add_visor";
+    String EVENT_LOG_DISABLE_VISOR = "remove_visor";
     String EVENT_LOG_ADD_STUDENT = "add_student";
     String EVENT_LOG_REMOVE_STUDENT = "remove_student";
     String EVENT_LOG_ADD_TEACHER = "add_teacher";
