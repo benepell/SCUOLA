@@ -77,6 +77,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     >
       <img
         src="static/images/scroll-up-arrow.png"
+        style="border: 3px solid #0dcaf0cf;border-radius: 60px;"
         alt="Vai sopra"
         width="80"
         height="80"
@@ -96,6 +97,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     >
       <img
         src="static/images/scroll-up-arrow.png"
+        style="border: 3px solid #0dcaf0cf;border-radius: 60px;"
         alt="Vai sopra"
         width="80"
         height="80"

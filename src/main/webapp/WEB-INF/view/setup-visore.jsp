@@ -54,19 +54,19 @@
 
 <div>
 <a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla ricerca dei nuovi device">
-  <img src="static/images/scroll-up-arrow.png" alt="Cerca" width="80" height="80">
+  <img src="static/images/scroll-up-arrow.png" style="border: 3px solid #0dcaf0cf;border-radius: 60px;" alt="Cerca" width="80" height="80">
 </a>
 </div>
 
 
 <div>
     <a href="#" id="scrollUpArrow" style="position: fixed; bottom: 110px; right: 35px;">
-      <img src="static/images/scroll-up-arrow.png" alt="Vai sopra" width="80" height="80">
+      <img src="static/images/scroll-up-arrow.png" style="border: 3px solid #0dcaf0cf;border-radius: 60px;" alt="Vai sopra" width="80" height="80">
     </a>
 </div>
 <div>
 <a href="#" id="scrollDownArrow" style="position: fixed; transform: rotate(180deg); bottom: 20px; right: 35px;">
-      <img src="static/images/scroll-up-arrow.png" alt="Vai sopra" width="80" height="80">
+      <img src="static/images/scroll-up-arrow.png" style="border: 3px solid #0dcaf0cf;border-radius: 60px;" alt="Vai sopra" width="80" height="80">
     </a>
 </div>
 </script>

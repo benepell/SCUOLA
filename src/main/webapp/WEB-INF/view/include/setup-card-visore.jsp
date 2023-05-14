@@ -5,7 +5,7 @@
                     <a href="#">${param.nome_visore}</a>
                 </div>
                 <div class="visore_small">
-                    <img src="static/images/visore_small.png" alt="Visore">
+                    <img src="static/images/visore_small.png"  alt="Visore">
                      <span class="tick">
                         <!--
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 20 20">
