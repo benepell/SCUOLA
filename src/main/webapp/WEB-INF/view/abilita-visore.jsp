@@ -55,7 +55,7 @@
         numVisoriInRow = 4;
     }
 %>
-  <% int margin = 0; %> <% for (int j = 0; j < Math.ceil(allievi.length / numVisoriInRow);
+  <% int margin = 0; %> <% for (int j = 0; j <= Math.ceil(allievi.length / numVisoriInRow);
   j++) { %>
   <div class="row" style="margin-top: <%=margin%>px;">
     <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(allievi.length, numVisoriInRow + j*numVisoriInRow); i++) { %>

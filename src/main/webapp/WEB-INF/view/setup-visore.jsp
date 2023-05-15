@@ -32,7 +32,7 @@
 
     <div class="container">
         <% int margin = 0; %>
-        <% for (int j = 0; j < Math.ceil(setupVisori.length / 4.0); j++) { %>
+        <% for (int j = 0; j <= Math.ceil(setupVisori.length / 4.0); j++) { %>
             <div class="row" style="margin-top:<%=margin%>px;">
                 <% for (int i = 1 + j*4; i <= Math.min(setupVisori.length, 4 + j*4); i++) { %>
                     <div class="col-md-3">
