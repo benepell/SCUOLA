@@ -8,6 +8,7 @@
 
 <%
     int codiceVisore = 0;
+    boolean isTablet = session.getAttribute("isTablet") != null ? (boolean)session.getAttribute("isTablet") : false;
     String[] allievi = (String[])session.getAttribute("alunni");
     String[] username = (String[])session.getAttribute("username");
     String users = username != null ? String.join(",", username) : "";
@@ -46,11 +47,25 @@
 <% if (allievi != null && allievi.length > 0) { %>
 
 <div class="container">
-  <% int margin = 0; %> <% for (int j = 0; j < Math.ceil(allievi.length / 4.0);
+<%
+    int numVisoriInRow = 0;
+    if (isTablet) {
+        numVisoriInRow = 3;
+    } else {
+        numVisoriInRow = 4;
+    }
+%>
+  <% int margin = 0; %> <% for (int j = 0; j < Math.ceil(allievi.length / numVisoriInRow);
   j++) { %>
-  <div class="row" style="margin-top: <%=margin%>px">
-    <% for (int i = 1 + j*4; i <= Math.min(allievi.length, 4 + j*4); i++) { %>
-    <div class="col-md-3">
+  <div class="row" style="margin-top: <%=margin%>px;">
+    <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(allievi.length, numVisoriInRow + j*numVisoriInRow); i++) { %>
+
+    <% if (isTablet) { %>
+      <div class="col-md-3" style="margin-left: 50px;">
+    <%} else { %>
+      <div class="col-md-3">
+    <% }%>
+
       <jsp:include page="include/card-visore.jsp">
         <jsp:param name="nome_allievo" value="<%=allievi[i-1]%>" />
         <jsp:param name="username_allievo" value="<%=username[i-1]%>" />
@@ -58,6 +73,7 @@
       </jsp:include>
     </div>
     <%} %>
+
   </div>
   <% margin = 325; %>
   <script>

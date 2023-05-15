@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
@@ -34,13 +35,21 @@ public class AbilitaController {
     EventLogService logService;
 
     @RequestMapping(value = "abilita-classe")
-    public String getAbilitaClasse(Model model) {
+    public String getAbilitaClasse(Model model, HttpServletRequest request, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
 
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
+
+        String userAgent = request != null && request.getHeader("User-Agent") != null
+                ? request.getHeader("User-Agent") : "";
+
+        boolean isTablet = userAgent.toLowerCase().contains("ipad") ||
+                userAgent.toLowerCase().contains("android") || userAgent.toLowerCase().contains("tablet");
+
+        session.setAttribute("isTablet", isTablet);
 
         return "abilita-classe";
     }
