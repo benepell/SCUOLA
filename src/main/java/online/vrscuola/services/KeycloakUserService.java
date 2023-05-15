@@ -91,6 +91,7 @@ public class KeycloakUserService {
 
         return classSelected != null ? users.stream()
                 .map(user -> user.get("sezione"))
+                .sorted()
                 .toArray(String[]::new) : null;
     }
 
