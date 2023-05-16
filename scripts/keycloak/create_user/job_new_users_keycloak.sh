@@ -10,11 +10,14 @@ if [ ! -f "$input_file" ]; then
   exit 1
 fi
 
+tmp="/var/www/html/risorse/files/conf/new_users"
+mv "$input_file" "$tmp"
+
 # Leggi il file di input riga per riga
 while IFS=, read -r classe sezione firstName lastName || [[ -n $classe ]]; do
   # Esegui lo split della riga in base alla virgola e passa i parametri allo script crea_file.sh
   $cmd "$classe" "$sezione" "$firstName" "$lastName"
-done < "$input_file"
-
+done < "$tmp"
+ext=".txt.done"
 # Rinomina il file di input in new_users.txt.done
-mv "$input_file" "$input_file.done"
+mv "$tmp" "$tmp$ext"
