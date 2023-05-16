@@ -2,7 +2,7 @@ package online.vrscuola.controllers.base;
 
 import online.vrscuola.models.InitParamModel;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
-import online.vrscuola.services.ValidateCredentialService;
+import online.vrscuola.services.securities.ValidateCredentialService;
 import online.vrscuola.services.conf.ReadOculusServices;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.utilities.Utilities;

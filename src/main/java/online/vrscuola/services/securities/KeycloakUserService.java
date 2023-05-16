@@ -1,4 +1,4 @@
-package online.vrscuola.services;
+package online.vrscuola.services.securities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

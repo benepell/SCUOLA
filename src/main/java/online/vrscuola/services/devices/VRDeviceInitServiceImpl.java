@@ -3,6 +3,7 @@ package online.vrscuola.services.devices;
 import online.vrscuola.entities.devices.VRDeviceInitEntitie;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
+import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +35,8 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         VRDeviceInitEntitie.setLabel(label);
         VRDeviceInitEntitie.setNote(note);
         VRDeviceInitEntitie.setCode(paramCode);
+        // quando si aggiunge un nuovo apparato, presumo che la batteria è al 100%
+        VRDeviceInitEntitie.setBatteryLevel(Constants.BATTERY_LEVEL_MAX);
         VRDeviceInitRepository.save(VRDeviceInitEntitie);
     }
 

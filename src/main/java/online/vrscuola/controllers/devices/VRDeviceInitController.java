@@ -1,21 +1,18 @@
 package online.vrscuola.controllers.devices;
 
 import online.vrscuola.models.InitParamModel;
-import online.vrscuola.payload.request.VRDeviceInitRequest;
 import online.vrscuola.payload.response.MessageResponse;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
-import online.vrscuola.services.ValidateCredentialService;
+import online.vrscuola.services.securities.ValidateCredentialService;
 import online.vrscuola.services.conf.ReadOculusServices;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
-import online.vrscuola.utilities.MessageServiceImpl;
-import online.vrscuola.utilities.UtilServiceImpl;
+import online.vrscuola.services.utils.MessageServiceImpl;
+import online.vrscuola.services.utils.UtilServiceImpl;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 

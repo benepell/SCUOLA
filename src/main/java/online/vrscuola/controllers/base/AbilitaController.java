@@ -1,10 +1,10 @@
 package online.vrscuola.controllers.base;
 
-import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageService;
 import online.vrscuola.services.log.EventLogService;
 import online.vrscuola.utilities.Constants;
+import online.vrscuola.services.utils.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -34,6 +34,9 @@ public class AbilitaController {
     @Autowired
     EventLogService logService;
 
+    @Autowired
+    UtilService utilService;
+
     @RequestMapping(value = "abilita-classe")
     public String getAbilitaClasse(Model model, HttpServletRequest request, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
@@ -43,13 +46,7 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
-        String userAgent = request != null && request.getHeader("User-Agent") != null
-                ? request.getHeader("User-Agent") : "";
-
-        boolean isTablet = userAgent.toLowerCase().contains("ipad") ||
-                userAgent.toLowerCase().contains("android") || userAgent.toLowerCase().contains("tablet");
-
-        session.setAttribute("isTablet", isTablet);
+        session.setAttribute("isTablet", utilService.isTablet(request));
 
         return "abilita-classe";
     }

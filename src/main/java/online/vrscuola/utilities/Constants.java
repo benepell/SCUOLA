@@ -37,9 +37,6 @@ public interface Constants {
     String EVENT_LOG_CHECK_RES = "resource_check";
     String EVENT_LOG_CHECK_INFO = "info_check";
 
-
-
-
-
+    int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 15;
 }

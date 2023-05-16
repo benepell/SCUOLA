@@ -3,7 +3,7 @@ package online.vrscuola.services.devices;
 import online.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
-import online.vrscuola.services.KeycloakUserService;
+import online.vrscuola.services.securities.KeycloakUserService;
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;

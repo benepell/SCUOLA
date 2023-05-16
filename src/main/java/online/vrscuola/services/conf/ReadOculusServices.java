@@ -2,7 +2,7 @@ package online.vrscuola.services.conf;
 
 import online.vrscuola.models.InitParamModel;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
-import online.vrscuola.services.ValidateCredentialService;
+import online.vrscuola.services.securities.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

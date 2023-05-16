@@ -1,6 +1,6 @@
 package online.vrscuola.controllers.securities;
 
-import online.vrscuola.services.KeycloakUserService;
+import online.vrscuola.services.securities.KeycloakUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;

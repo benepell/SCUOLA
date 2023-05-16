@@ -1,7 +1,7 @@
 package online.vrscuola.controllers.base;
 
 import online.vrscuola.services.ArgomentiDirService;
-import online.vrscuola.services.KeycloakUserService;
+import online.vrscuola.services.securities.KeycloakUserService;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import online.vrscuola.services.devices.VRDeviceManageService;
