@@ -38,8 +38,8 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     </c:forEach>
   </section>
 
-  <div class="my-classe">
-    <img src="static/images/classe.png" alt="classe" width="100%" />
+  <div  class="video-background">
+      <video src="static/video/video.mp4" autoplay loop muted></video>
   </div>
 </form>
 
@@ -78,4 +78,21 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     document.getElementById("classSelected").value = className;
     document.getElementById("form").submit();
   }
+</script>
+
+<script>
+  var video = document.getElementById('my-video');
+
+  video.addEventListener('progress', function() {
+    var bufferedEnd = video.buffered.end(video.buffered.length - 1);
+    var duration = video.duration;
+    if (duration > 0) {
+      // Calcola la percentuale di buffering completato
+      var percentBuffered = (bufferedEnd / duration) * 100;
+      console.log('Percentuale di buffering completato: ' + percentBuffered + '%');
+
+      // Puoi implementare qui le tue logiche basate sul buffering
+      // Ad esempio, mostrare uno spinner di caricamento durante il buffering
+    }
+  });
 </script>
