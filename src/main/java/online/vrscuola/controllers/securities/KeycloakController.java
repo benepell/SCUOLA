@@ -55,8 +55,9 @@ public class KeycloakController {
     @Autowired
     VRDeviceManageDetailService manageDetailService;
 
-    @GetMapping("/sso/login")
+    @RequestMapping("/sso/login")
     public RedirectView ssoLogin() {
+        // Esegui il redirect alla abilita-classe se si verifica l'errore 401
         return new RedirectView("/abilita-classe");
     }
 
