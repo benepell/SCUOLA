@@ -25,45 +25,45 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-        http.cors().and().csrf().disable()
+
+        http
+                .cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/sso/login").authenticated()
                 .antMatchers("/login").authenticated()
                 .antMatchers("/userinfo").authenticated()
+                .antMatchers("/sso/login").permitAll()
                 .antMatchers("/health").permitAll()
                 .antMatchers("/hello").permitAll()
                 .antMatchers("/config").permitAll()
                 .antMatchers("/update-env").permitAll()
+                .antMatchers("/initialize-devices/**").permitAll()
+                .antMatchers("/connectivity-devices/**").permitAll()
+                .antMatchers("/keycloak-users/**").permitAll()
+                .antMatchers("/basesetup").permitAll()
                 .antMatchers("/test").hasRole("admins")
                 .antMatchers("/test1").hasRole("users")
-
                 .antMatchers("/abilita-classe").hasRole("admins")
                 .antMatchers("/abilita-sezione").hasRole("admins")
                 .antMatchers("/abilita-visore").hasRole("admins")
-
                 .antMatchers("/setup-visore").hasRole("admins")
                 .antMatchers("/scan-visore").hasRole("admins")
                 .antMatchers("/sezione").hasRole("admins")
-
                 .antMatchers("/checkRes").hasRole("admins")
                 .antMatchers("/chiudi-visore").hasRole("admins")
                 .antMatchers("/diagnosi").hasRole("admins")
-
                 .antMatchers("/vpnconnect").hasRole("admins")
                 .antMatchers("/vpndisconnect").hasRole("admins")
-                .antMatchers("/initialize-devices/**").permitAll()
-                .antMatchers("/connectivity-devices/**").permitAll()
                 .antMatchers("/generate-keycloak-credentials/**").hasRole("admins")
-                .antMatchers("/keycloak-users/**").permitAll()
                 .antMatchers("/setup").hasRole("admins")
                 .antMatchers("/setup-state").hasRole("admins")
                 .antMatchers("/setup/**").hasRole("admins")
-                .antMatchers("/basesetup").permitAll()
                 .antMatchers("/upload/**").hasRole("admins")
                 .antMatchers("/resources/**").hasRole("admins")
                 .anyRequest().permitAll();
+
         http.headers().frameOptions().sameOrigin();
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

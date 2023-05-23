@@ -45,7 +45,6 @@
      <script type="text/javascript" src="<c:url value="/static/js/cookiechoices.js" />"></script>
       <script type="text/javascript" src="<c:url value="/static/js/bootstrap-cookie-consent-settings.js" />"></script>
 
-     !-- Aggiungi uno script per inizializzare il popup e gestire l'evento di selezione -->
      <script>
          const cookieSettings = new BootstrapCookieConsentSettings({
              contentURL: "<c:url value="/static/page/cookie/cookie-consent-content"/>",
