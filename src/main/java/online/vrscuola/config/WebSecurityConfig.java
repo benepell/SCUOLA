@@ -33,6 +33,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/sso/login").permitAll()
                 .antMatchers("/userinfo").authenticated()
+                .antMatchers("/error").permitAll()
                 .antMatchers("/health").permitAll()
                 .antMatchers("/hello").permitAll()
                 .antMatchers("/config").permitAll()
