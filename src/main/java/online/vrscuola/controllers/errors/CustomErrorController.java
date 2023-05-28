@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorCon
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -11,14 +12,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/error")
 public class CustomErrorController extends AbstractErrorController {
 
     public CustomErrorController(ErrorAttributes errorAttributes) {
         super(errorAttributes);
     }
 
-    @RequestMapping
+    @RequestMapping("/error")
     public RedirectView handleError(HttpServletRequest request) {
         if (getStatus(request) == HttpStatus.UNAUTHORIZED && "/sso/login".equals(request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI))) {
             // Esegui il redirect a login patch per error 401 per keycloak
@@ -26,6 +26,15 @@ public class CustomErrorController extends AbstractErrorController {
         }
 
         // Esegui un redirect di fallback a una pagina di errore generica
-        return new RedirectView("/error-page");
+        return new RedirectView("/errore");
+    }
+
+    @RequestMapping("/errore")
+    public String getWelcome(Model model)
+    {
+        model.addAttribute("intestazione", "Errore");
+        return "errore";
     }
 }
+
+

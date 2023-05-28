@@ -12,7 +12,7 @@
             <div class="col-6" style="margin-top: 20px !important;">
                 <h2>Errore</h2>
                 <p>Si è verificato un errore durante l'esecuzione della richiesta.</p>
-                <a href="/login" id="SignUp" class="btn btn btn-success btn-lg">Accedi</a>
+                <a href="/" class="btn btn btn-warning btn-lg">Home</a>
             </div>
         </div>
     </div>
