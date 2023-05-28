@@ -80,19 +80,3 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   }
 </script>
 
-<script>
-  var video = document.getElementById('my-video');
-
-  video.addEventListener('progress', function() {
-    var bufferedEnd = video.buffered.end(video.buffered.length - 1);
-    var duration = video.duration;
-    if (duration > 0) {
-      // Calcola la percentuale di buffering completato
-      var percentBuffered = (bufferedEnd / duration) * 100;
-      console.log('Percentuale di buffering completato: ' + percentBuffered + '%');
-
-      // Puoi implementare qui le tue logiche basate sul buffering
-      // Ad esempio, mostrare uno spinner di caricamento durante il buffering
-    }
-  });
-</script>

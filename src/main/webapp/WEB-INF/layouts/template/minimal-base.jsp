@@ -13,10 +13,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
-    
-    <!-- open-iconic -->
-    <link href="<c:url value="/static/css/open-iconic-bootstrap.css" />" rel="stylesheet">
-    
+     
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/minimal-main.css" />" rel="stylesheet">
 
@@ -33,7 +30,7 @@
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script type="text/javascript" src="<c:url value="/static/js/jquery-3.2.1.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/static/js/jquery-3.6.4.min.js" />"></script>
     <script type="text/javascript" src="<c:url value="/static/js/bootstrap.min.js" />"></script>
      <script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
      <script type="text/javascript" src="<c:url value="/static/js/Sortable.min.js" />"></script>

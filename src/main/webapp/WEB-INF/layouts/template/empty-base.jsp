@@ -12,9 +12,7 @@
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
 
-    <!-- open-iconic -->
-    <link href="<c:url value="/static/css/open-iconic-bootstrap.css" />" rel="stylesheet">
-
+  
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/empty-main.css" />" rel="stylesheet">
 

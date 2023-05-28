@@ -47,6 +47,14 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/abilita-visore").hasRole("admins")
                 .antMatchers("/setup-visore").hasRole("admins")
                 .antMatchers("/scan-visore").hasRole("admins")
+
+                .antMatchers("/visore-selection").hasRole("admins")
+                .antMatchers("/visore-remove").hasRole("admins")
+                .antMatchers("/allievo-visore").hasRole("admins")
+                .antMatchers("/argomento-visore").hasRole("admins")
+
+
+                .antMatchers("/classe").hasRole("admins")
                 .antMatchers("/sezione").hasRole("admins")
                 .antMatchers("/checkRes").hasRole("admins")
                 .antMatchers("/chiudi-visore").hasRole("admins")
@@ -59,7 +67,10 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/setup/**").hasRole("admins")
                 .antMatchers("/upload/**").hasRole("admins")
                 .antMatchers("/resources/**").hasRole("admins")
-                .anyRequest().permitAll();
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+
+                .anyRequest().denyAll();
 
         http.headers().frameOptions().sameOrigin();
     }
