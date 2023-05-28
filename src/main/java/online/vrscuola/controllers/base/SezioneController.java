@@ -56,6 +56,9 @@ public class SezioneController {
                 studentService.cleanVisori(session);
                 studentService.init(Arrays.asList(alu), Arrays.asList(vis));
             }
+        } else {
+            // reindirizza alla pagina di login se non username
+            return "redirect:/login";
         }
 
         orderService.initOrder(alunni,username,detailService);
