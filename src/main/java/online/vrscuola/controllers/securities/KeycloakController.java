@@ -46,6 +46,9 @@ public class KeycloakController {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
+    @Value("${keycloak.redirect-uri}")
+    private String redirectURI;
+
     @Autowired
     EventLogService logService;
 
@@ -58,27 +61,33 @@ public class KeycloakController {
     @RequestMapping("/sso/login")
     public RedirectView ssoLogin() {
         // Esegui il redirect alla abilita-classe se si verifica l'errore 401
-        return new RedirectView("/abilita-classe");
+        return new RedirectView("/login");
     }
 
     @GetMapping("/login")
     public RedirectView login(Principal principal, HttpSession session) {
-        try{
+        String redirectLogin = redirectURI + "/login";
+        try {
+            // Controlla se l'utente è autenticato con Keycloak
             KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
             AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
+
             if (accessToken != null) {
+                // L'utente è autenticato, esegui le azioni necessarie e reindirizzalo alla pagina desiderata
                 session.setAttribute("main_username", accessToken.getPreferredUsername());
                 logService.sendLog(session, Constants.EVENT_LOG_IN);
                 return new RedirectView("/abilita-classe");
             } else {
+                // L'utente non è autenticato, reindirizzalo alla pagina di login di Keycloak
                 session.removeAttribute("main_username");
-                return new RedirectView("/logout");
+                return new RedirectView("{authServerUrl}/realms/{realm}/protocol/openid-connect/auth?client_id={clientId}&redirect_uri={redirectLogin}&response_type=code");
             }
         } catch (Exception e) {
-            return new RedirectView("/login");
+            // Si è verificato un errore, reindirizza l'utente alla pagina di login di Keycloak
+            return new RedirectView("{authServerUrl}/realms/{realm}/protocol/openid-connect/auth?client_id={clientId}&redirect_uri={redirectLogin}&response_type=code");
         }
-
     }
+
 
     @GetMapping("/logout")
     public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException {
