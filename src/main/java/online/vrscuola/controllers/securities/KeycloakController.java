@@ -46,8 +46,8 @@ public class KeycloakController {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
-    @Value("${keycloak.redirect-uri}")
-    private String redirectURI;
+    @Value("${basename}")
+    private String basename;
 
     @Autowired
     EventLogService logService;
@@ -66,7 +66,7 @@ public class KeycloakController {
 
     @GetMapping("/login")
     public RedirectView login(Principal principal, HttpSession session) {
-        String redirectLogin = redirectURI + "/login";
+        String redirectLogin = basename + "/login";
         try {
             // Controlla se l'utente è autenticato con Keycloak
             KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
