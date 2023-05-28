@@ -52,5 +52,9 @@
 		<put-attribute name="titolo" value="Diagnose" />
 		<put-attribute name="content" value="/WEB-INF/view/diagnosi.jsp" />
 	</definition>
+	<definition name="error-page" extends="emptyBaseLayout">
+		<put-attribute name="titolo" value="Error Page" />
+		<put-attribute name="content" value="/WEB-INF/view/error-page.jsp" />
+	</definition>
 
 </tiles-definitions>
