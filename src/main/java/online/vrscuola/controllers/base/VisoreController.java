@@ -120,7 +120,7 @@ public class VisoreController {
             vPdfService.save();
 
         } catch (DocumentException | IOException  e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
 
         if (username != null) {
@@ -128,7 +128,7 @@ public class VisoreController {
             studentService.closeAllVisor(users, manageDetailService, session);
         }
 
-        return "abilita-classe";
+        return "redirect:/abilita-classe";
     }
 
     @PostMapping(value = "/allievo-visore")
