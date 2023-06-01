@@ -40,6 +40,7 @@ public class DownloadController {
                 .body(fileContent);
     }
 
+    /*
     @RestControllerAdvice
     public static class ExceptionHandlerAdvice {
 
@@ -49,10 +50,6 @@ public class DownloadController {
             return "Errore durante il download del file: " + e.getMessage();
         }
 
-        @ExceptionHandler(Exception.class)
-        @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-        public String handleException(Exception e) {
-            return "Errore generico durante il download del file: " + e.getMessage();
-        }
     }
+    */
 }
