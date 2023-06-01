@@ -96,7 +96,6 @@ public class KeycloakController {
 
     @GetMapping("/logout")
     public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException, IOException {
-        logService.sendLog(session, Constants.EVENT_LOG_OUT);
 
         // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
         boolean closeVisors = session.getAttribute("isCloseVisorLogout") != null ? (Boolean) session.getAttribute("isCloseVisorLogout") : false;
@@ -112,6 +111,7 @@ public class KeycloakController {
         }
 
         if (session != null){
+            logService.sendLog(session, Constants.EVENT_LOG_OUT);
             session.invalidate();
         }
         request.logout();
