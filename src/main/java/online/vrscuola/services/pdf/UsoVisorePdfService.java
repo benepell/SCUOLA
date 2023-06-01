@@ -82,7 +82,11 @@ public class UsoVisorePdfService {
 
     public void save() throws DocumentException, IOException {
 
-        init();
+        boolean isError =  !init();
+
+        if (isError) {
+            return;
+        }
 
         Document document = new Document(PageSize.A4);
         try {
@@ -145,10 +149,10 @@ public class UsoVisorePdfService {
 
     }
 
-    private void init() {
+    private boolean init() {
         List<Object[]> listUsers = vrRepository.findAllUsername();
         if (listUsers == null || listUsers.isEmpty()) {
-            return; // lista vuota
+            return false; // lista vuota
         }
         List<UserInfo> list = new ArrayList<>();
         String classe = "";
@@ -176,6 +180,8 @@ public class UsoVisorePdfService {
         this.classe = classe;
         this.sezione = sezione;
         this.listUsers = list;
+
+        return true;
     }
 
     private void writeTableHeader(PdfPTable table) {
