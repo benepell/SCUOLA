@@ -1,9 +1,11 @@
 package online.vrscuola.controllers.base;
 
+import com.lowagie.text.DocumentException;
 import online.vrscuola.services.ArgomentiDirService;
 import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import online.vrscuola.services.devices.VRDeviceManageService;
+import online.vrscuola.services.pdf.UsoVisorePdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -25,6 +28,9 @@ public class VisoreController {
 
     @Autowired
     VRDeviceManageDetailService manageDetailService;
+
+    @Autowired
+    private UsoVisorePdfService vPdfService;
 
     @PostMapping(value = "/visore-selection")
     @ResponseBody
@@ -108,7 +114,15 @@ public class VisoreController {
     }
 
     @PostMapping(value = "/chiudi-visore")
-    public String handleCloseAllVisor(@RequestParam("username") String username, HttpSession session) {
+    public String handleCloseAllVisor(@RequestParam("username") String username, HttpSession session) throws IOException {
+        try {
+            // stampa tutti gli utenti che hanno un visore per chiudere la sessione
+            vPdfService.save();
+
+        } catch (DocumentException | IOException  e) {
+            throw new RuntimeException(e);
+        }
+
         if (username != null) {
             String [] users = username.split(",");
             studentService.closeAllVisor(users, manageDetailService, session);

@@ -27,6 +27,9 @@ public interface VRDeviceDetailConnectivityRepository extends JpaRepository<VRDe
     @Query(value = "SELECT d.startDate, d.endDate, d.minutes FROM detailconnect d WHERE d.username = :username")
     List<Object[]> findValues(@Param("username") String username);
 
+    @Query(value = "SELECT d.startDate FROM detailconnect d WHERE d.username = :username")
+    Instant findStartDate(@Param("username") String username);
+
     @Transactional
     default void insertStartDate(String username) {
         if(username == null) return;

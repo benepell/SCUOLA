@@ -1,21 +1,23 @@
 package online.vrscuola.models;
 
-public class KeycloakUserInfo {
+public class UserInfo {
     private String classe;
     private String cognome;
     private String nome;
     private String sezione;
-    private String username;
+    private String argomento;
+    private String durata;
 
-    public KeycloakUserInfo() {
+    public UserInfo() {
     }
 
-    public KeycloakUserInfo(String classe, String cognome, String nome, String sezione, String username) {
+    public UserInfo(String nome, String cognome, String classe, String sezione, String argomento, String durata) {
         this.classe = classe;
         this.cognome = cognome;
         this.nome = nome;
         this.sezione = sezione;
-        this.username = username;
+        this.argomento = argomento;
+        this.durata = durata;
     }
 
     public String getClasse() {
@@ -50,11 +52,19 @@ public class KeycloakUserInfo {
         this.sezione = sezione;
     }
 
-    public String getUsername() {
-        return username;
+    public String getArgomento() {
+        return argomento;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setArgomento(String argomento) {
+        this.argomento = argomento;
+    }
+
+    public String getDurata() {
+        return durata;
+    }
+
+    public void setDurata(String durata) {
+        this.durata = durata;
     }
 }

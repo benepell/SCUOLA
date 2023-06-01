@@ -2,6 +2,7 @@ package online.vrscuola.repositories.devices;
 
 
 import online.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
+import online.vrscuola.models.VRDeviceConnectivityModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceConnectivityEntitie, Long> {
@@ -24,10 +27,32 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query("SELECT c.macAddress FROM connect c WHERE c.macAddress = :mac")
     String findMac(@Param("mac") String mac);
 
+    @Query("SELECT c.id, c.macAddress, c.initDate, c.username, c.note, c.connected, c.argoment FROM connect c")
+    List<Object[]> findAllUsername();
+
+    default List<VRDeviceConnectivityModel> findAllConnectivityModels() {
+        List<Object[]> connectivityDataList = findAllUsername();
+        List<VRDeviceConnectivityModel> connectivityModelList = new ArrayList<>();
+
+        for (Object[] connectivityData : connectivityDataList) {
+            Long id = (Long) connectivityData[0];
+            String macAddress = (String) connectivityData[1];
+            Instant initDate = (Instant) connectivityData[2];
+            String username = (String) connectivityData[3];
+            String note = (String) connectivityData[4];
+            String connected = (String) connectivityData[5];
+            String argoment = (String) connectivityData[6];
+
+            VRDeviceConnectivityModel connectivityModel = new VRDeviceConnectivityModel(id, macAddress, initDate, username, note, connected, argoment);
+            connectivityModelList.add(connectivityModel);
+        }
+
+        return connectivityModelList;
+    }
     @Transactional
     @Modifying
     @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note, c.connected = :connected WHERE  c.macAddress = :macAddress  ")
-    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress, @Param("connected") String connected );
+    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress, @Param("connected") String connected);
 
     @Transactional
     @Modifying
@@ -37,11 +62,12 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Transactional
     @Modifying
     @Query(value = "UPDATE connect c set c.initDate=:initDate, c.argoment = :argoment WHERE c.macAddress = :macAddress  ")
-    void updateArgomentByVisore(@Param("initDate") Instant initDate, @Param("argoment") String argoment,  @Param("macAddress") String macAddress);
+    void updateArgomentByVisore(@Param("initDate") Instant initDate, @Param("argoment") String argoment, @Param("macAddress") String macAddress);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM connect") // TODO aggiungere where aula
+    @Query(value = "DELETE FROM connect")
+        // TODO aggiungere where aula
     void removeAll();
 
     @Transactional

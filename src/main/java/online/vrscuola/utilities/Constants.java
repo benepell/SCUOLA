@@ -5,6 +5,7 @@ public interface Constants {
     String PATH_RESOURCE_DIR = "/var/www/html/risorse/files/";
 
  //   String PATH_RESOURCE_DIR = "D:\\";
+    String SEPARATOR = "/";
     String RESOURCE_TRASH = ".trash";
     String RESOURCE_TMB= ".tmb";
 

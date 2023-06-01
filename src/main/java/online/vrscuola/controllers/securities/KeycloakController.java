@@ -6,6 +6,7 @@ import online.vrscuola.services.StudentService;
 import online.vrscuola.services.devices.VRDeviceManageDetailService;
 import online.vrscuola.services.devices.VRDeviceManageService;
 import online.vrscuola.services.log.EventLogService;
+import online.vrscuola.services.pdf.UsoVisorePdfService;
 import online.vrscuola.utilities.Constants;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,9 @@ public class KeycloakController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    UsoVisorePdfService vPdfService;
 
     @Autowired
     VRDeviceManageDetailService manageDetailService;
@@ -90,7 +95,7 @@ public class KeycloakController {
 
 
     @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException {
+    public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException, IOException {
         logService.sendLog(session, Constants.EVENT_LOG_OUT);
 
         // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
@@ -99,6 +104,8 @@ public class KeycloakController {
           // effettua la chiamata a chiudi i visori
             String[] username = session.getAttribute("username") != null ? (String[])session.getAttribute("username") : null;
             if (username != null && username.length > 0) {
+                // stampa tutti gli utenti che hanno un visore per chiudere la sessione
+                vPdfService.save();
                 // chiude tutti i visori
                 studentService.closeAllVisor(username, manageDetailService, session);
             }
