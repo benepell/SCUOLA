@@ -3,9 +3,6 @@
 		<small>&copy; 2023 VRScuola</small>
 	</p>
 	<p class="text-muted">
-		<a href="#"><small>Termini &amp; Condizioni</small> </a>
-	</p>
-	<p class="text-muted">
 		<a href="javascript:showSettingsDialog()"><small>Privacy</small></a>
 	</p>
 </footer>
