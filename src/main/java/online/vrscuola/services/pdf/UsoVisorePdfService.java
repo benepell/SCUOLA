@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import com.lowagie.text.Image;
 import online.vrscuola.models.UserInfo;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceDetailConnectivityRepository;
-import online.vrscuola.repositories.devices.VRDeviceInitRepository;
 import online.vrscuola.services.utils.MessageService;
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
@@ -33,9 +31,6 @@ public class UsoVisorePdfService {
 
     @Value("${school.resource.ses}")
     private String resourceSes;
-
-    @Value("${basename.risorse}")
-    private String basenameRisorse;
 
     @Autowired
     private VRDeviceConnectivityRepository vrRepository;
@@ -110,12 +105,16 @@ public class UsoVisorePdfService {
 
             document.open();
 
-            URL url = new URL(basenameRisorse + "/files/DOCUMENTI/USOVISORE/intestazione.png");
+            String percorsoFile = resourceSes + "intestazione.png";
+            File file = new File(percorsoFile);
 
-            Image png = Image.getInstance(url);
-            png.setAlignment(Image.ALIGN_CENTER);
-            png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
-            document.add(png);
+            if (file.exists()) {
+                Image png = Image.getInstance(file.getAbsolutePath());
+                png.setAlignment(Image.ALIGN_CENTER);
+                png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                document.add(png);
+            }
+
 
             Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
             font.setSize(18);
