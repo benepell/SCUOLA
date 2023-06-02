@@ -4,6 +4,7 @@ import online.vrscuola.services.health.DatabaseHealthCheckService;
 import online.vrscuola.services.health.OperatingSystemHealthCheckService;
 import online.vrscuola.services.health.ResourceDirectoryHealthCheckService;
 import online.vrscuola.services.health.WebsiteHealthCheckService;
+import online.vrscuola.services.pdf.EventLogPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -50,8 +52,11 @@ public class DiagnoseController {
     @Autowired
     OperatingSystemHealthCheckService operatingSystemHealthCheckService;
 
+    @Autowired
+    EventLogPdfService eventLogPdfService;
+
     @GetMapping("/diagnosi")
-    public String getDiagnose(Model model) {
+    public String getDiagnose(Model model) throws IOException {
         // Recupera i valori dal JSON e assegnali al model
 
         String databaseStatus = databaseHealthCheckService.checkDatabase(healthDataSourceUrl, healthDatasourceUsername, healthDatasourcePassword).get("status").toString();
@@ -74,6 +79,8 @@ public class DiagnoseController {
 
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
+
+        eventLogPdfService.save();
 
         return ("diagnosi");
     }

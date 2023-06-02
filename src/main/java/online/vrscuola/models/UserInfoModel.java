@@ -1,6 +1,6 @@
 package online.vrscuola.models;
 
-public class UserInfo {
+public class UserInfoModel {
     private String classe;
     private String cognome;
     private String nome;
@@ -8,10 +8,10 @@ public class UserInfo {
     private String argomento;
     private String durata;
 
-    public UserInfo() {
+    public UserInfoModel() {
     }
 
-    public UserInfo(String nome, String cognome, String classe, String sezione, String argomento, String durata) {
+    public UserInfoModel(String nome, String cognome, String classe, String sezione, String argomento, String durata) {
         this.classe = classe;
         this.cognome = cognome;
         this.nome = nome;

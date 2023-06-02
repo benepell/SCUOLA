@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.Image;
-import online.vrscuola.models.UserInfo;
+import online.vrscuola.models.UserInfoModel;
 import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import online.vrscuola.repositories.devices.VRDeviceDetailConnectivityRepository;
 import online.vrscuola.services.utils.MessageService;
@@ -23,7 +23,6 @@ import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,7 +40,7 @@ public class UsoVisorePdfService {
     @Autowired
     private MessageService messageService;
 
-    private List<UserInfo> listUsers;
+    private List<UserInfoModel> listUsers;
 
     private String classe;
     private String sezione;
@@ -52,10 +51,15 @@ public class UsoVisorePdfService {
 
         document.open();
 
-        Image png = Image.getInstance(new ClassPathResource("pdf/intestazione.png").getURL());
-        png.setAlignment(Image.ALIGN_CENTER);
-        png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
-        document.add(png);
+        String percorsoFile = resourceSes + "intestazione.png";
+        File file = new File(percorsoFile);
+
+        if (file.exists()) {
+            Image png = Image.getInstance(file.getAbsolutePath());
+            png.setAlignment(Image.ALIGN_CENTER);
+            png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+            document.add(png);
+        }
 
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         font.setSize(18);
@@ -154,7 +158,7 @@ public class UsoVisorePdfService {
         if (listUsers == null || listUsers.isEmpty()) {
             return false; // lista vuota
         }
-        List<UserInfo> list = new ArrayList<>();
+        List<UserInfoModel> list = new ArrayList<>();
         String classe = "";
         String sezione = "";
         for (Object[] userData : listUsers) {
@@ -175,7 +179,7 @@ public class UsoVisorePdfService {
             long minutesElapsed = duration.toMinutes();
             String strMinutesElapsed = minutesElapsed > 0 ? String.valueOf(minutesElapsed) : messageService.getMessage("pdf.user.empty");
 
-            list.add(new UserInfo(nome, cognome, classe, sezione, materia, strMinutesElapsed));
+            list.add(new UserInfoModel(nome, cognome, classe, sezione, materia, strMinutesElapsed));
         }
         this.classe = classe;
         this.sezione = sezione;
@@ -213,7 +217,7 @@ public class UsoVisorePdfService {
     }
 
     private void writeTableData(PdfPTable table) {
-        for (UserInfo user : listUsers) {
+        for (UserInfoModel user : listUsers) {
             table.addCell(String.valueOf(user.getNome()));
             table.addCell(user.getCognome());
             table.addCell(user.getClasse());

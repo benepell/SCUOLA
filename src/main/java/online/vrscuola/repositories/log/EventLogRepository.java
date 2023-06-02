@@ -21,4 +21,6 @@ public interface EventLogRepository extends JpaRepository<EventLog, Long> {
     List<EventLog> findByUsernameAndEventDate(String username, Instant eventDate);
     List<EventLog> findByEventAndEventDate(String event, Instant eventDate);
     List<EventLog> findByUsernameAndEventAndEventDate(String username, String event, Instant eventDate);
+    List<EventLog> findAll();
+
 }
