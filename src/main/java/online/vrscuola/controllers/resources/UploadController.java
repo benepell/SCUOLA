@@ -62,19 +62,4 @@ import org.springframework.web.multipart.MultipartFile;
             }
         }
 
-        @RestControllerAdvice
-        public static class ExceptionHandlerAdvice {
-
-            @ExceptionHandler(IOException.class)
-            @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-            public String handleIOException(IOException e) {
-                return "Errore durante il caricamento del file: " + e.getMessage();
-            }
-
-            @ExceptionHandler(Exception.class)
-            @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-            public String handleException(Exception e) {
-                return "Errore generico durante il caricamento del file: " + e.getMessage();
-            }
-        }
     }

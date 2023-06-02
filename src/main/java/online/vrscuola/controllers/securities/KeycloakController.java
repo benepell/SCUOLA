@@ -102,19 +102,21 @@ public class KeycloakController {
         if (closeVisors) {
           // effettua la chiamata a chiudi i visori
             String[] username = session.getAttribute("username") != null ? (String[])session.getAttribute("username") : null;
-            if (username != null && username.length > 0) {
+            if (session != null &&
+                    username != null && username.length > 0) {
                 // stampa tutti gli utenti che hanno un visore per chiudere la sessione
                 vPdfService.save();
                 // chiude tutti i visori
                 studentService.closeAllVisor(username, manageDetailService, session);
+
+                logService.sendLog(session, Constants.EVENT_LOG_OUT);
+                session.invalidate();
             }
         }
-
-        if (session != null){
-            logService.sendLog(session, Constants.EVENT_LOG_OUT);
-            session.invalidate();
+        if (request != null){
+            request.logout();
         }
-        request.logout();
+
         return new RedirectView("/");
     }
 
