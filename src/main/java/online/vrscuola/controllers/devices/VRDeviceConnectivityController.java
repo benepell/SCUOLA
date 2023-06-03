@@ -45,7 +45,7 @@ public class VRDeviceConnectivityController {
     public ResponseEntity<?> username(@Valid VRDeviceConnectivityRequest request) {
 
         if(!cService.valid(request.getMacAddress(),request.getCode())){
-            return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("init.add.error.macaddress"));
+            return uService.responseMsgKo(ResponseEntity.badRequest(),messageServiceImpl.getMessage("connect.user.not.found"));
         }
 
         String username = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
@@ -60,6 +60,8 @@ public class VRDeviceConnectivityController {
         String username = request.getUsername();
         String macAddress = request.getMacAddress();
         String note = request.getNote();
+        String code = request.getCode();
+        int batteryLevel = request.getBatteryLevel();
 
         // dispositivo registrato
         if(!iService.valid(macAddress,code)){
@@ -69,6 +71,10 @@ public class VRDeviceConnectivityController {
         String usernameexist = cService.viewConnect(utilities,request.getMacAddress(),request.getNote());
             cService.connect(utilities,macAddress,username,note, Constants.CONNECTED_IN_CONNECTED);
 
+        // aggiorna stato batteria dispositivo
+        if (batteryLevel > 0) {
+            iService.updateBatteryLevel(macAddress, batteryLevel);
+        }
 
         // ritorna label visore
         String visore = iService.label(macAddress);

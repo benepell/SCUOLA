@@ -55,6 +55,16 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     }
 
     @Override
+    public void updateBatteryLevel(String macAddress, int batteryLevel) {
+        try{
+            iRepository.updateBatteryLevel(macAddress, batteryLevel);
+        } catch (Exception e){
+            Log.error("Error updating battery level for device with mac address: " + macAddress + " and battery level: " + batteryLevel);
+        }
+
+    }
+
+    @Override
     public String label(String macAddress) {
         return iRepository.labelByMacAddress(macAddress);
     }

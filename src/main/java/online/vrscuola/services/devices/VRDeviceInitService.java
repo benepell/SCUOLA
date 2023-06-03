@@ -11,4 +11,6 @@ public interface VRDeviceInitService {
 
     String label(String macAddress);
 
+    void updateBatteryLevel(String macAddress, int batteryLevel);
+
 }

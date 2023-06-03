@@ -14,7 +14,6 @@ public class VRDeviceConnectivityRequest {
     @NotBlank
     @Size(max = 17)
     private String macAddress;
-    @NotBlank
     @Size(max = 15)
     private String label;
     @NotBlank
