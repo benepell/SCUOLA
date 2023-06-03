@@ -1,0 +1,127 @@
+appunti per la connessione tra BE e visore visore
+
+richiesta al BE info dell'utente collegato al mac-address del visore
+
+Method: POST
+EndPoint: https://scuola.vrscuola.online/username
+param: macAddress
+param: code (@Value("${keycloak.credentials.secret}"))
+param: note opzionale
+
+https://scuola.vrscuola.online/connectivity-devices/username?macAddress=52:54:00:12:35:02&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
+
+esempio di risposta positiva
+
+{
+    "message": "1-a-laura-gentile"
+}
+
+esempio di risposta negativa 
+
+{
+    "message": "Utente non trovato"
+}
+
+motivi di risposta negativa
+
+code errato
+macAddress non trovato / visore non registrato
+utente/visore non abilitato dal docente
+
+
+-- Step 2 autenticazione allievo su keycloak
+
+esempio di risposta positiva:
+
+
+Method: POST
+EndPoint: https://keycloak.vrscuola.online:9443/realms/scuola/protocol/openid-connect/token
+param: grant_type: password
+param: client_id: client
+param: client_secret: MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
+param: username: 1-a-laura-gentile
+param: password: laura-gentile
+
+
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGSW5EUXFaUUp0dnAyeDY2UGN3NWdFeDROOGNNTS15b2dYVFpTaDMweFZFIn0.eyJleHAiOjE2ODU3OTU2OTksImlhdCI6MTY4NTc5NTM5OSwianRpIjoiYjAzNWJiZDMtOTI2ZS00YzcwLTk1ZDUtOGM2NmUwZTA2MTMxIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay52cnNjdW9sYS5vbmxpbmU6OTQ0My9yZWFsbXMvc2N1b2xhIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImUyODUzMTJkLWFjYWEtNDdmMy04YTA2LWIxY2RjZTE4NDljNCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1NGFjYTEyMi0zNjYyLTQ1ZTMtOTFkOC0xNzNmODk1YWNjZmYiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXNjdW9sYSIsImFkbWlucyJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjU0YWNhMTIyLTM2NjItNDVlMy05MWQ4LTE3M2Y4OTVhY2NmZiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImxhdXJhIGdlbnRpbGUiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiIxLWEtbGF1cmEtZ2VudGlsZSIsImdpdmVuX25hbWUiOiJsYXVyYSIsImZhbWlseV9uYW1lIjoiZ2VudGlsZSJ9.BySD9EMo8MqQQqAzz1cCWBg-hpon76MMbRSx5CRCgMJ7lyNvG3YgKCJA0dxvBCu01Av-NkNxkUpqMtmc6utUwxdTjZbtq1ED-DTnjL3K-QAgDhS2ZLGXAvRiw7NcEO569BBu_zk1MJG2gcvEhhEwjNAYAO1ceDbn4DDQ8tc67zhfeEOouAivHgixbBun7PwJ-Ixjjmdi5MCMajW58WUZZHZrMiwiwg98OUPN4wmtA3y7xdFN1K2y2owbwcx2syLs3pKRBIGCkSGcFQogKn5QtqW0QjZSDA7T_PyfjnrNE0DWIb6_u755Eic7xuccagKqYPEW7QCCjsTawptR6IIgyA",
+    "expires_in": 300,
+    "refresh_expires_in": 1800,
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkNGE1ZDMxZC0wZjQ0LTQ1ZGEtYjYwZS0xMmMwZGEzNjgwNmYifQ.eyJleHAiOjE2ODU3OTcxOTksImlhdCI6MTY4NTc5NTM5OSwianRpIjoiOWYzMTM5NzEtMzhlZC00MTc2LTgwMGQtMmU4MWM4MWVlOWUxIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay52cnNjdW9sYS5vbmxpbmU6OTQ0My9yZWFsbXMvc2N1b2xhIiwiYXVkIjoiaHR0cHM6Ly9rZXljbG9hay52cnNjdW9sYS5vbmxpbmU6OTQ0My9yZWFsbXMvc2N1b2xhIiwic3ViIjoiZTI4NTMxMmQtYWNhYS00N2YzLThhMDYtYjFjZGNlMTg0OWM0IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1NGFjYTEyMi0zNjYyLTQ1ZTMtOTFkOC0xNzNmODk1YWNjZmYiLCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiI1NGFjYTEyMi0zNjYyLTQ1ZTMtOTFkOC0xNzNmODk1YWNjZmYifQ.h0nmyx8CwzKa7rPPtiNLt1nhBHpC_DBjKQ2Hnqy1st0",
+    "token_type": "Bearer",
+    "not-before-policy": 0,
+    "session_state": "54aca122-3662-45e3-91d8-173f895accff",
+    "scope": "email profile"
+}
+
+
+esempio di risposta errata:
+
+{
+    "error": "invalid_grant",
+    "error_description": "Invalid user credentials"
+}
+
+Step 3: connessione al visore mediante account allievo keycloak (token)
+
+Method: POST
+EndPoint: https://scuola.vrscuola.online/connectivity-devices/connect
+param: macAddress
+param: code (@Value("${keycloak.credentials.secret}"))
+param: note opzionale
+param: batteryLevel opzionale int
+
+
+https://scuola.vrscuola.online/connectivity-devices/connect?macAddress=52:54:00:12:35:02&username=1-a-laura-gentile&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
+
+esempio di risposta positiva: [label visore]
+
+{
+    "message": "Dispositivo connesso [1]"
+}
+
+esempio di risposta negativa: [label visore]
+
+{
+    "message": "Dispositivo non registrato"
+}
+
+Step 4: Argomento selezionato dal docente
+
+Method: POST
+EndPoint: https://scuola.vrscuola.online/connectivity-devices/subject
+param: macAddress
+param: code (@Value("${keycloak.credentials.secret}"))
+param: batteryLevel opzionale int
+
+esempio di risposta positiva:
+
+{
+    "message": "introduzione"
+}
+
+esempio di risposta negativa:
+
+{
+    "message": "Dispositivo non registrato"
+}
+
+Step 5: lista dei file da scaricare
+
+Method: 
+
+
+[16:09, 3/6/2023] Benedetto Pellerito: lista argomenti disponibili
+https://scuola.vrscuola.online/argomenti/all
+[introduzione] solo root
+
+https://scuola.vrscuola.online/argomenti/all?classe=1&sezione=a
+["introduzione","fisica","matematica","geografia","storia"]
+[16:11, 3/6/2023] Benedetto Pellerito: https://scuola.vrscuola.online/resources/all
+
+[{"name":"20230602_124520.pdf","size":179381,"type":"application/pdf","hash":"547b091dcc31f79c0427790772e656e9e22ba30f078e45c3fb80b981cc662a0a","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"intestazione.png","size":161726,"type":"image/png","hash":"f8e6793e0cd36b86e09e11fd00c6cecc13a6132efb1a58a80f367040614e3dd6","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"20230602_111621.pdf","size":178879,"type":"application/pdf","hash":"483176887f514d09f6f6685fd0d6f5fe8b7b3f5b932bee06df6c267fe9f86762","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"20230602_105604.pdf","size":178550,"type":"application/pdf","hash":"46baac277196eb0d8991b487e91721b6cd0ca6ee1e8972b4ff8ece52…
+[16:12, 3/6/2023] Benedetto Pellerito: appena arrivi a collegare il tutto o in corso d'opera miglioriamo il tutto 😂
+[16:13, 3/6/2023] Benedetto Pellerito: 👋
+[16:15, 3/6/2023] Benedetto Pellerito: dimenticato esempio di accesso diretto alla risorsa senza credenziali
+https://scuola.vrscuola.online:8443/files/ARGOMENTI/introduzione/videoplayback.mp4
+
