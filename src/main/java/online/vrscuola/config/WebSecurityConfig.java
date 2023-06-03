@@ -71,6 +71,8 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
 
+                .antMatchers("/argomenti/**").permitAll()
+
                 .anyRequest().denyAll();
 
         http.headers().frameOptions().sameOrigin();
