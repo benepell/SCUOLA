@@ -49,6 +49,10 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
 
         return connectivityModelList;
     }
+
+    @Query(value = "SELECT argoment FROM connect c WHERE c.macAddress =:mac")
+    String argomentByMacAddress(@Param("mac") String mac);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note, c.connected = :connected WHERE  c.macAddress = :macAddress  ")

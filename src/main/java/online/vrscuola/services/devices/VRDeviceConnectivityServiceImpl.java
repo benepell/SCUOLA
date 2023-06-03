@@ -49,4 +49,9 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
             cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, connected);
 
     }
+
+    @Override
+    public String argomento(String argomento) {
+        return cRepository.argomentByMacAddress(argomento);
+    }
 }

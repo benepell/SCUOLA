@@ -9,4 +9,6 @@ public interface VRDeviceConnectivityService {
     boolean valid(String macAddress, String code);
 
     void connect(Utilities utilities, String macAddress, String username, String note, String connected);
+
+    String argomento(String argomento);
 }
