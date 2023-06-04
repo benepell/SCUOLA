@@ -12,7 +12,7 @@ public class ConfigService {
     private ConfigRepository cRepository;
     public void eventLogPdf(String value){
         if(cRepository.existsByName(Constants.CONFIG_EVENT_LOG_PDF)) {
-            cRepository.updateValue(value, "eventLogPdf");
+            cRepository.updateValue(value, Constants.CONFIG_EVENT_LOG_PDF);
         }else{
             try {
                 ConfigEntitie config = new ConfigEntitie();

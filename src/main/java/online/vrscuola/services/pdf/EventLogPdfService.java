@@ -1,10 +1,9 @@
 package online.vrscuola.services.pdf;
 
 
+import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import online.vrscuola.entities.log.EventLogEntitie;
@@ -13,7 +12,6 @@ import online.vrscuola.repositories.log.EventLogRepository;
 import online.vrscuola.services.config.ConfigService;
 import online.vrscuola.services.utils.MessageService;
 import online.vrscuola.utilities.Constants;
-import online.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class EventLogPdfService {
@@ -46,8 +45,49 @@ public class EventLogPdfService {
 
     private List<EventLogInfoModel> listLogs;
 
-    public void save() throws DocumentException, IOException {
+    public CompletableFuture<Void> saveAsync() {
+        return CompletableFuture.runAsync(this::save);
+    }
 
+    private List<EventLogInfoModel> init() {
+        Long id = configService.getEventLogPdf() != null ? Long.valueOf(configService.getEventLogPdf()) : 1;
+        Long finalId = 0L;
+        List<EventLogEntitie> ls = eRepository.findAll();
+
+        if (ls == null || ls.isEmpty()) {
+            return null; // lista vuota
+        }
+
+        List<EventLogInfoModel> list = new ArrayList<>();
+        for (EventLogEntitie data : ls) {
+            Long idx = data.getId();
+            if (idx > id) {
+                list.add(new EventLogInfoModel(idx, data.getUsername(), data.getEvent(), data.getEventDate(), data.getNote()));
+                finalId = idx;
+            }
+        }
+        if (finalId > 0) {
+            configService.eventLogPdf(String.valueOf(finalId));
+        }
+
+        return list;
+    }
+
+    protected void writeTableData(PdfPTable table) {
+        for (EventLogInfoModel e : listLogs) {
+            table.addCell(String.valueOf(e.getId()));
+            // Format the date in the format dd/MM/yyyy HH:mm:ss
+            Instant instant = e.getEventDate();
+            LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.EVENT_LOG_DATE_FORMAT);
+            table.addCell(ldt.format(formatter));
+            table.addCell(e.getUsername());
+            table.addCell(e.getEvent());
+            table.addCell(e.getNote());
+        }
+    }
+
+    public void save() {
         listLogs = init();
 
         if (listLogs == null || listLogs.isEmpty()) {
@@ -56,7 +96,7 @@ public class EventLogPdfService {
 
         Document document = new Document(PageSize.A4);
         try {
-            Utilities utility = new Utilities();
+            online.vrscuola.utilities.Utilities utility = new online.vrscuola.utilities.Utilities();
             String fileName = resourceElog + utility.strTime() + ".pdf";
 
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
@@ -73,7 +113,6 @@ public class EventLogPdfService {
                 document.add(png);
             }
 
-
             Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
             font.setSize(18);
             font.setColor(Color.BLACK);
@@ -88,81 +127,14 @@ public class EventLogPdfService {
             table.setWidths(new float[]{1.0f, 2.0f, 2.0f, 3.0f, 3.5f});
             table.setSpacingBefore(10);
 
-            writeTableHeader(table);
             writeTableData(table);
 
             document.add(table);
 
             document.close();
             writer.close();
-
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
-
-        }
-
-    }
-
-    private List<EventLogInfoModel> init() {
-        Long id = configService.getEventLogPdf() != null ? Long.valueOf(configService.getEventLogPdf()) : 1;
-        Long finalId = id;
-        List<EventLogEntitie> ls = eRepository.findAll();
-
-        if (ls == null || ls.isEmpty()) {
-            return null; // lista vuota
-        }
-        List<EventLogInfoModel> list = new ArrayList<>();
-        for (EventLogEntitie data : ls) {
-            Long idx = data.getId();
-            if (idx > id) {
-                list.add(new EventLogInfoModel(idx, data.getUsername(), data.getEvent(), data.getEventDate(), data.getNote()));
-                finalId = idx;
-            }
-        }
-
-        configService.eventLogPdf(String.valueOf(finalId));
-
-        return list;
-    }
-
-    private void writeTableHeader(PdfPTable table) {
-
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(Color.GRAY);
-        cell.setPadding(5);
-
-        Font font = FontFactory.getFont(FontFactory.HELVETICA);
-        font.setColor(Color.WHITE);
-
-        cell.setPhrase(new Phrase(messageService.getMessage("pdf.log.id"), font));
-        table.addCell(cell);
-
-        cell.setPhrase(new Phrase(messageService.getMessage("pdf.log.date"), font));
-        table.addCell(cell);
-
-        cell.setPhrase(new Phrase(messageService.getMessage("pdf.log.username"), font));
-        table.addCell(cell);
-
-        cell.setPhrase(new Phrase(messageService.getMessage("pdf.log.event"), font));
-        table.addCell(cell);
-
-        cell.setPhrase(new Phrase(messageService.getMessage("pdf.log.note"), font));
-        table.addCell(cell);
-    }
-
-    private void writeTableData(PdfPTable table) {
-        for (EventLogInfoModel e : listLogs) {
-            table.addCell(String.valueOf(e.getId()));
-            // formatto la data nel formato dd/MM/yyyy HH:mm:ss
-            Instant instant = e.getEventDate();
-            LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.EVENT_LOG_DATE_FORMAT);
-            table.addCell(ldt.format(formatter));
-            table.addCell(e.getUsername());
-            table.addCell(e.getEvent());
-            table.addCell(e.getNote());
         }
     }
-
 }
-
