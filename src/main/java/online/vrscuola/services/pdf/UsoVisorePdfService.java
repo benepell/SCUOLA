@@ -86,7 +86,7 @@ public class UsoVisorePdfService {
 
     public void save() throws DocumentException, IOException {
 
-        boolean isError =  !init();
+        boolean isError = !init();
 
         if (isError) {
             return;
@@ -167,9 +167,7 @@ public class UsoVisorePdfService {
             classe = args[0];
             sezione = args[1].toUpperCase();
             String nome = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
-            ;
             String cognome = args[3].substring(0, 1).toUpperCase() + args[3].substring(1).toLowerCase();
-            ;
             String materia = (String) userData[6];
             materia = materia.substring(0, 1).toUpperCase() + materia.substring(1).toLowerCase();
 
