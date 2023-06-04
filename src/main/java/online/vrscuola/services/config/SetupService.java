@@ -1,4 +1,4 @@
-package online.vrscuola.services.conf;
+package online.vrscuola.services.config;
 
 import online.vrscuola.models.SetupModel;
 import org.springframework.beans.factory.annotation.Autowired;

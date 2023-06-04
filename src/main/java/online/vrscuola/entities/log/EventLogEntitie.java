@@ -8,7 +8,7 @@ import java.time.Instant;
 @SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
 @Entity(name = "event_logs")
 @Data
-public class EventLog {
+public class EventLogEntitie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

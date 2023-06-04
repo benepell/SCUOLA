@@ -1,8 +1,7 @@
 package online.vrscuola.services.log;
 
-import online.vrscuola.entities.log.EventLog;
+import online.vrscuola.entities.log.EventLogEntitie;
 import online.vrscuola.repositories.log.EventLogRepository;
-import online.vrscuola.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +20,34 @@ public class EventLogService {
     EventLogRepository eventLogsRepository;
 
     public void sendLog(HttpSession session, String evt){
-        EventLog eventLogs = new EventLog();
+        EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
         String username = (String) session.getAttribute("main_username");
         if (username != null) {
-            eventLogs.setUsername(username);
+            eventLogsEntitie.setUsername(username);
         } else {
-            eventLogs.setUsername("anonymous");
+            eventLogsEntitie.setUsername("anonymous");
         }
 
-        eventLogs.setEvent(evt);
-        eventLogs.setEventDate(Instant.now());
-        eventLogsRepository.save(eventLogs);
+        eventLogsEntitie.setEvent(evt);
+        eventLogsEntitie.setEventDate(Instant.now());
+        eventLogsRepository.save(eventLogsEntitie);
 
     }
     public void sendLog(HttpSession session, String evt, String note){
-        EventLog eventLogs = new EventLog();
+        EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
         String username = (String) session.getAttribute("username");
         if (username != null) {
-            eventLogs.setUsername(username);
+            eventLogsEntitie.setUsername(username);
         } else {
-            eventLogs.setUsername("anonymous");
+            eventLogsEntitie.setUsername("anonymous");
         }
 
-        eventLogs.setEvent(evt);
-        eventLogs.setEventDate(Instant.now());
-        eventLogs.setNote(note);
-        eventLogsRepository.save(eventLogs);
+        eventLogsEntitie.setEvent(evt);
+        eventLogsEntitie.setEventDate(Instant.now());
+        eventLogsEntitie.setNote(note);
+        eventLogsRepository.save(eventLogsEntitie);
 
     }
 }

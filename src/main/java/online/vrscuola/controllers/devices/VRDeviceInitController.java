@@ -4,7 +4,7 @@ import online.vrscuola.models.InitParamModel;
 import online.vrscuola.payload.response.MessageResponse;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;
 import online.vrscuola.services.securities.ValidateCredentialService;
-import online.vrscuola.services.conf.ReadOculusServices;
+import online.vrscuola.services.config.ReadOculusServices;
 import online.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import online.vrscuola.services.utils.MessageServiceImpl;
 import online.vrscuola.services.utils.UtilServiceImpl;

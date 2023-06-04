@@ -40,10 +40,12 @@ public class OperatingSystemHealthCheckService {
             process = Runtime.getRuntime().exec("cat /proc/loadavg");
             reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             line = reader.readLine();
-            String[] loadAvg = line.split("\\s+");
-            response.put("system_load_1_min", loadAvg[0]);
-            response.put("system_load_5_min", loadAvg[1]);
-            response.put("system_load_15_min", loadAvg[2]);
+            if (line != null) {
+                String[] loadAvg = line.split("\\s+");
+                response.put("system_load_1_min", loadAvg[0]);
+                response.put("system_load_5_min", loadAvg[1]);
+                response.put("system_load_15_min", loadAvg[2]);
+            }
 
             response.put("status", "ok");
         } catch (IOException e) {

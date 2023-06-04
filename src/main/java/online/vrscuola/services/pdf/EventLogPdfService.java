@@ -7,12 +7,10 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import online.vrscuola.entities.log.EventLog;
+import online.vrscuola.entities.log.EventLogEntitie;
 import online.vrscuola.models.EventLogInfoModel;
-import online.vrscuola.models.UserInfoModel;
-import online.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
-import online.vrscuola.repositories.devices.VRDeviceDetailConnectivityRepository;
 import online.vrscuola.repositories.log.EventLogRepository;
+import online.vrscuola.services.config.ConfigService;
 import online.vrscuola.services.utils.MessageService;
 import online.vrscuola.utilities.Constants;
 import online.vrscuola.utilities.Utilities;
@@ -20,12 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -44,6 +40,9 @@ public class EventLogPdfService {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private ConfigService configService;
 
     private List<EventLogInfoModel> listLogs;
 
@@ -105,14 +104,23 @@ public class EventLogPdfService {
     }
 
     private List<EventLogInfoModel> init() {
-        List<EventLog> ls= eRepository.findAll();
+        Long id = configService.getEventLogPdf() != null ? Long.valueOf(configService.getEventLogPdf()) : 1;
+        Long finalId = id;
+        List<EventLogEntitie> ls = eRepository.findAll();
+
         if (ls == null || ls.isEmpty()) {
             return null; // lista vuota
         }
         List<EventLogInfoModel> list = new ArrayList<>();
-        for (EventLog data : ls) {
-            list.add(new EventLogInfoModel(data.getId(), data.getUsername(), data.getEvent(), data.getEventDate(), data.getNote()));
+        for (EventLogEntitie data : ls) {
+            Long idx = data.getId();
+            if (idx > id) {
+                list.add(new EventLogInfoModel(idx, data.getUsername(), data.getEvent(), data.getEventDate(), data.getNote()));
+                finalId = idx;
+            }
         }
+
+        configService.eventLogPdf(String.valueOf(finalId));
 
         return list;
     }

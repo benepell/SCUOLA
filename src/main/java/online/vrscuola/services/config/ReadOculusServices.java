@@ -1,4 +1,4 @@
-package online.vrscuola.services.conf;
+package online.vrscuola.services.config;
 
 import online.vrscuola.models.InitParamModel;
 import online.vrscuola.repositories.devices.VRDeviceInitRepository;

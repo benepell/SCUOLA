@@ -2,7 +2,7 @@ package online.vrscuola.controllers.base;
 
 
 import online.vrscuola.models.SetupModel;
-import online.vrscuola.services.conf.SetupService;
+import online.vrscuola.services.config.SetupService;
 import online.vrscuola.services.securities.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
