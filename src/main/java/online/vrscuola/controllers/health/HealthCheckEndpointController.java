@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class HealthCheckEndpointService {
+public class HealthCheckEndpointController {
 
     @Value("${health.datasource.website}")
     private String healthDataSourceWebsite;
