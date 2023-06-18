@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # valori default
-server="https://keycloak.vrscuola.online:9443"
+server="https://keycloak.vrscuola.it:9443"
 credUser="admin"
 credPass="vrscuola!!!"
 realm="scuola"
@@ -14,7 +14,7 @@ firstName=$3
 lastName=$4
 
 # email predefinita
-dominio="@vrscuola.online"
+dominio="@vrscuola.it"
 
 # Genera l'username
 username="$classe-$section-$firstName-$lastName"

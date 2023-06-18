@@ -98,10 +98,10 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 $provider = new GenericProvider([
     'clientId'                => 'client',
     'clientSecret'            => 'MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A',
-    'redirectUri'             => 'https://scuola.vrscuola.online:8443/res.php',
-    'urlAuthorize'            => 'https://keycloak.vrscuola.online:9443/realms/scuola/protocol/openid-connect/auth',
-    'urlAccessToken'          => 'https://keycloak.vrscuola.online:9443/realms/scuola/protocol/openid-connect/token',
-    'urlResourceOwnerDetails' => 'https://keycloak.vrscuola.online:9443/realms/scuola/protocol/openid-connect/userinfo'
+    'redirectUri'             => 'https://scuola.vrscuola.it:8443/res.php',
+    'urlAuthorize'            => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/auth',
+    'urlAccessToken'          => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/token',
+    'urlResourceOwnerDetails' => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/userinfo'
 ]);
 $abilitato = false;
 try{
@@ -126,7 +126,7 @@ $options = array(
 $context  = stream_context_create($options);
 
 // Effettua la chiamata POST all'endpoint
-$response = file_get_contents('https://scuola.vrscuola.online/checkRes', false, $context);
+$response = file_get_contents('https://scuola.vrscuola.it/checkRes', false, $context);
 
 // Controlla se la risposta contiene la stringa "admins"
 if(strpos($response, 'admins') !== false) {

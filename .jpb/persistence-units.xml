@@ -4,7 +4,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="online.vrscuola" />
+          <package value="it.vrscuola.scuola" />
         </packages>
       </persistence-unit>
     </persistence-units>
