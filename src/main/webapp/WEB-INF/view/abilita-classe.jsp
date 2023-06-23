@@ -37,10 +37,10 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
       </div>
     </c:forEach>
   </section>
+<div class="video-background">
+  <video id="myVideo" src="static/video/video.mp4" autoplay loop muted></video>
+</div>
 
-  <div  class="video-background">
-      <video src="static/video/video.mp4" autoplay loop muted></video>
-  </div>
 </form>
 
 <script src="static/js/jquery-3.6.4.min.js"></script>
@@ -70,6 +70,19 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
         });
       },
     });
+  });
+</script>
+
+<script>
+  // pause and play video
+  var video = document.getElementById('myVideo');
+
+  video.addEventListener('click', function() {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
   });
 </script>
 
