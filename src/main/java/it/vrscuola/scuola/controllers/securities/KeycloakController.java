@@ -85,7 +85,7 @@ public class KeycloakController {
 
 
     @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request, HttpSession session) throws ServletException, IOException {
+    public RedirectView logout(HttpServletRequest request, HttpSession session)  {
 
         // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
         boolean closeVisors = session.getAttribute("isCloseVisorLogout") != null ? (Boolean) session.getAttribute("isCloseVisorLogout") : false;
@@ -95,7 +95,12 @@ public class KeycloakController {
             if (session != null &&
                     username != null && username.length > 0) {
                 // stampa tutti gli utenti che hanno un visore per chiudere la sessione
-                vPdfService.save();
+                try {
+                    vPdfService.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 // chiude tutti i visori
                 studentService.closeAllVisor(username, manageDetailService, session);
 
@@ -104,7 +109,11 @@ public class KeycloakController {
             }
         }
         if (request != null){
-            request.logout();
+            try {
+                request.logout();
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
         }
 
         return new RedirectView("/");
