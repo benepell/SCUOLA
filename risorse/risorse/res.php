@@ -169,7 +169,7 @@ if($_SESSION['abilitato']) {
     ?>
     <!-- Element where elFinder will be created (REQUIRED) -->
     <div class="mysez">
-        <button id="logoutButton">Logout</button>
+        <button id="closeButton">Chiudi</button>
     </div>
     <div id="elfinder"></div>
     <img src="img/studenti.png" alt="studenti" style="width: 100%; height: 40%; position: absolute; z-index: -1;">
@@ -181,8 +181,8 @@ if($_SESSION['abilitato']) {
 </body>
 
 <script>
-document.getElementById('logoutButton').addEventListener('click', function() {
-    window.location.href = 'index.php?logout=true';
+document.getElementById('closeButton').addEventListener('click', function() {
+    window.close();
 });
 </script>
 
