@@ -16,7 +16,7 @@
           justify-content: end;
           padding: 4px;
           margin: 1px;
-          background-color: #352b2bdb;
+          background-color: rgb(30 23 34 / 73%);
           border: 2px solid rgb(13 253 173 / 23%);
           color: white;
           font-weight: bold;
