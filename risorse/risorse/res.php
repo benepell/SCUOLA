@@ -5,7 +5,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>VrScuola Risorse</title>
+
+     <style>
+        .mysez {
+          display: flex;
+          justify-content: end;
+          padding: 4px;
+          margin: 1px;
+          background-color: #352b2bdb;
+          border: 2px solid rgb(13 253 173 / 23%);
+          color: white;
+          font-weight: bold;
+          text-decoration: none;
+          border-radius: 5px;
+          transition: background-color 0.3s, color 0.3s;
+        }
+      </style>
 
     <!-- Require JS (REQUIRED) -->
     <!-- Rename "main.default.js" to "main.js" and edit it if you need configure elFInder options or any things -->
@@ -59,7 +78,7 @@
                     ]
                 }
             },
-            // bootCalback calls at before elFinder boot up 
+            // bootCalback calls at before elFinder boot up
             bootCallback: function(fm, extraObj) {
                 /* any bind functions etc. */
                 fm.bind('init', function() {
@@ -90,6 +109,8 @@
 <body>
 
 <?php
+session_start();
+
 require 'vendor/autoload.php';
 
 use League\OAuth2\Client\Provider\GenericProvider;
@@ -103,7 +124,8 @@ $provider = new GenericProvider([
     'urlAccessToken'          => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/token',
     'urlResourceOwnerDetails' => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/userinfo'
 ]);
-$abilitato = false;
+
+
 try{
 
 $accessToken = $provider->getAccessToken('authorization_code', [
@@ -128,22 +150,27 @@ $context  = stream_context_create($options);
 // Effettua la chiamata POST all'endpoint
 $response = file_get_contents('https://scuola.vrscuola.it/checkRes', false, $context);
 
-// Controlla se la risposta contiene la stringa "admins"
-if(strpos($response, 'admins') !== false) {
-    $abilitato = true;
+ // Controlla se la risposta contiene la stringa "admins"
+    if (strpos($response, 'admins') !== false) {
+        $_SESSION['abilitato'] = true;
+    } else {
+        $_SESSION['abilitato'] = false;
+        header("Location: index.php");
+        exit;
+    }
+} catch (Exception $e) {
+    $_SESSION['abilitato'] = false;
+    header("Location: index.php");
+    exit;
 }
-
-
-} catch(Exception $e){
-  $abilitato = false;
-  header("Location: index.php");
-  exit;	
-}
-if($abilitato) {
+if($_SESSION['abilitato']) {
 
     // Contenuto protetto
     ?>
     <!-- Element where elFinder will be created (REQUIRED) -->
+    <div class="mysez">
+        <button id="logoutButton">Logout</button>
+    </div>
     <div id="elfinder"></div>
     <img src="img/studenti.png" alt="studenti" style="width: 100%; height: 40%; position: absolute; z-index: -1;">
     <?php
@@ -152,5 +179,11 @@ if($abilitato) {
     exit;
 }?>
 </body>
+
+<script>
+document.getElementById('logoutButton').addEventListener('click', function() {
+    window.location.href = 'index.php?logout=true';
+});
+</script>
 
 </html>

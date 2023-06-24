@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require 'vendor/autoload.php';
 
 use League\OAuth2\Client\Provider\GenericProvider;
@@ -13,10 +15,20 @@ $provider = new GenericProvider([
     'urlResourceOwnerDetails' => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/userinfo'
 ]);
 
-if (!isset($_GET['code'])) {
+// Aggiungi logout get param logout=true per distruggere la sessione
+if(isset($_GET['logout']) && $_GET['logout'] == true) {
+    session_destroy();
+    header('Location: ' . 'https://scuola.vrscuola.it/logout');
+    exit();
+}
+
+if(!isset($_SESSION['abilitato']) && !isset($_GET['code'])) {
     $authorizationUrl = $provider->getAuthorizationUrl();
     header('Location: ' . $authorizationUrl);
-    exit;
-} 
- 
+    exit();
+} else {
+    // Redirect a res.php
+    header('Location: res.php');
+    exit();
+}
 ?>

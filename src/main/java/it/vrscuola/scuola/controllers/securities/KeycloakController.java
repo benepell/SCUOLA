@@ -118,7 +118,7 @@ public class KeycloakController {
     @PostMapping("/checkRes")
     public String checkRes(@ModelAttribute("setupModel") RisorsePhpModel res, HttpSession session) {
         String param = res.getKey();
-        if(param.equals("risorse")) {
+        if(session != null && param.equals("risorse")) {
             logService.sendLog(session, Constants.EVENT_LOG_CHECK_RES);
             return "admins";
         }
