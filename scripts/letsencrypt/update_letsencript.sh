@@ -92,7 +92,13 @@ if certbot certonly --standalone --preferred-challenges http -d "${a12_DOMAIN}" 
 	mkdir -p /etc/certs/scuola
 	
 	# copia tutti i file del certificato in /etc/certs
-	cp -rnL * /etc/certs/scuola/
+	cp cert.pem /etc/certs/scuola/
+  cp chain.pem /etc/certs/scuola/
+  cp fullchain.pem /etc/certs/scuola/
+  cp privkey.pem /etc/certs/scuola/
+  cp vrscuola.jks /etc/certs/scuola/
+  cp vrscuola.p12 /etc/certs/scuola/
+
 
 	# gestione permessi permette a tutti di leggere i file
 	chmod -R 644 /etc/certs/scuola

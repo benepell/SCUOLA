@@ -53,7 +53,12 @@ if certbot certonly --standalone --preferred-challenges http -d "${a9_DOMAIN}" -
 	mkdir -p /etc/certs/keycloak
 	
 	# copia tutti i file del certificato in /etc/certs
-	cp -rf -n * /etc/certs/keycloak/
+	cp cert.pem /etc/certs/keycloak/
+  cp chain.pem /etc/certs/keycloak/
+  cp fullchain.pem /etc/certs/keycloak/
+  cp privkey.pem /etc/certs/keycloak/
+  cp vrscuola.jks /etc/certs/keycloak/
+  cp vrscuola.p12 /etc/certs/keycloak/
 
 	# gestione permessi permette a tutti di leggere i file
 	chmod -R 644 /etc/certs/keycloak
