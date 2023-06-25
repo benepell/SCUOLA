@@ -35,6 +35,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT i.macAddress FROM init i")
     List<String> macsSetup();
 
+    @Query(value = "SELECT i.batteryLevel FROM init i")
+    List<String> battSetup();
 
     @Query(value = "SELECT COUNT(*) FROM init i")
     int getCount();
