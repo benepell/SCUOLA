@@ -1,3 +1,10 @@
+<?php
+ob_start(); // Avvia l'output buffering
+
+session_start();
+// ini_set ( 'display_errors', 1 );
+// error_reporting ( E_ALL );
+?>
 <!DOCTYPE html>
 <html>
 
@@ -106,10 +113,7 @@
     </script>
 </head>
 
-<body>
-
 <?php
-session_start();
 
 require 'vendor/autoload.php';
 
@@ -155,11 +159,13 @@ $response = file_get_contents('https://scuola.vrscuola.it/checkRes', false, $con
         $_SESSION['abilitato'] = true;
     } else {
         $_SESSION['abilitato'] = false;
-        header("Location: index.php");
+        ob_end_clean(); // Cancella l'output buffering
+        header("Location: https://scuola.vrscuola.it/");
         exit;
     }
 } catch (Exception $e) {
     $_SESSION['abilitato'] = false;
+    ob_end_clean(); // Cancella l'output buffering
     header("Location: index.php");
     exit;
 }
@@ -167,6 +173,7 @@ if($_SESSION['abilitato']) {
 
     // Contenuto protetto
     ?>
+    <body>
     <!-- Element where elFinder will be created (REQUIRED) -->
     <div class="mysez">
         <button id="closeButton">Chiudi</button>
@@ -187,3 +194,7 @@ document.getElementById('closeButton').addEventListener('click', function() {
 </script>
 
 </html>
+
+<?php
+ob_end_flush(); // Invia l'output buffering al browser
+?>

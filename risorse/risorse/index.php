@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// ini_set ( 'display_errors', 1 );
+// error_reporting ( E_ALL );
+
 require 'vendor/autoload.php';
 
 use League\OAuth2\Client\Provider\GenericProvider;
@@ -22,7 +25,7 @@ if(isset($_GET['logout']) && $_GET['logout'] == true) {
     exit();
 }
 
-if(!isset($_SESSION['abilitato']) && !isset($_GET['code'])) {
+if(!isset($_GET['code'])) {
     $authorizationUrl = $provider->getAuthorizationUrl();
     header('Location: ' . $authorizationUrl);
     exit();
