@@ -4,13 +4,13 @@
 cmd="/opt/keycloak/bin/create_user.sh"
 
 # Verifica l'esistenza del file di input
-input_file="/var/www/html/risorse/files/conf/new_users.txt"
+input_file="/var/www/html/risorse/files/conf/create_users.txt"
 if [ ! -f "$input_file" ]; then
   echo "Il file $input_file non esiste. Uscita dallo script."
   exit 1
 fi
 
-tmp="/var/www/html/risorse/files/conf/new_users"
+tmp="/var/www/html/risorse/files/conf/create_users"
 mv "$input_file" "$tmp"
 
 # Leggi il file di input riga per riga
