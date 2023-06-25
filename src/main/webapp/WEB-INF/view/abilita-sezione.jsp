@@ -40,7 +40,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     <!-- barra centrale -->
     <div class="mysez-barra-centrale">
       <% for(String letter : letters) { %>
-      <a href="#section-<%=letter%>"><%=letter%></a>
+      <a href="#section-<%=letter%>"><%=letter.toUpperCase()%></a>
       <% } %>
     </div>
   </div>
@@ -48,10 +48,10 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   <div class="mysez-container">
     <div class="row">
       <div class="col-md-12">
-        <div>
+        <div style="padding-bottom: 130px;">
           <% for(String letter : letters) { %>
           <section class="mysez-section" id="section-<%=letter%>">
-            <h2>Sezione <span><%=letter%></span></h2>
+            <h2>Sezione <span><%=letter.toUpperCase()%></span></h2>
             <button
               onclick="setSectionSelected('<%=letter%>')"
               type="button"
