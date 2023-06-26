@@ -109,7 +109,12 @@ public class UsoVisorePdfService {
                 sezioneDir.mkdir();
             }
 
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            File filex = new File(fileName);
+            if (!filex.exists()) {
+                filex.createNewFile(); // Crea il file se non esiste
+            }
+
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filex));
 
             document.open();
 
