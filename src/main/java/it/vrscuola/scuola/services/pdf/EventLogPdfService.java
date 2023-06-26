@@ -100,7 +100,13 @@ public class EventLogPdfService {
             Utilities utility = new Utilities();
             String fileName = resourceElog + utility.strTime() + ".pdf";
 
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            File filex = new File(fileName);
+            if (!filex.exists()) {
+                filex.getParentFile().mkdirs(); // Crea le directory se non esistono
+                filex.createNewFile(); // Crea il file
+            }
+
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filex));
 
             document.open();
 
