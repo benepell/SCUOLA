@@ -111,7 +111,8 @@ public class UsoVisorePdfService {
 
             File filex = new File(fileName);
             if (!filex.exists()) {
-                filex.createNewFile(); // Crea il file se non esiste
+                filex.getParentFile().mkdirs(); // Crea le directory se non esistono
+                filex.createNewFile(); // Crea il file
             }
 
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filex));
