@@ -13,8 +13,10 @@ public class ArgomentiDirService {
             String basePath = Constants.PATH_RESOURCE_DIR;
             List<String> argomenti = new ArrayList<>();
             File argomentiDirectory = new File(basePath, "ARGOMENTI");
-            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory()&& !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
-                argomenti.add(argomentoDirectory.getName());
+            if (argomentiDirectory != null && argomentiDirectory.isDirectory()) {
+                for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
+                    argomenti.add(argomentoDirectory.getName());
+                }
             }
             if (argomentiDirectory.exists() && argomentiDirectory.isDirectory()) {
                 File aulaDirectory = findDirectory(argomentiDirectory, aula.toLowerCase());
