@@ -174,8 +174,9 @@ public class UsoVisorePdfService {
             String nome = args[2].substring(0, 1).toUpperCase() + args[2].substring(1).toLowerCase();
             String cognome = args[3].substring(0, 1).toUpperCase() + args[3].substring(1).toLowerCase();
             String materia = (String) userData[6];
-            materia = materia.substring(0, 1).toUpperCase() + materia.substring(1).toLowerCase();
-
+            if (materia != null && !materia.isEmpty()) {
+                materia = materia.substring(0, 1).toUpperCase() + materia.substring(1).toLowerCase();
+            }
             Instant startDate = vrDetailRepository.findStartDate(username);
             Instant endDate = Instant.now();
             Duration duration = Duration.between(startDate, endDate);
