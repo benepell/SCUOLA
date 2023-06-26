@@ -55,7 +55,9 @@ public class SezioneController {
                     String[] alu = (String[]) session.getAttribute("alunni");
                     String[] vis = manageService.allDevices();
                     studentService.cleanVisori(session);
-                    studentService.init(Arrays.asList(alu), Arrays.asList(vis));
+                    if (alu != null && alu.length > 0 && vis != null && vis.length > 0 ){
+                        studentService.init(Arrays.asList(alu), Arrays.asList(vis));
+                    }
                 }
             }
 
