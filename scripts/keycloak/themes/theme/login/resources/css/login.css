@@ -121,7 +121,7 @@ body {
   height: 22px;
   opacity: 0.87;
   font-family: Muli;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -131,8 +131,8 @@ body {
   color: #b8082a;
   border: 0px;
   position: relative;
-  top: 180px;
-  left: 64px;
+  top: 200px;
+  left: 80px;
   display: inline-flex;
   align-items: center;
 }
