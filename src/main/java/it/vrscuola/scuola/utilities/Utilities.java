@@ -42,30 +42,30 @@ public class Utilities {
 
         switch (batteryLevelRounded){
             case 10:
-            case 9:
                 svg.append("<path d=\"M7204.7,90.1v-857h248.8h248.8v857v857h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 8:
+            case 9:
                 svg.append("<path d=\"M6463.8,98.3l8.3-851.5l243.3-8.3l240.5-8.3V90.1v857h-248.8h-248.8L6463.8,98.3z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 7:
+            case 8:
                 svg.append("<path d=\"M5739.5,90.1v-859.8l243.3,8.3l240.5,8.3l8.3,851.5l5.5,848.7h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 6:
+            case 7:
                 svg.append("<path d=\"M4993.1,90.1v-857h248.8h248.8v857v857h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 5:
+            case 6:
                 svg.append("<path d=\"M4252.2,98.3l8.3-851.5l243.3-8.3l240.5-8.3V90.1v857h-248.8h-248.8L4252.2,98.3z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 4:
+            case 5:
                 svg.append("<path d=\"M3527.9,90.1v-859.8l243.3,8.3l240.5,8.3l8.3,851.5l5.5,848.7h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 3:
+            case 4:
                 svg.append("<path d=\"M2781.5,90.1v-857h248.8h248.8v857v857h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
-            case 2:
+            case 3:
                 svg.append("<path d=\"M2062.8,90.1v-857h235h235v857v857h-235h-235V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
+            case 2:
             case 1:
                 svg.append("<path d=\"M1316.4,90.1v-859.8l243.3,8.3l240.5,8.3l8.3,851.5L1814,947h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
