@@ -137,7 +137,7 @@ public class VRDeviceManageService {
     }
 
     public String[] allDevices() {
-        List<String> list = iRepository.labels();
+        List<String> list = iRepository.labels(Constants.BATTERY_LEVEL);
         return list != null ? list.toArray(new String[list.size()]) : null;
     }
 }

@@ -3,6 +3,7 @@ package it.vrscuola.scuola.services;
 import it.vrscuola.scuola.repositories.devices.VRDeviceConnectivityRepository;
 import it.vrscuola.scuola.repositories.devices.VRDeviceInitRepository;
 import it.vrscuola.scuola.services.devices.VRDeviceManageDetailService;
+import it.vrscuola.scuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,7 +106,7 @@ public class StudentService {
         // se non è occupato, ritorna il primo
         int i = 0;
         while (visori.size() > 0) {
-            if (iRepository.findLabelAvailable(visori.get(i)) != null) {
+            if (iRepository.findLabelAvailable(visori.get(i), Constants.BATTERY_LEVEL) != null) {
                 i++;
             } else {
                 return visori.get(i);

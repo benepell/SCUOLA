@@ -1,7 +1,6 @@
 package it.vrscuola.scuola.repositories.devices;
 
 import it.vrscuola.scuola.entities.devices.VRDeviceInitEntitie;
-import it.vrscuola.scuola.utilities.Constants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,17 +16,14 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM init i WHERE i.macAddress =:mac")
     Boolean existsByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac and i.batteryLevel > " + Constants.BATTERY_LEVEL)
-    String labelByMacAddress(@Param("mac") String mac);
+    @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac and FUNCTION('abs', i.batteryLevel) > :batteryLevel")
+    String labelByMacAddress(@Param("mac") String mac,@Param("batteryLevel") int batteryLevel);
 
     @Query(value = "SELECT code FROM init i WHERE i.macAddress =:mac")
     String codeByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > " + Constants.BATTERY_LEVEL)
-    List<String> labels();
-
-    @Query(value = "SELECT i.macAddress FROM init i WHERE FUNCTION('abs', i.batteryLevel) > " + Constants.BATTERY_LEVEL)
-    List<String> macs();
+    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > :batteryLevel")
+    List<String> labels(@Param("batteryLevel") int batteryLevel);
 
     @Query(value = "SELECT label FROM init i ")
     List<String> labelsSetup();
@@ -52,8 +48,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
-            + "WHERE (i.label = :label AND c.connected != 'disconnected' AND FUNCTION('abs', i.batteryLevel) > " + Constants.BATTERY_LEVEL + ")")
-    String findLabelAvailable(@Param("label") String label);
+            + "WHERE (i.label = :label AND c.connected != 'disconnected' AND FUNCTION('abs', i.batteryLevel) >  :batteryLevel)")
+    String findLabelAvailable(@Param("label") String label, @Param("batteryLevel") int batteryLevel);
 
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")
     String findMac(@Param("label") String label);
@@ -66,5 +62,5 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Modifying
     @Query(value = "UPDATE init i set i.batteryLevel = :batteryLevel WHERE  i.macAddress = :mac  ")
     void updateBatteryLevel(@Param("mac") String mac,@Param("batteryLevel") int batteryLevel);
-
 }
+

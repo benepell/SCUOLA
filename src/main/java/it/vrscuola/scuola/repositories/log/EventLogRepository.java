@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.List;
-
-@SuppressWarnings("unused")
 @Repository
 public interface EventLogRepository extends JpaRepository<EventLogEntitie, Long> {
     List<EventLogEntitie> findByUsername(String username);
