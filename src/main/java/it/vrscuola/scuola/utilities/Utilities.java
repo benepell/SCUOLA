@@ -42,8 +42,6 @@ public class Utilities {
 
         switch (batteryLevelRounded){
             case 10:
-                svg.append("<path d=\"M7945.5,90.1v-859.8l243.3,8.3l240.5,8.3l8.3,851.5l5.5,848.7h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
-                svg.append(strChargingPath);
             case 9:
                 svg.append("<path d=\"M7204.7,90.1v-857h248.8h248.8v857v857h-248.8h-248.8V90.1z\" style=\"fill:#00FF00\">\n");
                 svg.append(strChargingPath);
