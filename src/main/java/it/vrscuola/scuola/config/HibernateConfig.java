@@ -24,7 +24,7 @@ import java.util.Map;
 public class HibernateConfig {
 
     @Autowired
-    private Environment env;
+    Environment env;
 
     @Bean
     @Primary

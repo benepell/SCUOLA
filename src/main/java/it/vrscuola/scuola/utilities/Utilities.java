@@ -36,7 +36,7 @@ public class Utilities {
         }
         int batteryLevelRounded =  (int) Math.round(Math.abs(batteryLevel) / 10.0);
 
-        String strCharging = "<animate attributeName=\"fill\" values=\"#00FF00; #FF6601\" dur=\"3.5s\" repeatCount=\"indefinite\"/>\n";
+        String strCharging = "<animate attributeName=\"fill\" values=\"#FF6601; #00FF00\" dur=\"6.5s\" repeatCount=\"indefinite\"/>\n";
         String strChargingPath = charging ? strCharging.concat("</path>\n") : "</path>\n";
 
 
