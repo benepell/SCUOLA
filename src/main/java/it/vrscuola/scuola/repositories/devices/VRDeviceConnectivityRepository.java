@@ -70,7 +70,6 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM connect")
-        // TODO aggiungere where aula
     void removeAll();
 
     @Transactional
