@@ -4,21 +4,18 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
  
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
      
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/minimal-main.css" />" rel="stylesheet">
-
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 
 
     <title><tiles:insertAttribute name="titolo" /></title>

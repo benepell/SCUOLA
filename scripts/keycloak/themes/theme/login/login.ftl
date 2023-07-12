@@ -3,7 +3,6 @@
     <#if section = "title">
         ${msg("loginTitle",(realm.displayName!''))}
     <#elseif section = "header">
-        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"/>
         <link href="${url.resourcesPath}/img/favicon.png" rel="icon"/>
         <script>
             function togglePassword() {
@@ -29,12 +28,12 @@
         <#if realm.password>
             <div>
                <form id="kc-form-login" class="form" onsubmit="return true;" action="${url.loginAction}" method="post">
-                    <input id="username" class="login-field" placeholder="${msg("username")}" type="text" name="username" tabindex="1">
+                    <input id="username" class="login-field" placeholder="${msg("username")}" type="text" name="username">
                     <div>
-                        <label class="visibility" id="v" onclick="togglePassword()"><img id="vi" src="${url.resourcesPath}/img/eye-off.png" width="14px" height="14px"></label>
+                        <label class="visibility" id="v" onclick="togglePassword()"><img id="vi" src="${url.resourcesPath}/img/eye-off.png" width="14px" height="14px" alt="vi"></label>
                     </div>
-                <input id="password" class="login-field" placeholder="${msg("password")}" type="password" name="password" tabindex="2">
-                <input class="submit" type="submit" value="${msg("doLogIn")}" tabindex="3">
+                <input id="password" class="login-field" placeholder="${msg("password")}" type="password" name="password">
+                <input class="submit" type="submit" value="${msg("doLogIn")}">
                 </form>
             </div>
         </#if>
