@@ -42,11 +42,24 @@ public class MainActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        int scale = 80;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            webView.setInitialScale(scale*2);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int scale_p, scale_l;
+
+        if (displayMetrics.widthPixels > 2560){
+            scale_l = 180;
+            scale_p = 110;
+        } else if (displayMetrics.widthPixels > 1920 && displayMetrics.widthPixels <= 2560 ){
+            scale_l = 160;
+            scale_p = 100;
         } else {
-            webView.setInitialScale(scale);
+            scale_l = 140;
+            scale_p = 90;
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            webView.setInitialScale(scale_l);
+        } else {
+            webView.setInitialScale(scale_p);
         }
         webView.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4644.0 Safari/537.36");
         webView.loadUrl("https://scuola.vrscuola.it");
@@ -57,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_classe, R.id.nav_visori, R.id.nav_risorse, R.id.nav_utenti, R.id.nav_diagnosi)
+                R.id.nav_home, R.id.nav_classe, R.id.nav_visori, R.id.nav_risorse, R.id.nav_utenti, R.id.nav_diagnosi, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -118,17 +132,4 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private float getScaleFactorForLandscape() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float deviceWidth = displayMetrics.widthPixels;
-        float scaleFactor = deviceWidth / 1080; // Adatta il fattore di scala in base alla larghezza dello schermo desiderata (1080 in questo caso)
-        return scaleFactor;
-    }
-
-    private float getScaleFactorForPortrait() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float deviceWidth = displayMetrics.widthPixels;
-        float scaleFactor = deviceWidth / 720; // Adatta il fattore di scala in base alla larghezza dello schermo desiderata (720 in questo caso)
-        return scaleFactor;
-    }
 }
