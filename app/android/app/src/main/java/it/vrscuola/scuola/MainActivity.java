@@ -1,15 +1,25 @@
 package it.vrscuola.scuola;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,7 +33,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.vrscuola.scuola.databinding.ActivityMainBinding;
+import it.vrscuola.scuola.dialogs.MenuDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int scale_p, scale_l;
 
-        if (displayMetrics.widthPixels > 2560){
+        if (displayMetrics.widthPixels > 2560) {
             scale_l = 180;
             scale_p = 110;
-        } else if (displayMetrics.widthPixels > 1920 && displayMetrics.widthPixels <= 2560 ){
+        } else if (displayMetrics.widthPixels > 1920 && displayMetrics.widthPixels <= 2560) {
             scale_l = 160;
             scale_p = 100;
         } else {
@@ -92,17 +106,15 @@ public class MainActivity extends AppCompatActivity {
                     url = "https://scuola.vrscuola.it";
                 } else if (id == R.id.nav_classe) {
                     url = "https://scuola.vrscuola.it/abilita-classe";
-                }else if (id == R.id.nav_visori) {
+                } else if (id == R.id.nav_visori) {
                     url = "https://scuola.vrscuola.it/setup-visore";
-                }else if (id == R.id.nav_risorse) {
+                } else if (id == R.id.nav_risorse) {
                     url = "https://scuola.vrscuola.it:8443/";
-                }
-                else if (id == R.id.nav_utenti) {
+                } else if (id == R.id.nav_utenti) {
                     url = "https://keycloak.vrscuola.it:9443/admin/master/console/#/scuola/users";
-                }
-                else if (id == R.id.nav_diagnosi) {
+                } else if (id == R.id.nav_diagnosi) {
                     url = "https://scuola.vrscuola.it/diagnosi";
-                }else if (id == R.id.nav_logout) {
+                } else if (id == R.id.nav_logout) {
                     url = "https://scuola.vrscuola.it/logout";
                 }
 
@@ -117,6 +129,78 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_settings) {
+            // Logica da eseguire quando viene premuto l'elemento "action_settings"
+            List<String> menuItems = new ArrayList<>();
+            menuItems.add("Autore: Benedetto Pellerito");
+            menuItems.add("Software per la didattica VrScuola");
+            menuItems.add("© 2023 Tutti i diritti riservati");
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, menuItems) {
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    View view = super.getView(position, convertView, parent);
+                    TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                    textView.setTextSize(24f);
+                    textView.setTextColor(Color.GREEN);
+
+                    if (position == 0) { // Applica l'effetto solo alla terza riga
+                        final String text = getItem(position);
+                        if (text != null && !text.isEmpty()) {
+                            textView.setText(""); // Rimuovi il testo iniziale per l'animazione
+                            animateText(textView, text);
+                        }
+                    }
+
+                    return view;
+                }
+            };
+
+            final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Menu")
+                    .setAdapter(adapter, null)
+                    .show();
+
+            Window window = dialog.getWindow();
+            if (window != null) {
+                window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
+            }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Chiudi la finestra dopo 3 secondi
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }, 5000); // 3000 millisecondi = 3 secondi
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void animateText(final TextView textView, final String text) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            int index = 0;
+
+            @Override
+            public void run() {
+                textView.setText(text.substring(0, index++));
+                if (index <= text.length()) {
+                    handler.postDelayed(this, 100); // Delay di 100 millisecondi tra ogni carattere
+                }
+            }
+        }, 150); // Delay iniziale di 100 millisecondi
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
