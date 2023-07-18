@@ -179,3 +179,8 @@ body {
   font-size: 14px;
   margin-left: 30px;
 }
+
+.social-icon-style {
+  width: 180px;
+  margin-inline-start: 30px;
+}
