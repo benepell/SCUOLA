@@ -1,20 +1,18 @@
 package it.vrscuola.scuola;
 
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,17 +25,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.vrscuola.scuola.databinding.ActivityMainBinding;
-import it.vrscuola.scuola.dialogs.MenuDialog;
+import it.vrscuola.scuola.ui.webviev.CustomWebViewClient;
+import it.vrscuola.scuola.utility.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,36 +51,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         webView = findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int scale_p, scale_l;
+        webView.setWebViewClient(new CustomWebViewClient(MainActivity.this));
 
-        if (displayMetrics.widthPixels > 2560) {
-            scale_l = 180;
-            scale_p = 110;
-        } else if (displayMetrics.widthPixels > 1920 && displayMetrics.widthPixels <= 2560) {
-            scale_l = 160;
-            scale_p = 100;
-        } else {
-            scale_l = 140;
-            scale_p = 90;
-        }
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            webView.setInitialScale(scale_l);
-        } else {
-            webView.setInitialScale(scale_p);
-        }
-        webView.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4644.0 Safari/537.36");
-        webView.loadUrl("https://scuola.vrscuola.it");
+        webView.getSettings().setUserAgentString(Constants.userAgent);
+        webView.loadUrl(Constants.base);
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_classe, R.id.nav_visori, R.id.nav_risorse, R.id.nav_utenti, R.id.nav_diagnosi, R.id.nav_logout)
@@ -101,27 +78,34 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 String url = "";
+                boolean inBrowser = false;
 
                 if (id == R.id.nav_home) {
-                    url = "https://scuola.vrscuola.it";
+                    url = Constants.base;
                 } else if (id == R.id.nav_classe) {
-                    url = "https://scuola.vrscuola.it/abilita-classe";
+                    url = Constants.base.concat("abilita-classe");
                 } else if (id == R.id.nav_visori) {
-                    url = "https://scuola.vrscuola.it/setup-visore";
+                    url = Constants.base.concat("setup-visore");
                 } else if (id == R.id.nav_risorse) {
-                    url = "https://scuola.vrscuola.it:8443/";
+                    url = Constants.risorse;
+                    inBrowser = true;
                 } else if (id == R.id.nav_utenti) {
-                    url = "https://keycloak.vrscuola.it:9443/admin/master/console/#/scuola/users";
+                    url = Constants.utenti;
                 } else if (id == R.id.nav_diagnosi) {
-                    url = "https://scuola.vrscuola.it/diagnosi";
+                    url = Constants.base.concat("diagnosi");
                 } else if (id == R.id.nav_logout) {
-                    url = "https://scuola.vrscuola.it/logout";
+                    url = Constants.base.concat("logout");
                 }
 
-                // Aggiungi altre condizioni per le altre voci del menu
-
                 if (!url.isEmpty()) {
-                    webView.loadUrl(url);
+                    if (inBrowser) {
+                        // Apri il link "risorse" nel browser
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                    } else {
+                        webView.loadUrl(url);
+                    }
+
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
@@ -129,16 +113,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_settings) {
-            // Logica da eseguire quando viene premuto l'elemento "action_settings"
+
             List<String> menuItems = new ArrayList<>();
-            menuItems.add("Autore: Benedetto Pellerito");
-            menuItems.add("Software per la didattica VrScuola");
-            menuItems.add("© 2023 Tutti i diritti riservati");
+            menuItems.add(Constants.credits_1);
+            menuItems.add(Constants.credits_2);
+            menuItems.add(Constants.credits_3);
 
             final ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, menuItems) {
                 @NonNull
@@ -179,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 }
-            }, 5000); // 3000 millisecondi = 3 secondi
+            }, Constants.timeout);
 
             return true;
         }
@@ -195,12 +178,11 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 textView.setText(text.substring(0, index++));
                 if (index <= text.length()) {
-                    handler.postDelayed(this, 100); // Delay di 100 millisecondi tra ogni carattere
+                    handler.postDelayed(this, Constants.postDelay);
                 }
             }
-        }, 150); // Delay iniziale di 100 millisecondi
+        }, Constants.delayTimeout);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
