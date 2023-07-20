@@ -43,8 +43,10 @@
               <#list social.providers as p>
               <#if p.displayName == "Google">
                   <a href="${p.loginUrl}"><img src="${url.resourcesPath}/img/google-signin.png" alt="Login with Google" class="social-icon-style"></a>
+              <#elseif p.displayName == "GitHub">
+                  <a href="${p.loginUrl}"><img src="${url.resourcesPath}/img/github-signin.png" alt="Login with GitHub" class="social-icon-style2"></a>
               <#else>
-                  <input class="social-link-style" type="button" onclick="location.href='${p.loginUrl}';" value="${p.displayName}"/>
+                  <input class="social-link-style" type="button" onclick="location.href='${p.loginUrl}';" value="${p.displayName}"></input>
               </#if>
               </#list>
           </div>

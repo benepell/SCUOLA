@@ -181,6 +181,11 @@ body {
 }
 
 .social-icon-style {
-  width: 180px;
+  width: 170px;
+  height: 60px;
   margin-inline-start: 30px;
+}
+
+.social-icon-style2 {
+  width: 150px;
 }

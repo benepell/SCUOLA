@@ -15,6 +15,7 @@ public class CustomWebViewClient extends WebViewClient {
     public CustomWebViewClient(Context context) {
         this.context = context;
     }
+
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
