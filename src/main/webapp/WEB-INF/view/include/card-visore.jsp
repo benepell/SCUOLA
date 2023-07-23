@@ -10,7 +10,7 @@
         <a href="#">${param.nome_allievo}</a>
       </div>
       <div class="visore_small">
-        <img src="static/images/visore_small.png" alt="Visore"/>
+        <img src="static/images/visore_small.webp" alt="Visore"/>
             <jsp:include page="lampeggio.jsp">
             <jsp:param name="enable" value="true" />
         </jsp:include>
@@ -26,7 +26,7 @@
       </div>
       <div class="hexagon-inset">
         <div class="card-content">
-          <img src="static/images/profile.png" />
+          <img src="static/images/profile.webp" />
         </div>
       </div>
       <span class="see-more valore" style="transform: rotate(0) !important"

@@ -8,7 +8,7 @@
                     <a href="#">${param.nome_visore}</a>
                 </div>
                 <div class="visore_small">
-                    <img src="static/images/visore_small.png"  alt="Visore">
+                    <img src="static/images/visore_small.webp"  alt="Visore">
                      <span class="tick-batt">
                         <!-- qui codice battVisore -->
                         <%
