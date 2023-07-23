@@ -34,19 +34,16 @@ public class AbilitaController {
     @Autowired
     EventLogService logService;
 
-    @Autowired
-    UtilService utilService;
+
 
     @RequestMapping(value = "abilita-classe")
-    public String getAbilitaClasse(Model model, HttpServletRequest request, HttpSession session) {
+    public String getAbilitaClasse(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
 
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
-
-        session.setAttribute("isTablet", utilService.isTablet(request));
 
         return "abilita-classe";
     }

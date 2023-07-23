@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new CustomWebViewClient(MainActivity.this));
 
-        webView.getSettings().setUserAgentString(Constants.userAgent);
+       // webView.getSettings().setUserAgentString(Constants.userAgent);
         webView.loadUrl(Constants.base);
 
         setSupportActionBar(binding.appBarMain.toolbar);
