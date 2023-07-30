@@ -101,22 +101,6 @@ public class StudentService {
             return iRepository.findLabelByUsername(username);
     }
 
-    public String dbFirstVisore() {
-        // while su tutti i visori
-        // se non è occupato, ritorna il primo
-        int i = 0;
-        while (visori.size() > 0) {
-            String vis = visori.get(i);
-            System.out.println("visore: " + vis);
-            boolean isOccupato = iRepository.findLabelAvailable(visori.get(i), Constants.BATTERY_LEVEL) != null;
-            if (!isOccupato) {
-                return vis;
-            }
-            i++;
-        }
-        return null;
-    }
-
     public int deleteUserNotClass(String username) {
         if(username != null) {
            String [] cs = username.split("-");
