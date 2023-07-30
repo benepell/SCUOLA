@@ -1,8 +1,11 @@
 <section class="card-container">
   <div class="card">
     <input type="hidden" id="username-${param.index}" value="${param.username_allievo}">
+    <input type="hidden" id="resumeusername-${param.index}" value="${param.resume_username}">
     <input type="hidden" id="nome-${param.index}" value="${param.nome_allievo}">
-    <input type="hidden" id="codicevisore-${param.index}" value="">
+    <input type="hidden" id="index" value="${param.index}">
+    <input type="hidden" id="totalIndexes" value="${param.totalIndexes}">
+    <input type="hidden" id="codicevisore-${param.index}" value="${param.resume_label}">
 
 
     <figure class="hexagon front">

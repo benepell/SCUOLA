@@ -10,10 +10,23 @@ function setShowmod(value) {
   showmod = value;
 }
 
+$(document).ready(function () {
+  var totalIndexes = parseInt($('#' + "totalIndexes").val()); // Assicurati che "totalIndexes" sia un valore numerico
+  for (var index = 1; index <= totalIndexes; index++) {
+    var resumeUsername = $('#' + "resumeusername" + "-" + index).val();
+    var resumeLbl = $('#' + "codicevisore" + "-" + index).val();
+    if (resumeUsername == "true") {
+      var $hexagonBack = $('.hexagon.back');
+      $hexagonBack.eq(index - 1).click();
+      $hexagonBack.eq(index - 1).find('.see-more.valore').text(resumeLbl);
+    }
+  }
+});
+
 $("figure.hexagon.front").click(function() {
   var input_id = $(this).parent().parent().find('input[type=hidden]').attr('id');
   var index = input_id.split("-")[1];
-  var usernameAllievo = $('#' + "username" + "-" + index).val()
+  var usernameAllievo = $('#' + "username" + "-" + index).val();
   var nomeAllievo = $('#' + "nome" + "-" + index).val();
   var codiceVisore = $('#' + "codicevisore" + "-" + index).val();
 
@@ -25,19 +38,15 @@ $("figure.hexagon.front").click(function() {
         $('#' + "codicevisore" + "-" + index).val(data.visore);
 
         if (data.num_visore_occup === undefined) {
-                // Non ci sono visori disponibili, mostra l'alert
-                var $alert = $('<div class="alert alert-warning" style="width:80%;padding-inline-start: 30px;background-color: #79656580;font-size: 20px;color: yellowgreen; border: 2px solid #C5E1A5" role="alert">Non ci sono visori disponibili.</div>');
-                $('body').append($alert);
+                // Non ci sono visori disponibili
                 setTimeout(function () {
-                  $alert.alert('close'); // Chiudi l'alert dopo 5 secondi
-                    // forza chiusura modale
                     $("span.close-btn").click();
                     // inserisci 0.5 secondi di ritardo per permettere la chiusura della modale
                     setTimeout(function () {
                         $clicked_figure.next('.hexagon.back').click();
                     }, 500);
 
-                }, 5000);
+                }, 2000);
         }
     });
 

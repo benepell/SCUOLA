@@ -106,11 +106,13 @@ public class StudentService {
         // se non è occupato, ritorna il primo
         int i = 0;
         while (visori.size() > 0) {
-            if (iRepository.findLabelAvailable(visori.get(i), Constants.BATTERY_LEVEL) != null) {
-                i++;
-            } else {
-                return visori.get(i);
+            String vis = visori.get(i);
+            System.out.println("visore: " + vis);
+            boolean isOccupato = iRepository.findLabelAvailable(visori.get(i), Constants.BATTERY_LEVEL) != null;
+            if (!isOccupato) {
+                return vis;
             }
+            i++;
         }
         return null;
     }

@@ -48,7 +48,7 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
-            + "WHERE (i.label = :label AND c.connected != 'disconnected' AND FUNCTION('abs', i.batteryLevel) >  :batteryLevel)")
+            + "WHERE (i.label = :label  AND FUNCTION('abs', i.batteryLevel) >  :batteryLevel)")
     String findLabelAvailable(@Param("label") String label, @Param("batteryLevel") int batteryLevel);
 
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")

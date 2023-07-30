@@ -11,6 +11,7 @@
     String[] allievi = (String[])session.getAttribute("alunni");
     String[] username = (String[])session.getAttribute("username");
     String users = username != null ? String.join(",", username) : "";
+
 %>
 
 <div class="jumbotron jumbotron-billboard">
@@ -49,17 +50,41 @@
 <%
     int numVisoriInRow = 4;
 %>
-  <% int margin = 0; %> <% for (int j = 0; j <= Math.ceil(allievi.length / numVisoriInRow);
+  <%
+  int totalIndexes = allievi.length;
+  int margin = 0; %> <% for (int j = 0; j <= Math.ceil(totalIndexes / numVisoriInRow);
   j++) { %>
   <div class="row" style="margin-top: <%=margin%>px;">
-    <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(allievi.length, numVisoriInRow + j*numVisoriInRow); i++) { %>
+    <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(totalIndexes, numVisoriInRow + j*numVisoriInRow); i++) { %>
 
       <div class="col-md-3">
+
+      <%
+        boolean isResumeUsername = false;
+        String resumeLabel = "";
+        String[] resumeUsers = (String[]) request.getAttribute("resumeUsers").toString().split(",");
+        String[] resumeLabels = (String[]) request.getAttribute("resumeLabels").toString().split(",");
+        if(resumeUsers != null && resumeLabels != null && resumeUsers.length == resumeLabels.length) {
+            int y = 0;
+            for (String resumeUser : resumeUsers) {
+                if (resumeUser.equals(username[i-1])) {
+                    isResumeUsername = true;
+                    resumeLabel = resumeLabels[y];
+                    break;
+                }
+                y++;
+            }
+        }
+
+      %>
 
       <jsp:include page="include/card-visore.jsp">
         <jsp:param name="nome_allievo" value="<%=allievi[i-1]%>" />
         <jsp:param name="username_allievo" value="<%=username[i-1]%>" />
+        <jsp:param name="resume_username" value="<%=isResumeUsername%>" />
+        <jsp:param name="resume_label" value="<%=resumeLabel%>" />
         <jsp:param name="index" value="<%=i%>" />
+        <jsp:param name="totalIndexes" value="<%=totalIndexes%>" />
       </jsp:include>
     </div>
     <%} %>

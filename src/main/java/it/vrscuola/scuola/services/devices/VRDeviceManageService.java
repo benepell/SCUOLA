@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Service
 public class VRDeviceManageService {
@@ -50,8 +51,8 @@ public class VRDeviceManageService {
         // controlla da keycloak se l'utente esiste ed e' abilitato
         if (kService.existUser(username)) {
 
-            String arg = null ;
-            if (!label.equals("0")|| !label.equals("1")) {
+            String arg = null;
+            if (!label.equals("0") || !label.equals("1")) {
                 // recupera argomento del visore da session
                 arg = (String) session.getAttribute("arg");
                 // se non e' presente in session usa quello di default
@@ -59,7 +60,7 @@ public class VRDeviceManageService {
             }
 
             if (updating) {
-                if(arg != null){
+                if (arg != null) {
                     cRepository.updateByMacAddress2(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_PENDING, arg);
                 } else {
                     cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, Constants.CONNECTED_IN_PENDING);
@@ -72,7 +73,7 @@ public class VRDeviceManageService {
                 vrDeviceConnectivityEntitie.setNote(note);
                 vrDeviceConnectivityEntitie.setConnected(Constants.CONNECTED_IN_PENDING);
 
-                if(arg != null){
+                if (arg != null) {
                     vrDeviceConnectivityEntitie.setArgoment(arg);
                 }
                 cRepository.save(vrDeviceConnectivityEntitie);
@@ -106,7 +107,7 @@ public class VRDeviceManageService {
             return;
         }
 
-        String arg = "" ;
+        String arg = "";
         if (argoment == null) {
             // recupera argomento del visore da session
             arg = (String) session.getAttribute("arg");
@@ -139,5 +140,25 @@ public class VRDeviceManageService {
     public String[] allDevices() {
         List<String> list = iRepository.labels(Constants.BATTERY_LEVEL);
         return list != null ? list.toArray(new String[list.size()]) : null;
+    }
+
+    public String[] resume() {
+        String resumeUsersString = "";
+        String resumeLabelsString = "";
+        String[] resumeUsers = cRepository.findAllUsers();
+        if (resumeUsers != null && resumeUsers.length > 0) {
+            StringJoiner joinerUser = new StringJoiner(",");
+            StringJoiner joinerLabel = new StringJoiner(",");
+
+            for (String user : resumeUsers) {
+                String label = iRepository.findLabelByUsername(user);
+                joinerUser.add(user);
+                joinerLabel.add(label);
+            }
+            resumeUsersString = joinerUser.toString();
+            resumeLabelsString = joinerLabel.toString();
+
+        }
+        return new String[] {resumeUsersString, resumeLabelsString};
     }
 }
