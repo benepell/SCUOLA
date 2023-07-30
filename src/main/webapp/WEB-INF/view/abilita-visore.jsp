@@ -8,6 +8,7 @@
 
 <%
     int codiceVisore = 0;
+    boolean isTablet = session.getAttribute("isTablet") != null ? (boolean)session.getAttribute("isTablet") : false;
     String[] allievi = (String[])session.getAttribute("alunni");
     String[] username = (String[])session.getAttribute("username");
     String users = username != null ? String.join(",", username) : "";
@@ -48,16 +49,24 @@
 
 <div class="container">
 <%
-    int numVisoriInRow = 4;
-%>
-  <%
+    int numVisoriInRow = 0;
+    if (isTablet) {
+        numVisoriInRow = 3;
+    } else {
+        numVisoriInRow = 4;
+    }
+
   int totalIndexes = allievi.length;
   int margin = 0; %> <% for (int j = 0; j <= Math.ceil(totalIndexes / numVisoriInRow);
   j++) { %>
   <div class="row" style="margin-top: <%=margin%>px;">
     <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(totalIndexes, numVisoriInRow + j*numVisoriInRow); i++) { %>
 
-      <div class="col-md-3">
+        <% if (isTablet) { %>
+           <div class="col-md-3" style="margin-left: 50px;">
+         <%} else { %>
+           <div class="col-md-3">
+         <% }%>
 
       <%
         boolean isResumeUsername = false;
