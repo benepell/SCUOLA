@@ -26,7 +26,7 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query("SELECT c.macAddress FROM connect c WHERE c.macAddress = :mac")
     String findMac(@Param("mac") String mac);
 
-    @Query("SELECT  c.username FROM connect c")
+    @Query("SELECT  c.username FROM connect c WHERE c.connected != 'disconnected'")
     String[] findAllUsers();
 
     @Query("SELECT c.id, c.macAddress, c.initDate, c.username, c.note, c.connected, c.argoment FROM connect c")

@@ -1,6 +1,7 @@
 var showmod = false;
 var codice_visore;
 var isShowModal = false;
+var isResume = false;
 
 function getShowmod() {
   return showmod;
@@ -16,6 +17,7 @@ $(document).ready(function () {
     var resumeUsername = $('#' + "resumeusername" + "-" + index).val();
     var resumeLbl = $('#' + "codicevisore" + "-" + index).val();
     if (resumeUsername == "true") {
+      isResume = true;
       var $hexagonBack = $('.hexagon.back');
       $hexagonBack.eq(index - 1).click();
       $hexagonBack.eq(index - 1).find('.see-more.valore').text(resumeLbl);
@@ -46,7 +48,7 @@ $("figure.hexagon.front").click(function() {
                         $clicked_figure.next('.hexagon.back').click();
                     }, 500);
 
-                }, 2000);
+                }, 1500);
         }
     });
 
@@ -64,15 +66,18 @@ $("figure.hexagon.back").click(function() {
   var input_id = $(this).parent().parent().find('input[type=hidden]').attr('id');
   var index = input_id.split("-")[1];
   var usernameAllievo = $('#' + "username" + "-" + index).val()
+  var resumeUsername = $('#' + "resumeusername" + "-" + index).val();
   var nomeAllievo = $('#' + "nome" + "-" + index).val();
 
   var $clicked_figure = $(this);
     // Chiamata AJAX per ottenere il codice del visore
-    if(!isShowModal){
+    if(!isShowModal && !isResume) {
         $.post("/visore-remove", { username: usernameAllievo, allievo: nomeAllievo }, function (data) {
             $clicked_figure.next('.hexagon.front').find('.see-more.valore').text('');
         });
     }
+
+    isResume = false;
 });
 
 // Modifica la funzione di gestione dell'evento click della carta
