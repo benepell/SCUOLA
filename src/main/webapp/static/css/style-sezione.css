@@ -31,9 +31,14 @@
     transition: background-color 0.mysez-3s, color 0.mysez-3s;
   }
 
+  .active {
+    background-color: #a7ee54b5 !important;
+    color: white !important;
+  }
+
   .mysez-barra-centrale a:hover {
     background-color: #242729;
-    color: yellow
+    color: yellow;
   }
 
   /* Sezioni */

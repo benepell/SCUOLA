@@ -23,8 +23,12 @@ public class VRDeviceInitEntitie {
     @Column(columnDefinition = "INTEGER DEFAULT 100")
     private Integer batteryLevel;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "classroom_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private VRDeviceClassroomEntitie classroom_id;
+
+
     @OneToMany(mappedBy = "init", fetch = FetchType.LAZY)
     private List<VRDeviceConnectivityEntitie> connectivities;
 
-    // Metodi getter e setter
 }

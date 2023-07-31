@@ -13,22 +13,22 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
 
-<form id="form" method="post" action="/classe">
+<form id="form" method="post" action="/classroom">
   <input
     type="hidden"
-    id="classSelected"
-    name="classSelected"
-    value="${classSelected}"
+    id="classroomSelected"
+    name="classroomSelected"
+    value="${classroomSelected}"
   />
 
   <section class="my-card-container">
     <c:forEach var="i" begin="1" end="5">
       <div class="my-card">
         <div class="my-card-front">
-          <h3>Classe ${i}</h3>
+          <h3>Aula ${i}</h3>
         </div>
         <div class="my-card-back">
-          <h3>Classe ${i}</h3>
+          <h3>Aula ${i}</h3>
           <!-- Aggiungi l'attributo data-classe con il valore della classe -->
           <button data-classe="${i}" onclick="setClassSelected('${i}')">
             Seleziona
@@ -88,7 +88,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <script>
   function setClassSelected(className) {
-    document.getElementById("classSelected").value = className;
+    document.getElementById("classroomSelected").value = className;
     document.getElementById("form").submit();
   }
 </script>

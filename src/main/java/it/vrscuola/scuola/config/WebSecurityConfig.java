@@ -56,7 +56,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers("/allievo-visore").hasRole("admins")
                 .antMatchers("/argomento-visore").permitAll()
 
-
+                .antMatchers("/classroom").hasRole("admins")
                 .antMatchers("/classe").hasRole("admins")
                 .antMatchers("/sezione").hasRole("admins")
                 .antMatchers("/checkRes").hasRole("admins")

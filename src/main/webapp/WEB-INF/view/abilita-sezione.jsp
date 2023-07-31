@@ -14,36 +14,54 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
 
 <!-- Form per inviare il valore della classe selezionata -->
-<form id="form" method="post" action="/sezione">
+<form id="form" method="post" action="/classe">
   <input
     type="hidden"
     id="classSelected"
     name="classSelected"
     value="${classSelected}"
   />
-  <input
-    type="hidden"
-    id="sectionSelected"
-    name="sectionSelected"
-    value="${sectionSelected}"
-  />
+
 
   <%
+    String[] classes = {"1", "2", "3", "4", "5"};
     String[] letters = session.getAttribute("allSections") != null ? (String[])session.getAttribute("allSections") : new String[0];
   %>
 
   <!-- codice sezione -->
 
   <div class="mysez-sezione">
-    <h1>Scegli la Sezione</h1>
+    <h1>Scegli la Classe</h1>
 
     <!-- barra centrale -->
     <div class="mysez-barra-centrale">
-      <% for(String letter : letters) { %>
-      <a href="#section-<%=letter%>"><%=letter.toUpperCase()%></a>
+      <% for(String cl : classes) {
+      String c = (String)session.getAttribute("classSelected");
+      String clazz =  c != null && c.equals(cl) ? "active": "";
+
+       %>
+      <a href="#" onclick="setClasseSelected('<%=cl%>')" class="<%=clazz%>"><%=cl%></a>
       <% } %>
     </div>
   </div>
+
+</form>
+
+  <!-- Form per inviare il valore della classe selezionata -->
+  <form id="form1" method="post" action="/sezione">
+    <input
+      type="hidden"
+      id="classSelected"
+      name="classSelected"
+      value="${classSelected}"
+    />
+    <input
+      type="hidden"
+      id="sectionSelected"
+      name="sectionSelected"
+      value="${sectionSelected}"
+    />
+
 
   <div class="mysez-container">
     <div class="row">
@@ -106,9 +124,14 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
 <script src="static/js/jquery-3.6.4.min.js"></script>
 
 <script>
+    function setClasseSelected(classe) {
+        document.getElementById("classSelected").value = classe;
+        document.getElementById("form").submit();
+    }
+
   function setSectionSelected(sectionName) {
     document.getElementById("sectionSelected").value = sectionName;
-    document.getElementById("form").submit();
+    document.getElementById("form1").submit();
   }
 </script>
 
