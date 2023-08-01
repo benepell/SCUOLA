@@ -46,9 +46,13 @@ public class SetupVisoreController {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
-        try {
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
 
-            String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+        if (classroom.isEmpty()) {
+            return "redirect:/abilita-classe";
+        }
+
+        try {
 
             List<String> labelsSetup = repository.labelsSetup(classroom);
             List<String> macsSetup = repository.macsSetup(classroom);

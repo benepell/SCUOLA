@@ -52,13 +52,19 @@ public class AbilitaController {
     }
 
     @RequestMapping(value = "abilita-sezione")
-    public String getAbilitaSezione(Model model) {
+    public String getAbilitaSezione(Model model, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
 
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
+
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+
+        if (classroom.isEmpty()) {
+            return "redirect:/abilita-classe";
+        }
 
         return "abilita-sezione";
     }
