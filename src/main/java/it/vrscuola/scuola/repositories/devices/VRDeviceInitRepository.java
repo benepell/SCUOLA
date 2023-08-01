@@ -22,17 +22,17 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT code FROM init i WHERE i.macAddress =:mac")
     String codeByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > :batteryLevel")
-    List<String> labels(@Param("batteryLevel") int batteryLevel);
+    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > :batteryLevel and i.classroom = :classroom" )
+    List<String> labels(@Param("batteryLevel") int batteryLevel, @Param("classroom") String classroom);
 
-    @Query(value = "SELECT label FROM init i ")
-    List<String> labelsSetup();
+    @Query(value = "SELECT label FROM init i WHERE i.classroom =:classroom")
+    List<String> labelsSetup(String classroom);
 
-    @Query(value = "SELECT i.macAddress FROM init i")
-    List<String> macsSetup();
+    @Query(value = "SELECT i.macAddress FROM init i WHERE i.classroom =:classroom")
+    List<String> macsSetup(String classroom);
 
-    @Query(value = "SELECT i.batteryLevel FROM init i")
-    List<String> battSetup();
+    @Query(value = "SELECT i.batteryLevel FROM init i WHERE i.classroom =:classroom")
+    List<String> battSetup(String classroom);
 
     @Query(value = "SELECT COUNT(*) FROM init i")
     int getCount();
@@ -42,8 +42,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
-            + "WHERE c.username = :username and c.connected != 'disconnected'")
-    String findLabelByUsername(@Param("username") String username);
+            + "WHERE c.username = :username and c.connected != 'disconnected' and i.classroom = :classroom")
+    String findLabelByUsername(@Param("username") String username, @Param("classroom") String classroom);
 
     @Query(value = "SELECT i.label "
             + "FROM init i "

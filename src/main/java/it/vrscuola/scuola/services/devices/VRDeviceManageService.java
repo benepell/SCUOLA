@@ -137,12 +137,12 @@ public class VRDeviceManageService {
         return true;
     }
 
-    public String[] allDevices() {
-        List<String> list = iRepository.labels(Constants.BATTERY_LEVEL);
+    public String[] allDevices(String classroom) {
+        List<String> list = iRepository.labels(Constants.BATTERY_LEVEL, classroom);
         return list != null ? list.toArray(new String[list.size()]) : null;
     }
 
-    public String[] resume() {
+    public String[] resume(String classroom) {
         String resumeUsersString = "";
         String resumeLabelsString = "";
         String[] resumeUsers = cRepository.findAllUsers();
@@ -151,7 +151,7 @@ public class VRDeviceManageService {
             StringJoiner joinerLabel = new StringJoiner(",");
 
             for (String user : resumeUsers) {
-                String label = iRepository.findLabelByUsername(user);
+                String label = iRepository.findLabelByUsername(user, classroom);
                 joinerUser.add(user);
                 joinerLabel.add(label);
             }

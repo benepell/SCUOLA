@@ -47,16 +47,18 @@ public class SezioneController {
             String[] alunni = keycloakUserService.filterSectionsAllievi();
             String[] username = keycloakUserService.filterSectionsUsername();
 
+            String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+
             session.setAttribute("usernameSelected",username);
             // cancella i dati precedenti se cambia classe in connec sovrascrivi i dati precedenti
             if(username != null && username.length > 0){
                 int row = studentService.deleteUserNotClass(username[0]);
                 if (row > 0) {
                     String[] alu = (String[]) session.getAttribute("alunni");
-                    String[] vis = manageService.allDevices();
+                    String[] vis = manageService.allDevices(classroom);
                     studentService.cleanVisori(session);
                     if (alu != null && alu.length > 0 && vis != null && vis.length > 0 ){
-                        studentService.init(Arrays.asList(alu), Arrays.asList(vis));
+                        studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
                     }
                 }
             }

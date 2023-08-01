@@ -25,9 +25,12 @@ public class StudentService {
     private List<String> allievi;
     private List<String> visori;
 
-    public void init(List<String> allievi, List<String> visori) {
+    private String classroom;
+
+    public void init(List<String> allievi, List<String> visori, String classroom) {
         this.allievi = allievi;
         this.visori = visori;
+        this.classroom = classroom;
     }
 
     public Optional<String> setVisore(String allievo, HttpSession session) {
@@ -98,7 +101,7 @@ public class StudentService {
     }
 
     public String dbVisori(String username) {
-            return iRepository.findLabelByUsername(username);
+            return iRepository.findLabelByUsername(username,classroom);
     }
 
     public int deleteUserNotClass(String username) {

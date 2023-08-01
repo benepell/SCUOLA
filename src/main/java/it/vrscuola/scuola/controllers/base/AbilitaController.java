@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
-import java.util.StringJoiner;
 
 @Controller
 @RequestMapping("/")
@@ -75,13 +74,15 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+
         String[] alu = (String[]) session.getAttribute("alunni");
-        String[] vis = manageService.allDevices();
+        String[] vis = manageService.allDevices(classroom);
         String[] users = session.getAttribute("usernameSelected") != null ? session.getAttribute("usernameSelected").toString().split(",") : null;
 
         model.addAttribute("username", users);
 
-        String[] resume = manageService.resume();
+        String[] resume = manageService.resume(classroom);
         if (resume != null && resume.length == 2) {
             model.addAttribute("resumeUsers", resume[0]);
             model.addAttribute("resumeLabels", resume[1]);
@@ -91,7 +92,8 @@ public class AbilitaController {
             return "redirect:/abilita-classe";
         }
 
-        studentService.init(Arrays.asList(alu), Arrays.asList(vis));
+
+        studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
 
         logService.sendLog(session, Constants.EVENT_LOG_ENABLE_VISOR);
 

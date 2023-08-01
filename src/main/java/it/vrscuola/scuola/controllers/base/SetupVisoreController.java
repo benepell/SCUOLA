@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -41,14 +42,17 @@ public class SetupVisoreController {
     Utilities utilities;
 
     @RequestMapping(value = "setup-visore")
-    public String getSetupVisoreClasse(Model model) {
+    public String getSetupVisoreClasse(Model model, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
         try {
-            List<String> labelsSetup = repository.labelsSetup();
-            List<String> macsSetup = repository.macsSetup();
-            List<String> battSetup = repository.battSetup();
+
+            String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+
+            List<String> labelsSetup = repository.labelsSetup(classroom);
+            List<String> macsSetup = repository.macsSetup(classroom);
+            List<String> battSetup = repository.battSetup(classroom);
 
             model.addAttribute("macsSetup", String.join(",", macsSetup));
             model.addAttribute("labelsSetup", String.join(",", labelsSetup));
