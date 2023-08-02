@@ -91,7 +91,6 @@
 
 
       %>
-        ciao <%=resumeLabels[0]%>
       <jsp:include page="include/card-visore.jsp">
         <jsp:param name="nome_allievo" value="<%=allievi[i-1]%>" />
         <jsp:param name="username_allievo" value="<%=username[i-1]%>" />
