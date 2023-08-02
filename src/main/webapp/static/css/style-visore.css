@@ -425,3 +425,7 @@ border: 3px solid;
     opacity: 0;
   }
 }
+
+.highlighted {
+     background-color: #f44336a1;
+}

@@ -15,6 +15,17 @@
 
 %>
 
+<!-- Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p id="modalMessage"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
     <div class="row">
@@ -27,7 +38,19 @@
   </div>
 </div>
 
+<!-- Casella di ricerca -->
+<div style="position: fixed; top: 25px; right: 133px; background: none; border: none;z-index: 9999;">
+  <div class="input-group">
+    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)">
+    <button class="btn btn-primary" id="searchButton">Cerca</button>
+  </div>
+</div>
+
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
+
+
+
+
 
 <!-- Form per inviare il valore della classe selezionata -->
 <form id="form" method="post" action="/chiudi-visore">
@@ -123,6 +146,8 @@
 <script src="static/js/modale-card-visore.js"></script>
 <script src="static/js/preload-card-visore.js"></script>
 <script src="static/js/scroll-card-visore.js"></script>
+<script src="static/js/search-modale-visor.js"></script>
+
 
 <%-- Modale per la visualizzazione del visore --%>
 <%
@@ -150,3 +175,4 @@
 
 
 </form>
+
