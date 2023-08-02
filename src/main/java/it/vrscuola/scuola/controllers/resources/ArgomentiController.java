@@ -19,7 +19,7 @@ public class ArgomentiController {
 
     @GetMapping(value = "/argomenti/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getArgomentiAll(
-            @RequestParam(name = "aula", defaultValue = "aula01") String aula,
+            @RequestParam(name = "aula", defaultValue = "") String aula,
             @RequestParam(name = "classe", defaultValue = "") String classe,
             @RequestParam(name = "sezione", defaultValue = "") String sezione) {
 

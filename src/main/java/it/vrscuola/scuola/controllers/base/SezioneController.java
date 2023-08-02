@@ -6,6 +6,7 @@ import it.vrscuola.scuola.services.devices.VRDeviceManageDetailService;
 import it.vrscuola.scuola.services.devices.VRDeviceManageService;
 import it.vrscuola.scuola.services.devices.VRDeviceManagerOrderService;
 import it.vrscuola.scuola.services.securities.KeycloakUserService;
+import it.vrscuola.scuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,7 @@ public class SezioneController {
             String[] usernameOrdinati = orderService.getUsername();
             session.setAttribute("alunni",alunniOrdinati);
             session.setAttribute("username",usernameOrdinati);
-            session.setAttribute("argoments", argomentiDirService.getArgomentiAll("aula01",classSelected,sectionSelected));
+            session.setAttribute("argoments", argomentiDirService.getArgomentiAll(Constants.PREFIX_CLASSROOM + classroom ,classSelected,sectionSelected));
 
         } catch (Exception e) {
             e.printStackTrace();
