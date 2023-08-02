@@ -41,7 +41,8 @@
 <!-- Casella di ricerca -->
 <div style="position: fixed; top: 25px; right: 133px; background: none; border: none;z-index: 9999;">
   <div class="input-group">
-    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)">
+    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)"
+    style="border: 3px solid #808080ab;">
     <button class="btn btn-primary" id="searchButton">Cerca</button>
   </div>
 </div>
