@@ -38,12 +38,22 @@
   </div>
 </div>
 
-<!-- Casella di ricerca -->
-<div style="position: fixed; top: 25px; right: 133px; background: none; border: none;z-index: 9999;">
+<div style="position: fixed;top: 4px;right: 37px;background: none;border: none;z-index: 9999;/* height: 12px !important; */">
   <div class="input-group">
-    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)"
-    style="border: 3px solid #808080ab;">
-    <button class="btn btn-primary" id="searchButton">Cerca</button>
+    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)" style="border: 2px solid rgb(13 253 173 / 23%);background: #9e9e9e2e;color: white;/* border-color: #455A64; */">
+    <button class="btn btn-primary" id="searchButton" style="
+    display: inline-block;
+    padding: 4px;
+    margin: 0px 2px;
+    background-color: #352b2b;
+    border: 2px solid rgb(13 253 173 / 23%);
+    text-align: center;
+    min-width: 100px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.mysez-3s, color 0.mysez-3s;">Cerca</button>
   </div>
 </div>
 
@@ -63,7 +73,7 @@
 </div>
 
 <div>
-    <a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 25px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla chiusura di tutti i visori">
+    <a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 65px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla chiusura di tutti i visori">
       <img src="static/images/scroll-up-arrow.png" style="border: 3px solid #0dcaf0cf;border-radius: 60px;" alt="Cerca" width="80" height="80">
     </a>
 </div>
