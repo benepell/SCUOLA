@@ -8,7 +8,6 @@
 
 <%
     int codiceVisore = 0;
-    boolean isTablet = session.getAttribute("isTablet") != null ? (boolean)session.getAttribute("isTablet") : false;
     String[] allievi = (String[])session.getAttribute("alunni");
     String[] username = (String[])session.getAttribute("username");
     String users = username != null ? String.join(",", username) : "";
@@ -40,7 +39,7 @@
 
 <div style="position: fixed;top: 4px;right: 37px;background: none;border: none;z-index: 9999;/* height: 12px !important; */">
   <div class="input-group">
-    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)" style="border: 2px solid rgb(13 253 173 / 23%);background: #9e9e9e2e;color: white;/* border-color: #455A64; */">
+    <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)" style="border: 2px solid rgb(13 253 173 / 23%);background: #352b2b;color: white;/* border-color: #455A64; */">
     <button class="btn btn-primary" id="searchButton" style="
     display: inline-block;
     padding: 4px;
@@ -83,12 +82,7 @@
 
 <div class="container">
 <%
-    int numVisoriInRow = 0;
-    if (isTablet) {
-        numVisoriInRow = 3;
-    } else {
-        numVisoriInRow = 4;
-    }
+    int numVisoriInRow = 4;
 
   int totalIndexes = allievi.length;
   int margin = 0; %> <% for (int j = 0; j <= Math.ceil(totalIndexes / numVisoriInRow);
@@ -96,11 +90,8 @@
   <div class="row" style="margin-top: <%=margin%>px;">
     <% for (int i = 1 + j*numVisoriInRow; i <= Math.min(totalIndexes, numVisoriInRow + j*numVisoriInRow); i++) { %>
 
-        <% if (isTablet) { %>
-           <div class="col-md-3" style="margin-left: 50px;">
-         <%} else { %>
            <div class="col-md-3">
-         <% }%>
+
 
       <%
         boolean isResumeUsername = false;
