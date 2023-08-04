@@ -182,8 +182,8 @@ body {
 
 .social-icon-style {
   width: 170px;
-  height: 60px;
   margin-inline-start: 30px;
+  padding-bottom: 10px;
 }
 
 .social-icon-style2 {
