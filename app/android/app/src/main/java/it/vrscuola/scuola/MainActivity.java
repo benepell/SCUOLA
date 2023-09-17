@@ -82,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (id == R.id.nav_home) {
                     url = Constants.base;
-                } else if (id == R.id.nav_classe) {
+                } else if (id == R.id.nav_aule) {
                     url = Constants.base.concat("abilita-classe");
+                } else if (id == R.id.nav_classe) {
+                    url = Constants.base.concat("abilita-sezione");
                 } else if (id == R.id.nav_visori) {
                     url = Constants.base.concat("setup-visore");
                 } else if (id == R.id.nav_risorse) {

@@ -11,7 +11,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
-    <string name="menu_classe">Classe</string>
+    <string name="menu_aule">Aule</string>
+    <string name="menu_classe">Classi</string>
     <string name="menu_visori">Visori</string>
     <string name="menu_risorse">Risorse</string>
     <string name="menu_utenti">Utenti</string>
