@@ -3,11 +3,15 @@ package it.vrscuola.scuola.entities.devices;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 @Entity(name = "init")
 @Data
-public class VRDeviceInitEntitie {
+public class VRDeviceInitEntitie  implements Serializable {
+
+    private static final long serialVersionUID = 1649157305664836876L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
