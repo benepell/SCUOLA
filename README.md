@@ -37,7 +37,7 @@ Per assistenza riguardante MultiAule, contatta il nostro team dedicato all'indir
 
 ## Contribuzione
 
-Se sei interessato a contribuire al progetto, ti preghiamo di leggere le [nostre linee guida per la contribuzione](CONTRIBUTING.MD).
+Se sei interessato a contribuire al progetto, ti preghiamo di leggere le [nostre linee guida per la contribuzione](CONTRIBUTING.md).
 
 ---
 
