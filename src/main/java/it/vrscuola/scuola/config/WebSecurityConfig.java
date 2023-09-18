@@ -73,6 +73,11 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
                 .antMatchers("/argomenti/**").permitAll()
 
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/api-docs").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+
                 .anyRequest().denyAll();
 
         http.headers().frameOptions().sameOrigin();
