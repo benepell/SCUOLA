@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2023, Benedetto Pellerito
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package it.vrscuola.scuola.config;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
@@ -18,71 +34,32 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Bean
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new RegisterSessionAuthenticationStrategy(
-                new SessionRegistryImpl());
+        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-
-        http
-                .cors().and().csrf().disable()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").authenticated()
-                .antMatchers("/logout").authenticated()
-                .antMatchers("/sso/login").permitAll()
-                .antMatchers("/userinfo").authenticated()
-                .antMatchers("/error").permitAll()
-                .antMatchers("/errore").permitAll()
-                .antMatchers("/health").permitAll()
-                .antMatchers("/hello").permitAll()
-                .antMatchers("/config").permitAll()
-                .antMatchers("/update-env").permitAll()
-                .antMatchers("/initialize-devices/**").permitAll()
-                .antMatchers("/connectivity-devices/**").permitAll()
-                .antMatchers("/keycloak-users/**").permitAll()
-                .antMatchers("/basesetup").permitAll()
-                .antMatchers("/test").hasRole("admins")
-                .antMatchers("/test1").hasRole("users")
-                .antMatchers("/abilita-classe").hasRole("admins")
-                .antMatchers("/abilita-sezione").hasRole("admins")
-                .antMatchers("/abilita-visore").hasRole("admins")
-                .antMatchers("/setup-visore").hasRole("admins")
-                .antMatchers("/scan-visore").hasRole("admins")
 
-                .antMatchers("/visore-selection").hasRole("admins")
-                .antMatchers("/visore-remove").hasRole("admins")
-                .antMatchers("/allievo-visore").hasRole("admins")
-                .antMatchers("/argomento-visore").permitAll()
+                .antMatchers("/login", "/logout", "/userinfo").authenticated()
 
-                .antMatchers("/classroom").hasRole("admins")
-                .antMatchers("/classe").hasRole("admins")
-                .antMatchers("/sezione").hasRole("admins")
-                .antMatchers("/checkRes").hasRole("admins")
-                .antMatchers("/chiudi-visore").hasRole("admins")
-                .antMatchers("/diagnosi").hasRole("admins")
-                .antMatchers("/generate-keycloak-credentials/**").hasRole("admins")
-                .antMatchers("/setup").hasRole("admins")
-                .antMatchers("/setup-state").hasRole("admins")
-                .antMatchers("/setup/**").hasRole("admins")
-                .antMatchers("/upload/**").hasRole("admins")
-                .antMatchers("/resources/**").hasRole("admins")
-                .antMatchers("/static/**").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
+                        "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
+                        "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
+                        "/v3/api-docs", "/swagger-resources/**", "/webjars/**").permitAll()
 
-                .antMatchers("/argomenti/**").permitAll()
-
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/api-docs").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/test", "/test1", "/abilita-classe", "/abilita-sezione", "/abilita-visore",
+                        "/setup-visore", "/scan-visore", "/visore-selection", "/visore-remove", "/allievo-visore",
+                        "/classroom", "/classe", "/sezione", "/checkRes", "/chiudi-visore", "/diagnosi",
+                        "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**",
+                        "/resources/**").hasRole("admins")
 
                 .anyRequest().denyAll();
 
         http.headers().frameOptions().sameOrigin();
     }
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -90,5 +67,4 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
-
 }
