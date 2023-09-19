@@ -27,6 +27,10 @@ Scopri le potenzialità di MultiAule visitando il link: [https://scuola.vrscuola
 - Dispositivo compatibile con la realtà aumentata o visore VR.
 - Connessione internet stabile.
 
+## Documentazione API
+Se sei uno sviluppatore o semplicemente curioso delle nostre API, ti invitiamo a consultare la nostra documentazione API dettagliata al seguente [link](https://scuola.vrscuola.it/swagger-ui/index.html#/)
+
+
 ## Supporto
 
 Per assistenza riguardante MultiAule, contatta il nostro team dedicato all'indirizzo: [benedettopellerito@gmail.com](benedettopellerito@gmail.com).
