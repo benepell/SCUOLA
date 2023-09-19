@@ -7,7 +7,7 @@
 Scopri le potenzialità di MultiAule visitando il link: [https://scuola.vrscuola.it](https://scuola.vrscuola.it)
 
 ## Scarica l'App
-[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=it.vrscuola.multiAule)
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=it.vrscuola.scuola)
 
 ## Caratteristiche Principali
 
