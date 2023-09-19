@@ -1,0 +1,90 @@
+.my-card-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.my-card {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.my-card-front,
+.my-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+  border-radius: 10px;
+  padding: 20px;
+  color: #fff;
+}
+
+.my-card-front {
+  background-color: #352b2bb0;
+}
+
+.my-card-back {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: rotateY(180deg);
+}
+
+.my-card-back h3 {
+  margin-bottom: 15px;
+}
+
+.my-card-back button {
+  background-color: #1f1b1b;
+  color: yellow;
+  border: none;
+  border-radius: 5px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.my-card-back button:hover {
+    background-color: #1f1b1b;
+    color: yellow;
+    border : 1px solid yellow;
+  filter: brightness(120%);
+}
+
+.my-card:hover .my-card-front {
+  transform: rotateY(-180deg);
+}
+
+.my-card:hover .my-card-back {
+  transform: rotateY(0deg);
+  background-color: #352b2b;
+  border-color: yellow;
+
+}
+
+.my-classe {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.video-background video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

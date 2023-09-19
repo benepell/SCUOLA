@@ -1,0 +1,431 @@
+:root {
+  --black: #212121;
+  --darkBlue: #1976d2;
+  --blue: #2196f3;
+  --lightBlue: #bbdefb;
+  --green: #4caf50;
+  --greenmod: #65a267;
+  --grey: #352b2b;
+  --lightGrey: #b6b6b6;
+  --white: #ffffff;
+}
+
+.card {
+  background: rgba(8, 6, 9, 0.9);
+}
+
+.card-container {
+  position: relative;
+  perspective: 1000px;
+  margin: 25px auto;
+  width: 300px;
+  margin-top: 0;
+
+}
+
+.card-container .card {
+  position: absolute;
+  width: 300px;
+  height: 347px;
+  font-family: helvetica, arial, sans-serif;
+  color: var(--black);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.2s;
+  /*FF bug fix - applying backface-visibility on the .card
+    element makes .hexagon behave properly when rotated*/
+  -moz-backface-visibility: hidden;
+}
+
+.card-container .card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-container .card.flipped .front {
+  z-index: 2;
+}
+
+.card-container .card.flipped .back {
+  z-index: 3;
+}
+
+.hexagon {
+  position: absolute;
+  width: 300px;
+  height: 173.21px;
+  background-color: var(--grey);
+  margin: 86.6px 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  transition: transform 0.5s;
+  z-index: 3;
+}
+
+.hexagon:hover {
+  transform: translateY(-3px);
+}
+
+.hexagon:before,
+.hexagon:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 212.13px;
+  height: 212.13px;
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+  left: 43.934px;
+}
+
+.hexagon:before {
+  top: -106.066px;
+}
+
+.hexagon:after {
+  bottom: -106.066px;
+}
+
+.hexagon.back {
+  transform: rotateY(180deg);
+  background-color: var(--greenmod);
+  color: var(--white);
+  z-index: 2;
+}
+
+.hexagon-inset {
+  position: absolute;
+  right: 0;
+  bottom: -87px;
+  width: 100px;
+  height: 57.74px;
+  background-color: var(--green);
+  margin: 28.87px 0;
+  z-index: 4;
+}
+
+.hexagon-inset:before,
+.hexagon-inset:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+}
+
+.hexagon-inset:before {
+  bottom: 100%;
+  border-bottom: 28.87px solid var(--green);
+}
+
+.hexagon-inset:after {
+  top: 100%;
+  width: 0;
+  border-top: 28.87px solid var(--green);
+}
+
+.card-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.card-content img {
+  max-width: 90%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -45px;
+  margin-left: -45px;
+}
+
+.card-content a {
+  font-size: 26px;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.card-content a:hover {
+  color: var(--lightBlue);
+}
+
+.see-more {
+  position: absolute;
+  bottom: -80px;
+  left: 150px;
+  margin-left: -14px;
+  font-size: 40px;
+  z-index: 2;
+  transition: color 0.2s, transform 0.2s;
+  color: yellow;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.card:hover .see-more {
+  color: var(--white);
+  transform: rotate(45deg);
+}
+
+.visore_text {
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+  z-index: 100;
+  color: yellow;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.visore_small {
+  position: relative;
+  text-align: center;
+  margin-top: 16px;
+  z-index: 100;
+}
+
+.visore_small img {
+  clip-path: none;
+}
+
+.loader-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid yellowgreen;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 768px) {
+  .card-container {
+    width: 100%;
+  }
+
+  .card-container .card {
+    width: 100%;
+    height: auto;
+    margin: 25px 0;
+  }
+
+  .hexagon {
+    width: 100%;
+    height: auto;
+    margin: 25px 0;
+  }
+
+  .hexagon:before,
+  .hexagon:after {
+    width: 70%;
+    height: 70%;
+  }
+
+  .see-more {
+    bottom: -40px;
+    left: 50%;
+    margin-left: -40px;
+    font-size: 20px;
+  }
+
+  .visore_text {
+    font-size: 30px;
+  }
+
+  .visore_small {
+    margin-top: 10px;
+  }
+
+  .loader {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Desktop styles */
+
+@media only screen and (min-width: 1024px) {
+
+  .card-container {
+    width: 80%;
+    max-width: 1000px;
+  }
+
+  .card-container .card {
+    margin: 50px 0;
+    background: #17161812;
+    border: 0;
+
+  }
+
+  .hexagon {
+    margin: 50px 0;
+  }
+
+  .see-more {
+    bottom: -80px;
+    left: 150px;
+    margin-left: -14px;
+    font-size: 40px;
+  }
+
+  .visore_text {
+    margin-top: 0;
+    font-size: 40px;
+  }
+
+
+
+  .visore_small {
+    margin-top: 8px;
+  }
+
+  .loader {
+    width: 30px;
+    height: 30px;
+  }
+
+}
+
+.setup_visore_text {
+  position: relative;
+  text-align: center;
+  margin-top: 0;
+  z-index: 100;
+  color: yellowgreen;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.ok {
+  color: yellowgreen !important;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.error {
+  color: red !important;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.tick {
+  position: absolute;
+  top: 55px;
+  left: 130px;
+  z-index: 1;
+}
+
+.tick-batt {
+  position: absolute;
+  top: 20px;
+  left: 95px;
+  z-index: 1;
+}
+
+/* Stile per il contenuto della finestra modale */
+.modal-content {
+  background-color:#79656580;
+  margin: 15% auto; /* Posiziona il contenuto della finestra modale al centro della pagina */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  max-width: 494px;
+  color: greenyellow;
+}
+
+.modal-content ul{
+    background: #d5e9d2;
+    line-height: 4rem;
+    color: black;
+    border: 5px solid gray;
+    font-size: 24px;
+
+}
+
+/* Stile per il pulsante di chiusura */
+.close-btn {
+    color: #fff;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #F57C00;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Effetto 3D alla modale quando viene aperta */
+.modal.show {
+  display: flex;
+}
+
+.modal.show .modal-content {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.iframe-container {
+height: 300px;
+overflow: auto;
+margin-top: 20px;
+}
+
+.iframe-container iframe {
+width: 450px;
+height: 290px;
+border: 3px solid;
+}
+
+.cerchio {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 4px solid #C5E1A5;
+    text-align: center;
+    line-height: 34px;
+    color: yellow;
+    font-size: larger;
+    position: absolute;
+    left: 435px;
+    top: 10px;
+}
+
+.cerchio.teletrasporto {
+  animation: teletrasporto 0.5s ease-in-out;
+}
+
+@keyframes teletrasporto {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.highlighted {
+     background-color: #f44336a1;
+}

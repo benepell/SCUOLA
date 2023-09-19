@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentazione di vrscuola - Amministrazione e Gestione Scuola VR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 30px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        code {
+            font-family: monospace;
+            background-color: #f9f9f9;
+            padding: 2px;
+            border: 1px solid #ccc;
+        }
+        pre {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Documentazione di vrscuola - Gestione e Amministrazione Scuola VR</h1>
+
+    <h2>Introduzione:</h2>
+    <p>La seguente documentazione fornisce un'esaustiva panoramica di vrscuola, una piattaforma avanzata per la gestione e l'amministrazione di una scuola VR basata su visori Oculus. Il sistema è stato sviluppato utilizzando una vasta gamma di tecnologie, tra cui Springboot, Java, Servlet, JSP, JSTL, JPA, Hibernate, Spring Security, Keycloak, Lombok e Libredf. L'ambiente Debian virtualizzato tramite VMware ospita la piattaforma, mentre il database utilizzato è MySQL 8.0.27. La piattaforma offre un'eccezionale esperienza utente su desktop hd+ fino a 4k e tablet in modalità landscape. A seguire, elenchiamo le principali funzionalità di vrscuola:</p>
+
+    <h2>Accesso alla Demo:</h2>
+    <p>Per accedere alla demo della piattaforma, collegarsi all'URL: <a href="https://scuola.vrscuola.it">https://scuola.vrscuola.it</a>. Le credenziali di accesso sono le seguenti:</p>
+    <ul>
+        <li><code>Ospite:</code> ospite/vrscuola</li>
+        <li><code>Amministratore Keycloak:</code> admin/vrscuola</li>
+    </ul>
+
+    <h2>Accesso alla VM di Sviluppo:</h2>
+    <p>Una VM di sviluppo è disponibile per visualizzare l'implementazione della piattaforma in un ambiente Windows. Le credenziali di accesso sono:</p>
+    <ul>
+        <li><code>RDP:</code> scuola.vrscuola.it</li>
+        <li><code>Utente:</code> dev</li>
+        <li><code>Password:</code> 6Proprio!</li>
+    </ul>
+
+    <h2>Configurazione Hardware e Software:</h2>
+    <p>Il sistema è stato progettato e testato su un PC portatile con le seguenti specifiche:</p>
+    <ul>
+        <li>Processore: Intel Core i7</li>
+        <li>RAM: 8 GB</li>
+        <li>Disco SSD: 256 GB</li>
+    </ul>
+    <p>Come sistema operativo è stato utilizzato Debian, virtualizzato tramite VMware.</p>
+
+    <h2>Funzionalità Principali:</h2>
+    <ul>
+        <li>Attivazione Visori: I visori Oculus possono essere attivati tramite configurazione di un file contenente il macaddress e il codice corrispondente.</li>
+        <li>Creazione Classi e Sezioni: Le classi e le sezioni degli allievi possono essere create utilizzando il loro username, ad esempio "1-a-benedetto-pellerito" per la classe 1, sezione A, e l'allievo Benedetto Pellerito con password "benedetto-pellerito".</li>
+        <li>Creazione Automatica Allievi: Gli account degli allievi possono essere generati automaticamente tramite un file denominato "create_user.txt". Uno script di Keycloak, eseguito da un cron job, si occupa di generare gli utenti. Esempi di inserimento nel file di configurazione prevedono la creazione di 200 allievi.</li>
+        <li>Selezione degli Argomenti: All'apertura dell'allievo è possibile selezionare gli argomenti disponibili, generati automaticamente mediante l'inserimento di cartelle nella sezione risorse. È possibile disattivare gli argomenti, se necessario.</li>
+        <li>Disposizione degli Allievi: Gli allievi vengono disposti in base al monteore, con un ordinamento che privilegia chi ha utilizzato meno il visore. È disponibile un bottone di chiusura per terminare tutte le sessioni degli allievi, con generazione di un file PDF al termine di ogni sessione.</li>
+        <li>Stato di Salute della Piattaforma: È prevista una funzione per controllare lo stato di salute della piattaforma, con possibilità di riavvio automatico dei servizi e generazione incrementale di un file PDF ad ogni apertura del link diagnostico.</li>
+        <li>Installazione Automatica: L'installazione della piattaforma è totalmente automatica in VirtualBox e comprende l'installazione del software VirtualBox, la gestione dei certificati, il rinnovo dei certificati e l'inizializzazione del sistema.</li>
+    </ul>
+
+    <p>Conclusioni: La piattaforma vrscuola offre un'esperienza di gestione e amministrazione avanzata di una scuola VR, sfruttando appieno i visori Oculus. Con funzionalità avanzate e un'interfaccia utente intuitiva, è stata sviluppata con tecnologie moderne e costituisce una soluzione completa per la gestione della didattica VR.</p>
