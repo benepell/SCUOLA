@@ -67,7 +67,7 @@ public class VRDeviceInitController {
         List<InitParamModel> macs = rService.addOculus(vService);
         String note = "aggiunta visore";
         for (InitParamModel p : macs) {
-            initService.addInit(utilities, p.getMacAddress(), note, p.getCode());
+            initService.addInit(utilities, p.getMacAddress(), note, p.getCode(), p.getClassroom());
         }
 
         return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));

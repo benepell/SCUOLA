@@ -105,7 +105,7 @@ public class SetupVisoreController {
             String note = "aggiunta visore";
             for (InitParamModel p : macs) {
                 macsString[macs.indexOf(p)] = p.getMacAddress();
-                initService.addInit(utilities, p.getMacAddress(), note, p.getCode());
+                initService.addInit(utilities, p.getMacAddress(), note, p.getCode(), p.getClassroom());
             }
         } else if (readOculusServices.existUpdateFile()) {
             List<InitParamModel> paramModels = readOculusServices.changeOculus(repository);

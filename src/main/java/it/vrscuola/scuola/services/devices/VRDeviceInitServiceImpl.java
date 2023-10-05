@@ -38,13 +38,13 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     private String code;
 
     @Autowired
-    it.vrscuola.scuola.repositories.devices.VRDeviceInitRepository iRepository;
+    VRDeviceInitRepository iRepository;
 
     @Autowired
     VRDeviceInitRepository VRDeviceInitRepository;
 
     @Override
-    public void addInit(Utilities utilities, String macAddress, String note, String paramCode){
+    public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom){
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());
@@ -52,6 +52,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         VRDeviceInitEntitie.setLabel(label);
         VRDeviceInitEntitie.setNote(note);
         VRDeviceInitEntitie.setCode(paramCode);
+        VRDeviceInitEntitie.setClassroom(classroom);
         // quando si aggiunge un nuovo apparato, presumo che la batteria è al 100%
         VRDeviceInitEntitie.setBatteryLevel(Constants.BATTERY_LEVEL_MAX);
         VRDeviceInitRepository.save(VRDeviceInitEntitie);
@@ -59,7 +60,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
     @Override
     public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode){
-            VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode);
+        VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode);
     }
 
     @Override
