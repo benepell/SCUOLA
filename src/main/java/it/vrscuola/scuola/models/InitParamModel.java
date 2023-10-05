@@ -25,4 +25,5 @@ public class InitParamModel {
     private String macAddress;
     private String oldMacAddress;
     private String code;
+    private String classroom;
 }

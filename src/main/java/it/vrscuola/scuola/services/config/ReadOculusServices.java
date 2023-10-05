@@ -45,6 +45,7 @@ public class ReadOculusServices {
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(confPath + "add_oculus.conf"));
             String line;
+            String classroom;
             String mac;
             String code;
             Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
@@ -52,8 +53,9 @@ public class ReadOculusServices {
             while ((line = fileReader.readLine()) != null) {
 
                 String[] sep = line.split(",");
-                mac = sep[0];
-                code = sep[1];
+                classroom = sep[0];
+                mac = sep[1];
+                code = sep[2];
 
                 Matcher matcher = macPattern.matcher(mac);
                 if (matcher.find()) {
@@ -62,6 +64,7 @@ public class ReadOculusServices {
                     String s = validateCredentialService.generateVisorCode(mac);
                     if (code.equals(s)) {
                         InitParamModel initParamModel = new InitParamModel();
+                        initParamModel.setClassroom(classroom);
                         initParamModel.setMacAddress(macAddress);
                         initParamModel.setCode(code);
                         param.add(initParamModel);
@@ -88,6 +91,7 @@ public class ReadOculusServices {
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(confPath + "change_oculus.conf"));
             String line;
+            String classroom;
             String new_mac;
             String old_mac;
             Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
@@ -95,13 +99,15 @@ public class ReadOculusServices {
             while ((line = fileReader.readLine()) != null) {
 
                 String[] sep = line.split(",");
-                old_mac = sep[0];
-                new_mac = sep[1];
+                classroom = sep[0];
+                old_mac = sep[1];
+                new_mac = sep[2];
 
 
                 Matcher matcher = macPattern.matcher(new_mac);
                 if (matcher.find()) {
                     InitParamModel initParamModel = new InitParamModel();
+                    initParamModel.setClassroom(classroom);
                     initParamModel.setMacAddress(new_mac);
                     initParamModel.setOldMacAddress(old_mac);
                     initParamModel.setCode(iRepository.codeByMacAddress(old_mac));
