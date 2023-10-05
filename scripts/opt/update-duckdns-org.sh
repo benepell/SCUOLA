@@ -31,7 +31,7 @@ if [ "$current_ip" != "$new_ip" ]; then
     echo "L'indirizzo IP è cambiato. Eseguo l'aggiornamento..."
 
     # Esegui l'aggiornamento tramite cURL
-    echo url="https://www.duckdns.org/update?domains=vrscuola.duckdns.org&token=dd9e98df-8c14-4e46-8554-4b4985b96cfb&ip=" | curl -k -o ~/duckdns/duck.log -K -
+    echo url="https://www.duckdns.org/update?domains=vrscuola.duckdns.org&token=TODOTOKEN&ip=" | curl -k -o ~/duckdns/duck.log -K -
 
     # Aggiorna il file current-ip.txt con il nuovo indirizzo IP
     echo "$new_ip" > ~/duckdns/current-ip.txt
