@@ -23,7 +23,7 @@ import it.vrscuola.scuola.utilities.Utilities;
 public interface VRDeviceInitService {
     void addInit(Utilities utilities, String macAddress,  String note, String paramCode, String classroom);
 
-    void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode);
+    void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom);
 
     boolean valid(String macAddress, String code);
 

@@ -73,8 +73,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     String findMac(@Param("label") String label);
     @Transactional
     @Modifying
-    @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note, i.code = :code WHERE  i.macAddress = :oldmac  ")
-    void updateByMacAddress(@Param("oldmac") String oldmac,@Param("newmac") String newmac,@Param("note") String note, @Param("code") String code );
+    @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note, i.code = :code, i.classroom = :classroom WHERE  i.macAddress = :oldmac  ")
+    void updateByMacAddress(@Param("oldmac") String oldmac,@Param("newmac") String newmac,@Param("note") String note, @Param("code") String code, @Param("classroom") String classroom );
 
     @Transactional
     @Modifying

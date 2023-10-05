@@ -84,7 +84,7 @@ public class VRDeviceInitController {
                 try {
                     String note = "modifica visore con vecchio mac: " + p.getOldMacAddress();
                     String code = vService.generateVisorCode(p.getMacAddress());
-                    initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code);
+                    initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code, p.getClassroom());
                     return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.update")));
                 } catch (Exception e) {
                     throw new RuntimeException(e);

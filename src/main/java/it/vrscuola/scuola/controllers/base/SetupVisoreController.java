@@ -115,7 +115,7 @@ public class SetupVisoreController {
                     try {
                         String note = "modifica visore con vecchio mac: " + p.getOldMacAddress();
                         String code = validateCredentialService.generateVisorCode(p.getMacAddress());
-                        initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code);
+                        initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code, p.getClassroom());
 
                     } catch (Exception e) {
                         throw new RuntimeException(e);

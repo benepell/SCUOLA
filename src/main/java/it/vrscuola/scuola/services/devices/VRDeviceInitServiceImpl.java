@@ -59,8 +59,8 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     }
 
     @Override
-    public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode){
-        VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode);
+    public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom){
+        VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode, classroom);
     }
 
     @Override
