@@ -3,7 +3,13 @@
 
     <section class="card-container">
         <div class="card">
-            <figure class="hexagon front">
+        <%
+            boolean isOnline = false;
+            if (request != null) {
+                isOnline = "true".equals(request.getParameter("online_visore"));
+            }
+        %>
+            <figure class="hexagon front" <%if (!isOnline){ out.print("style=\"filter: grayscale(100%);\"");  } else {out.print("style=\"filter: grayscale(0);\"");}%> >
                 <div class="card-content">
                     <a href="#">${param.nome_visore}</a>
                 </div>

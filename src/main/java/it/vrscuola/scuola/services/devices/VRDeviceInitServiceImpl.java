@@ -28,6 +28,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
@@ -42,6 +46,9 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
     @Autowired
     VRDeviceInitRepository VRDeviceInitRepository;
+
+    @Autowired
+    Utilities utilities;
 
     @Override
     public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom){
@@ -87,5 +94,22 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         return iRepository.labelByMacAddress(macAddress, Constants.BATTERY_LEVEL);
     }
 
+    @Override
+    public void updateOnline(String macAddress) {
+        Instant eraOnline = utilities.getEpoch();
+        iRepository.updateEraOnline(macAddress, eraOnline);
+    }
+    @Override
+    public List<Boolean> isOnline(String macAddresses) {
+        String[] addresses = macAddresses.split(",");
+        List<Boolean> results = new ArrayList<>();
 
+        for (String macAddress : addresses) {
+            Instant timestamp = iRepository.findEraOnlineByMacAddress(macAddress.trim());
+            boolean isOnline = (timestamp != null) ? utilities.isExpired(timestamp, Constants.MIN_ONLINE_ERA) : false;
+            results.add(isOnline);
+        }
+
+        return results;
+    }
 }

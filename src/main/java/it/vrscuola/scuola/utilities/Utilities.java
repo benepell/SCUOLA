@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,10 @@ public class Utilities {
     public boolean isValidMacAddr(String mac){
         Pattern pattern = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
         return pattern.matcher(mac).matches();
+    }
+    public boolean isExpired(Instant timestamp, long minutes) {
+        long differenceInMinutes = ChronoUnit.MINUTES.between(timestamp, Instant.now());
+        return  timestamp != null && differenceInMinutes < Constants.MIN_ONLINE_ERA;
     }
 
     public String generateBatterySVG(int batteryLevel, String width){

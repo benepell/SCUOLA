@@ -8,11 +8,13 @@
     String[] setupVisori = null;
     String[] labelVisori = null;
     String[] battVisori = null;
+    String[] onlineVisori = null;
 
     if (request.getAttribute("macsSetup") != null && request.getAttribute("labelsSetup") != null && request.getAttribute("battSetup") != null ) {
         setupVisori = request.getAttribute("macsSetup").toString().split(",");
         labelVisori = request.getAttribute("labelsSetup").toString().split(",");
         battVisori = request.getAttribute("battSetup").toString().split(",");
+        onlineVisori = request.getAttribute("onlineSetup").toString().split(",");
     }
 
 %>
@@ -42,6 +44,8 @@
                             <jsp:param name="nome_visore" value="<%=setupVisori[i-1]%>" />
                             <jsp:param name="codice_visore" value="<%=labelVisori[i-1]%>" />
                             <jsp:param name="batt_visore" value="<%=battVisori[i-1]%>" />
+                            <jsp:param name="online_visore" value="<%=onlineVisori[i-1]%>" />
+
                         </jsp:include>
                     </div>
                 <% } %>

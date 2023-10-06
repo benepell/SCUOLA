@@ -20,15 +20,21 @@ package it.vrscuola.scuola.services.devices;
 
 import it.vrscuola.scuola.utilities.Utilities;
 
+import java.time.Instant;
+import java.util.List;
+
 public interface VRDeviceInitService {
     void addInit(Utilities utilities, String macAddress,  String note, String paramCode, String classroom);
 
     void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom);
 
     boolean valid(String macAddress, String code);
+    List<Boolean> isOnline(String macAddress);
 
     String label(String macAddress);
 
     void updateBatteryLevel(String macAddress, int batteryLevel);
+
+    void updateOnline(String macAddress);
 
 }

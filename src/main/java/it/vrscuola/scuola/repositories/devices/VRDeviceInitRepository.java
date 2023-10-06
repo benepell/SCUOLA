@@ -26,6 +26,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.List;
 
 @Repository
@@ -51,6 +52,8 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT i.batteryLevel FROM init i WHERE i.classroom =:classroom")
     List<String> battSetup(String classroom);
+    @Query(value = "SELECT i.eraOnline FROM init i WHERE i.macAddress  =:mac")
+    Instant findEraOnlineByMacAddress(@Param("mac") String mac);
 
     @Query(value = "SELECT COUNT(*) FROM init i")
     int getCount();
@@ -80,5 +83,10 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Modifying
     @Query(value = "UPDATE init i set i.batteryLevel = :batteryLevel WHERE  i.macAddress = :mac  ")
     void updateBatteryLevel(@Param("mac") String mac,@Param("batteryLevel") int batteryLevel);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE init i set i.eraOnline = :eraOnline WHERE  i.macAddress = :mac  ")
+    void updateEraOnline(@Param("mac") String mac,@Param("eraOnline") Instant eraOnline);
 }
 

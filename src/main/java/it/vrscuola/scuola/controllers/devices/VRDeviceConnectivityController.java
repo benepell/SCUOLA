@@ -62,11 +62,16 @@ public class VRDeviceConnectivityController {
     @PostMapping(value = "/username")
     public ResponseEntity<?> username(@Valid VRDeviceConnectivityRequest request) {
 
+        String mac = request.getMacAddress();
+
+        // richiesta visore avvenuta aggiona il valore di eraOnline
+        iService.updateOnline(mac);
+
         if (!cService.valid(request.getMacAddress(), request.getCode())) {
             return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("connect.user.not.found"));
         }
 
-        String username = cService.viewConnect(utilities, request.getMacAddress(), request.getNote());
+        String username = cService.viewConnect(utilities, mac, request.getNote());
 
         return ResponseEntity.ok(new MessageResponse(username));
 

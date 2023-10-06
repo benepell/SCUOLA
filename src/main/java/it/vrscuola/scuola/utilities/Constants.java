@@ -63,4 +63,5 @@ public interface Constants {
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
+    long MIN_ONLINE_ERA = 5;
 }

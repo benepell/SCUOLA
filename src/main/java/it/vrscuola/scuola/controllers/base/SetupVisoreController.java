@@ -32,8 +32,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Controller
 public class SetupVisoreController {
@@ -60,7 +63,13 @@ public class SetupVisoreController {
     Utilities utilities;
 
     @RequestMapping(value = "setup-visore")
-    public String getSetupVisoreClasse(Model model, HttpSession session) {
+    public String getSetupVisoreClasse(Model model, HttpSession session, HttpServletResponse response) {
+
+        // Aggiungi questi headers per prevenire la cache
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setHeader("Expires", "0"); // Proxies
+
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
@@ -76,10 +85,14 @@ public class SetupVisoreController {
             List<String> macsSetup = repository.macsSetup(classroom);
             List<String> battSetup = repository.battSetup(classroom);
 
-            model.addAttribute("macsSetup", String.join(",", macsSetup));
+            String macs = String.join(",", macsSetup);
+
+            List<Boolean> online = initService.isOnline(macs);
+
+            model.addAttribute("macsSetup", macs);
             model.addAttribute("labelsSetup", String.join(",", labelsSetup));
             model.addAttribute("battSetup", String.join(",", battSetup));
-
+            model.addAttribute("onlineSetup", String.join(",", online.stream().map(String::valueOf).collect(Collectors.toList())));
 
             model.addAttribute("utenti", linkKeycloak);
             model.addAttribute("risorse", linkRisorse);
