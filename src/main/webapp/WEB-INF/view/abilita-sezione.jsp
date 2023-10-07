@@ -5,7 +5,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <h3 style="color: white">${intestazione}</h3>
+        <h3 style="color: white">${intestazione} Aula: ${classroomSelected}</h3>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   <!-- codice sezione -->
 
   <div class="mysez-sezione">
-    <h1>Scegli la Classe</h1>
+    <h1>Scegli la Classe </h1>
 
     <!-- barra centrale -->
     <div class="mysez-barra-centrale">
