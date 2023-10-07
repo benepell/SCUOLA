@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-lg-12">
         <h3 style="color: white">
-          ${intestazione} Classe: ${classSelected} Sezione: ${sectionSelected.toUpperCase()}
+          ${intestazione} Aula: ${classroomSelected} Classe: ${classSelected} Sezione: ${sectionSelected.toUpperCase()}
         </h3>
       </div>
     </div>
