@@ -112,4 +112,21 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
         return results;
     }
+
+    @Override
+    public List<String> strOnline(List<String> labels, String classroom) {
+        List<String> results = new ArrayList<>();
+
+        for (String label : labels) {
+            String macAddress = iRepository.findMac(label);
+            Instant timestamp = iRepository.findEraOnlineByMacAddress(macAddress.trim());
+            boolean isOnline = (timestamp != null) ? utilities.isExpired(timestamp, Constants.MIN_ONLINE_ERA) : false;
+            if (isOnline) {
+                results.add(label);
+            }
+        }
+
+        return results;
+    }
+
 }

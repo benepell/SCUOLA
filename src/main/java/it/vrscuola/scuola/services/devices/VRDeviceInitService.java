@@ -31,6 +31,9 @@ public interface VRDeviceInitService {
     boolean valid(String macAddress, String code);
     List<Boolean> isOnline(String macAddress);
 
+    List<String> strOnline(List<String> labels, String classroom);
+
+
     String label(String macAddress);
 
     void updateBatteryLevel(String macAddress, int batteryLevel);

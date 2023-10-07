@@ -20,6 +20,7 @@ package it.vrscuola.scuola.services;
 
 import it.vrscuola.scuola.repositories.devices.VRDeviceConnectivityRepository;
 import it.vrscuola.scuola.repositories.devices.VRDeviceInitRepository;
+import it.vrscuola.scuola.services.devices.VRDeviceInitServiceImpl;
 import it.vrscuola.scuola.services.devices.VRDeviceManageDetailService;
 import it.vrscuola.scuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class StudentService {
     @Autowired
     VRDeviceConnectivityRepository cRepository;
 
+    @Autowired
+    VRDeviceInitServiceImpl initService;
+
     private List<String> allievi;
     private List<String> visori;
 
@@ -47,7 +51,8 @@ public class StudentService {
 
     public void init(List<String> allievi, List<String> visori, String classroom) {
         this.allievi = allievi;
-        this.visori = visori;
+        List<String> visoriOnline = initService.strOnline(visori, classroom);
+        this.visori = visoriOnline;
         this.classroom = classroom;
     }
 
