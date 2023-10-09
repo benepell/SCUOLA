@@ -62,5 +62,7 @@ public interface Constants {
     int BATTERY_LEVEL = 20;
     boolean ENABLED_ONLINE = true;
     long MIN_ONLINE_ERA = 5;
+    boolean ENABLED_REMOVE_RECORDS = true;
+    long MIN_REMOVE_RECORDS = 2;
 
 }

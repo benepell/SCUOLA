@@ -29,6 +29,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -178,5 +180,10 @@ public class VRDeviceManageService {
 
         }
         return new String[] {resumeUsersString, resumeLabelsString};
+    }
+
+    public void removeRecordsOlder(){
+        Instant thresholdTime = Instant.now().minus(Constants.MIN_REMOVE_RECORDS, ChronoUnit.MINUTES);
+        cRepository.removeRecordsOlder(thresholdTime);
     }
 }

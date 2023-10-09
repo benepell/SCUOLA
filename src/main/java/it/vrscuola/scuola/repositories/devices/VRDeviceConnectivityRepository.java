@@ -97,5 +97,10 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Modifying
     @Query(value = "DELETE FROM connect c WHERE c.username NOT LIKE :prefix")
     int deleteByUsernameNotLike(@Param("prefix") String prefix);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM connect c WHERE c.initDate < :thresholdTime")
+    void removeRecordsOlder(@Param("thresholdTime") Instant thresholdTime);
 }
 

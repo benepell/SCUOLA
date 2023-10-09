@@ -106,6 +106,11 @@ public class AbilitaController {
 
         model.addAttribute("username", users);
 
+        // elimina visori se il tempo trascorso è superiore al max definito
+        if (Constants.ENABLED_REMOVE_RECORDS){
+            manageService.removeRecordsOlder();
+        }
+
         String[] resume = manageService.resume(classroom);
         if (resume != null && resume.length == 2) {
             model.addAttribute("resumeUsers", resume[0]);
