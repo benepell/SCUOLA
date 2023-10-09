@@ -19,6 +19,7 @@
 package it.vrscuola.scuola.utilities;
 
 public interface Constants {
+    boolean IS_DEBUG = true;
     String UNIQUE_TIME_FORMAT = "yyyyMMdd_HHmmss";
 
     String EVENT_LOG_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
@@ -28,14 +29,12 @@ public interface Constants {
     String SEPARATOR = "/";
     String RESOURCE_TRASH = ".trash";
     String RESOURCE_TMB= ".tmb";
-
     String CONNECTED_IN_PENDING = "in_pending";
     String CONNECTED_IN_CONNECTED = "connected";
     String CONNECTED_IN_DISCONNECTED = "disconnected";
     String CONNECTED_IN_RECONNECTED = "reconnected";
     String CONNECTED_IN_RECONNECTING = "reconnecting";
     String CONNECTED_IN_RECONNECTING_ERROR = "reconnecting_error";
-
    String EVENT_LOG_IN = "accesso";
    String EVENT_LOG_OUT = "uscita";
    String EVENT_LOG_RECONNECT = "riconnessione";
@@ -57,11 +56,11 @@ public interface Constants {
    String EVENT_LOG_CLOSE_ALL_VISOR = "chiudi tutti visori";
    String EVENT_LOG_CHECK_RES = "verifica risorse";
    String EVENT_LOG_CHECK_INFO = "verifica informazioni";
-
    String PREFIX_CLASSROOM = "aula";
-
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
+    boolean ENABLED_ONLINE = true;
     long MIN_ONLINE_ERA = 5;
+
 }

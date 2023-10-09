@@ -23,6 +23,7 @@ import it.vrscuola.scuola.repositories.devices.VRDeviceInitRepository;
 import it.vrscuola.scuola.services.config.ReadOculusServices;
 import it.vrscuola.scuola.services.devices.VRDeviceInitServiceImpl;
 import it.vrscuola.scuola.services.securities.ValidateCredentialService;
+import it.vrscuola.scuola.utilities.Constants;
 import it.vrscuola.scuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,12 +88,14 @@ public class SetupVisoreController {
 
             String macs = String.join(",", macsSetup);
 
-            List<Boolean> online = initService.isOnline(macs);
+            if (Constants.ENABLED_ONLINE) {
+                List<Boolean> online = initService.isOnline(macs);
+                model.addAttribute("onlineSetup", String.join(",", online.stream().map(String::valueOf).collect(Collectors.toList())));
+            }
 
             model.addAttribute("macsSetup", macs);
             model.addAttribute("labelsSetup", String.join(",", labelsSetup));
             model.addAttribute("battSetup", String.join(",", battSetup));
-            model.addAttribute("onlineSetup", String.join(",", online.stream().map(String::valueOf).collect(Collectors.toList())));
 
             model.addAttribute("utenti", linkKeycloak);
             model.addAttribute("risorse", linkRisorse);

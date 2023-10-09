@@ -51,8 +51,14 @@ public class StudentService {
 
     public void init(List<String> allievi, List<String> visori, String classroom) {
         this.allievi = allievi;
-        List<String> visoriOnline = initService.strOnline(visori, classroom);
-        this.visori = visoriOnline;
+
+        if (Constants.ENABLED_ONLINE){
+            List<String> visoriOnline = initService.strOnline(visori, classroom);
+            this.visori = visoriOnline;
+        } else {
+            this.visori = visori;
+        }
+
         this.classroom = classroom;
     }
 
