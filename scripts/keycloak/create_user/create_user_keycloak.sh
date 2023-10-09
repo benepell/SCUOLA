@@ -58,3 +58,25 @@ $kc create users -r $realm -s username=$username -s firstName=$firstName -s last
 
 # genera password utente 
 $kc set-password -r $realm --username $username --new-password $password
+
+# ottieni e rimuovi tutti i ruoli mappati all'utente
+CURRENT_ROLES=$($kc get-roles -r $realm --uusername $username | jq -c '.[]')
+for role in $CURRENT_ROLES; do
+    ROLE_ID=$(echo $role | jq -r '.id')
+    $kc remove-roles -r $realm --uusername $username --rid $ROLE_ID
+done
+
+# aggiungi il role mapping users all'utente
+ROLE_ID=$($kc get roles -r $realm -q name=users | jq -r '.[0].id')
+if [ -z "$ROLE_ID" ]; then
+    echo "Errore nell'ottenere il role ID."
+    exit 1
+fi
+
+$kc add-roles -r $realm --uusername $username --rid $ROLE_ID
+
+# verifica se l'assegnazione del ruolo è andata a buon fine
+if [ $? -ne 0 ]; then
+    echo "Errore nell'assegnazione del ruolo all'utente."
+    exit 1
+fi

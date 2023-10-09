@@ -86,10 +86,17 @@ public class KeycloakController {
             AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
 
             if (accessToken != null) {
-                // L'utente è autenticato, esegui le azioni necessarie e reindirizzalo alla pagina desiderata
-                session.setAttribute("main_username", accessToken.getPreferredUsername());
-                logService.sendLog(session, Constants.EVENT_LOG_IN);
-                return new RedirectView("/abilita-classe");
+
+                // Controllo se l'utente appartiene al gruppo "admins"
+                if (accessToken.getRealmAccess().isUserInRole("admins")) {
+                    // L'utente è autenticato e appartiene al gruppo "admins", esegui le azioni necessarie e reindirizzalo alla pagina desiderata
+                    session.setAttribute("main_username", accessToken.getPreferredUsername());
+                    logService.sendLog(session, Constants.EVENT_LOG_IN);
+                    return new RedirectView("/abilita-classe");
+                } else {
+                    // L'utente è autenticato ma non appartiene al gruppo "admins", reindirizzalo alla pagina di logout
+                    return new RedirectView("/logout"); // puoi reindirizzarlo a una pagina di errore o di login a tua scelta
+                }
             } else {
                 // L'utente non è autenticato, reindirizzalo alla pagina di login di Keycloak
                 session.removeAttribute("main_username");
@@ -97,6 +104,7 @@ public class KeycloakController {
             }
         } catch (Exception e) {
             // Si è verificato un errore, reindirizza l'utente alla pagina di login di Keycloak
+            System.out.println(e.getMessage());
             return new RedirectView("{authServerUrl}/realms/{realm}/protocol/openid-connect/auth?client_id={clientId}&redirect_uri={redirectLogin}&response_type=code");
         }
     }
