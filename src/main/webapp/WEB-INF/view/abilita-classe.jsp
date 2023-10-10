@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib
-prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
@@ -25,13 +26,13 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
     <c:forEach var="i" begin="1" end="5">
       <div class="my-card">
         <div class="my-card-front">
-          <h3>Aula ${i}</h3>
+          <h3><spring:message code="form.abilita-classe.classroom"/> ${i}</h3>
         </div>
         <div class="my-card-back">
           <h3>Aula ${i}</h3>
           <!-- Aggiungi l'attributo data-classe con il valore della classe -->
           <button data-classe="${i}" onclick="setClassSelected('${i}')">
-            Seleziona
+            <spring:message code="form.abilita-classe.button.title"/>
           </button>
         </div>
       </div>

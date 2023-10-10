@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib
-prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
@@ -31,7 +31,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
   <!-- codice sezione -->
 
   <div class="mysez-sezione">
-    <h1>Scegli la Classe </h1>
+    <h1><spring:message code="form.abilita-sezione.title" /></h1>
 
     <!-- barra centrale -->
     <div class="mysez-barra-centrale">
@@ -69,13 +69,13 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
         <div style="padding-bottom: 130px;">
           <% for(String letter : letters) { %>
           <section class="mysez-section" id="section-<%=letter%>">
-            <h2>Sezione <span><%=letter.toUpperCase()%></span></h2>
+            <h2><spring:message code="form.abilita-sezione.section" /> <span><%=letter.toUpperCase()%></span></h2>
             <button
               onclick="setSectionSelected('<%=letter%>')"
               type="button"
               class="mysez-btn mysez-btn-primary mysez-btn-3d"
             >
-              Avanti --&gt;
+              <spring:message code="form.abilita-sezione.button.next" /> --&gt;
             </button>
           </section>
           <% } %>
@@ -113,7 +113,7 @@ prefix="spring" uri="http://www.springframework.org/tags"%>
       <img
         src="static/images/scroll-up-arrow.png"
         style="border: 3px solid #0dcaf0cf;border-radius: 60px;"
-        alt="Vai sopra"
+        alt="Vai sotto"
         width="80"
         height="80"
       />

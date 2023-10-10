@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-lg-12">
         <h3 style="color: white">
-          ${intestazione} Aula: ${classroomSelected} Classe: ${classSelected} Sezione: ${sectionSelected.toUpperCase()}
+          ${intestazione} <spring:message code="form.abilita-visore.classroom" />: ${classroomSelected} <spring:message code="form.abilita-visore.class" />: ${classSelected} <spring:message code="form.abilita-visore.section" />: ${sectionSelected.toUpperCase()}
         </h3>
       </div>
     </div>
