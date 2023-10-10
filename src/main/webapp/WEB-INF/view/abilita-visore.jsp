@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div style="position: fixed;top: 4px;right: 37px;background: none;border: none;z-index: 9999;/* height: 12px !important; */">
+<div style="position: fixed;top: 4px;right: 125px;background: none;border: none;z-index: 9999;/* height: 12px !important; */">
   <div class="input-group">
     <input type="text" class="form-control" id="searchBox" placeholder="Cerca un nome..." onkeydown="handleEnterKey(event)" style="border: 2px solid rgb(13 253 173 / 23%);background: #352b2b;color: white;/* border-color: #455A64; */">
     <button class="btn btn-primary" id="searchButton" style="
