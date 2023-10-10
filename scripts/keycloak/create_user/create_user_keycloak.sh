@@ -22,6 +22,7 @@ credUser="admin"
 credPass="vrscuola!!!"
 realm="scuola"
 kc="/opt/keycloak/bin/kcadm.sh"
+rolename="users"
 
 # Parametri di input
 classe=$1
@@ -54,14 +55,13 @@ else
 fi
 
 # crea utente keycloak
-$kc create users -r $realm -s username=$username -s firstName=$firstName -s lastName=$lastName -s enabled=true -i 
+$kc create users -r $realm -s username=$username -s firstName=$firstName -s lastName=$lastName -s enabled=true -i
 
-# genera password utente 
+# genera password utente
 $kc set-password -r $realm --username $username --new-password $password
 
 # rimuovi tutti i ruoli mappati all'utente
 $kc remove-roles -r $realm --uusername $username --rolename default-roles-$realm
 
 # aggiungi il role mapping users all'utente
-$kc add-roles -r $realm --uusername $username --rolename users
-
+$kc add-roles -r $realm --uusername $username --rolename $rolename
