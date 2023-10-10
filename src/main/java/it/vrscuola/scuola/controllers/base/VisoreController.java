@@ -23,6 +23,7 @@ import it.vrscuola.scuola.services.StudentService;
 import it.vrscuola.scuola.services.devices.VRDeviceManageDetailService;
 import it.vrscuola.scuola.services.devices.VRDeviceManageService;
 import it.vrscuola.scuola.services.pdf.UsoVisorePdfService;
+import it.vrscuola.scuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,14 @@ public class VisoreController {
     @ResponseBody
     public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
         Map<String, String> response = new HashMap<>();
+
+        if (Constants.ENABLED_ONLINE){
+            String classroom = session.getAttribute("classroomSelected").toString();
+            String[] alu = (String[]) session.getAttribute("alunni");
+            String[] vis = manageService.allDevices(classroom);
+            studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
+        }
+
         String dbVisore = studentService.dbVisori(username);
 
         if (dbVisore != null) {
