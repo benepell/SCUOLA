@@ -60,7 +60,7 @@ public interface Constants {
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
-    boolean ENABLED_ONLINE = true;
+    boolean ENABLED_ONLINE = false;
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;
     long MIN_REMOVE_RECORDS = 2;
