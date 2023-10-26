@@ -1,5 +1,5 @@
 <div>
-  <svg width="180" height="10" style="padding-inline-start: 8px">
+  <svg width="180" height="10" style="padding-inline-start: 8px; margin-top: 8px; margin-bottom: 4px;">
     <% if("true".equals(request.getParameter("enable"))) { %>
     <rect
       x="0"

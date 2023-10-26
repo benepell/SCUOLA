@@ -182,7 +182,7 @@
 .visore_small {
   position: relative;
   text-align: center;
-  margin-top: 16px;
+  margin-top: 4px;
   z-index: 100;
 }
 
@@ -288,12 +288,6 @@
   .visore_text {
     margin-top: 0;
     font-size: 40px;
-  }
-
-
-
-  .visore_small {
-    margin-top: 8px;
   }
 
   .loader {
