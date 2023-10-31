@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
@@ -37,6 +38,11 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 
     @Override
@@ -58,7 +64,14 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                         "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**",
                         "/resources/**").hasRole("admins")
 
-                .anyRequest().denyAll();
+                .anyRequest().denyAll()
+                .anyRequest().denyAll()
+                .and()
+                .sessionManagement()
+                .maximumSessions(1) // Numero massimo di sessioni consentite per un utente
+                .expiredUrl("/logout") // URL di reindirizzamento quando la sessione scade
+                .sessionRegistry(sessionRegistry()); // Registro delle sessioni personalizzato
+
 
         http.headers().frameOptions().sameOrigin();
     }
