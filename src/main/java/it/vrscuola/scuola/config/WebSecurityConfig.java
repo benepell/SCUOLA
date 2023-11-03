@@ -65,13 +65,11 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                         "/resources/**").hasRole("admins")
 
                 .anyRequest().denyAll()
-                .anyRequest().denyAll()
                 .and()
                 .sessionManagement()
                 .maximumSessions(1) // Numero massimo di sessioni consentite per un utente
                 .expiredUrl("/logout") // URL di reindirizzamento quando la sessione scade
                 .sessionRegistry(sessionRegistry()); // Registro delle sessioni personalizzato
-
 
         http.headers().frameOptions().sameOrigin();
     }
