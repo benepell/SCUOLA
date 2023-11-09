@@ -32,7 +32,7 @@
   <c:set var="currentLanguage" value="${cookie['localeInfo'].value}" />
    <section class="locale-link" style="position: fixed;top: 0;right: 40px;background: none;border: none;z-index: 9999;">
        <c:choose>
-           <c:when test="${currentLanguage == 'it'}">
+           <c:when test="${currentLanguage == null || currentLanguage == 'it'}">
                <a href="?language=en"><img src="<c:url value='/static/images/IT.png' />" style="width: 80%;"></a>
            </c:when>
            <c:otherwise>
