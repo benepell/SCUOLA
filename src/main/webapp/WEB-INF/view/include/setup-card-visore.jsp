@@ -1,5 +1,5 @@
  <%@ page language="java" %>
- <%@ page import="it.vrscuola.scuola.utilities.Utilities" %>
+ <%@ page import="org.duckdns.vrscuola.utilities.Utilities" %>
 
     <section class="card-container">
         <div class="card">

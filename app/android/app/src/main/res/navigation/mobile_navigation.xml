@@ -7,49 +7,49 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="it.vrscuola.scuola.ui.home.HomeFragment"
+        android:name="org.duckdns.vrscuola.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="it.vrscuola.scuola.ui.gallery.GalleryFragment"
+        android:name="org.duckdns.vrscuola.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+        android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_classe"
-        android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+        android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_classe"
         tools:layout="@layout/fragment_slideshow" />
 
      <fragment
             android:id="@+id/nav_visori"
-            android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+            android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
             android:label="@string/menu_visori"
             tools:layout="@layout/fragment_slideshow" />
 
     <fragment
             android:id="@+id/nav_risorse"
-            android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+            android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
             android:label="@string/menu_risorse"
             tools:layout="@layout/fragment_slideshow" />
 
      <fragment
         android:id="@+id/nav_utenti"
-        android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+        android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_utenti"
         tools:layout="@layout/fragment_slideshow" />
 
      <fragment
         android:id="@+id/nav_diagnosi"
-        android:name="it.vrscuola.scuola.ui.slideshow.SlideshowFragment"
+        android:name="org.duckdns.vrscuola.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_diagnosi"
         tools:layout="@layout/fragment_slideshow" />
 

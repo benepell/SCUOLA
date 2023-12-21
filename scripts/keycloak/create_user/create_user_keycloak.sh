@@ -17,7 +17,7 @@
 # limitations under the License.
 
 # valori default
-server="https://keycloak.vrscuola.it:9443"
+server="https://vrscuola-auth.duckdns.org:9443"
 credUser="admin"
 credPass="vrscuola!!!"
 realm="scuola"

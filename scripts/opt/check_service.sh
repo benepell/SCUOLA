@@ -18,7 +18,7 @@
 
 # Definisci il formato del timestamp
 timestamp=$(date +"[%Y-%m-%d %T]")
-baseurl=https://scuola.vrscuola.it/health
+baseurl=https://vrscuola.duckdns.org/health
 
 # Definisci il nome del file di log
 logfile="/opt/script/log/$(date +'%Y_%m_%d')_service.log"

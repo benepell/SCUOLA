@@ -121,12 +121,12 @@ use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 $provider = new GenericProvider([
-    'clientId'                => 'prometheus',
+    'clientId'                => 'client',
     'clientSecret'            => 'MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A',
-    'redirectUri'             => 'https://scuola.vrscuola.it:8443/res.php',
-    'urlAuthorize'            => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/auth',
-    'urlAccessToken'          => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/token',
-    'urlResourceOwnerDetails' => 'https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/userinfo'
+    'redirectUri'             => 'https://vrscuola.duckdns.org:8443/res.php',
+    'urlAuthorize'            => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/auth',
+    'urlAccessToken'          => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/token',
+    'urlResourceOwnerDetails' => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/userinfo'
 ]);
 
 
@@ -152,7 +152,7 @@ $options = array(
 $context  = stream_context_create($options);
 
 // Effettua la chiamata POST all'endpoint
-$response = file_get_contents('https://scuola.vrscuola.it/checkRes', false, $context);
+$response = file_get_contents('https://vrscuola.duckdns.org/checkRes', false, $context);
 
  // Controlla se la risposta contiene la stringa "admins"
     if (strpos($response, 'admins') !== false) {
@@ -160,7 +160,7 @@ $response = file_get_contents('https://scuola.vrscuola.it/checkRes', false, $con
     } else {
         $_SESSION['abilitato'] = false;
         ob_end_clean(); // Cancella l'output buffering
-        header("Location: https://scuola.vrscuola.it/");
+        header("Location: https://vrscuola.duckdns.org/");
         exit;
     }
 } catch (Exception $e) {

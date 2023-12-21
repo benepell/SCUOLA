@@ -1,12 +1,12 @@
 richiesta al BE info dell'utente collegato al mac-address del visore
 
 Method: POST
-EndPoint: https://scuola.vrscuola.it/username
+EndPoint: https://vrscuola.duckdns.org/username
 param: macAddress
 param: code (@Value("${keycloak.credentials.secret}"))
 param: note opzionale
 
-https://scuola.vrscuola.it/connectivity-devices/username?macAddress=52:54:00:12:35:02&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
+https://vrscuola.duckdns.org/connectivity-devices/username?macAddress=52:54:00:12:35:02&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
 
 esempio di risposta positiva
 
@@ -33,7 +33,7 @@ esempio di risposta positiva:
 
 
 Method: POST
-EndPoint: https://keycloak.vrscuola.it:9443/realms/scuola/protocol/openid-connect/token
+EndPoint: https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/token
 param: grant_type: password
 param: client_id: client
 param: client_secret: MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
@@ -62,7 +62,7 @@ esempio di risposta errata:
 [14:54, 3/6/2023] Benedetto Pellerito: Step 3: connessione al visore mediante account allievo keycloak (token)
 
 Method: POST
-EndPoint: https://scuola.vrscuola.it/connectivity-devices/connect
+EndPoint: https://vrscuola.duckdns.org/connectivity-devices/connect
 param: macAddress
 param: code (@Value("${keycloak.credentials.secret}"))
 param: batteryLevel (int 1-100 val) opzionale
@@ -70,7 +70,7 @@ param: note opzionale
 
 
 
-https://scuola.vrscuola.it/connectivity-devices/connect?macAddress=52:54:00:12:35:02&username=1-a-laura-gentile&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
+https://vrscuola.duckdns.org/connectivity-devices/connect?macAddress=52:54:00:12:35:02&username=1-a-laura-gentile&code=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A
 
 esempio di risposta positiva: [label visore]
 
@@ -86,7 +86,7 @@ esempio di risposta negativa: [label visore]
 [15:53, 3/6/2023] Benedetto Pellerito: Step 4: Argomento selezionato dal docente
 
 Method: POST
-EndPoint: https://scuola.vrscuola.it/connectivity-devices/subject
+EndPoint: https://vrscuola.duckdns.org/connectivity-devices/subject
 param: macAddress
 param: code (@Value("${keycloak.credentials.secret}"))
 param: batteryLevel opzionale int
@@ -103,15 +103,15 @@ esempio di risposta negativa:
     "message": "Dispositivo non registrato"
 }
 [16:09, 3/6/2023] Benedetto Pellerito: lista argomenti disponibili
-https://scuola.vrscuola.it/argomenti/all
+https://vrscuola.duckdns.org/argomenti/all
 [introduzione] solo root
 
-https://scuola.vrscuola.it/argomenti/all?classe=1&sezione=a
+https://vrscuola.duckdns.org/argomenti/all?classe=1&sezione=a
 ["introduzione","fisica","matematica","geografia","storia"]
-[16:11, 3/6/2023] Benedetto Pellerito: https://scuola.vrscuola.it/resources/all
+[16:11, 3/6/2023] Benedetto Pellerito: https://vrscuola.duckdns.org/resources/all
 
 [{"name":"20230602_124520.pdf","size":179381,"type":"application/pdf","hash":"547b091dcc31f79c0427790772e656e9e22ba30f078e45c3fb80b981cc662a0a","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"intestazione.png","size":161726,"type":"image/png","hash":"f8e6793e0cd36b86e09e11fd00c6cecc13a6132efb1a58a80f367040614e3dd6","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"20230602_111621.pdf","size":178879,"type":"application/pdf","hash":"483176887f514d09f6f6685fd0d6f5fe8b7b3f5b932bee06df6c267fe9f86762","dir":"/var/www/html/risorse/files/DOCUMENTI/EVENTLOG"},{"name":"20230602_105604.pdf","size":178550,"type":"application/pdf","hash":"46baac277196eb0d8991b487e91721b6cd0ca6ee1e8972b4ff8ece52…
 [16:12, 3/6/2023] Benedetto Pellerito: appena arrivi a collegare il tutto o in corso d'opera miglioriamo il tutto 😂
 [16:13, 3/6/2023] Benedetto Pellerito: 👋
 [16:15, 3/6/2023] Benedetto Pellerito: dimenticato esempio di accesso diretto alla risorsa senza credenziali
-https://scuola.vrscuola.it:8443/files/ARGOMENTI/introduzione/videoplayback.mp4
+https://vrscuola.duckdns.org:8443/files/ARGOMENTI/introduzione/videoplayback.mp4

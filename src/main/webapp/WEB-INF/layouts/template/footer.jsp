@@ -9,7 +9,7 @@
 		<a href="javascript:showSettingsDialog()"><small>Privacy</small></a>
 	</p>
 	 <p class="text-muted">
-            <a style="margin-bottom: 0;" href='https://play.google.com/store/apps/details?id=it.vrscuola.scuola'>
+            <a style="margin-bottom: 0;" href='https://play.google.com/store/apps/details?id=org.duckdns.vrscuola'>
                 <img alt="Get it on Google Play" src="<c:url value="/static/svg/google-play.svg" />" width="134" height="43" decoding="async" data-nimg="1" class="img-fluid p-1" loading="lazy" style="color:transparent;">
             </a>
      </p>

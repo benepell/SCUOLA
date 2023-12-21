@@ -4,7 +4,7 @@
 `VRScuola MultiAule` rappresenta l'evoluzione del progetto `VRScuola Demo`, portando l'istruzione in realtà aumentata a un nuovo livello. Questa variante consente di avere molteplici ambienti di apprendimento virtuali all'interno di una singola piattaforma, permettendo a studenti e docenti di spostarsi tra diverse aule virtuali e di beneficiare di un'esperienza didattica ancora più variegata.
 
 ## Link Diretto
-Scopri le potenzialità di MultiAule visitando il link: [https://scuola.vrscuola.it](https://scuola.vrscuola.it)
+Scopri le potenzialità di MultiAule visitando il link: [https://vrscuola.duckdns.org](https://vrscuola.duckdns.org)
 
 ## Scarica l'App
 [![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=it.vrscuola.scuola)
@@ -18,7 +18,7 @@ Scopri le potenzialità di MultiAule visitando il link: [https://scuola.vrscuola
 
 ## Come Iniziare
 
-1. Accedi al [sito MultiAule](https://scuola.vrscuola.it)
+1. Accedi al [sito MultiAule](https://vrscuola.duckdns.org)
 2. Naviga tra le diverse aule disponibili.
 3. Personalizza la tua esperienza e inizia il tuo viaggio educativo.
 
@@ -28,7 +28,7 @@ Scopri le potenzialità di MultiAule visitando il link: [https://scuola.vrscuola
 - Connessione internet stabile.
 
 ## Documentazione API
-Se sei uno sviluppatore o semplicemente curioso delle nostre API, ti invitiamo a consultare la nostra documentazione API dettagliata al seguente [link](https://scuola.vrscuola.it/swagger-ui/index.html#/)
+Se sei uno sviluppatore o semplicemente curioso delle nostre API, ti invitiamo a consultare la nostra documentazione API dettagliata al seguente [link](https://vrscuola.duckdns.org/swagger-ui/index.html#/)
 
 
 ## Supporto
