@@ -1,7 +1,7 @@
-# VRScuola MultiAule
+# VRScuola
 
 ## Introduzione
-`VRScuola MultiAule` rappresenta l'evoluzione del progetto `VRScuola Demo`, portando l'istruzione in realtà aumentata a un nuovo livello. Questa variante consente di avere molteplici ambienti di apprendimento virtuali all'interno di una singola piattaforma, permettendo a studenti e docenti di spostarsi tra diverse aule virtuali e di beneficiare di un'esperienza didattica ancora più variegata.
+`VRScuola` è un progetto innovativo dedicato alla promozione dell'istruzione attraverso la realtà aumentata. Questo progetto offre un'esperienza immersiva nell'ambiente educativo, permettendo a studenti e docenti di interagire in modi mai visti prima.
 
 ## Link Diretto
 Scopri le potenzialità di MultiAule visitando il link: [https://vrscuola.duckdns.org](https://vrscuola.duckdns.org)
@@ -18,7 +18,7 @@ Scopri le potenzialità di MultiAule visitando il link: [https://vrscuola.duckdn
 
 ## Come Iniziare
 
-1. Accedi al [sito MultiAule](https://vrscuola.duckdns.org)
+1. Accedi al [sito](https://vrscuola.duckdns.org)
 2. Naviga tra le diverse aule disponibili.
 3. Personalizza la tua esperienza e inizia il tuo viaggio educativo.
 
@@ -37,7 +37,7 @@ Per assistenza riguardante MultiAule, contatta il nostro team dedicato all'indir
 
 ## Licenza
 
-`VRScuola MultiAule` è rilasciato sotto la Licenza Apache 2.0, come il progetto originale. Puoi consultare il testo completo della licenza nel file `LICENSE` incluso nel repository o [online](https://www.apache.org/licenses/LICENSE-2.0).
+`VRScuola` è rilasciato sotto la Licenza Apache 2.0, come il progetto originale. Puoi consultare il testo completo della licenza nel file `LICENSE` incluso nel repository o [online](https://www.apache.org/licenses/LICENSE-2.0).
 
 ## Contribuzione
 
@@ -45,4 +45,4 @@ Se sei interessato a contribuire al progetto, ti preghiamo di leggere le [nostre
 
 ---
 
-Grazie per la tua curiosità verso VRScuola MultiAule! Ci impegniamo per portare l'istruzione virtuale a nuovi orizzonti.
+Grazie per la tua curiosità verso VRScuola! Ci impegniamo per portare l'istruzione virtuale a nuovi orizzonti.
