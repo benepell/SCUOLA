@@ -18,9 +18,9 @@
 
 package org.duckdns.vrscuola.services.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
-import javax.servlet.http.HttpServletRequest;
 
 public interface UtilService {
     ResponseEntity responseMsgKo(ResponseEntity.BodyBuilder bodyBuilder, String msg);

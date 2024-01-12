@@ -20,6 +20,13 @@ package org.duckdns.vrscuola.services.securities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -27,16 +34,20 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
 public class KeycloakUserService {
+
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
+    @Autowired
+    private JwtDecoder jwtDecoder;
+
     private final DataSource dataSource;
     private final Pattern usernamePattern;
+
     private List<Map<String, String>> users;
 
     @Autowired
@@ -148,4 +159,53 @@ public class KeycloakUserService {
         }
         return exist;
     }
+
+    public List<String> getRolesFromAccessToken(String accessToken) {
+        Jwt jwt = jwtDecoder.decode(accessToken);
+        Map<String, Object> claims = jwt.getClaims();
+
+        Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+        if (realmAccess != null && realmAccess.containsKey("roles")) {
+            return (List<String>) realmAccess.get("roles");
+        }
+
+        return Collections.emptyList();
+    }
+
+    public boolean hasRoleInAccessToken(String accessToken, String role) {
+        Jwt jwt = jwtDecoder.decode(accessToken);
+        Map<String, Object> claims = jwt.getClaims();
+
+        Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+        if (realmAccess != null && realmAccess.containsKey("roles")) {
+            List<String> roles = (List<String>) realmAccess.get("roles");
+            return roles.contains(role);
+        }
+
+        return false;
+    }
+
+    public String getAccessToken(Authentication authentication){
+        if (authentication != null && authentication.isAuthenticated()) {
+            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+            OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
+                    oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
+
+            if (authorizedClient != null) {
+                // Ottieni l'Access Token
+                return authorizedClient.getAccessToken().getTokenValue();
+            }
+        }
+        return null;
+
+    }
+    public String getTokenAttribute(Authentication authentication,String key){
+        if (authentication.getPrincipal() instanceof OAuth2User) {
+            OAuth2User user = (OAuth2User) authentication.getPrincipal();
+            return user.getAttribute(key).toString();
+        }
+
+        return null;
+    }
+
 }

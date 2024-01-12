@@ -19,13 +19,13 @@
 package org.duckdns.vrscuola.services.utils;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.duckdns.vrscuola.payload.response.MessageResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UtilServiceImpl implements UtilService{

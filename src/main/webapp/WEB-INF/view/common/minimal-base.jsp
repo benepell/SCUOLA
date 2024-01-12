@@ -1,8 +1,7 @@
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -13,18 +12,26 @@
 
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
-     
+
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/minimal-main.css" />" rel="stylesheet">
 
 
-    <title><tiles:insertAttribute name="titolo" /></title>
+    <title>
+           <c:if test="${not empty titolo}">
+                ${titolo}
+           </c:if>
+    </title>
+
   </head>
   <body>
-     <tiles:insertAttribute name="content" /> 
-     
-     <tiles:insertAttribute name="footer" />  
-      
+
+   <!-- <c:if test="${not empty content}">
+        <jsp:include page="${content}" />
+    </c:if>
+-->
+    <jsp:include page="common/minimal-footer.jspf" />
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="<c:url value="/static/js/jquery-3.6.4.min.js" />"></script>

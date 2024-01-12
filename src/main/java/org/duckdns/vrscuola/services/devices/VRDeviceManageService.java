@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.services.devices;
 
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
@@ -28,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;

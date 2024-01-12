@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.repositories.devices;
 
+import jakarta.transaction.Transactional;
 import org.duckdns.vrscuola.entities.devices.VRDeviceDetailConnectivityEntitie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,7 +26,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
 
@@ -72,12 +72,12 @@ public interface VRDeviceDetailConnectivityRepository extends JpaRepository<VRDe
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE detailconnect d SET d.startDate = '0', d.endDate = '0' WHERE d.username = :username")
+    @Query(value = "UPDATE detail_connect SET minutes = 0, start_date = '1970-01-01 00:00:00', end_date = '1970-01-01 00:00:00' WHERE username = :username", nativeQuery = true)
     void resetDate(@Param("username") String username);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE detailconnect d SET d.minutes = 0, d.startDate = 0, d.endDate = 0 WHERE d.username = :username")
+    @Query(value = "UPDATE detail_connect SET minutes = 0, start_date = '1970-01-01 00:00:00', end_date = '1970-01-01 00:00:00' WHERE username = :username", nativeQuery = true)
     void resetAll(@Param("username") String username);
 
 }

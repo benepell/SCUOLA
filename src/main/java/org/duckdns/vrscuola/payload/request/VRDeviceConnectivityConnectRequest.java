@@ -18,12 +18,13 @@
 
 package org.duckdns.vrscuola.payload.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 @Data
 public class VRDeviceConnectivityConnectRequest {
     private static final Logger Log = LogManager.getLogger(VRDeviceInitRequest.class.getName());

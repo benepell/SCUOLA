@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.services;
 
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
@@ -26,7 +27,6 @@ import org.duckdns.vrscuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

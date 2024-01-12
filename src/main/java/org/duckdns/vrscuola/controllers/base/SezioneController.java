@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.ArgomentiDirService;
 import org.duckdns.vrscuola.services.StudentService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
@@ -31,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
 @Controller

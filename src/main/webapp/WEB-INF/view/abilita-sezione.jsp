@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%@ include file="common/empty-base.jsp" %>
+
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
     <div class="row">

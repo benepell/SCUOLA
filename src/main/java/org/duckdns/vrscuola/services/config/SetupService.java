@@ -18,12 +18,12 @@
 
 package org.duckdns.vrscuola.services.config;
 
+import jakarta.servlet.ServletContext;
 import org.duckdns.vrscuola.models.SetupModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletContext;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

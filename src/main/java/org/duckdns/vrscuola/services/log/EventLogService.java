@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.services.log;
 
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.entities.log.EventLogEntitie;
 import org.duckdns.vrscuola.repositories.log.EventLogRepository;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.time.Instant;
 
 
@@ -38,6 +38,7 @@ public class EventLogService {
     EventLogRepository eventLogsRepository;
 
     public void sendLog(HttpSession session, String evt){
+    /*
         EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
         String username = (String) session.getAttribute("main_username");
@@ -51,8 +52,11 @@ public class EventLogService {
         eventLogsEntitie.setEventDate(Instant.now());
         eventLogsRepository.save(eventLogsEntitie);
 
+     */
+
     }
     public void sendLog(HttpSession session, String evt, String note){
+        /*
         EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
         String username = (String) session.getAttribute("username");
@@ -66,7 +70,7 @@ public class EventLogService {
         eventLogsEntitie.setEventDate(Instant.now());
         eventLogsEntitie.setNote(note);
         eventLogsRepository.save(eventLogsEntitie);
-
+*/
     }
 }
 

@@ -19,6 +19,7 @@
 package org.duckdns.vrscuola.controllers.base;
 
 import com.lowagie.text.DocumentException;
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.StudentService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 

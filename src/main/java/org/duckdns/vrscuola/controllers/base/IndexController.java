@@ -33,6 +33,9 @@ public class IndexController {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
 
+        model.addAttribute("titolo", "Benvenuti nel sito Vr Scuola");
+        model.addAttribute("content", "/WEB-INF/view/welcome.jsp");
+
         return "index";
     }
 }

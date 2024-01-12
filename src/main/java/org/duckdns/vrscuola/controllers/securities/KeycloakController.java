@@ -18,27 +18,27 @@
 
 package org.duckdns.vrscuola.controllers.securities;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.models.RisorsePhpModel;
 import org.duckdns.vrscuola.services.StudentService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.services.log.EventLogService;
 import org.duckdns.vrscuola.services.pdf.UsoVisorePdfService;
+import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.utilities.Constants;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,6 +59,9 @@ public class KeycloakController {
     @Value("${basename}")
     private String basename;
 
+    @Value("${spring.security.oauth2.client.provider.external.issuer-uri}")
+    private String uriLink;
+
     @Autowired
     EventLogService logService;
 
@@ -71,31 +74,27 @@ public class KeycloakController {
     @Autowired
     VRDeviceManageDetailService manageDetailService;
 
-    @RequestMapping("/sso/login")
-    public RedirectView ssoLogin() {
-        // Esegui il redirect alla abilita-classe se si verifica l'errore 401
-        return new RedirectView("/login");
-    }
+    @Autowired
+    KeycloakUserService kService;
 
-    @GetMapping("/login")
-    public RedirectView login(Principal principal, HttpSession session) {
-        String redirectLogin = basename + "/login";
+    @GetMapping("/_login")
+    public RedirectView login(Authentication authentication, Principal principal, HttpSession session) {
+        String redirectLogin = basename + "/_login";
         try {
             // Controlla se l'utente è autenticato con Keycloak
-            KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
-            AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
+            String accessToken = kService.getAccessToken(authentication);
 
             if (accessToken != null) {
 
                 // Controllo se l'utente appartiene al gruppo "admins"
-                if (accessToken.getRealmAccess().isUserInRole("admins")) {
+                if (kService.hasRoleInAccessToken(accessToken,"admins")) {
                     // L'utente è autenticato e appartiene al gruppo "admins", esegui le azioni necessarie e reindirizzalo alla pagina desiderata
-                    session.setAttribute("main_username", accessToken.getPreferredUsername());
-                    logService.sendLog(session, Constants.EVENT_LOG_IN);
+                    session.setAttribute("main_username", kService.getTokenAttribute(authentication,Constants.CLAIMS_PREF_USERNAME));
+                    // logService.sendLog(session, Constants.EVENT_LOG_IN);
                     return new RedirectView("/abilita-classe");
                 } else {
                     // L'utente è autenticato ma non appartiene al gruppo "admins", reindirizzalo alla pagina di logout
-                    return new RedirectView("/logout"); // puoi reindirizzarlo a una pagina di errore o di login a tua scelta
+                    return new RedirectView("/_logout"); // puoi reindirizzarlo a una pagina di errore o di login a tua scelta
                 }
             } else {
                 // L'utente non è autenticato, reindirizzalo alla pagina di login di Keycloak
@@ -110,8 +109,8 @@ public class KeycloakController {
     }
 
 
-    @GetMapping("/logout")
-    public RedirectView logout(HttpServletRequest request, HttpSession session)  {
+    @GetMapping("/_logout")
+    public RedirectView logout(HttpServletRequest request, HttpServletResponse response , HttpSession session)  {
 
         // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
         boolean closeVisors = session.getAttribute("isCloseVisorLogout") != null ? (Boolean) session.getAttribute("isCloseVisorLogout") : false;
@@ -134,6 +133,16 @@ public class KeycloakController {
                 session.invalidate();
             }
         }
+        // Invalida la sessione
+        if (request.getSession(false) != null) {
+            request.getSession().invalidate();
+        }
+
+        // Cancella i cookie
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath(request.getContextPath());
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         if (request != null){
             try {
                 request.logout();
@@ -142,7 +151,7 @@ public class KeycloakController {
             }
         }
 
-        return new RedirectView("/");
+        return new RedirectView( uriLink + "/protocol/openid-connect/logout?redirecturi=" + basename);
     }
 
     @GetMapping("/test")
@@ -166,23 +175,26 @@ public class KeycloakController {
 
     // A new endpoint to get the user's information in JSON format
     @GetMapping("/userinfo")
-    public Map<String, Object> getUserInfo(Principal principal, HttpSession session) {
-        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) principal;
-        AccessToken accessToken = token.getAccount().getKeycloakSecurityContext().getToken();
+    public Map<String, Object> getUserInfo(Authentication authentication, Principal principal, HttpSession session) {
+        String accessToken = kService.getAccessToken(authentication);
 
         // Create a map to hold the user's information
         Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("name", accessToken.getName());
-        userInfo.put("preferred_username", accessToken.getPreferredUsername());
-        userInfo.put("email", accessToken.getEmail());
-        userInfo.put("roles", accessToken.getRealmAccess().getRoles().stream().collect(Collectors.toList()));
+
+        List<String> listRoles = kService.getRolesFromAccessToken(accessToken);
+        userInfo.put("name", kService.getTokenAttribute(authentication,Constants.CLAIMS_NAME));
+        userInfo.put("preferred_username", kService.getTokenAttribute(authentication,Constants.CLAIMS_PREF_USERNAME));
+        userInfo.put("email", kService.getTokenAttribute(authentication,Constants.CLAIMS_EMAIL));
+        userInfo.put("roles", listRoles);
+
 
         // Get the user's resource roles
+        // Get the user's resource roles
         Map<String, Set<String>> resourceRoles = new HashMap<>();
-        accessToken.getResourceAccess().forEach((k, v) -> {
-            if (v != null) {
-                resourceRoles.put(k, v.getRoles());
-            }
+        listRoles.forEach(role -> {
+            // Assumi che ogni ruolo corrisponda a una risorsa specifica
+            // e aggiungilo a un Set di ruoli associati a quella risorsa
+            resourceRoles.computeIfAbsent(role, k -> new HashSet<>()).add(role);
         });
         userInfo.put("resource_roles", resourceRoles);
 

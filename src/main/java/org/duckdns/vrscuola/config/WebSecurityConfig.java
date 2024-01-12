@@ -18,66 +18,122 @@
 
 package org.duckdns.vrscuola.config;
 
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
-import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
-@KeycloakConfiguration
-public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+import java.util.*;
 
-    @Bean
-    @Override
-    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
-    }
-
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-
-                .antMatchers("/login", "/logout", "/userinfo").authenticated()
-
-                .antMatchers("/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
-                        "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
-                        "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
-                        "/v3/api-docs", "/swagger-resources/**", "/webjars/**").permitAll()
-
-                .antMatchers("/test", "/test1", "/abilita-classe", "/abilita-sezione", "/abilita-visore",
-                        "/setup-visore", "/scan-visore", "/visore-selection", "/visore-remove", "/allievo-visore",
-                        "/classroom", "/classe", "/sezione", "/checkRes", "/chiudi-visore", "/diagnosi",
-                        "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**",
-                        "/resources/**").hasRole("admins")
-
-                .anyRequest().denyAll()
-                .and()
-                .sessionManagement()
-                .maximumSessions(1) // Numero massimo di sessioni consentite per un utente
-                .expiredUrl("/logout") // URL di reindirizzamento quando la sessione scade
-                .sessionRegistry(sessionRegistry()); // Registro delle sessioni personalizzato
-
-        http.headers().frameOptions().sameOrigin();
-    }
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig {
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
-        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-        auth.authenticationProvider(keycloakAuthenticationProvider);
+    private ApplicationContext applicationContext;
+
+    @Value("${spring.security.oauth2.client.provider.external.issuer-uri}")
+    private String issuerUri;
+
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        String jwkSetUri = issuerUri + "/protocol/openid-connect/certs";
+        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
+
+    private AuthorizationManager<RequestAuthorizationContext> roleAccessManager(String role) {
+
+        OAuth2AuthorizedClientService authorizedClientService = applicationContext.getBean(OAuth2AuthorizedClientService.class);
+        JwtDecoder jwtDecoder = jwtDecoder();
+
+        return (auth, context) -> {
+            Authentication authentication = auth.get();
+
+            if (authentication instanceof OAuth2AuthenticationToken) {
+                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+                OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
+                        oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
+
+                if (authorizedClient != null) {
+                    String accessToken = authorizedClient.getAccessToken().getTokenValue();
+                    Jwt jwt = jwtDecoder.decode(accessToken);
+                    Map<String, Object> claims = jwt.getClaims();
+
+                    Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+                    if (realmAccess != null && realmAccess.containsKey("roles")) {
+                        List<String> roles = (List<String>) realmAccess.get("roles");
+                        boolean hasRoleAdmins = roles.contains(role);
+                        return new AuthorizationDecision(hasRoleAdmins);
+                    }
+                }
+            }
+            return new AuthorizationDecision(false);
+        };
+    }
+
+    @Bean
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+
+        http
+                // cors disable
+                .cors(corsCustomizer -> corsCustomizer.disable())
+
+                // Disabilita CSRF
+                .csrf(csrfCustomizer -> {
+                    csrfCustomizer.disable();
+                })
+
+                // Configurazione delle richieste autorizzate
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers( "/test", "/test1", "/abilita-classe", "/abilita-sezione", "/abilita-visore",
+                                "/setup-visore", "/scan-visore", "/visore-selection", "/visore-remove", "/allievo-visore",
+                                "/classroom", "/classe", "/sezione", "/checkRes", "/chiudi-visore", "/diagnosi",
+                                "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**",
+                                "/resources/**").access(roleAccessManager("admins"))
+
+                        .requestMatchers("/oauth2/**","/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
+                                "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
+                                "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
+                                "/v3/api-docs", "/swagger-resources/**", "/webjars/**").permitAll()
+
+                        .anyRequest().authenticated()
+                )
+
+                // Configurazione della gestione delle sessioni
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )
+
+                .oauth2Login(Customizer.withDefaults())
+
+                // Configurazione del logout
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/_logout")
+                )
+
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.sameOrigin())
+                );
+
+
+        return http.build();
+    }
+
 }

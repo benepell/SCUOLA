@@ -1,8 +1,5 @@
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -13,7 +10,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
-    
+
 
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/main.css" />" rel="stylesheet">
@@ -21,16 +18,24 @@
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/cookie.css" />" rel="stylesheet">
 
-    <title><tiles:insertAttribute name="titolo" /></title>
+    <title>
+           <c:if test="${not empty titolo}">
+                ${titolo}
+           </c:if>
+    </title>
+
   </head>
 
   <body>
 
    <div class="content" style="background-image: url(&quot;/static/svg/background.svg&quot;);">
 
-     <tiles:insertAttribute name="content" /> 
-     
-     <tiles:insertAttribute name="footer" />  
+    <c:if test="${not empty content}">
+        <jsp:include page="${content}" />
+    </c:if>
+
+    <jsp:include page="common/footer.jsp" />
+
    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

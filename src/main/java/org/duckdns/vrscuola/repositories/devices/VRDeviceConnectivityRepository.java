@@ -19,6 +19,7 @@
 package org.duckdns.vrscuola.repositories.devices;
 
 
+import jakarta.transaction.Transactional;
 import org.duckdns.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import org.duckdns.vrscuola.models.VRDeviceConnectivityModel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,7 +28,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;

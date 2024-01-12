@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%> 
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
@@ -16,7 +15,7 @@
     <!-- Bootstrap CSS -->
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
 
-  
+
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/empty-main.css" />" rel="stylesheet">
 
@@ -24,10 +23,15 @@
     <link href="<c:url value="/static/css/style-sezione.css" />" rel="stylesheet">
     <link href="<c:url value="/static/css/style-visore.css" />" rel="stylesheet">
 
+    <title>
+           <c:if test="${not empty titolo}">
+                ${titolo}
+           </c:if>
+    </title>
 
-    <title><tiles:insertAttribute name="titolo" /></title>
   </head>
   <body>
+
 
   <c:set var="currentLanguage" value="${cookie['localeInfo'].value}" />
    <section class="locale-link" style="position: fixed;top: 0;right: 40px;background: none;border: none;z-index: 9999;">
@@ -41,7 +45,6 @@
        </c:choose>
    </section>
 
-     <tiles:insertAttribute name="content" /> 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

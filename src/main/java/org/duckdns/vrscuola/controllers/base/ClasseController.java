@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/classe")

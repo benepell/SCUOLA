@@ -18,8 +18,6 @@
 
 package org.duckdns.vrscuola.config;
 
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,9 +29,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-import javax.servlet.ServletContext;
 import java.util.Locale;
 
 @Configuration
@@ -49,12 +45,6 @@ public class WebApplicationContextConfig  implements WebMvcConfigurer
         configurer.enable();
     }
 
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry)
-    {
-        TilesViewResolver viewResolver = new TilesViewResolver();
-        registry.viewResolver(viewResolver);
-    }
 
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver()

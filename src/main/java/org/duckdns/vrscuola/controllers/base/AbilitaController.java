@@ -18,6 +18,8 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.StudentService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.log.EventLogService;
@@ -29,8 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 import java.util.Arrays;
 
 @Controller
@@ -64,6 +65,9 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
+        model.addAttribute("titolo", "Abilita Classe");
+        model.addAttribute("content", "/WEB-INF/view/abilita-classe.jsp");
+
         session.setAttribute("isTablet", utilService.isTablet(request));
 
         return "abilita-classe";
@@ -77,6 +81,9 @@ public class AbilitaController {
 
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
+
+        model.addAttribute("titolo", "Abilita Sezione");
+        model.addAttribute("content", "/WEB-INF/view/abilita-sezione.jsp");
 
         String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
 

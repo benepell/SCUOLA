@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%@ include file="common/empty-base.jsp" %>
 
 <div class="jumbotron jumbotron-billboard">
   <div class="container">
@@ -38,6 +39,7 @@
       </div>
     </c:forEach>
   </section>
+
 <div class="video-background">
   <video id="myVideo" src="static/video/video.mp4" autoplay loop muted></video>
 </div>

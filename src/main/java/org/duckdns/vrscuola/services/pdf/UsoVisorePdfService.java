@@ -28,11 +28,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.Image;
+import jakarta.servlet.http.HttpServletResponse;
 import org.duckdns.vrscuola.models.UserInfoModel;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceDetailConnectivityRepository;
