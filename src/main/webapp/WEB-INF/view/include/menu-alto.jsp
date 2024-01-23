@@ -28,7 +28,7 @@
     String risorse = request.getAttribute("risorse") != null ? (String)request.getAttribute("risorse") : "";
     String utenti = request.getAttribute("utenti") != null ? (String)request.getAttribute("utenti") : "";
 
-    String[] li = new String[] {"/abilita-classe", "/abilita-sezione","/setup-visore", risorse, utenti + "/admin/master/console/#/scuola/users","/diagnosi" ,"/logout" };
+    String[] li = new String[] {"/abilita-classe", "/abilita-sezione","/setup-visore", risorse, utenti + "/admin/master/console/#/scuola/users","/diagnosi" ,"/_logout" };
     String[] targets = new String[] { "_self", "_self", "_self", "_blank", "_blank", "_self", "_self" };
 %>
 

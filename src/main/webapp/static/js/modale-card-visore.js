@@ -71,7 +71,7 @@ window.addEventListener("message", function(event) {
           formData.append('argomento', event.data.argomento);
           formData.append('id_argomento', event.data.id_argomento);
           formData.append('visore', visore);
-          fetch('argomento-visore', {
+          fetch('/argomento-visore', {
             method: 'POST',
             body: formData
           }).then(function(response) {
@@ -81,13 +81,13 @@ window.addEventListener("message", function(event) {
                  }, 3000);
              } else {  // aggiungi questo blocco else
                 document.body.removeChild(loading);
-                alert("Errore di caricamento ( " + response.status + " )" );
+                alert("Errore di caricamento 1 ( " + response.status + " )" );
              }
 
             // gestisci la risposta della pagina di destinazione qui
           }).catch(function(error) {
             document.body.removeChild(loading);
-            alert("Errore di caricamento ( " + response.status + " )" );
+            alert("Errore di caricamento 2 ( " + response.status + " )" );
           });
 
   }

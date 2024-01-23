@@ -98,8 +98,24 @@
       <%
         boolean isResumeUsername = false;
         String resumeLabel = "";
-        String[] resumeUsers = (String[]) request.getAttribute("resumeUsers").toString().split(",");
-        String[] resumeLabels = (String[]) request.getAttribute("resumeLabels").toString().split(",");
+      String[] resumeUsers;
+      String[] resumeLabels;
+
+      Object resumeUsersObj = request.getAttribute("resumeUsers");
+      Object resumeLabelsObj = request.getAttribute("resumeLabels");
+
+      if (resumeUsersObj != null && resumeUsersObj instanceof String) {
+          resumeUsers = ((String) resumeUsersObj).split(",");
+      } else {
+          resumeUsers = new String[0]; // or handle this scenario as you see fit
+      }
+
+      if (resumeLabelsObj != null && resumeLabelsObj instanceof String) {
+          resumeLabels = ((String) resumeLabelsObj).split(",");
+      } else {
+          resumeLabels = new String[0]; // or handle this scenario as you see fit
+      }
+
         if(resumeUsers != null && resumeLabels != null &&
         resumeLabels.length > 0 &&
         !resumeLabels[0].equals("null") &&

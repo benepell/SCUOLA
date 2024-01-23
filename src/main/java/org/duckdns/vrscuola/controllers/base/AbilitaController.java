@@ -23,10 +23,12 @@ import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.StudentService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.log.EventLogService;
+import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.services.utils.UtilService;
 import org.duckdns.vrscuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +58,11 @@ public class AbilitaController {
     @Autowired
     UtilService utilService;
 
+    @Autowired
+    KeycloakUserService kService;
+
     @RequestMapping(value = "abilita-classe")
-    public String getAbilitaClasse(Model model, HttpServletRequest request, HttpSession session) {
+    public String getAbilitaClasse(Authentication authentication, Model model, HttpServletRequest request, HttpSession session) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -69,6 +74,8 @@ public class AbilitaController {
         model.addAttribute("content", "/WEB-INF/view/abilita-classe.jsp");
 
         session.setAttribute("isTablet", utilService.isTablet(request));
+
+        session.setAttribute("main_username", kService.getTokenAttribute(authentication,Constants.CLAIMS_PREF_USERNAME));
 
         return "abilita-classe";
     }

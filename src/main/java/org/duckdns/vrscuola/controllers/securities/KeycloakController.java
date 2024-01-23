@@ -37,6 +37,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,46 +80,21 @@ public class KeycloakController {
     @Autowired
     KeycloakUserService kService;
 
-    @GetMapping("/_login")
-    public RedirectView login(Authentication authentication, Principal principal, HttpSession session) {
-        String redirectLogin = basename + "/_login";
-        try {
-            // Controlla se l'utente è autenticato con Keycloak
-            String accessToken = kService.getAccessToken(authentication);
-
-            if (accessToken != null) {
-
-                // Controllo se l'utente appartiene al gruppo "admins"
-                if (kService.hasRoleInAccessToken(accessToken,"admins")) {
-                    // L'utente è autenticato e appartiene al gruppo "admins", esegui le azioni necessarie e reindirizzalo alla pagina desiderata
-                    session.setAttribute("main_username", kService.getTokenAttribute(authentication,Constants.CLAIMS_PREF_USERNAME));
-                    // logService.sendLog(session, Constants.EVENT_LOG_IN);
-                    return new RedirectView("/abilita-classe");
-                } else {
-                    // L'utente è autenticato ma non appartiene al gruppo "admins", reindirizzalo alla pagina di logout
-                    return new RedirectView("/_logout"); // puoi reindirizzarlo a una pagina di errore o di login a tua scelta
-                }
-            } else {
-                // L'utente non è autenticato, reindirizzalo alla pagina di login di Keycloak
-                session.removeAttribute("main_username");
-                return new RedirectView("{authServerUrl}/realms/{realm}/protocol/openid-connect/auth?client_id={clientId}&redirect_uri={redirectLogin}&response_type=code");
-            }
-        } catch (Exception e) {
-            // Si è verificato un errore, reindirizza l'utente alla pagina di login di Keycloak
-            System.out.println(e.getMessage());
-            return new RedirectView("{authServerUrl}/realms/{realm}/protocol/openid-connect/auth?client_id={clientId}&redirect_uri={redirectLogin}&response_type=code");
-        }
-    }
-
 
     @GetMapping("/_logout")
-    public RedirectView logout(HttpServletRequest request, HttpServletResponse response , HttpSession session)  {
+    public RedirectView logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws UnsupportedEncodingException, UnsupportedEncodingException {
+
+        // lasciare qui perchè dopo viene invalidata
+        String idTokenHint = null;
+        if (session.getAttribute("idToken") != null) {
+            idTokenHint = (String) session.getAttribute("idToken");
+        }
 
         // chiude tutti i visori prima del logout se viene richiesto dalla pagina di gestione della classe
         boolean closeVisors = session.getAttribute("isCloseVisorLogout") != null ? (Boolean) session.getAttribute("isCloseVisorLogout") : false;
         if (closeVisors) {
-          // effettua la chiamata a chiudi i visori
-            String[] username = session.getAttribute("username") != null ? (String[])session.getAttribute("username") : null;
+            // effettua la chiamata a chiudi i visori
+            String[] username = session.getAttribute("username") != null ? (String[]) session.getAttribute("username") : null;
             if (session != null &&
                     username != null && username.length > 0) {
                 // stampa tutti gli utenti che hanno un visore per chiudere la sessione
@@ -143,7 +121,7 @@ public class KeycloakController {
         cookie.setPath(request.getContextPath());
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        if (request != null){
+        if (request != null) {
             try {
                 request.logout();
             } catch (ServletException e) {
@@ -151,9 +129,22 @@ public class KeycloakController {
             }
         }
 
-        return new RedirectView( uriLink + "/protocol/openid-connect/logout?redirecturi=" + basename);
-    }
+        // Controlla se l'idTokenHint è stato recuperato correttamente
+        if (idTokenHint == null || idTokenHint.isEmpty()) {
+            // Gestisci l'errore: l'idTokenHint non è disponibile
+            // Potresti reindirizzare l'utente a una pagina di errore o registrare l'errore.
+            return new RedirectView("/error"); // Sostituire con il percorso appropriato
+        }
 
+        // Prepara l'URL per il logout di Keycloak
+        String logoutUrl = uriLink + "/protocol/openid-connect/logout"
+                + "?id_token_hint=" + URLEncoder.encode(idTokenHint, StandardCharsets.UTF_8.name())
+                + "&post_logout_redirect_uri=" + URLEncoder.encode(basename, StandardCharsets.UTF_8.name());
+
+        // Esegui il redirect alla richiesta di logout di Keycloak
+        return new RedirectView(logoutUrl);
+
+    }
     @GetMapping("/test")
     public String test(HttpServletRequest request) throws ServletException {
         return "Successfully  admins";

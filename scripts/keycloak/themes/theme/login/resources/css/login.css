@@ -4,8 +4,8 @@ body, html {
   flex: 1;
   overflow: hidden;
   min-height: 0px;
-  font-size: 14px;
-  color:rgba(0,0,0,.87);
+  font-size: 18px;
+  color: #8BC34A;
   margin: 0px;
   height: 100%;
 }

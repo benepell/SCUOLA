@@ -53,8 +53,12 @@ public class WebSecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        String jwkSetUri = issuerUri + "/protocol/openid-connect/certs";
-        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        try {
+            String jwkSetUri = issuerUri + "/protocol/openid-connect/certs";
+            return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private AuthorizationManager<RequestAuthorizationContext> roleAccessManager(String role) {
@@ -105,13 +109,13 @@ public class WebSecurityConfig {
                         .requestMatchers( "/test", "/test1", "/abilita-classe", "/abilita-sezione", "/abilita-visore",
                                 "/setup-visore", "/scan-visore", "/visore-selection", "/visore-remove", "/allievo-visore",
                                 "/classroom", "/classe", "/sezione", "/checkRes", "/chiudi-visore", "/diagnosi",
-                                "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**",
-                                "/resources/**").access(roleAccessManager("admins"))
+                                "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**"
+                        ).access(roleAccessManager("admins"))
 
-                        .requestMatchers("/oauth2/**","/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
+                        .requestMatchers("/**","/oauth2/**","/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
                                 "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
                                 "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
-                                "/v3/api-docs", "/swagger-resources/**", "/webjars/**").permitAll()
+                                "/v3/api-docs", "/swagger-resources/**", "/webjars/**","/resources/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -121,7 +125,9 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
 
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauthLogin -> oauthLogin
+                        .successHandler(new CustomAuthenticationSuccessHandler())
+                )
 
                 // Configurazione del logout
                 .logout(logout -> logout

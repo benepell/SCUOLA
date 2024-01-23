@@ -20,6 +20,7 @@ package org.duckdns.vrscuola.services.securities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -28,6 +29,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -54,6 +56,35 @@ public class KeycloakUserService {
     public KeycloakUserService(@Qualifier("secondDataSource") DataSource dataSource) {
         this.dataSource = dataSource;
         this.usernamePattern = Pattern.compile("\\d+-[a-z]+-[a-z]+-[a-z]+");
+    }
+
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private static final String USERINFO_ENDPOINT = "https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/userinfo";
+
+    public Map<String, Object> getUserInfo(String accessToken) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    USERINFO_ENDPOINT,
+                    HttpMethod.GET,
+                    entity,
+                    Map.class
+            );
+
+            return response.getBody();
+        } catch (Exception e) {
+            // Log the exception or handle it as per your need
+            e.printStackTrace();
+            return Collections.emptyMap();
+        }
     }
 
     public List<Map<String, String>> getUsers(String filter, String classe, String sezione) {
@@ -161,51 +192,77 @@ public class KeycloakUserService {
     }
 
     public List<String> getRolesFromAccessToken(String accessToken) {
-        Jwt jwt = jwtDecoder.decode(accessToken);
-        Map<String, Object> claims = jwt.getClaims();
+        try {
+            Jwt jwt = jwtDecoder.decode(accessToken);
+            Map<String, Object> claims = jwt.getClaims();
 
-        Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            return (List<String>) realmAccess.get("roles");
+            Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+            if (realmAccess != null && realmAccess.containsKey("roles")) {
+                return (List<String>) realmAccess.get("roles");
+            }
+        } catch (Exception e) {
+            return null;
+           // log.error("Errore durante la decodifica del token JWT", e);
         }
 
         return Collections.emptyList();
     }
 
     public boolean hasRoleInAccessToken(String accessToken, String role) {
-        Jwt jwt = jwtDecoder.decode(accessToken);
-        Map<String, Object> claims = jwt.getClaims();
+        try {
+            Jwt jwt = jwtDecoder.decode(accessToken);
+            Map<String, Object> claims = jwt.getClaims();
 
-        Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            List<String> roles = (List<String>) realmAccess.get("roles");
-            return roles.contains(role);
+            Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+            if (realmAccess != null && realmAccess.containsKey("roles")) {
+                List<String> roles = (List<String>) realmAccess.get("roles");
+                return roles.contains(role);
+            }
+        } catch (Exception e) {
+           return false;
+            // log.error("Errore durante la decodifica del token JWT", e);
         }
 
         return false;
     }
 
-    public String getAccessToken(Authentication authentication){
-        if (authentication != null && authentication.isAuthenticated()) {
+    public String getAccessToken(Authentication authentication) {
+        if (authentication instanceof OAuth2AuthenticationToken) {
             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
             OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
                     oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
 
-            if (authorizedClient != null) {
-                // Ottieni l'Access Token
+            if (authorizedClient != null && authorizedClient.getAccessToken() != null) {
                 return authorizedClient.getAccessToken().getTokenValue();
             }
         }
         return null;
-
     }
-    public String getTokenAttribute(Authentication authentication,String key){
-        if (authentication.getPrincipal() instanceof OAuth2User) {
+
+    public String getIdToken(Authentication authentication) {
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+            OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
+                    oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
+
+            // Controlla se il client autorizzato e l'id_token sono non nulli
+            if (authorizedClient != null && authorizedClient.getRefreshToken() != null) {
+                // Restituisce l'id_token
+                return authorizedClient.getRefreshToken().getTokenValue();
+            }
+        }
+        return null;
+    }
+
+    public String getTokenAttribute(Authentication authentication, String key) {
+        if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
             OAuth2User user = (OAuth2User) authentication.getPrincipal();
-            return user.getAttribute(key).toString();
+            Object attribute = user.getAttribute(key);
+            return attribute != null ? attribute.toString() : null;
         }
 
         return null;
     }
+
 
 }
