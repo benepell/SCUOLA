@@ -19,9 +19,24 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
+		<mysql.version>8.0.33</mysql.version>
+		<json.version>20230227</json.version>
+		<validation.api.version>3.0.2</validation.api.version>
+		<webflux.version>2.6.3</webflux.version>
+		<tomcat.version>10.1.17</tomcat.version>
+		<jstl.api.version>3.0.0</jstl.api.version>
+		<jstl.version>3.0.1</jstl.version>
+		<json.path.version>2.6.0</json.path.version>
+		<openpdf.version>1.3.30</openpdf.version>
+		<swagger.version>3.0.0</swagger.version>
+		<codec.version>1.16.0</codec.version>
+		<httpclient.version>4.5.14</httpclient.version>
+		<assertj.version>3.24.2</assertj.version>
+		<compiler.plugin.version>3.11.0</compiler.plugin.version>
+		<surefire.plugin.version>3.1.2</surefire.plugin.version>
+		<resources.plugin.version>3.3.1</resources.plugin.version>
+		<war.plugin.version>3.4.0</war.plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,7 +70,7 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.0.33</version>
+			<version>${mysql.version}</version>
 		</dependency>
 
 		<!-- Dipendenze per MediaTypeFactory -->
@@ -68,49 +83,48 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20230227</version>
+			<version>${json.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
-			<version>3.0.2</version> <!-- o la versione più recente disponibile -->
+			<version>${validation.api.version}</version> <!-- o la versione più recente disponibile -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
-			<version>2.6.3</version>
+			<version>${webflux.version}</version>
 		</dependency>
-
 
 		<!-- JSTL -->
 		<!-- Dipendenza per il supporto JSP -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<version>10.1.17</version>
+			<version>${tomcat.version}</version>
 		</dependency>
 
 		<!-- Dipendenza JSTL -->
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-			<version>3.0.0</version>
+			<version>${jstl.api.version}</version>
 		</dependency>
 
 		<!-- Per l'implementazione runtime di JSTL -->
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>3.0.1</version>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
-			<version>2.6.0</version>
+			<version>${json.path.version}</version>
 		</dependency>
 
 		<!-- Lib PDF -->
@@ -118,7 +132,7 @@
 		<dependency>
 			<groupId>com.github.librepdf</groupId>
 			<artifactId>openpdf</artifactId>
-			<version>1.3.30</version>
+			<version>${openpdf.version}</version>
 		</dependency>
 
 
@@ -126,33 +140,33 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
+			<version>${swagger.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
+			<version>${swagger.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
+			<version>${swagger.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.16.0</version> <!-- Verifica se questa è l'ultima versione -->
+			<version>${codec.version}</version> <!-- Verifica se questa è l'ultima versione -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.14</version>
+			<version>${httpclient.version}</version>
 		</dependency>
 
 
@@ -176,7 +190,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.24.2</version>
+			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -201,25 +215,25 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>${compiler.plugin.version}</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.2</version>
+				<version>${surefire.plugin.version}</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.3.1</version>
+				<version>${resources.plugin.version}</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.4.0</version>
+				<version>${war.plugin.version}</version>
 			</plugin>
 		</plugins>
 
