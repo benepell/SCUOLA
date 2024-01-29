@@ -4,6 +4,10 @@
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
 }
 
+.modal-content {
+    background-color: #00000080 !important;
+}
+
 /* testo */
 .modal-body, .modal-header, .modal-footer, .bccs-body-text {
   color: #35af5ed9;
