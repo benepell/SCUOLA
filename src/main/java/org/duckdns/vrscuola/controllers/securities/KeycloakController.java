@@ -150,15 +150,6 @@ public class KeycloakController {
         return "Successfully  admins";
     }
 
-    @PostMapping("/checkRes")
-    public String checkRes(@ModelAttribute("setupModel") RisorsePhpModel res, HttpSession session) {
-        String param = res.getKey();
-        if(session != null && param.equals("risorse")) {
-            return "admins";
-        }
-        return "";
-    }
-
     @GetMapping("/test1")
     public String test1(HttpServletRequest request) throws ServletException {
         return "Successfully  users";

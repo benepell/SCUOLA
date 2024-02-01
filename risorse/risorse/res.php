@@ -1,9 +1,74 @@
 <?php
-ob_start(); // Avvia l'output buffering
-
 session_start();
-// ini_set ( 'display_errors', 1 );
-// error_reporting ( E_ALL );
+
+require 'vendor/autoload.php';
+require 'vars.php';
+
+use League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+
+$provider = new GenericProvider([
+    'clientId'                => CLIENT_ID,
+    'clientSecret'            => CLIENT_SECRET,
+    'redirectUri'             => REDIRECT_URI,
+    'urlAuthorize'            => URL_AUTHORIZE,
+    'urlAccessToken'          => URL_ACCESS_TOKEN,
+    'urlResourceOwnerDetails' => URL_RESOURCE_OWNER_DETAILS
+]);
+
+
+try{
+
+    $accessToken = $provider->getAccessToken('authorization_code', [
+        'code' => $_GET['code']
+    ]);
+
+     // Se l'access token è valido, ottieni i dettagli dell'utente
+     if ($accessToken) {
+        $isAdmin = false;
+
+        // Supponiamo che $accessToken sia il tuo token
+        $jwt = $accessToken;
+
+        // Divide il token in parti
+        $jwtParts = explode('.', $jwt);
+        if (count($jwtParts) !== 3) {
+            throw new Exception('Token JWT non valido.');
+        }
+
+        // Decodifica il payload
+        $payload = base64_decode(str_replace(['-', '_'], ['+', '/'], $jwtParts[1]));
+
+        // Converti la stringa JSON in un array PHP
+        $payloadArray = json_decode($payload, true);
+
+        // Controlla se il payload ha la struttura attesa e ottiene i ruoli
+        if (isset($payloadArray['realm_access']) && isset($payloadArray['realm_access']['roles'])) {
+            $roles = $payloadArray['realm_access']['roles'];
+
+            // Controlla se 'admins' è uno dei ruoli
+            if (in_array('admins', $roles)) {
+                $isAdmin = true;
+            }
+
+        } else {
+            throw new Exception('Ruoli non trovati nel token.');
+        }
+
+        if($isAdmin){
+            $_SESSION['abilitato'] = true;
+        }
+
+    } else {
+        throw new Exception("Token non valido.");
+    }
+}  catch (Exception $e) {
+    $_SESSION['abilitato'] = false;
+    ob_end_clean(); // Cancella l'output buffering
+    header("Location: index.php");
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -115,60 +180,6 @@ session_start();
 
 <?php
 
-require 'vendor/autoload.php';
-
-use League\OAuth2\Client\Provider\GenericProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-
-$provider = new GenericProvider([
-    'clientId'                => 'client',
-    'clientSecret'            => 'MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A',
-    'redirectUri'             => 'https://vrscuola.duckdns.org:8443/res.php',
-    'urlAuthorize'            => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/auth',
-    'urlAccessToken'          => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/token',
-    'urlResourceOwnerDetails' => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/userinfo'
-]);
-
-
-try{
-
-$accessToken = $provider->getAccessToken('authorization_code', [
-    'code' => $_GET['code']
-]);
-
-// Dati da inviare con la richiesta POST
-$data = array('key' => 'risorse');
-
-$options = array(
-    'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n" .
-                     "Authorization: Bearer " . $accessToken->getToken() . "\r\n",
-        'method'  => 'POST',
-        'content' => http_build_query($data)
-    )
-);
-
-// Crea il contesto della richiesta
-$context  = stream_context_create($options);
-
-// Effettua la chiamata POST all'endpoint
-$response = file_get_contents('https://vrscuola.duckdns.org/checkRes', false, $context);
-
- // Controlla se la risposta contiene la stringa "admins"
-    if (strpos($response, 'admins') !== false) {
-        $_SESSION['abilitato'] = true;
-    } else {
-        $_SESSION['abilitato'] = false;
-        ob_end_clean(); // Cancella l'output buffering
-        header("Location: https://vrscuola.duckdns.org/");
-        exit;
-    }
-} catch (Exception $e) {
-    $_SESSION['abilitato'] = false;
-    ob_end_clean(); // Cancella l'output buffering
-    header("Location: index.php");
-    exit;
-}
 if($_SESSION['abilitato']) {
 
     // Contenuto protetto
@@ -194,7 +205,3 @@ document.getElementById('closeButton').addEventListener('click', function() {
 </script>
 
 </html>
-
-<?php
-ob_end_flush(); // Invia l'output buffering al browser
-?>
