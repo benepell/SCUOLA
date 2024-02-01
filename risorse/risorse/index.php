@@ -5,17 +5,18 @@ session_start();
 // error_reporting ( E_ALL );
 
 require 'vendor/autoload.php';
+require 'vars.php';
 
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 $provider = new GenericProvider([
-    'clientId'                => 'client',
-    'clientSecret'            => 'MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A',
-    'redirectUri'             => 'https://vrscuola.duckdns.org:8443/res.php',
-    'urlAuthorize'            => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/auth',
-    'urlAccessToken'          => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/token',
-    'urlResourceOwnerDetails' => 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/userinfo'
+    'clientId'                => CLIENT_ID,
+    'clientSecret'            => CLIENT_SECRET,
+    'redirectUri'             => REDIRECT_URI,
+    'urlAuthorize'            => URL_AUTHORIZE,
+    'urlAccessToken'          => URL_ACCESS_TOKEN,
+    'urlResourceOwnerDetails' => URL_RESOURCE_OWNER_DETAILS
 ]);
 
 // Aggiungi logout get param logout=true per distruggere la sessione

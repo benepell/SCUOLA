@@ -16,7 +16,6 @@ $provider = new GenericProvider([
     'urlResourceOwnerDetails' => URL_RESOURCE_OWNER_DETAILS
 ]);
 
-
 try{
 
     $accessToken = $provider->getAccessToken('authorization_code', [
