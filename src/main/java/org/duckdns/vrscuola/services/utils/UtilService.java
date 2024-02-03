@@ -30,4 +30,6 @@ public interface UtilService {
 
     boolean isTablet(HttpServletRequest request);
 
+    boolean isCodeActivation();
+
 }

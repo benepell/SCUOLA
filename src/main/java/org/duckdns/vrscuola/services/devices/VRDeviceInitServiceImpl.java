@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -53,6 +54,19 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     @Override
     public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom){
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
+
+        Integer nextId;
+        try {
+            nextId = iRepository.getNextAvailableId();
+            if (nextId == null) {
+                nextId = 1;
+            }
+        } catch (Exception e) {
+            nextId = 1; // Imposta un valore di default in caso di eccezione
+        }
+
+        VRDeviceInitEntitie.setId(Long.valueOf(nextId));
+
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());
         String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
@@ -60,9 +74,12 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         VRDeviceInitEntitie.setNote(note);
         VRDeviceInitEntitie.setCode(paramCode);
         VRDeviceInitEntitie.setClassroom(classroom);
-        // quando si aggiunge un nuovo apparato, presumo che la batteria è al 100%
         VRDeviceInitEntitie.setBatteryLevel(Constants.BATTERY_LEVEL_MAX);
-        VRDeviceInitRepository.save(VRDeviceInitEntitie);
+        try {
+            VRDeviceInitRepository.save(VRDeviceInitEntitie);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("A record with the same unique constraint already exists. Details: " + e.getMessage());
+        }
     }
 
     @Override

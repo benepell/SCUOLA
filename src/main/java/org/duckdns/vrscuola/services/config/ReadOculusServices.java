@@ -21,6 +21,9 @@ package org.duckdns.vrscuola.services.config;
 import org.duckdns.vrscuola.models.InitParamModel;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
+import org.duckdns.vrscuola.services.utils.UtilServiceImpl;
+import org.duckdns.vrscuola.utilities.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +42,10 @@ public class ReadOculusServices {
     @Value("${school.resource.conf}") // path configuration file
     String confPath;
 
+
+    @Autowired
+    UtilServiceImpl utilService;
+
     public List<InitParamModel> addOculus(ValidateCredentialService validateCredentialService) {
         List<InitParamModel> param = new ArrayList<>();
 
@@ -55,20 +62,32 @@ public class ReadOculusServices {
                 String[] sep = line.split(",");
                 classroom = sep[0];
                 mac = sep[1];
-                code = sep[2];
+                code = utilService.isCodeActivation() ? sep[2] : Constants.NO_CODE;
 
                 Matcher matcher = macPattern.matcher(mac);
                 if (matcher.find()) {
                     String macAddress = matcher.group();
                     // validation code here
-                    String s = validateCredentialService.generateVisorCode(mac);
-                    if (code.equals(s)) {
+                    if (utilService.isCodeActivation()) {
+                        String s = validateCredentialService.generateVisorCode(mac);
+                        if (code.equals(s)) {
+                            InitParamModel initParamModel = new InitParamModel();
+                            initParamModel.setClassroom(classroom);
+                            initParamModel.setMacAddress(macAddress);
+                            initParamModel.setCode(code);
+                            param.add(initParamModel);
+
+                        }
+                    } else {
+                        // nocode validation
                         InitParamModel initParamModel = new InitParamModel();
                         initParamModel.setClassroom(classroom);
                         initParamModel.setMacAddress(macAddress);
                         initParamModel.setCode(code);
                         param.add(initParamModel);
+
                     }
+
                 }
             }
 
@@ -110,7 +129,10 @@ public class ReadOculusServices {
                     initParamModel.setClassroom(classroom);
                     initParamModel.setMacAddress(new_mac);
                     initParamModel.setOldMacAddress(old_mac);
-                    initParamModel.setCode(iRepository.codeByMacAddress(old_mac));
+
+                    String c_code =  utilService.isCodeActivation() ? iRepository.codeByMacAddress(old_mac) : Constants.NO_CODE;
+                    initParamModel.setCode(c_code);
+
                     param.add(initParamModel);
                 }
             }

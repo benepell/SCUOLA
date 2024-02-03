@@ -25,6 +25,7 @@ import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.config.ReadOculusServices;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
+import org.duckdns.vrscuola.services.utils.UtilServiceImpl;
 import org.duckdns.vrscuola.utilities.Constants;
 import org.duckdns.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Controller
 public class SetupVisoreController {
@@ -62,6 +62,9 @@ public class SetupVisoreController {
 
     @Autowired
     Utilities utilities;
+
+    @Autowired
+    UtilServiceImpl utilService;
 
     @RequestMapping(value = "setup-visore")
     public String getSetupVisoreClasse(Model model, HttpSession session, HttpServletResponse response) {
@@ -121,22 +124,40 @@ public class SetupVisoreController {
             String note = "aggiunta visore";
             for (InitParamModel p : macs) {
                 macsString[macs.indexOf(p)] = p.getMacAddress();
-                initService.addInit(utilities, p.getMacAddress(), note, p.getCode(), p.getClassroom());
+                initService.addInit(utilities, p.getMacAddress(), note,
+                        utilService.isCodeActivation() ? p.getCode() : Constants.NO_CODE, p.getClassroom());
             }
+
         } else if (readOculusServices.existUpdateFile()) {
             List<InitParamModel> paramModels = readOculusServices.changeOculus(repository);
             for (InitParamModel p : paramModels) {
-                boolean valid = initService.valid(p.getOldMacAddress(), p.getCode());
-                if (valid) {
+                if(utilService.isCodeActivation()){
+                    boolean valid = initService.valid(p.getOldMacAddress(), p.getCode());
+
+                    if (valid) {
+                        try {
+                            String note = "modifica visore con vecchio mac: " + p.getOldMacAddress();
+                            String code = validateCredentialService.generateVisorCode(p.getMacAddress());
+                            initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code, p.getClassroom());
+
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else {
+                    // nocode validation
                     try {
                         String note = "modifica visore con vecchio mac: " + p.getOldMacAddress();
-                        String code = validateCredentialService.generateVisorCode(p.getMacAddress());
+                        String code = Constants.NO_CODE;
                         initService.updateInit(utilities, p.getOldMacAddress(), p.getMacAddress(), note, code, p.getClassroom());
 
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+
                 }
+
+
             }
         }
 
