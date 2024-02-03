@@ -70,7 +70,8 @@ public class VRDeviceInitController {
 
         for (InitParamModel p : macs) {
             initService.addInit(utilities, p.getMacAddress(), note,
-                    uService.isCodeActivation() ? p.getCode() : Constants.NO_CODE , p.getClassroom());
+                    uService.isCodeActivation() ? p.getCode() : Constants.NO_CODE ,
+                    p.getClassroom(), p.getLabel());
         }
 
         return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("init.add.device.activate")));

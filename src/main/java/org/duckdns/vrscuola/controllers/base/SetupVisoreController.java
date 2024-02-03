@@ -125,7 +125,8 @@ public class SetupVisoreController {
             for (InitParamModel p : macs) {
                 macsString[macs.indexOf(p)] = p.getMacAddress();
                 initService.addInit(utilities, p.getMacAddress(), note,
-                        utilService.isCodeActivation() ? p.getCode() : Constants.NO_CODE, p.getClassroom());
+                        utilService.isCodeActivation() ? p.getCode() : Constants.NO_CODE,
+                        p.getClassroom(),p.getLabel());
             }
 
         } else if (readOculusServices.existUpdateFile()) {

@@ -23,7 +23,7 @@ import org.duckdns.vrscuola.utilities.Utilities;
 import java.util.List;
 
 public interface VRDeviceInitService {
-    void addInit(Utilities utilities, String macAddress,  String note, String paramCode, String classroom);
+    void addInit(Utilities utilities, String macAddress,  String note, String paramCode, String classroom, String label);
 
     void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom);
 

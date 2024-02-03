@@ -53,6 +53,7 @@ public class ReadOculusServices {
             BufferedReader fileReader = new BufferedReader(new FileReader(confPath + "add_oculus.conf"));
             String line;
             String classroom;
+            String label;
             String mac;
             String code;
             Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
@@ -61,8 +62,9 @@ public class ReadOculusServices {
 
                 String[] sep = line.split(",");
                 classroom = sep[0];
-                mac = sep[1];
-                code = utilService.isCodeActivation() ? sep[2] : Constants.NO_CODE;
+                label = sep[1];
+                mac = sep[2];
+                code = utilService.isCodeActivation() ? sep[3] : Constants.NO_CODE;
 
                 Matcher matcher = macPattern.matcher(mac);
                 if (matcher.find()) {
@@ -73,6 +75,7 @@ public class ReadOculusServices {
                         if (code.equals(s)) {
                             InitParamModel initParamModel = new InitParamModel();
                             initParamModel.setClassroom(classroom);
+                            initParamModel.setLabel(label);
                             initParamModel.setMacAddress(macAddress);
                             initParamModel.setCode(code);
                             param.add(initParamModel);
@@ -82,6 +85,7 @@ public class ReadOculusServices {
                         // nocode validation
                         InitParamModel initParamModel = new InitParamModel();
                         initParamModel.setClassroom(classroom);
+                        initParamModel.setLabel(label);
                         initParamModel.setMacAddress(macAddress);
                         initParamModel.setCode(code);
                         param.add(initParamModel);

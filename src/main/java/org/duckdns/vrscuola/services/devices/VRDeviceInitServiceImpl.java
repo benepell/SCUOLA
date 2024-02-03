@@ -52,7 +52,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     Utilities utilities;
 
     @Override
-    public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom){
+    public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom, String label){
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
 
         Integer nextId;
@@ -69,7 +69,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());
-        String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
+       // String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
         VRDeviceInitEntitie.setLabel(label);
         VRDeviceInitEntitie.setNote(note);
         VRDeviceInitEntitie.setCode(paramCode);

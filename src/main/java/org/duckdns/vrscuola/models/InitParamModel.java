@@ -26,4 +26,5 @@ public class InitParamModel {
     private String oldMacAddress;
     private String code;
     private String classroom;
+    private String label;
 }
