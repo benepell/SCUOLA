@@ -17,7 +17,7 @@
 # limitations under the License.
 
 # valori default
-server="https://vrscuola-auth.duckdns.org:9443"
+server="https://vrscuola-auth.duckdns.it:9443"
 credUser="admin"
 credPass="vrscuola!!!"
 realm="scuola"
@@ -31,7 +31,7 @@ firstName=$3
 lastName=$4
 
 # email predefinita
-dominio="@vrscuola.it"
+dominio="@duckdns.org"
 
 # Genera l'username
 username="$classe-$section-$firstName-$lastName"
@@ -55,7 +55,7 @@ else
 fi
 
 # crea utente keycloak
-$kc create users -r $realm -s username=$username -s firstName=$firstName -s lastName=$lastName -s enabled=true -i
+$kc create users -r $realm -s username="$username" -s firstName="$firstName" -s lastName="$lastName" -s email="$email" -s enabled=true -i
 
 # genera password utente
 $kc set-password -r $realm --username $username --new-password $password

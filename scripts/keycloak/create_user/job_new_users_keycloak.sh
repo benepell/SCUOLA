@@ -32,7 +32,9 @@ mv "$input_file" "$tmp"
 # Leggi il file di input riga per riga
 while IFS=, read -r classe sezione firstName lastName || [[ -n $classe ]]; do
   # Esegui lo split della riga in base alla virgola e passa i parametri allo script crea_file.sh
-  $cmd "$classe" "$sezione" "$firstName" "$lastName"
+  cmd_with_params="$cmd \"$username\" \"$password\" \"$group\" \"$firstName\" \"$lastName\""
+  eval $cmd_with_params
+
 done < "$tmp"
 ext=".txt.done"
 # Rinomina il file di input in new_users.txt.done
