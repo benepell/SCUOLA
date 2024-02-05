@@ -13,7 +13,8 @@ $provider = new GenericProvider([
     'redirectUri'             => REDIRECT_URI,
     'urlAuthorize'            => URL_AUTHORIZE,
     'urlAccessToken'          => URL_ACCESS_TOKEN,
-    'urlResourceOwnerDetails' => URL_RESOURCE_OWNER_DETAILS
+    'urlResourceOwnerDetails' => URL_RESOURCE_OWNER_DETAILS,
+    'scopes'                  => 'openid'
 ]);
 
 try{
