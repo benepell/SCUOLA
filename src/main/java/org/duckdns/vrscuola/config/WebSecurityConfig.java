@@ -25,7 +25,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,10 +34,12 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
+import java.time.Instant;
 import java.util.*;
 
 @Configuration
@@ -72,14 +73,23 @@ public class WebSecurityConfig {
 
                 if (authorizedClient != null) {
                     String accessToken = authorizedClient.getAccessToken().getTokenValue();
-                    Jwt jwt = jwtDecoder.decode(accessToken);
-                    Map<String, Object> claims = jwt.getClaims();
+                    Instant expiryDate = authorizedClient.getAccessToken().getExpiresAt();
 
-                    Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
-                    if (realmAccess != null && realmAccess.containsKey("roles")) {
-                        List<String> roles = (List<String>) realmAccess.get("roles");
-                        boolean hasRoleAdmins = roles.contains(role);
-                        return new AuthorizationDecision(hasRoleAdmins);
+                    // Controlla se il token di accesso non è scaduto
+                    if (expiryDate.isAfter(Instant.now())) {
+                        try {
+                            Jwt jwt = jwtDecoder.decode(accessToken);
+                            Map<String, Object> claims = jwt.getClaims();
+
+                            Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+                            if (realmAccess != null && realmAccess.containsKey("roles")) {
+                                List<String> roles = (List<String>) realmAccess.get("roles");
+                                boolean hasRoleAdmins = roles.contains(role);
+                                return new AuthorizationDecision(hasRoleAdmins);
+                            }
+                        } catch (JwtValidationException ex) {
+                            return new AuthorizationDecision(false);
+                        }
                     }
                 }
             }
@@ -123,6 +133,14 @@ public class WebSecurityConfig {
 
                 .oauth2Login(oauthLogin -> oauthLogin
                         .successHandler(new CustomAuthenticationSuccessHandler())
+                )
+
+                // Configurazione della gestione degli errori
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Se lo stato è 403, reindirizza l'utente alla pagina di logout
+                            response.sendRedirect("/_logout");
+                        })
                 )
 
                 // Configurazione del logout

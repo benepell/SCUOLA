@@ -24,7 +24,7 @@ public class CustomErrorController extends AbstractErrorController {
         HttpStatus status = getStatus(request);
         if (status == HttpStatus.UNAUTHORIZED && "/sso/login".equals(request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI))) {
             // Esegui il redirect a login patch per error 401 per keycloak
-            return "redirect:/login";
+            return "redirect:/abilita-classe";
         }
 
         // Aggiungi i dettagli dell'errore al modello
