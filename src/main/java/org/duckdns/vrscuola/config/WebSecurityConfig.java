@@ -121,7 +121,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/**", "/oauth2/**", "/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
                                 "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
                                 "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
-                                "/api-docs/**","/v3/api-docs", "/swagger-resources/**", "/webjars/**", "/resources/**").permitAll()
+                                "/api-docs/**","/v3/api-docs", "/swagger-resources/**", "/webjars/**", "/resources/**", "/questions/**").permitAll()
 
                         .anyRequest().authenticated()
                 )

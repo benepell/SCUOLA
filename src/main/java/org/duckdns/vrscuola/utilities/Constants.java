@@ -58,7 +58,7 @@ public interface Constants {
     String EVENT_LOG_CHECK_INFO = "verifica informazioni";
     String PREFIX_CLASSROOM = "aula";
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
-
+    String QUESTIONS_SEPARATOR = "|";
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
