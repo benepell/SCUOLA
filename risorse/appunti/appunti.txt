@@ -125,3 +125,17 @@ https://vrscuola.duckdns.org/argomenti/all?classe=1&sezione=a
 [16:15, 3/6/2023] Benedetto Pellerito: dimenticato esempio di accesso diretto alla risorsa senza credenziali
 https://vrscuola.duckdns.org:8443/files/ARGOMENTI/introduzione/videoplayback.mp4
 
+appunti per questions escludi accesso diretto alle risorse in modo da ottenere al link diretto 403
+
+esempio: https://vrscuola.duckdns.org:8443/files/ARGOMENTI/aula1/1/a/matematica/test_finale.txt
+
+ nano /etc/apache2/sites-available/000-default.conf
+
+# ricordati di abilitare modulo con sudo a2enmod rewrite
+   <Directory "/var/www/html/risorse">
+        RewriteEngine On
+        RewriteBase /
+        RewriteCond %{REQUEST_URI} ^/files/ARGOMENTI/.*/test_.*\.txt$ [NC]
+        RewriteRule ^ - [F,L]
+    </Directory>
+
