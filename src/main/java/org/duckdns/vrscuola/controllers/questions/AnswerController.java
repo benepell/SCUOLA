@@ -39,8 +39,4 @@ public class AnswerController {
         return ResponseEntity.ok(savedAnswer);
     }
 
-    @PostMapping("/testbp")
-    public ResponseEntity<String> testEndpoint(@RequestBody String rawBody) {
-        return ResponseEntity.ok("Received: " + rawBody);
-    }
 }
