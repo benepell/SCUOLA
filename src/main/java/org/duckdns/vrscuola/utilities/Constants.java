@@ -59,6 +59,7 @@ public interface Constants {
     String PREFIX_CLASSROOM = "aula";
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     String QUESTIONS_SEPARATOR = "|";
+    String QUESTIONS_PREFIX_FILENAME = "test";
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
@@ -70,5 +71,7 @@ public interface Constants {
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;
     long MIN_REMOVE_RECORDS = 2;
+
+    boolean QUESTIONS_RANDOM = true;
 
 }
