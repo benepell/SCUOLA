@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,7 +50,7 @@ public class ReadOculusServices {
         List<InitParamModel> param = new ArrayList<>();
 
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + "add_oculus.conf"));
+            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.ADD_OCULUS_CONF));
             String line;
             String classroom;
             String label;
@@ -97,7 +97,7 @@ public class ReadOculusServices {
 
             fileReader.close();
 
-            renameFile(confPath + "add_oculus.conf", confPath + "add_oculus.conf.done");
+            renameFile(confPath + Constants.ADD_OCULUS_CONF, confPath + Constants.ADD_OCULUS_DONE);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -112,7 +112,7 @@ public class ReadOculusServices {
         List<InitParamModel> param = new ArrayList<>();
 
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + "change_oculus.conf"));
+            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.CHANGE_OCULUS_CONF));
             String line;
             String classroom;
             String new_mac;
@@ -134,7 +134,7 @@ public class ReadOculusServices {
                     initParamModel.setMacAddress(new_mac);
                     initParamModel.setOldMacAddress(old_mac);
 
-                    String c_code =  utilService.isCodeActivation() ? iRepository.codeByMacAddress(old_mac) : Constants.NO_CODE;
+                    String c_code = utilService.isCodeActivation() ? iRepository.codeByMacAddress(old_mac) : Constants.NO_CODE;
                     initParamModel.setCode(c_code);
 
                     param.add(initParamModel);
@@ -143,7 +143,7 @@ public class ReadOculusServices {
 
             fileReader.close();
 
-            renameFile(confPath + "change_oculus.conf", confPath + "change_oculus.conf.done");
+            renameFile(confPath + Constants.CHANGE_OCULUS_CONF, confPath + Constants.CHANGE_OCULUS_DONE);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -153,11 +153,11 @@ public class ReadOculusServices {
     }
 
     public boolean existAddFile() {
-        return checkFileExists(confPath + "add_oculus.conf");
+        return checkFileExists(confPath + Constants.ADD_OCULUS_CONF);
     }
 
     public boolean existUpdateFile() {
-        return checkFileExists(confPath + "change_oculus.conf");
+        return checkFileExists(confPath + Constants.CHANGE_OCULUS_CONF);
     }
 
 

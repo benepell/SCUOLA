@@ -27,6 +27,10 @@ public interface Constants {
 
     //   String PATH_RESOURCE_DIR = "D:\\";
     String SEPARATOR = "/";
+    String ADD_OCULUS_CONF = "aggiungi-visore.txt";
+    String ADD_OCULUS_DONE = "aggiungi-visore-fatto.txt";
+    String CHANGE_OCULUS_CONF = "cambia-visore.txt";
+    String CHANGE_OCULUS_DONE = "cambia-visore-fatto.txt";
     String RESOURCE_TRASH = ".trash";
     String RESOURCE_TMB = ".tmb";
     String CONNECTED_IN_PENDING = "in_pending";
@@ -64,14 +68,12 @@ public interface Constants {
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
     String NO_CODE = "nocode";
-
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
     boolean ENABLED_ONLINE = false;
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;
     long MIN_REMOVE_RECORDS = 2;
-
     boolean QUESTIONS_RANDOM = true;
 
 }
