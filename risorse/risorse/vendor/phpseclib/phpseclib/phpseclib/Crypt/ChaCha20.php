@@ -58,7 +58,7 @@ class ChaCha20 extends Salsa20
                 // OpenSSL 1.1.0 (released 25 Aug 2016) added support for chacha20.
                 // PHP didn't support OpenSSL 1.1.0 until 7.0.19 (11 May 2017)
 
-                // if you attempt to provide openssl with a 128 bit key (as opposed to a 256 bit key) openssl will null
+                // if you attemptEntitie to provide openssl with a 128 bit key (as opposed to a 256 bit key) openssl will null
                 // pad the key to 256 bits and still use the expansion constant for 256-bit keys. the fact that
                 // openssl treats the IV as both the counter and nonce, however, let's us use openssl in continuous mode
                 // whereas libsodium does not

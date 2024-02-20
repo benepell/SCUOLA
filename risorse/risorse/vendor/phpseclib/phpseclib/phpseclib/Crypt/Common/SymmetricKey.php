@@ -746,7 +746,7 @@ abstract class SymmetricKey
     /**
      * Enables Poly1305 mode.
      *
-     * Once enabled Poly1305 cannot be disabled. If $key is not passed then an attempt to call createPoly1305Key
+     * Once enabled Poly1305 cannot be disabled. If $key is not passed then an attemptEntitie to call createPoly1305Key
      * will be made.
      *
      * @param string $key optional

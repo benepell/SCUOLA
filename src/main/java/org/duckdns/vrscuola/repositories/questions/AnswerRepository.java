@@ -1,27 +1,24 @@
-/**
- * Copyright (c) 2023, Benedetto Pellerito
- * Email: benedettopellerito@gmail.com
- * GitHub: https://github.com/benepell
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.duckdns.vrscuola.repositories.questions;
 
+import jakarta.transaction.Transactional;
 import org.duckdns.vrscuola.entities.questions.AnswerEntitie;
+import org.duckdns.vrscuola.entities.questions.AttemptEntitie;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
+import java.util.List;
+
 public interface AnswerRepository extends JpaRepository<AnswerEntitie, Long> {
+
+    @Query("SELECT a FROM answer a WHERE a.questionEntitie.id = :questionId AND a.id IN :userAnswerIds")
+    List<AnswerEntitie> findByQuestionIdAndIdIn(Long questionId, List<Long> userAnswerIds);
+
+    @Query("SELECT a FROM answer a WHERE a.questionEntitie.id = :questionId AND a.questionEntitie.attemptEntitie = :attemptId AND a.id IN :userAnswerIds")
+    List<AnswerEntitie> findByQuestionIdAndAttemptIdAndIdIn(Long questionId, AttemptEntitie attemptId, List<Long> userAnswerIds);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE answer a SET a.corretto = :corretto WHERE a.id = :answerId AND a.questionEntitie.id = :questionId")
+    void updateCorrettoById(Long answerId, Long questionId ,boolean corretto);
 }

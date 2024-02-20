@@ -325,7 +325,7 @@ Please see [the upgrade document](UPGRADING.md) that describes all BC breaking c
   https://github.com/guzzle/guzzle/pull/1373
 * Bug fix: defer sink stream opening in StreamHandler.
   https://github.com/guzzle/guzzle/pull/1377
-* Bug fix: do not attempt to escape cookie values.
+* Bug fix: do not attemptEntitie to escape cookie values.
   https://github.com/guzzle/guzzle/pull/1406
 * Feature: report original content encoding and length on decoded responses.
   https://github.com/guzzle/guzzle/pull/1409
@@ -700,7 +700,7 @@ interfaces.
   has been supplied by the user. This prevents the adapter layer from modifying
   the request that is sent over the wire after any listeners may have already
   put the request in a desired state (e.g., signed the request).
-* Throwing an exception when you attempt to send requests that have the
+* Throwing an exception when you attemptEntitie to send requests that have the
   "stream" set to true in parallel using the MultiAdapter.
 * Only calling curl_multi_select when there are active cURL handles. This was
   previously changed and caused performance problems on some systems due to PHP
@@ -1089,7 +1089,7 @@ interfaces.
 * Added support for PHP 5.5's CurlFile to prevent warnings with the deprecated @ syntax
 * Added support for oauth_callback in OAuth signatures
 * Added support for oauth_verifier in OAuth signatures
-* Added support to attempt to retrieve a command first literally, then ucfirst, the with inflection
+* Added support to attemptEntitie to retrieve a command first literally, then ucfirst, the with inflection
 
 ## 3.4.0 - 2013-04-11
 

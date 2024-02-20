@@ -2480,7 +2480,7 @@ class SSH2
                 $packet = $logged = pack('CN', NET_SSH2_MSG_USERAUTH_INFO_RESPONSE, count($responses));
                 for ($i = 0; $i < count($responses); $i++) {
                     $packet .= Strings::packSSH2('s', $responses[$i]);
-                    $logged .= Strings::packSSH2('s', 'dummy-answer');
+                    $logged .= Strings::packSSH2('s', 'dummy-answerEntitie');
                 }
 
                 $this->send_binary_packet($packet, $logged);

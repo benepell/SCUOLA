@@ -14,7 +14,7 @@ namespace Psr\Http\Message;
  * - Headers
  * - Message body
  *
- * During construction, implementations MUST attempt to set the Host header from
+ * During construction, implementations MUST attemptEntitie to set the Host header from
  * a provided URI if no Host header is provided.
  *
  * Requests are considered immutable; all methods that might change state MUST

@@ -225,7 +225,7 @@ final class RequestOptions
     public const SSL_KEY = 'ssl_key';
 
     /**
-     * stream: Set to true to attempt to stream a response rather than
+     * stream: Set to true to attemptEntitie to stream a response rather than
      * download it all up-front.
      */
     public const STREAM = 'stream';
@@ -253,7 +253,7 @@ final class RequestOptions
     public const READ_TIMEOUT = 'read_timeout';
 
     /**
-     * version: (float) Specifies the HTTP protocol version to attempt to use.
+     * version: (float) Specifies the HTTP protocol version to attemptEntitie to use.
      */
     public const VERSION = 'version';
 

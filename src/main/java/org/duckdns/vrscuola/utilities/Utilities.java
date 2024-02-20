@@ -37,6 +37,10 @@ public class Utilities {
         return new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT).format(new Date());
     }
 
+    public String strTime2(){
+        return new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT2).format(new Date());
+    }
+
     public boolean isValidMacAddr(String mac){
         Pattern pattern = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
         return pattern.matcher(mac).matches();

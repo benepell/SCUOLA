@@ -3,17 +3,30 @@ package org.duckdns.vrscuola.models;
 import java.util.List;
 
 public class QuestionModel {
+    private String id;
     private String domanda;
-    private List<String> risposte;
-    private List<String> corrette;
+    private String media;
 
-    public QuestionModel(String domanda, List<String> risposte, List<String> corrette) {
+    private List<RispostaModel> risposte; // Modificato per utilizzare RispostaModel
+    private List<RispostaModel> corrette; // Modificato per utilizzare RispostaModel
+
+    public QuestionModel(String id, String domanda, String media ,List<RispostaModel> risposte, List<RispostaModel> corrette) {
+        this.id = id;
         this.domanda = domanda;
+        this.media = media;
         this.risposte = risposte;
         this.corrette = corrette;
     }
 
-    // Getters e setters
+    // Getter e setter modificati per utilizzare RispostaModel
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getDomanda() {
         return domanda;
     }
@@ -22,19 +35,27 @@ public class QuestionModel {
         this.domanda = domanda;
     }
 
-    public List<String> getRisposte() {
+    public List<RispostaModel> getRisposte() {
         return risposte;
     }
 
-    public void setRisposte(List<String> risposte) {
+    public void setRisposte(List<RispostaModel> risposte) {
         this.risposte = risposte;
     }
 
-    public List<String> getCorrette() {
+    public List<RispostaModel> getCorrette() {
         return corrette;
     }
 
-    public void setCorrette(List<String> corrette) {
+    public void setCorrette(List<RispostaModel> corrette) {
         this.corrette = corrette;
+    }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
     }
 }

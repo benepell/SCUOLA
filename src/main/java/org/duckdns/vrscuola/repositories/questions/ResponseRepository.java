@@ -16,26 +16,12 @@
  * limitations under the License.
  */
 
-package org.duckdns.vrscuola.models;
+package org.duckdns.vrscuola.repositories.questions;
 
-import lombok.Data;
+import org.duckdns.vrscuola.entities.questions.ResponseEntitie;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-@Data
-public class AnswerModel {
-    private String aula;
-    private String classe;
-    private String sezione;
-    private String argomento;
-    private String text;
-    private String username;
-    private List<QuestionAnswerPair> questionAnswers; // Lista di coppie domanda-risposta
-
-    @Data
-    public static class QuestionAnswerPair {
-        private String questionId;
-        private List<String> answerIds; // Lista degli ID delle risposte selezionate per ogni domanda
-        private Long attemptId;
-    }
+@Repository
+public interface ResponseRepository extends JpaRepository<ResponseEntitie, Long> {
 }

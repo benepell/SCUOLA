@@ -21,6 +21,7 @@ package org.duckdns.vrscuola.utilities;
 public interface Constants {
     boolean IS_DEBUG = true;
     String UNIQUE_TIME_FORMAT = "yyyyMMdd_HHmmss";
+    String UNIQUE_TIME_FORMAT2 = "dd-MM-yyyy HH:mm";
 
     String EVENT_LOG_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
     String PATH_RESOURCE_DIR = "/var/www/html/risorse/files/";
@@ -64,6 +65,15 @@ public interface Constants {
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     String QUESTIONS_SEPARATOR = "|";
     String QUESTIONS_PREFIX_FILENAME = "test";
+    String QUESTIONS_PREFIX_DOMANDE = "QUESTIONARI";
+    String QUESTIONS_PREFIX_TEST = "TEST";
+    String QUESTIONS_PREFIX_FILES = "files";
+
+    String QUESTIONS_PREFIX_RISPOSTE = "ALLIEVI";
+    String QUESTIONS_TAG_DOMANDA = "{domanda}";
+    String QUESTIONS_TAG_CORRETTA = "{corretta}";
+    String QUESTIONS_TAG_MEDIA_START = "{media:";
+    String QUESTIONS_TAG_MEDIA_END = "}";
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";

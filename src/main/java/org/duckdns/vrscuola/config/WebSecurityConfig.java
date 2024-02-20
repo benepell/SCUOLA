@@ -122,7 +122,7 @@ public class WebSecurityConfig {
                                 "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
                                 "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
                                 "/api-docs/**","/v3/api-docs", "/swagger-resources/**", "/webjars/**", "/resources/**",
-                                "/questions/**", "/answers/**","/testbp/**").permitAll()
+                                "/questions/**", "/answers/**","/list-questions/**","/list-media/**").permitAll()
 
                         .anyRequest().authenticated()
                 )

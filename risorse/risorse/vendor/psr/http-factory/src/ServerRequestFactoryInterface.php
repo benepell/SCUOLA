@@ -8,7 +8,7 @@ interface ServerRequestFactoryInterface
      * Create a new server request.
      *
      * Note that server-params are taken precisely as given - no parsing/processing
-     * of the given values is performed, and, in particular, no attempt is made to
+     * of the given values is performed, and, in particular, no attemptEntitie is made to
      * determine the HTTP method or URI, which must be provided explicitly.
      *
      * @param string $method The HTTP method associated with the request.

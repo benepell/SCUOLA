@@ -695,7 +695,7 @@ abstract class AbstractProvider
     /**
      * Sends a request instance and returns a response instance.
      *
-     * WARNING: This method does not attempt to catch exceptions caused by HTTP
+     * WARNING: This method does not attemptEntitie to catch exceptions caused by HTTP
      * errors! It is recommended to wrap this method in a try/catch block.
      *
      * @param  RequestInterface $request

@@ -2,30 +2,22 @@ package org.duckdns.vrscuola.entities.questions;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
-@Entity(name = "answer")
+@Entity(name = "correct_answer")
 @Data
-public class AnswerEntitie {
+public class CorrectAnswerEntitie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
+    @ToString.Exclude
     private QuestionEntitie questionEntitie;
 
-    @ManyToOne
-    @JoinColumn(name = "attempt_id")
-    private AttemptEntitie attemptEntitie;
-
     @Lob
-    private String risposta;
-
-    @Column
-    private Integer posizione;
-
-    @Column
-    private Boolean corretto;
+    private String corretta;
 
 
 }

@@ -628,7 +628,7 @@ class OpenIDConnectClient
      */
     protected function getProviderConfigValue($param, $default = null) {
 
-        // If the configuration value is not available, attempt to fetch it from a well known config endpoint
+        // If the configuration value is not available, attemptEntitie to fetch it from a well known config endpoint
         // This is also known as auto "discovery"
         if (!isset($this->providerConfig[$param])) {
             $this->providerConfig[$param] = $this->getWellKnownConfigValue($param, $default);
@@ -648,7 +648,7 @@ class OpenIDConnectClient
      */
     private function getWellKnownConfigValue($param, $default = null) {
 
-        // If the configuration value is not available, attempt to fetch it from a well known config endpoint
+        // If the configuration value is not available, attemptEntitie to fetch it from a well known config endpoint
         // This is also known as auto "discovery"
         if(!$this->wellKnown) {
             $well_known_config_url = rtrim($this->getProviderURL(), '/') . '/.well-known/openid-configuration';
