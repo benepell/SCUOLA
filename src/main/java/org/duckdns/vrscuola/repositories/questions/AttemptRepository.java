@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface AttemptRepository extends JpaRepository<AttemptEntitie, Long> {
     @Query("SELECT a FROM attempt a JOIN a.userFileEntitie u WHERE u.username = :username ORDER BY a.attemptDate DESC")
     List<AttemptEntitie> findLatestAttemptByUserName(@Param("username") String username);
+
 }

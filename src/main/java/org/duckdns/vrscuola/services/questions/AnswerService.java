@@ -68,6 +68,9 @@ public class AnswerService {
             QuestionEntitie question = questionRepository.findById(questionId)
                     .orElseThrow(() -> new RuntimeException("Question not found: " + pair.getQuestionId()));
 
+            // Resetta tutti i corretto a null per la domanda corrente prima dell'aggiornamento
+            answerRepository.resetCorrettoByQuestionId(questionId);
+
             for (String answerId : pair.getAnswerIds()) {
                 boolean correctAnswer = isCorrectAnswer(Long.parseLong(answerId));
                 answerRepository.updateCorrettoById(Long.parseLong(answerId), questionId, correctAnswer);

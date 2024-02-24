@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "question")
@@ -22,6 +23,9 @@ public class QuestionEntitie {
 
     @Column
     private String media;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data = new Date();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "questionEntitie", cascade = CascadeType.ALL)

@@ -22,11 +22,13 @@ import org.duckdns.vrscuola.entities.questions.AttemptEntitie;
 import org.duckdns.vrscuola.entities.questions.ResponseEntitie;
 import org.duckdns.vrscuola.models.AnswerModel;
 import org.duckdns.vrscuola.repositories.questions.AttemptRepository;
+import org.duckdns.vrscuola.services.pdf.QuestionarioPdfService;
 import org.duckdns.vrscuola.services.questions.AnswerService;
 import org.duckdns.vrscuola.services.questions.ScoreService;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,6 +48,8 @@ public class AnswerController {
     @Autowired
     private ScoreService scoreService;
 
+    @Autowired
+    private QuestionarioPdfService questionarioPdfService;
 
     private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
 
@@ -57,18 +61,13 @@ public class AnswerController {
             ResponseEntitie savedAnswer = answerService.initAndSave(answerDTO);
             scoreService.calculateAndSaveTotalScore(answerDTO);
 
+            questionarioPdfService.generateLatestUserPdfQuestionario(answerDTO);
+
             return ResponseEntity.ok(savedAnswer);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while saving the answer.");
         }
     }
-
-    /*
-            String filePath = txtRes + Constants.QUESTIONS_PREFIX_RISPOSTE + "/" + aula + "/" + classe + "/" + sezione + "/" + argomento + "/" +
-                    utilities.strTime() + "_" + username + ".pdf";
-
-                    //    questionarioPdfService.generateLatestUserPdfQuestionario(username, filePath, utilities.strTime2(), "01-01-2024 8:30");
-  */
 
 
 }

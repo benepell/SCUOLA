@@ -22,7 +22,7 @@ public class AttemptEntitie {
     @Temporal(TemporalType.TIMESTAMP)
     private Date attemptDate = new Date();
 
-    @OneToMany(mappedBy = "attemptEntitie")
+    @OneToMany(mappedBy = "attemptEntitie", cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private List<QuestionEntitie> questions;
 
