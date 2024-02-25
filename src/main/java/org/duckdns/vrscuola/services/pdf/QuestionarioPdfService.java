@@ -52,110 +52,109 @@ public class QuestionarioPdfService {
 
     public void generatePdfQuestionario(List<QuestionEntitie> domande, String filePath, String user, String dataInizio, String dataFine, String score) throws DocumentException, IOException {
 
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
-        document.open();
+            document.open();
 
-        String percorsoFile = resource + "intestazione.png";
-        File file = new File(percorsoFile);
+            String percorsoFile = resource + "intestazione.png";
+            File file = new File(percorsoFile);
 
-        if (file.exists()) {
-            Image png = Image.getInstance(file.getAbsolutePath());
-            png.setAlignment(Image.ALIGN_CENTER);
-            png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
-            document.add(png);
-        }
-
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setSize(18);
-        font.setColor(Color.BLACK);
-
-        Paragraph p = new Paragraph(messageService.getMessage("pdf.test-finale.title"), font);
-        p.setAlignment(Paragraph.ALIGN_CENTER);
-
-        document.add(p);
-
-        p = new Paragraph(messageService.getMessage("pdf.test-finale.user") + ": " + user + " - " +
-                messageService.getMessage("pdf.test-data.score") + ": " + score + " - " +
-                messageService.getMessage("pdf.test-data-inizio") + ": " + dataInizio + " - " +
-                messageService.getMessage("pdf.test-data-fine") + ": " + dataFine
-                , FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10));
-        //p.setAlignment(Paragraph.ALIGN_CENTER);
-
-        document.add(p);
-
-        // Aggiungi una linea vuota
-        Paragraph lineBreak = new Paragraph("\n");
-        document.add(lineBreak);
-
-        Font fontDomande = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-        Font fontRisposte = FontFactory.getFont(FontFactory.HELVETICA, 12);
-
-        int i = 1;
-        for (QuestionEntitie domanda : domande) {
-            Paragraph pDomanda = new Paragraph(i + ") " + domanda.getDomanda(), fontDomande);
-            document.add(pDomanda);
-
-            PdfPTable tableRisposte = new PdfPTable(1);
-            tableRisposte.setWidthPercentage(100);
-            int r = 1;
-            for (AnswerEntitie risposta : domanda.getRisposte()) {
-
-                List<AnswerEntitie> answerEntities = answerRepository.findAnswersByQuestionId(domanda.getId());
-                boolean segnaCorretta = risposta.getCorretto() != null;
-
-                Paragraph pRisposta = new Paragraph();
-
-                // Aggiungi la risposta data "X"
-                String strCorretto = segnaCorretta ? "[X] " : "[ ]  ";
-                Chunk chunkX = new Chunk(strCorretto, new Font(Font.HELVETICA, 8));
-                pRisposta.add(chunkX);
-
-
-                // Aggiungi il numero della risposta e chiudi la parentesi come testo normale
-                Chunk chunkNumero = new Chunk(String.valueOf(r) + ")", fontRisposte);
-                pRisposta.add(chunkNumero);
-
-                // Aggiungi il testo della risposta
-                pRisposta.add(new Chunk(" " + risposta.getRisposta(), fontRisposte));
-
-                PdfPCell cellRisposta = new PdfPCell(pRisposta);
-                cellRisposta.setBorder(PdfPCell.NO_BORDER);
-
-                r++;
-                tableRisposte.addCell(cellRisposta);
+            if (file.exists()) {
+                Image png = Image.getInstance(file.getAbsolutePath());
+                png.setAlignment(Image.ALIGN_CENTER);
+                png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                document.add(png);
             }
 
-            // Gestisci le risposte corrette
-            if (domanda.getCorrette() != null && !domanda.getCorrette().isEmpty()) {
-                StringBuilder risposteCorretteBuilder = new StringBuilder("Risposta corretta: ");
-                for (CorrectAnswerEntitie corretta : domanda.getCorrette()) {
-                    if (risposteCorretteBuilder.length() > 19) { // 19 è la lunghezza di "Risposta corretta: "
-                        risposteCorretteBuilder.append(", ");
-                    }
-                    risposteCorretteBuilder.append(corretta.getCorretta());
+            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            font.setSize(18);
+            font.setColor(Color.BLACK);
+
+            Paragraph p = new Paragraph(messageService.getMessage("pdf.test-finale.title"), font);
+            p.setAlignment(Paragraph.ALIGN_CENTER);
+
+            document.add(p);
+
+            p = new Paragraph(messageService.getMessage("pdf.test-finale.user") + ": " + user + " - " +
+                    messageService.getMessage("pdf.test-data.score") + ": " + score + " - " +
+                    messageService.getMessage("pdf.test-data-inizio") + ": " + dataInizio + " - " +
+                    messageService.getMessage("pdf.test-data-fine") + ": " + dataFine
+                    , FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10));
+            //p.setAlignment(Paragraph.ALIGN_CENTER);
+
+            document.add(p);
+
+            // Aggiungi una linea vuota
+            Paragraph lineBreak = new Paragraph("\n");
+            document.add(lineBreak);
+
+            Font fontDomande = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+            Font fontRisposte = FontFactory.getFont(FontFactory.HELVETICA, 12);
+
+            int i = 1;
+            for (QuestionEntitie domanda : domande) {
+                Paragraph pDomanda = new Paragraph(i + ") " + domanda.getDomanda(), fontDomande);
+                document.add(pDomanda);
+
+                PdfPTable tableRisposte = new PdfPTable(1);
+                tableRisposte.setWidthPercentage(100);
+                int r = 1;
+                for (AnswerEntitie risposta : domanda.getRisposte()) {
+
+                    List<AnswerEntitie> answerEntities = answerRepository.findAnswersByQuestionId(domanda.getId());
+                    boolean segnaCorretta = risposta.getCorretto() != null;
+
+                    Paragraph pRisposta = new Paragraph();
+
+                    // Aggiungi la risposta data "X"
+                    String strCorretto = segnaCorretta ? "[X] " : "[ ]  ";
+                    Chunk chunkX = new Chunk(strCorretto, new Font(Font.HELVETICA, 8));
+                    pRisposta.add(chunkX);
+
+
+                    // Aggiungi il numero della risposta e chiudi la parentesi come testo normale
+                    Chunk chunkNumero = new Chunk(String.valueOf(r) + ")", fontRisposte);
+                    pRisposta.add(chunkNumero);
+
+                    // Aggiungi il testo della risposta
+                    pRisposta.add(new Chunk(" " + risposta.getRisposta(), fontRisposte));
+
+                    PdfPCell cellRisposta = new PdfPCell(pRisposta);
+                    cellRisposta.setBorder(PdfPCell.NO_BORDER);
+
+                    r++;
+                    tableRisposte.addCell(cellRisposta);
                 }
-                PdfPCell cellCorretta = new PdfPCell(new Phrase(risposteCorretteBuilder.toString(), fontRisposte));
-                cellCorretta.setBorder(PdfPCell.NO_BORDER);
-                tableRisposte.addCell(cellCorretta);
-            }
-            i++;
-            document.add(tableRisposte);
-            document.add(new Paragraph(" ")); // Aggiunge uno spazio tra le domande
-        }
 
-        document.close();
+                // Gestisci le risposte corrette
+                if (domanda.getCorrette() != null && !domanda.getCorrette().isEmpty()) {
+                    StringBuilder risposteCorretteBuilder = new StringBuilder("Risposta corretta: ");
+                    for (CorrectAnswerEntitie corretta : domanda.getCorrette()) {
+                        if (risposteCorretteBuilder.length() > 19) { // 19 è la lunghezza di "Risposta corretta: "
+                            risposteCorretteBuilder.append(", ");
+                        }
+                        risposteCorretteBuilder.append(corretta.getCorretta());
+                    }
+                    PdfPCell cellCorretta = new PdfPCell(new Phrase(risposteCorretteBuilder.toString(), fontRisposte));
+                    cellCorretta.setBorder(PdfPCell.NO_BORDER);
+                    tableRisposte.addCell(cellCorretta);
+                }
+                i++;
+                document.add(tableRisposte);
+                document.add(new Paragraph(" ")); // Aggiunge uno spazio tra le domande
+            }
+
+            document.close();
+        } catch (Exception e) {
+            throw new RuntimeException("Errore nel file" + e.getMessage(), e);
+
+        }
     }
 
     public void generateLatestUserPdfQuestionario(AnswerModel answerDTO) {
-        // Trova l'ultimo UserFile per l'utente
 
-
-        /*
-        UserFileEntitie userFile = userFileRepository.findFirstByUsernameOrderByIdDesc(username)
-                .orElseThrow(() -> new RuntimeException("Nessun file trovato per l'utente: " + username));
-*/
         // Trova tutte le domande associate a questo UserFile
         String username = answerDTO.getUsername();
         String datetime = new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT).format(new Date());
@@ -163,12 +162,12 @@ public class QuestionarioPdfService {
 
         UserFileEntitie userFile = userFileRepository.findFirstByUsernameOrderByIdDesc(username)
                 .orElseThrow(() -> new RuntimeException("Nessun file trovato per l'utente: " + username));
-        
+
 
         List<AttemptEntitie> attemptEntities = attemptRepository.findLatestAttemptByUserName(username);
         long attemptId = 0;
         String dataInizio = "";
-        if (attemptEntities != null && !attemptEntities.isEmpty()){
+        if (attemptEntities != null && !attemptEntities.isEmpty()) {
             attemptId = attemptEntities.get(0).getId();
 
             SimpleDateFormat sdf = new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT2);
@@ -176,10 +175,10 @@ public class QuestionarioPdfService {
         }
 
         String filePath = txtRes + Constants.QUESTIONS_PREFIX_RISPOSTE + "/" +
-                answerDTO.getAula() + "/" +
-                answerDTO.getClasse() + "/" +
-                answerDTO.getSezione() + "/" +
-                answerDTO.getArgomento() + "/" +
+                answerDTO.getAula().toLowerCase() + "/" +
+                answerDTO.getClasse().toLowerCase() + "/" +
+                answerDTO.getSezione().toLowerCase() + "/" +
+                answerDTO.getArgomento().toLowerCase() + "/" +
                 datetime + "_" + username + ".pdf";
 
         List<QuestionEntitie> domande = questionRepository.findByAttemptEntitieId(attemptId);
@@ -189,7 +188,7 @@ public class QuestionarioPdfService {
         String scoreTotal;
         String score;
 
-        List<ScoreEntitie> scores = scoreRepository.findByUsernameAndAttemptId(username, 1L);
+        List<ScoreEntitie> scores = scoreRepository.findByUsernameAndAttemptId(username, attemptId);
 
         if (scores != null && !scores.isEmpty()) {
             scorePartial = String.valueOf(scores.get(0).getScoreValue());
