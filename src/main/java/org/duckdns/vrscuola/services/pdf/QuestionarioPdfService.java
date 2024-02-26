@@ -21,8 +21,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class QuestionarioPdfService {
@@ -50,6 +53,75 @@ public class QuestionarioPdfService {
     @Autowired
     private AttemptRepository attemptRepository;
 
+    public void generateSummaryPdfQuestionario(String filePath) throws DocumentException, IOException {
+        // Ottieni la data odierna come stringa nel formato yyyy-MM-dd
+        LocalDate today = LocalDate.now();
+        String dateAsString = today.toString();
+
+        List<ScoreEntitie> scores = scoreRepository.findScoresByDate(dateAsString);
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+        document.open();
+        // Aggiungi intestazione, immagini, ecc.
+        String percorsoFile = resource + "intestazione.png";
+        File file = new File(percorsoFile);
+
+        if (file.exists()) {
+            Image png = Image.getInstance(file.getAbsolutePath());
+            png.setAlignment(Image.ALIGN_CENTER);
+            png.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+            document.add(png);
+        }
+
+        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(18);
+        font.setColor(Color.BLACK);
+
+        Paragraph p = new Paragraph(messageService.getMessage("pdf.test-data.summary"), font);
+        p.setAlignment(Paragraph.ALIGN_CENTER);
+
+        document.add(p);
+
+        // Creazione della tabella per i dati 'score'
+        PdfPTable table = new PdfPTable(3); // 3 colonne per id, attemptId, scoreValue, totalQuestions, username
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10);
+
+        // Aggiungi intestazioni di colonna
+        Stream.of(
+                messageService.getMessage("pdf.test-data.name"),
+                messageService.getMessage("pdf.test-data.score"),
+                messageService.getMessage("pdf.test-data.percent")
+        ).forEach(columnTitle -> {
+            PdfPCell header = new PdfPCell();
+            header.setBackgroundColor(Color.LIGHT_GRAY);
+            header.setBorderWidth(2);
+            header.setPhrase(new Phrase(columnTitle));
+            table.addCell(header);
+        });
+
+        // Aggiungi dati delle righe
+        for (ScoreEntitie score : scores) {
+            table.addCell(score.getUsername());
+            String str = Integer.toString(score.getScoreValue()) + "/" + Integer.toString(score.getTotalQuestions());
+            String perc;
+            if (score.getTotalQuestions() > 0) {
+                perc = Integer.toString((int) Math.round((double) score.getScoreValue() / score.getTotalQuestions() * 100));
+            } else {
+                perc = "0";
+            }
+            table.addCell(str);
+            table.addCell(perc + " %");
+
+        }
+
+        document.add(table);
+
+        document.close();
+    }
+
     public void generatePdfQuestionario(List<QuestionEntitie> domande, String filePath, String user, String dataInizio, String dataFine, String score) throws DocumentException, IOException {
 
         try {
@@ -72,7 +144,7 @@ public class QuestionarioPdfService {
             font.setSize(18);
             font.setColor(Color.BLACK);
 
-            Paragraph p = new Paragraph(messageService.getMessage("pdf.test-finale.title"), font);
+            Paragraph p = new Paragraph(messageService.getMessage("pdf.test-data.summary"), font);
             p.setAlignment(Paragraph.ALIGN_CENTER);
 
             document.add(p);
@@ -158,6 +230,7 @@ public class QuestionarioPdfService {
         // Trova tutte le domande associate a questo UserFile
         String username = answerDTO.getUsername();
         String datetime = new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT).format(new Date());
+        String datetime2 = new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT3).format(new Date());
         String datefine = new SimpleDateFormat(Constants.UNIQUE_TIME_FORMAT2).format(new Date());
 
         UserFileEntitie userFile = userFileRepository.findFirstByUsernameOrderByIdDesc(username)
@@ -198,9 +271,18 @@ public class QuestionarioPdfService {
             score = "0 / 0";
         }
 
+        String filePathSummary = txtRes + Constants.QUESTIONS_PREFIX_RISPOSTE + "/" +
+                answerDTO.getAula().toLowerCase() + "/" +
+                answerDTO.getClasse().toLowerCase() + "/" +
+                answerDTO.getSezione().toLowerCase() + "/" +
+                answerDTO.getArgomento().toLowerCase() + "/" +
+                datetime2 + "_" + Constants.QUESTIONS_PREFIX_REPORT + ".pdf";
+
+
         // Genera il PDF
         try {
             generatePdfQuestionario(domande, filePath, username, dataInizio, datefine, score);
+            generateSummaryPdfQuestionario(filePathSummary);
         } catch (DocumentException | IOException e) {
             throw new RuntimeException("Errore nella generazione del PDF", e);
         }

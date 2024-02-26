@@ -23,6 +23,8 @@ public interface Constants {
     String UNIQUE_TIME_FORMAT = "yyyyMMdd_HHmmss";
     String UNIQUE_TIME_FORMAT2 = "dd-MM-yyyy HH:mm";
 
+    String UNIQUE_TIME_FORMAT3 = "dd-MM-yyyy";
+
     String EVENT_LOG_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
     String PATH_RESOURCE_DIR = "/var/www/html/risorse/files/";
 
@@ -74,6 +76,8 @@ public interface Constants {
     String QUESTIONS_TAG_CORRETTA = "{corretta}";
     String QUESTIONS_TAG_MEDIA_START = "{media:";
     String QUESTIONS_TAG_MEDIA_END = "}";
+
+    String QUESTIONS_PREFIX_REPORT = "report";
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
