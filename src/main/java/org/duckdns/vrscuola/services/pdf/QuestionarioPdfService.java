@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -54,17 +55,21 @@ public class QuestionarioPdfService {
     private AttemptRepository attemptRepository;
 
     public void generateSummaryPdfQuestionario(String filePath) throws DocumentException, IOException {
-        // Ottieni la data odierna come stringa nel formato yyyy-MM-dd
-        LocalDate today = LocalDate.now();
-        String dateAsString = today.toString();
+        // Ottieni l'istante corrente ad ore fa
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime hoursAgo = now.minusHours(Constants.QUESTIONS_HOURS_AGO);
 
-        List<ScoreEntitie> scores = scoreRepository.findScoresByDate(dateAsString);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String nowAsString = now.format(formatter);
+        String hoursAgoAsString = hoursAgo.format(formatter);
+
+        List<ScoreEntitie> scores = scoreRepository.findScoresInTimeRange(hoursAgoAsString, nowAsString);
 
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
         document.open();
-        // Aggiungi intestazione, immagini, ecc.
+
         String percorsoFile = resource + "intestazione.png";
         File file = new File(percorsoFile);
 

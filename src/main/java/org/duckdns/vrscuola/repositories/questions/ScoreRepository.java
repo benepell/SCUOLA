@@ -15,6 +15,15 @@ public interface ScoreRepository extends JpaRepository<ScoreEntitie, Long> {
     @Query("SELECT s FROM ScoreEntitie s")
     List<ScoreEntitie> findAllScores();
 
-    @Query(value = "SELECT s.* FROM score s JOIN attempt a ON s.attemptId = a.id WHERE DATE(a.attemptDate) = :date", nativeQuery = true)
-    List<ScoreEntitie> findScoresByDate(@Param("date") String date);
+    // ritorna score con username piu recente sulla base del range temporale
+    @Query(value = "SELECT s.* " +
+            "FROM score s " +
+            "INNER JOIN ( " +
+            "  SELECT MAX(s.id) as maxId " +
+            "  FROM score s " +
+            "  JOIN attempt a ON s.attemptId = a.id " +
+            "  WHERE a.attemptDate BETWEEN :start AND :end " +
+            "  GROUP BY s.username " +
+            ") AS latestScores ON s.id = latestScores.maxId;", nativeQuery = true)
+    List<ScoreEntitie> findScoresInTimeRange(@Param("start") String start, @Param("end") String end);
 }

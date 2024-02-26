@@ -84,6 +84,8 @@ public interface Constants {
     String NO_CODE = "nocode";
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
+
+    int QUESTIONS_HOURS_AGO = 3;
     boolean ENABLED_ONLINE = false;
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;
