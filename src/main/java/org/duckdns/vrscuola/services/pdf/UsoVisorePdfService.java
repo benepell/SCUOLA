@@ -58,6 +58,9 @@ public class UsoVisorePdfService {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private Utilities utilities;
+
     private List<UserInfoModel> listUsers;
 
     private String classe;
@@ -69,8 +72,7 @@ public class UsoVisorePdfService {
 
         document.open();
 
-        String percorsoFile = resourceSes + "intestazione.png";
-        File file = new File(percorsoFile);
+        File file = new File(utilities.getIntestazionePng());
 
         if (file.exists()) {
             Image png = Image.getInstance(file.getAbsolutePath());
@@ -137,8 +139,7 @@ public class UsoVisorePdfService {
 
             document.open();
 
-            String percorsoFile = resourceSes + "intestazione.png";
-            File file = new File(percorsoFile);
+            File file = new File(utilities.getIntestazionePng());
 
             if (file.exists()) {
                 Image png = Image.getInstance(file.getAbsolutePath());

@@ -12,6 +12,7 @@ import org.duckdns.vrscuola.models.AnswerModel;
 import org.duckdns.vrscuola.repositories.questions.*;
 import org.duckdns.vrscuola.services.utils.MessageService;
 import org.duckdns.vrscuola.utilities.Constants;
+import org.duckdns.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ import java.util.stream.Stream;
 @Service
 public class QuestionarioPdfService {
 
-    @Value("${school.resource}")
+    @Value("${school.resource.base}")
     private String resource;
 
     @Value("${school.resource.txt}")
@@ -54,24 +55,35 @@ public class QuestionarioPdfService {
     @Autowired
     private AttemptRepository attemptRepository;
 
+    @Autowired
+    private Utilities utilities;
+
+    @Autowired
+    private ChartToPDF chartToPDF;
+
+
     public void generateSummaryPdfQuestionario(String filePath) throws DocumentException, IOException {
         // Ottieni l'istante corrente ad ore fa
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime hoursAgo = now.minusHours(Constants.QUESTIONS_HOURS_AGO);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.UNIQUE_TIME_STD);
         String nowAsString = now.format(formatter);
         String hoursAgoAsString = hoursAgo.format(formatter);
 
         List<ScoreEntitie> scores = scoreRepository.findScoresInTimeRange(hoursAgoAsString, nowAsString);
+
+        // non scrivere il file pdf se non vi sono record
+        if (scores.isEmpty()) {
+            return;
+        }
 
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
         document.open();
 
-        String percorsoFile = resource + "intestazione.png";
-        File file = new File(percorsoFile);
+        File file = new File(utilities.getIntestazionePng());
 
         if (file.exists()) {
             Image png = Image.getInstance(file.getAbsolutePath());
@@ -124,6 +136,21 @@ public class QuestionarioPdfService {
 
         document.add(table);
 
+        // Genera il grafico a barre e ottiene il percorso del file PNG
+        String chartPath = chartToPDF.generateBarChartImage(scores); // Assumendo che questo metodo ritorni il percorso del file PNG del grafico
+
+        // Assicurati che il documento sia ancora aperto prima di aggiungere immagini
+        if (!document.isOpen()) {
+            document.open();
+        }
+
+        // Aggiungi l'immagine del grafico al documento
+        Image chartImage = Image.getInstance(chartPath);
+        chartImage.setAlignment(Image.ALIGN_CENTER);
+        // Opzionalmente, puoi ridimensionare l'immagine per adattarla meglio al tuo layout
+        chartImage.scaleToFit(PageSize.A4.getWidth() / 2, PageSize.A4.getHeight() / 4);
+        document.add(chartImage);
+
         document.close();
     }
 
@@ -135,8 +162,7 @@ public class QuestionarioPdfService {
 
             document.open();
 
-            String percorsoFile = resource + "intestazione.png";
-            File file = new File(percorsoFile);
+            File file = new File(utilities.getIntestazionePng());
 
             if (file.exists()) {
                 Image png = Image.getInstance(file.getAbsolutePath());
@@ -207,7 +233,7 @@ public class QuestionarioPdfService {
 
                 // Gestisci le risposte corrette
                 if (domanda.getCorrette() != null && !domanda.getCorrette().isEmpty()) {
-                    StringBuilder risposteCorretteBuilder = new StringBuilder("Risposta corretta: ");
+                    StringBuilder risposteCorretteBuilder = new StringBuilder(Constants.QUESTIONS_CORRECT_RESPONSE + ": ");
                     for (CorrectAnswerEntitie corretta : domanda.getCorrette()) {
                         if (risposteCorretteBuilder.length() > 19) { // 19 è la lunghezza di "Risposta corretta: "
                             risposteCorretteBuilder.append(", ");
@@ -276,7 +302,7 @@ public class QuestionarioPdfService {
             score = "0 / 0";
         }
 
-        String filePathSummary = txtRes + Constants.QUESTIONS_PREFIX_RISPOSTE + "/" +
+        String filePathSummary = txtRes + Constants.QUESTIONS_PREFIX_REPORT + "/" +
                 answerDTO.getAula().toLowerCase() + "/" +
                 answerDTO.getClasse().toLowerCase() + "/" +
                 answerDTO.getSezione().toLowerCase() + "/" +

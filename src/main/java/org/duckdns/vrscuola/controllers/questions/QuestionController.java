@@ -73,6 +73,7 @@ public class QuestionController {
                                                                   @RequestParam(required = true) String classe,
                                                                   @RequestParam(required = true) String sezione,
                                                                   @RequestParam(required = true) String argomento,
+                                                                  @RequestParam(required = true) String username,
                                                                   @RequestParam(required = false) String text
     ) {
         try {
@@ -97,7 +98,6 @@ public class QuestionController {
             List<QuestionModel> domandeConRisposta = questionarioService.leggiDomandeDaFile(fileDomande, baselink);
 
             String hash = FileUtils.calculateHash(new File(fileDomande));
-            String username = kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME);
             List<QuestionModel> tmpResponse = questionarioService.scriviDomandeInDb(domandeConRisposta, username, hash, textName);
 
             // Trasformare tmpResponse  per rimuovere rispostecorrette dalla lista

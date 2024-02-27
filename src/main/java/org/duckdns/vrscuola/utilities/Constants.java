@@ -20,9 +20,10 @@ package org.duckdns.vrscuola.utilities;
 
 public interface Constants {
     boolean IS_DEBUG = true;
+
+    String UNIQUE_TIME_STD = "yyyy-MM-dd HH:mm:ss";
     String UNIQUE_TIME_FORMAT = "yyyyMMdd_HHmmss";
     String UNIQUE_TIME_FORMAT2 = "dd-MM-yyyy HH:mm";
-
     String UNIQUE_TIME_FORMAT3 = "dd-MM-yyyy";
 
     String EVENT_LOG_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
@@ -76,8 +77,9 @@ public interface Constants {
     String QUESTIONS_TAG_CORRETTA = "{corretta}";
     String QUESTIONS_TAG_MEDIA_START = "{media:";
     String QUESTIONS_TAG_MEDIA_END = "}";
-
     String QUESTIONS_PREFIX_REPORT = "report";
+    String QUESTIONS_CORRECT_RESPONSE = "Risposta corretta";
+    String RESOURCES_INTEST_PNG = "intestazione.png";
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
@@ -85,7 +87,7 @@ public interface Constants {
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
 
-    int QUESTIONS_HOURS_AGO = 3;
+    int QUESTIONS_HOURS_AGO = 6;
     boolean ENABLED_ONLINE = false;
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;

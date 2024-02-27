@@ -62,6 +62,9 @@ public class EventLogPdfService {
     @Autowired
     private ConfigService configService;
 
+    @Autowired
+    private Utilities utilities;
+
     private List<EventLogInfoModel> listLogs;
 
     public CompletableFuture<Void> saveAsync() {
@@ -128,8 +131,7 @@ public class EventLogPdfService {
 
             document.open();
 
-            String percorsoFile = resourceElog + "intestazione.png";
-            File file = new File(percorsoFile);
+            File file = new File(utilities.getIntestazionePng());
 
             if (file.exists()) {
                 Image png = Image.getInstance(file.getAbsolutePath());

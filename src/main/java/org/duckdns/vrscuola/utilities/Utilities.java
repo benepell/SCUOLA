@@ -17,6 +17,7 @@
  */
 
 package org.duckdns.vrscuola.utilities;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +29,9 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 @Component
 public class Utilities {
+    @Value("${school.resource.conf}")
+    private String conf;
+
     @SuppressWarnings("unused")
     public Instant getEpoch() {
         return Instant.now();
@@ -102,6 +106,10 @@ public class Utilities {
         svg.append("</svg>");
 
         return svg.toString();
+    }
+
+    public String getIntestazionePng(){
+        return conf + "/" + Constants.RESOURCES_INTEST_PNG;
     }
 
 
