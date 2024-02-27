@@ -78,6 +78,7 @@ public interface Constants {
     String QUESTIONS_TAG_MEDIA_START = "{media:";
     String QUESTIONS_TAG_MEDIA_END = "}";
     String QUESTIONS_PREFIX_REPORT = "report";
+    String QUESTIONS_PREF_UPPERCASE_REPORT = "REPORT";
     String QUESTIONS_CORRECT_RESPONSE = "Risposta corretta";
     String RESOURCES_INTEST_PNG = "intestazione.png";
     String CLAIMS_NAME = "name";

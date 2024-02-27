@@ -302,7 +302,7 @@ public class QuestionarioPdfService {
             score = "0 / 0";
         }
 
-        String filePathSummary = txtRes + Constants.QUESTIONS_PREFIX_REPORT + "/" +
+        String filePathSummary = txtRes + Constants.QUESTIONS_PREF_UPPERCASE_REPORT + "/" +
                 answerDTO.getAula().toLowerCase() + "/" +
                 answerDTO.getClasse().toLowerCase() + "/" +
                 answerDTO.getSezione().toLowerCase() + "/" +
@@ -315,7 +315,7 @@ public class QuestionarioPdfService {
             generatePdfQuestionario(domande, filePath, username, dataInizio, datefine, score);
             generateSummaryPdfQuestionario(filePathSummary);
         } catch (DocumentException | IOException e) {
-            throw new RuntimeException("Errore nella generazione del PDF", e);
+            throw new RuntimeException("Errore nella generazione del PDF" + e.getMessage(), e);
         }
     }
 }

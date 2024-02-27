@@ -37,7 +37,6 @@
 		<surefire.plugin.version>3.1.2</surefire.plugin.version>
 		<resources.plugin.version>3.3.1</resources.plugin.version>
 		<war.plugin.version>3.4.0</war.plugin.version>
-		<com.github.librepdf>2.0.0</com.github.librepdf>
 		<org.jfree.jfreechart>1.5.4</org.jfree.jfreechart>
 		<org.apache.pdfbox>3.0.1</org.apache.pdfbox>
 	</properties>
@@ -154,13 +153,6 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>${httpclient.version}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>com.github.librepdf</groupId>
-			<artifactId>openpdf</artifactId>
-			<version>${com.github.librepdf}</version> <!-- Controlla per eventuali nuove versioni -->
 		</dependency>
 
 		<dependency>
