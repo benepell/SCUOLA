@@ -174,7 +174,8 @@ public class QuestionService {
 
         // Aggiungi l'ultima domanda processata dopo l'uscita dal ciclo
         if (domanda != null) {
-            domande.add(new QuestionModel("0", domanda, media, new ArrayList<>(risposte), new ArrayList<>(risposteCorrette)));
+            String tmpMedia = media != null ? baselink + media : null;
+            domande.add(new QuestionModel("0", domanda, tmpMedia, new ArrayList<>(risposte), new ArrayList<>(risposteCorrette)));
         }
 
         // Mescola le domande in ordine casuale
