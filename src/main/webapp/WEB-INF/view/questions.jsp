@@ -9,7 +9,7 @@
 <body>
     <div class="content">
         <div class="container">
-            <h2>Questionario</h2>
+            <h2 style="text-align: center;">Questionario</h2>
             <form id="questionForm" method="post"
                   data-aula="${aula}"
                   data-classe="${classe}"
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </c:forEach>
-                <button type="submit" class="btn-custom">Invia Risposte</button>
+                <button type="submit" class="btn-custom" style="display: block; margin-left: auto; margin-right: auto;">Invia Risposte</button>
             </form>
         </div>
     </div>
