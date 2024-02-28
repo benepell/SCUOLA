@@ -307,7 +307,9 @@ public class QuestionarioPdfService {
                 answerDTO.getClasse().toLowerCase() + "/" +
                 answerDTO.getSezione().toLowerCase() + "/" +
                 answerDTO.getArgomento().toLowerCase() + "/" +
-                datetime2 + "_" + Constants.QUESTIONS_PREFIX_REPORT + ".pdf";
+                datetime2 + "_" +
+                (answerDTO.getText() != null ? answerDTO.getText().replaceAll(".txt","") : Constants.QUESTIONS_PREFIX_FILENAME.concat("_finale") ) +
+                ".pdf";
 
 
         // Genera il PDF
