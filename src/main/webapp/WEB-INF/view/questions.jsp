@@ -30,7 +30,7 @@
                             <c:forEach var="answer" items="${question.risposte}" varStatus="ansStatus">
                                 <div>
                                     <label>
-                                        <input type="checkbox" name="answer_${question.id}" value="${answer.id}">
+                                        <input type="checkbox" data-question-id="${question.id}" value="${answer.id}">
                                         ${ansStatus.index + 1}) ${answer.testo}
                                     </label>
                                     <!-- Opzionale: visualizza media per risposta se presente -->
@@ -53,23 +53,35 @@
         <p>Copyright © 2024 Tutti i diritti riservati.</p>
     </footer>
      <script>
-   document.addEventListener('DOMContentLoaded', function() {
-       const form = document.getElementById('questionForm');
+  document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('questionForm');
 
-       form.addEventListener('submit', function(event) {
-           event.preventDefault(); // Impedisce il normale invio del form
+      form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Impedisce il normale invio del form
 
-           // Prepara i dati del form per l'invio
-             const formData = {
-                         aula: form.dataset.aula,
-                         classe: form.dataset.classe,
-                         sezione: form.dataset.sezione,
-                         argomento: form.dataset.argomento,
-                         text: form.dataset.text,
-                         username: form.dataset.username,
-                         questionAnswers: []
-                     };
+          // Raccoglie le risposte selezionate
+          const selectedAnswers = {};
+          document.querySelectorAll('input[type="checkbox"]:checked').forEach(input => {
+              const questionId = input.getAttribute('data-question-id');
+              if (!selectedAnswers[questionId]) {
+                  selectedAnswers[questionId] = [];
+              }
+              selectedAnswers[questionId].push(input.value);
+          });
 
+          // Prepara il JSON da inviare
+          const formData = {
+              aula: form.dataset.aula,
+              classe: form.dataset.classe,
+              sezione: form.dataset.sezione,
+              argomento: form.dataset.argomento,
+              text: form.dataset.text,
+              username: form.dataset.username,
+              questionAnswers: Object.keys(selectedAnswers).map(questionId => ({
+                  questionId: questionId,
+                  answerIds: selectedAnswers[questionId]
+              }))
+          };
            // Invia i dati al server
            fetch('/answers', {
                method: 'POST',
