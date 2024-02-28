@@ -34,6 +34,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
@@ -175,6 +176,52 @@ public class QuestionController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(null);
         }
+    }
+
+    @GetMapping("/questions-view")
+    public ModelAndView getQuestionsForJsp(Authentication authentication,
+                                           @RequestParam(required = true) String aula,
+                                           @RequestParam(required = true) String classe,
+                                           @RequestParam(required = true) String sezione,
+                                           @RequestParam(required = true) String argomento,
+                                           @RequestParam(required = true) String username,
+                                           @RequestParam(required = false) String text) throws IOException {
+        ModelAndView modelAndView = new ModelAndView("questions"); // Indica il nome della tua pagina JSP (senza l'estensione .jsp)
+
+        // Aggiungi qui la logica per recuperare i dati che vuoi passare alla tua pagina JSP
+        String textName = Constants.QUESTIONS_PREFIX_FILENAME + "_" + (text != null ? text : "finale") + ".txt";
+
+        String fileDomande = txtRes + Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
+                aula + "/" +
+                classe + "/" +
+                sezione + "/" +
+                argomento + "/" + textName;
+
+        String baselink = linkRes + "/" +
+                Constants.QUESTIONS_PREFIX_FILES + "/" +
+                Constants.QUESTIONS_PREFIX_TEST + "/" +
+                Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
+                aula + "/" +
+                classe + "/" +
+                sezione + "/" +
+                argomento + "/";
+
+        List<QuestionModel> domandeConRisposta = questionarioService.leggiDomandeDaFile(fileDomande, baselink);
+
+        String hash = FileUtils.calculateHash(new File(fileDomande));
+        List<QuestionModel> tmpResponse = questionarioService.scriviDomandeInDb(domandeConRisposta, username, hash, textName);
+
+
+        // Passa i valori alla vista
+        modelAndView.addObject("aula", aula);
+        modelAndView.addObject("classe", classe);
+        modelAndView.addObject("sezione", sezione);
+        modelAndView.addObject("argomento", argomento);
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("text", textName);
+        modelAndView.addObject("questions", tmpResponse);
+
+        return modelAndView; // Restituisce il modello e il nome della vista
     }
 
 
