@@ -190,7 +190,7 @@ if($_SESSION['abilitato']) {
         <button id="closeButton">Chiudi</button>
     </div>
     <div id="elfinder"></div>
-    <img src="img/studenti.png" alt="studenti" style="width: 100%; height: 40%; position: absolute; z-index: -1;">
+    <img src="img/studenti.png" alt="studenti" style="padding-top: 80px;width: 100%;height: 30%;position: absolute;z-index: -1;">
     <?php
 } else {
     header("Location: index.php");
