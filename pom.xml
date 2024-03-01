@@ -1,241 +1,240 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.duckdns.vrscuola</groupId>
-	<artifactId>spring-boot-war-deployment-school</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+    <groupId>org.duckdns.vrscuola</groupId>
+    <artifactId>spring-boot-war-deployment-school</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-	<name>spring-boot-war-deployment-school</name>
-	<description>VR Scuola API</description>
+    <name>spring-boot-war-deployment-school</name>
+    <description>VR Scuola API</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
-		<relativePath/>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.3</version>
+        <relativePath/>
+    </parent>
 
-	<properties>
-		<java.version>17</java.version>
-		<mysql.version>8.0.33</mysql.version>
-		<json.version>20231013</json.version>
-		<validation.api.version>3.1.0-M1</validation.api.version>
-		<webflux.version>3.2.2</webflux.version>
-		<tomcat.version>10.1.18</tomcat.version>
-		<jstl.api.version>3.0.0</jstl.api.version>
-		<jstl.version>3.0.1</jstl.version>
-		<json.path.version>2.9.0</json.path.version>
-		<openpdf.version>1.3.39</openpdf.version>
-		<springdoc.version>2.3.0</springdoc.version>
-		<codec.version>1.16.0</codec.version>
-		<httpclient.version>4.5.14</httpclient.version>
-		<assertj.version>3.25.2</assertj.version>
-		<compiler.plugin.version>3.11.0</compiler.plugin.version>
-		<surefire.plugin.version>3.1.2</surefire.plugin.version>
-		<resources.plugin.version>3.3.1</resources.plugin.version>
-		<war.plugin.version>3.4.0</war.plugin.version>
-		<org.jfree.jfreechart>1.5.4</org.jfree.jfreechart>
-		<org.apache.pdfbox>3.0.1</org.apache.pdfbox>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+    <properties>
+        <java.version>17</java.version>
+        <mysql.version>8.0.33</mysql.version>
+        <json.version>20240205</json.version>
+        <validation.api.version>3.1.0-M1</validation.api.version>
+        <webflux.version>3.2.3</webflux.version>
+        <tomcat.version>10.1.19</tomcat.version>
+        <jstl.api.version>3.0.0</jstl.api.version>
+        <jstl.version>3.0.1</jstl.version>
+        <json.path.version>2.9.0</json.path.version>
+        <openpdf.version>2.0.0</openpdf.version>
+        <springdoc.version>2.3.0</springdoc.version>
+        <codec.version>1.16.0</codec.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <assertj.version>3.25.2</assertj.version>
+        <compiler.plugin.version>3.11.0</compiler.plugin.version>
+        <surefire.plugin.version>3.1.2</surefire.plugin.version>
+        <resources.plugin.version>3.3.1</resources.plugin.version>
+        <war.plugin.version>3.4.0</war.plugin.version>
+        <org.jfree.jfreechart>1.5.4</org.jfree.jfreechart>
+        <org.apache.pdfbox>3.0.1</org.apache.pdfbox>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
-		<!-- Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-
-		<!-- DATABASE JPA - Mysql -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
-
-		<!-- Dipendenze per MediaTypeFactory -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-json</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>${json.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jakarta.validation</groupId>
-			<artifactId>jakarta.validation-api</artifactId>
-			<version>${validation.api.version}</version> <!-- o la versione più recente disponibile -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-			<version>${webflux.version}</version>
-		</dependency>
-
-		<!-- JSTL -->
-		<!-- Dipendenza per il supporto JSP -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<version>${tomcat.version}</version>
-		</dependency>
-
-		<!-- Dipendenza JSTL -->
-		<dependency>
-			<groupId>jakarta.servlet.jsp.jstl</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-			<version>${jstl.api.version}</version>
-		</dependency>
-
-		<!-- Per l'implementazione runtime di JSTL -->
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>${jstl.version}</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-		<dependency>
-			<groupId>com.jayway.jsonpath</groupId>
-			<artifactId>json-path</artifactId>
-			<version>${json.path.version}</version>
-		</dependency>
-
-		<!-- Lib PDF -->
-		<!-- https://mvnrepository.com/artifact/com.github.librepdf/openpdf -->
-		<dependency>
-			<groupId>com.github.librepdf</groupId>
-			<artifactId>openpdf</artifactId>
-			<version>${openpdf.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${codec.version}</version> <!-- Verifica se questa è l'ultima versione -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${httpclient.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>${org.jfree.jfreechart}</version> <!-- Verifica per una versione più aggiornata -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox</artifactId>
-			<version>${org.apache.pdfbox}</version>
-		</dependency>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
 
+        <!-- DATABASE JPA - Mysql -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-		<!-- TEST -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>${assertj.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
 
-	</dependencies>
+        <!-- Dipendenze per MediaTypeFactory -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
+        </dependency>
 
-	<build>
-		<finalName>ROOT</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compiler.plugin.version}</version>
-			</plugin>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${validation.api.version}</version> <!-- o la versione più recente disponibile -->
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${surefire.plugin.version}</version>
-			</plugin>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>${webflux.version}</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${resources.plugin.version}</version>
-			</plugin>
+        <!-- JSTL -->
+        <!-- Dipendenza per il supporto JSP -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${war.plugin.version}</version>
-			</plugin>
-		</plugins>
+        <!-- Dipendenza JSTL -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>${jstl.api.version}</version>
+        </dependency>
 
-	</build>
+        <!-- Per l'implementazione runtime di JSTL -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json.path.version}</version>
+        </dependency>
+
+        <!-- Lib PDF -->
+        <!-- https://mvnrepository.com/artifact/com.github.librepdf/openpdf -->
+        <dependency>
+            <groupId>com.github.librepdf</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>${openpdf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${codec.version}</version> <!-- Verifica se questa è l'ultima versione -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>${org.jfree.jfreechart}</version> <!-- Verifica per una versione più aggiornata -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>${org.apache.pdfbox}</version>
+        </dependency>
+
+
+        <!-- TEST -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>ROOT</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${resources.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war.plugin.version}</version>
+            </plugin>
+        </plugins>
+
+    </build>
 
 
 </project>
