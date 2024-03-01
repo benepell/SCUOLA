@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,7 +52,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     Utilities utilities;
 
     @Override
-    public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom, String label){
+    public void addInit(Utilities utilities, String macAddress, String note, String paramCode, String classroom, String label) {
         VRDeviceInitEntitie VRDeviceInitEntitie = new VRDeviceInitEntitie();
 
         Integer nextId;
@@ -69,7 +69,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
         VRDeviceInitEntitie.setMacAddress(macAddress);
         VRDeviceInitEntitie.setInitDate(utilities.getEpoch());
-       // String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
+        // String label = String.valueOf(iRepository.getCount() > 0 ? iRepository.getNextAvailableId(): 1);
         VRDeviceInitEntitie.setLabel(label);
         VRDeviceInitEntitie.setNote(note);
         VRDeviceInitEntitie.setCode(paramCode);
@@ -83,8 +83,8 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     }
 
     @Override
-    public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom){
-        VRDeviceInitRepository.updateByMacAddress(macAddress,oldMacAddress,note, paramCode, classroom);
+    public void updateInit(Utilities utilities, String macAddress, String oldMacAddress, String note, String paramCode, String classroom) {
+        VRDeviceInitRepository.updateByMacAddress(macAddress, oldMacAddress, note, paramCode, classroom);
     }
 
     @Override
@@ -98,9 +98,9 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
 
     @Override
     public void updateBatteryLevel(String macAddress, int batteryLevel) {
-        try{
+        try {
             iRepository.updateBatteryLevel(macAddress, batteryLevel);
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.error("Error updating battery level for device with mac address: " + macAddress + " and battery level: " + batteryLevel);
         }
 
@@ -116,6 +116,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
         Instant eraOnline = utilities.getEpoch();
         iRepository.updateEraOnline(macAddress, eraOnline);
     }
+
     @Override
     public List<Boolean> isOnline(String macAddresses) {
         String[] addresses = macAddresses.split(",");

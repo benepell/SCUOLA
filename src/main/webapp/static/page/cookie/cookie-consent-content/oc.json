@@ -11,21 +11,29 @@
   "categories": {
     "necessary": {
       "title": "Necessaris",
-      "description": ["Requerits pel foncionament del site"]
+      "description": [
+        "Requerits pel foncionament del site"
+      ]
     },
     "statistics": {
       "title": "Estatisticas",
-      "description": ["Per susvelhar l'utilizacion del site e melhorar l'experiéncia dels utilizaires"]
+      "description": [
+        "Per susvelhar l'utilizacion del site e melhorar l'experiéncia dels utilizaires"
+      ]
     },
     "marketing": {
       "title": "Marketing",
-      "description": ["Estudi de las accions de marketing"]
+      "description": [
+        "Estudi de las accions de marketing"
+      ]
     },
     "personalization": {
       "title": "Personalizacion",
-      "description": ["Gardar las preferéncias de visitas precedentas",
+      "description": [
+        "Gardar las preferéncias de visitas precedentas",
         "Reculhir los comentaris dels utilizaire per melhorar nòstre site web",
-        "Enregistrar vòstres interesses per vos fornir de contenguts e publicitats personalizats<"]
+        "Enregistrar vòstres interesses per vos fornir de contenguts e publicitats personalizats<"
+      ]
     }
   }
 }

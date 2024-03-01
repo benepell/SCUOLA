@@ -33,6 +33,7 @@ public class UtilServiceImpl implements UtilService {
     @Value("${school.code.activation}")
     private String isCodeActivation;
     private static final Logger Log = LogManager.getLogger(UtilServiceImpl.class.getName());
+
     @SuppressWarnings("rawtypes")
     @Override
     public ResponseEntity responseMsgKo(ResponseEntity.BodyBuilder bodyBuilder, String msg) {
@@ -40,11 +41,13 @@ public class UtilServiceImpl implements UtilService {
         return bodyBuilder
                 .body(new MessageResponse(message));
     }
+
     @SuppressWarnings("rawtypes")
     @Override
     public ResponseEntity responseMsgOk(ResponseEntity.BodyBuilder bodyBuilder, String message) {
         return bodyBuilder.body(new MessageResponse(message));
     }
+
     @Override
     public boolean isTablet(HttpServletRequest request) {
         String userAgent = request != null && request.getHeader("User-Agent") != null
@@ -54,6 +57,7 @@ public class UtilServiceImpl implements UtilService {
                 userAgent.toLowerCase().contains("android") || userAgent.toLowerCase().contains("tablet");
 
     }
+
     @Override
     public boolean isCodeActivation() {
         return isCodeActivation != null ? Boolean.getBoolean(isCodeActivation) : false;

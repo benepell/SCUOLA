@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserFileRepository extends JpaRepository<UserFileEntitie, Long> {
     Optional<UserFileEntitie> findByUsernameAndFileHash(String username, String fileHash);
+
     Optional<UserFileEntitie> findFirstByUsernameOrderByIdDesc(String username);
 
 }

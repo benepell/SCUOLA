@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,26 +49,27 @@ public interface VRDeviceDetailConnectivityRepository extends JpaRepository<VRDe
 
     @Transactional
     default void insertStartDate(String username) {
-        if(username == null) return;
+        if (username == null) return;
         VRDeviceDetailConnectivityEntitie entity = new VRDeviceDetailConnectivityEntitie();
         entity.setUsername(username);
         entity.setStartDate(Instant.now());
         save(entity);
     }
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE detailconnect d SET d.startDate = :timestamp WHERE d.username = :username")
-    void updateStartDate(@Param("timestamp") Instant timestamp ,@Param("username") String username);
+    void updateStartDate(@Param("timestamp") Instant timestamp, @Param("username") String username);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE detailconnect d SET d.endDate = :timestamp WHERE d.username = :username")
-    void updateEndDate(@Param("timestamp") Instant timestamp,@Param("username") String username);
+    void updateEndDate(@Param("timestamp") Instant timestamp, @Param("username") String username);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE detailconnect d SET d.minutes = :minutes WHERE d.username = :username")
-    void updateMinutes(@Param("minutes") Long minutes,@Param("username") String username);
+    void updateMinutes(@Param("minutes") Long minutes, @Param("username") String username);
 
     @Transactional
     @Modifying

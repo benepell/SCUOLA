@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,19 +37,16 @@ import java.util.Locale;
 @EnableWebMvc
 @ComponentScan(basePackages = "org.duckdns.vrscuola")
 
-public class WebApplicationContextConfig  implements WebMvcConfigurer
-{
+public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
-    {
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
 
 
     @Bean
-    public InternalResourceViewResolver getInternalResourceViewResolver()
-    {
+    public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setViewClass(JstlView.class);
 
@@ -65,8 +62,7 @@ public class WebApplicationContextConfig  implements WebMvcConfigurer
     }
 
     @Bean
-    public MessageSource messageSource()
-    {
+    public MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
         resource.setBasename("messages");
 
@@ -74,8 +70,7 @@ public class WebApplicationContextConfig  implements WebMvcConfigurer
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry)
-    {
+    public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
 
@@ -83,8 +78,7 @@ public class WebApplicationContextConfig  implements WebMvcConfigurer
     }
 
     @Bean
-    public LocaleResolver localeResolver()
-    {
+    public LocaleResolver localeResolver() {
         /*
          * SessionLocaleResolver resolver = new SessionLocaleResolver();
          * resolver.setDefaultLocale(new Locale("it")); return resolver;

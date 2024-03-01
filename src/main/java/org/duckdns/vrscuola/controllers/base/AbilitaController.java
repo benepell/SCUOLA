@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -75,7 +75,7 @@ public class AbilitaController {
 
         session.setAttribute("isTablet", utilService.isTablet(request));
 
-        session.setAttribute("main_username", kService.getTokenAttribute(authentication,Constants.CLAIMS_PREF_USERNAME));
+        session.setAttribute("main_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
 
         return "abilita-classe";
     }
@@ -92,7 +92,7 @@ public class AbilitaController {
         model.addAttribute("titolo", "Abilita Sezione");
         model.addAttribute("content", "/WEB-INF/view/abilita-sezione.jsp");
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
 
         if (classroom.isEmpty()) {
             return "redirect:/abilita-classe";
@@ -112,7 +112,7 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
 
         String[] alu = (String[]) session.getAttribute("alunni");
         String[] vis = manageService.allDevices(classroom);
@@ -121,7 +121,7 @@ public class AbilitaController {
         model.addAttribute("username", users);
 
         // elimina visori se il tempo trascorso è superiore al max definito
-        if (Constants.ENABLED_REMOVE_RECORDS){
+        if (Constants.ENABLED_REMOVE_RECORDS) {
             manageService.removeRecordsOlder();
         }
 

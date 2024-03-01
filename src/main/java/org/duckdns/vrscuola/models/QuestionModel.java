@@ -10,7 +10,7 @@ public class QuestionModel {
     private List<RispostaModel> risposte; // Modificato per utilizzare RispostaModel
     private List<RispostaModel> corrette; // Modificato per utilizzare RispostaModel
 
-    public QuestionModel(String id, String domanda, String media ,List<RispostaModel> risposte, List<RispostaModel> corrette) {
+    public QuestionModel(String id, String domanda, String media, List<RispostaModel> risposte, List<RispostaModel> corrette) {
         this.id = id;
         this.domanda = domanda;
         this.media = media;

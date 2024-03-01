@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -77,7 +77,7 @@ public class SetupVisoreController {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ?  session.getAttribute("classroomSelected").toString() : "";
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
 
         if (classroom.isEmpty()) {
             return "redirect:/abilita-classe";
@@ -126,13 +126,13 @@ public class SetupVisoreController {
                 macsString[macs.indexOf(p)] = p.getMacAddress();
                 initService.addInit(utilities, p.getMacAddress(), note,
                         utilService.isCodeActivation() ? p.getCode() : Constants.NO_CODE,
-                        p.getClassroom(),p.getLabel());
+                        p.getClassroom(), p.getLabel());
             }
 
         } else if (readOculusServices.existUpdateFile()) {
             List<InitParamModel> paramModels = readOculusServices.changeOculus(repository);
             for (InitParamModel p : paramModels) {
-                if(utilService.isCodeActivation()){
+                if (utilService.isCodeActivation()) {
                     boolean valid = initService.valid(p.getOldMacAddress(), p.getCode());
 
                     if (valid) {

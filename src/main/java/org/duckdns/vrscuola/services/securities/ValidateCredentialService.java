@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,14 +33,13 @@ public class ValidateCredentialService {
     @Value("${school.setup.key}")
     private String key;
 
-    public String generateCredentials(String resource)
-    {
+    public String generateCredentials(String resource) {
         int multiply = 1;
         for (char c : (key + resource).toCharArray()) {
             multiply *= (int) c;
         }
         String result = String.valueOf(multiply);
-        return  key.charAt(0) + result;
+        return key.charAt(0) + result;
     }
 
     public String generateVisorCode(String resource) throws Exception {
@@ -57,7 +56,6 @@ public class ValidateCredentialService {
         // Restituisce il codice visore
         return key.charAt(0) + encodedResult;
     }
-
 
 
 }

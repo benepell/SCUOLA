@@ -11,21 +11,29 @@
   "categories": {
     "necessary": {
       "title": "Notwendig",
-      "description": ["Zum Betrieb der Website erforderlich"]
+      "description": [
+        "Zum Betrieb der Website erforderlich"
+      ]
     },
     "statistics": {
       "title": "Statistik",
-      "description": ["Beobachtung der Website-Nutzung und Optimierung der Benutzererfahrung"]
+      "description": [
+        "Beobachtung der Website-Nutzung und Optimierung der Benutzererfahrung"
+      ]
     },
     "marketing": {
       "title": "Marketing",
-      "description": ["Bewertung von Marketingaktionen"]
+      "description": [
+        "Bewertung von Marketingaktionen"
+      ]
     },
     "personalization": {
       "title": "Personalisierung",
-      "description": ["Speicherung Ihrer Präferenzen aus früheren Besuchen",
+      "description": [
+        "Speicherung Ihrer Präferenzen aus früheren Besuchen",
         "Sammeln von Benutzer-Feedback zur Verbesserung unserer Website",
-        "Erfassung Ihrer Interessen, um maßgeschneiderte Inhalte und Angebote anzubieten"]
+        "Erfassung Ihrer Interessen, um maßgeschneiderte Inhalte und Angebote anzubieten"
+      ]
     }
   }
 }

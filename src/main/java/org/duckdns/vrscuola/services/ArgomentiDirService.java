@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,29 +28,29 @@ import java.util.List;
 @Service
 public class ArgomentiDirService {
     public List<String> getArgomentiAll(String aula, String classe, String sezione) {
-            String basePath = Constants.PATH_RESOURCE_DIR;
-            List<String> argomenti = new ArrayList<>();
-            File argomentiDirectory = new File(basePath, "ARGOMENTI");
-            if (argomentiDirectory != null && argomentiDirectory.isDirectory()) {
-                for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
-                    argomenti.add(argomentoDirectory.getName());
-                }
+        String basePath = Constants.PATH_RESOURCE_DIR;
+        List<String> argomenti = new ArrayList<>();
+        File argomentiDirectory = new File(basePath, "ARGOMENTI");
+        if (argomentiDirectory != null && argomentiDirectory.isDirectory()) {
+            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
+                argomenti.add(argomentoDirectory.getName());
             }
-            if (argomentiDirectory.exists() && argomentiDirectory.isDirectory()) {
-                File aulaDirectory = findDirectory(argomentiDirectory, aula.toLowerCase());
-                if (aulaDirectory != null) {
-                    File classeDirectory = findDirectory(aulaDirectory, classe.toLowerCase());
-                    if (classeDirectory != null) {
-                        File sezioneDirectory = findDirectory(classeDirectory, sezione.toLowerCase());
-                        if (sezioneDirectory != null) {
-                            argomenti.addAll(getArgomentiFromDirectories(sezioneDirectory)) ;
-                            return argomenti;
-                        }
+        }
+        if (argomentiDirectory.exists() && argomentiDirectory.isDirectory()) {
+            File aulaDirectory = findDirectory(argomentiDirectory, aula.toLowerCase());
+            if (aulaDirectory != null) {
+                File classeDirectory = findDirectory(aulaDirectory, classe.toLowerCase());
+                if (classeDirectory != null) {
+                    File sezioneDirectory = findDirectory(classeDirectory, sezione.toLowerCase());
+                    if (sezioneDirectory != null) {
+                        argomenti.addAll(getArgomentiFromDirectories(sezioneDirectory));
+                        return argomenti;
                     }
                 }
             }
+        }
 
-            return argomenti;
+        return argomenti;
     }
 
     private File findDirectory(File directory, String name) {

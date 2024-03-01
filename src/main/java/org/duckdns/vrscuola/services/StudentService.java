@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,7 +52,7 @@ public class StudentService {
     public void init(List<String> allievi, List<String> visori, String classroom) {
         this.allievi = allievi;
 
-        if (Constants.ENABLED_ONLINE){
+        if (Constants.ENABLED_ONLINE) {
             List<String> visoriOnline = initService.strOnline(visori, classroom);
             this.visori = visoriOnline;
         } else {
@@ -119,7 +119,7 @@ public class StudentService {
     }
 
     public void cleanVisori(HttpSession session) {
-        if (session != null && session.getAttribute("visoreAllievo") != null){
+        if (session != null && session.getAttribute("visoreAllievo") != null) {
             session.removeAttribute("visoreAllievo");
         }
     }
@@ -130,29 +130,29 @@ public class StudentService {
     }
 
     public String dbVisori(String username) {
-            return iRepository.findLabelByUsername(username,classroom);
+        return iRepository.findLabelByUsername(username, classroom);
     }
 
     public int deleteUserNotClass(String username) {
-        if(username != null) {
-           String [] cs = username.split("-");
-           if(cs.length > 1) {
-               String classe = cs[0];
-               String sezione = cs[1];
-               String str = classe + "-" + sezione + "-" + "%";
-               return cRepository.deleteByUsernameNotLike(str);
-           }
+        if (username != null) {
+            String[] cs = username.split("-");
+            if (cs.length > 1) {
+                String classe = cs[0];
+                String sezione = cs[1];
+                String str = classe + "-" + sezione + "-" + "%";
+                return cRepository.deleteByUsernameNotLike(str);
+            }
         }
         return 0;
     }
 
-    public void closeAllVisor(String[] users, VRDeviceManageDetailService detailService, HttpSession session){
+    public void closeAllVisor(String[] users, VRDeviceManageDetailService detailService, HttpSession session) {
 
-        if (users == null || users.length == 0){
+        if (users == null || users.length == 0) {
             return;
         }
 
-        for(String user : users){
+        for (String user : users) {
             // aggiorna orario di fine utilizzo e monteore in dettaglio connessione
             detailService.endTime(user);
         }

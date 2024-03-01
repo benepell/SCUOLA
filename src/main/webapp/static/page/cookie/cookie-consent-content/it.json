@@ -1,31 +1,39 @@
 {
-    "title": "Impostazioni privacy",
-    "body": "Utilizziamo cookie e tecnologie simili che sono necessarie per il funzionamento del sito Web. I cookie aggiuntivi vengono utilizzati solo con il tuo consenso. sono effettuati per fornirti una migliore esperienza utente sul Sito. Sei libero di prestare, negare o revocare il tuo consenso in qualsiasi momento utilizzando il link \"impostazioni cookie\" presente in fondo a ciascuna pagina. al nostro utilizzo dei cookie facendo clic su \"Accetto\". Per ulteriori informazioni su quali informazioni vengono raccolte e su come vengono condivise con i nostri partner, leggi la nostra --privacy-policy--.",
-    "privacyPolicy": "Informativa sulla protezione dei dati",
-    "legalNotice": "Avviso legale",
-    "mySettings": "Le mie impostazioni",
-    "buttonNotAgree": "Non sono d'accordo",
-    "buttonAgree": "Accetto",
-    "buttonSaveSelection": "Salva selezione",
-    "buttonAgreeAll": "Accetto tutto",
-    "categories": {
-      "necessary": {
-        "title": "Necessario",
-        "description": ["Necessario per accedere al sito web"]
-      },
-      "statistics": {
-        "title": "Statistiche",
-        "description": ["Monitoraggio dell'utilizzo del sito Web e ottimizzazione dell'esperienza dell'utente"]
-      },
-      "marketing": {
-        "title": "Marketing",
-        "description": ["Valutazione delle azioni di marketing"]
-      },
-      "personalization": {
-        "title": "Personalizzazione",
-        "description": ["Memorizzazione delle tue preferenze da visite precedenti",
-          "Raccogliere il feedback degli utenti per migliorare il nostro sito Web",
-          "Registrazione dei tuoi interessi al fine di fornire contenuti e offerte personalizzate"]
-      }
+  "title": "Impostazioni privacy",
+  "body": "Utilizziamo cookie e tecnologie simili che sono necessarie per il funzionamento del sito Web. I cookie aggiuntivi vengono utilizzati solo con il tuo consenso. sono effettuati per fornirti una migliore esperienza utente sul Sito. Sei libero di prestare, negare o revocare il tuo consenso in qualsiasi momento utilizzando il link \"impostazioni cookie\" presente in fondo a ciascuna pagina. al nostro utilizzo dei cookie facendo clic su \"Accetto\". Per ulteriori informazioni su quali informazioni vengono raccolte e su come vengono condivise con i nostri partner, leggi la nostra --privacy-policy--.",
+  "privacyPolicy": "Informativa sulla protezione dei dati",
+  "legalNotice": "Avviso legale",
+  "mySettings": "Le mie impostazioni",
+  "buttonNotAgree": "Non sono d'accordo",
+  "buttonAgree": "Accetto",
+  "buttonSaveSelection": "Salva selezione",
+  "buttonAgreeAll": "Accetto tutto",
+  "categories": {
+    "necessary": {
+      "title": "Necessario",
+      "description": [
+        "Necessario per accedere al sito web"
+      ]
+    },
+    "statistics": {
+      "title": "Statistiche",
+      "description": [
+        "Monitoraggio dell'utilizzo del sito Web e ottimizzazione dell'esperienza dell'utente"
+      ]
+    },
+    "marketing": {
+      "title": "Marketing",
+      "description": [
+        "Valutazione delle azioni di marketing"
+      ]
+    },
+    "personalization": {
+      "title": "Personalizzazione",
+      "description": [
+        "Memorizzazione delle tue preferenze da visite precedenti",
+        "Raccogliere il feedback degli utenti per migliorare il nostro sito Web",
+        "Registrazione dei tuoi interessi al fine di fornire contenuti e offerte personalizzate"
+      ]
     }
   }
+}

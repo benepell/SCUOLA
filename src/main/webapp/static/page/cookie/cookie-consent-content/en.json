@@ -11,21 +11,29 @@
   "categories": {
     "necessary": {
       "title": "Necessary",
-      "description": ["Required to run the website"]
+      "description": [
+        "Required to run the website"
+      ]
     },
     "statistics": {
       "title": "Statistics",
-      "description": ["Monitoring website usage and optimizing the user experience"]
+      "description": [
+        "Monitoring website usage and optimizing the user experience"
+      ]
     },
     "marketing": {
       "title": "Marketing",
-      "description": ["Evaluation of marketing actions"]
+      "description": [
+        "Evaluation of marketing actions"
+      ]
     },
     "personalization": {
       "title": "Personalization",
-      "description": ["Storage of your preferences from previous visits",
+      "description": [
+        "Storage of your preferences from previous visits",
         "Collecting user feedback to improve our website",
-        "Recording of your interests in order to provide customised content and offers"]
+        "Recording of your interests in order to provide customised content and offers"
+      ]
     }
   }
 }

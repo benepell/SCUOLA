@@ -3,6 +3,7 @@ package org.duckdns.vrscuola.entities.questions;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.Instant;
 
 @Entity

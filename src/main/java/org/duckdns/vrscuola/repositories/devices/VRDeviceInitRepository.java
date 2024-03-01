@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,12 +36,12 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     Boolean existsByMacAddress(@Param("mac") String mac);
 
     @Query(value = "SELECT label FROM init i WHERE i.macAddress =:mac and FUNCTION('abs', i.batteryLevel) > :batteryLevel")
-    String labelByMacAddress(@Param("mac") String mac,@Param("batteryLevel") int batteryLevel);
+    String labelByMacAddress(@Param("mac") String mac, @Param("batteryLevel") int batteryLevel);
 
     @Query(value = "SELECT code FROM init i WHERE i.macAddress =:mac")
     String codeByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > :batteryLevel and i.classroom = :classroom" )
+    @Query(value = "SELECT label FROM init i WHERE FUNCTION('abs', i.batteryLevel) > :batteryLevel and i.classroom = :classroom")
     List<String> labels(@Param("batteryLevel") int batteryLevel, @Param("classroom") String classroom);
 
     @Query(value = "SELECT label FROM init i WHERE i.classroom =:classroom")
@@ -52,6 +52,7 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT i.batteryLevel FROM init i WHERE i.classroom =:classroom")
     List<String> battSetup(String classroom);
+
     @Query(value = "SELECT i.eraOnline FROM init i WHERE i.macAddress  =:mac")
     Instant findEraOnlineByMacAddress(@Param("mac") String mac);
 
@@ -60,6 +61,7 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT MAX(id) + 1 FROM init i")
     int getNextAvailableId();
+
     @Query(value = "SELECT i.label "
             + "FROM init i "
             + "JOIN connect c ON i.macAddress = c.macAddress "
@@ -74,19 +76,20 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
 
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")
     String findMac(@Param("label") String label);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note, i.code = :code, i.classroom = :classroom WHERE  i.macAddress = :oldmac  ")
-    void updateByMacAddress(@Param("oldmac") String oldmac,@Param("newmac") String newmac,@Param("note") String note, @Param("code") String code, @Param("classroom") String classroom );
+    void updateByMacAddress(@Param("oldmac") String oldmac, @Param("newmac") String newmac, @Param("note") String note, @Param("code") String code, @Param("classroom") String classroom);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.batteryLevel = :batteryLevel WHERE  i.macAddress = :mac  ")
-    void updateBatteryLevel(@Param("mac") String mac,@Param("batteryLevel") int batteryLevel);
+    void updateBatteryLevel(@Param("mac") String mac, @Param("batteryLevel") int batteryLevel);
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.eraOnline = :eraOnline WHERE  i.macAddress = :mac  ")
-    void updateEraOnline(@Param("mac") String mac,@Param("eraOnline") Instant eraOnline);
+    void updateEraOnline(@Param("mac") String mac, @Param("eraOnline") Instant eraOnline);
 }
 

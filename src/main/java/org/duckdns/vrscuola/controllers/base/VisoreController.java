@@ -2,13 +2,13 @@
  * Copyright (c) 2023, Benedetto Pellerito
  * Email: benedettopellerito@gmail.com
  * GitHub: https://github.com/benepell
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,7 +54,7 @@ public class VisoreController {
     public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
         Map<String, String> response = new HashMap<>();
 
-        if (Constants.ENABLED_ONLINE){
+        if (Constants.ENABLED_ONLINE) {
             String classroom = session.getAttribute("classroomSelected").toString();
             String[] alu = (String[]) session.getAttribute("alunni");
             String[] vis = manageService.allDevices(classroom);
@@ -77,7 +77,7 @@ public class VisoreController {
                 response.put("primo_visore", "0");
             }
 
-        }else {
+        } else {
             studentService.setVisore(allievo, session);
             Optional<String> res = studentService.getVisore(allievo, session);
 
@@ -111,7 +111,7 @@ public class VisoreController {
         Optional<String> res = studentService.getVisore(allievo, session);
         String visore = res.isPresent() ? res.get() : "0";
 
-        if(visore.equals("0")) {
+        if (visore.equals("0")) {
             String dbVisore = studentService.dbVisori(username);
             if (dbVisore != null) {
                 visore = dbVisore;
@@ -144,12 +144,12 @@ public class VisoreController {
             // stampa tutti gli utenti che hanno un visore per chiudere la sessione
             vPdfService.save();
 
-        } catch (DocumentException | IOException  e) {
+        } catch (DocumentException | IOException e) {
             System.out.println(e.getMessage());
         }
 
         if (username != null) {
-            String [] users = username.split(",");
+            String[] users = username.split(",");
             studentService.closeAllVisor(users, manageDetailService, session);
         }
 
