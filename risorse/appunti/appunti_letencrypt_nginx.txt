@@ -9,3 +9,13 @@ certbot certonly --standalone --preferred-challenges http -d "vrscuola-auth.duck
 
 sudo apt install python3-certbot-nginx
 sudo certbot --nginx -d vrscuola-res.duckdns.org  --non-interactive --keep-until-expiring
+
+
+------
+#!/bin/bash
+sudo certbot --nginx -d vrscuola.duckdns.org -d vrscuola-auth.duckdns.org -d vrscuola-res.duckdns.org --non-interactive --keep-until-expiring --expand
+
+in crontab
+
+0 12 * * * /opt/script/check_certs.sh
+
