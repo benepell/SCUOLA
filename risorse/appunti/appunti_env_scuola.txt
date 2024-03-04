@@ -1,0 +1,27 @@
+nano /etc/apache2/sites-available/000-default.conf
+aggiungere 
+
+ SetEnv VRSCUOLA_KEYCLOAK_URL "https://vrscuola-auth.duckdns.org"
+ SetEnv VRSCUOLA_KEYCLOAK_SECRET "MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A"
+ SetEnv VRSCUOLA_RESOURCES_URL "https://vrscuola-res.duckdns.org"
+
+systemctl restart apache2
+
+--------
+
+tomcat10
+
+
+nano /etc/systemd/system/multi-user.target.wants/tomcat10.service
+
+aggiungere 
+
+Environment="VRSCUOLA_BASE_URL=https://vrscuola.duckdns.org"
+Environment="VRSCUOLA_KEYCLOAK_URL=https://vrscuola-auth.duckdns.org"
+Environment="VRSCUOLA_KEYCLOAK_SECRET=MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A"
+Environment="VRSCUOLA_RESOURCES_URL=https://vrscuola-res.duckdns.org"
+
+
+systemctl daemon-reload
+systemctl restart tomcat10
+

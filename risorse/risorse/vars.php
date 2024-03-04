@@ -1,10 +1,10 @@
 <?php
 
     define('CLIENT_ID', 'client');
-    define('CLIENT_SECRET', 'MizAkO7AcNiDEgsGwXIsCHWdhAlNMc2A');
-    define('REDIRECT_URI', 'https://vrscuola.duckdns.org:8443/res.php');
-    define('URL_AUTHORIZE', 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/auth');
-    define('URL_ACCESS_TOKEN', 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/token');
-    define('URL_RESOURCE_OWNER_DETAILS', 'https://vrscuola-auth.duckdns.org:9443/realms/scuola/protocol/openid-connect/userinfo');
+    define('CLIENT_SECRET', getenv('VRSCUOLA_KEYCLOAK_SECRET'));
+    define('REDIRECT_URI', getenv('VRSCUOLA_RESOURCES_URL') . '/res.php');
+    define('URL_AUTHORIZE', getenv('VRSCUOLA_KEYCLOAK_URL') . '/realms/scuola/protocol/openid-connect/auth');
+    define('URL_ACCESS_TOKEN', getenv('VRSCUOLA_KEYCLOAK_URL') . '/realms/scuola/protocol/openid-connect/token');
+    define('URL_RESOURCE_OWNER_DETAILS', getenv('VRSCUOLA_KEYCLOAK_URL') . '/realms/scuola/protocol/openid-connect/userinfo>
 
 ?>
