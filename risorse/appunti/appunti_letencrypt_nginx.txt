@@ -4,5 +4,8 @@ sudo apt install certbot python3-certbot-apache -y
 
 certbot certonly --standalone --preferred-challenges http -d "vrscuola-res.duckdns.org" --dry-run;
 
+certbot certonly --standalone --preferred-challenges http -d "vrscuola-auth.duckdns.org";
+
+
 sudo apt install python3-certbot-nginx
 sudo certbot --nginx -d vrscuola-res.duckdns.org  --non-interactive --keep-until-expiring

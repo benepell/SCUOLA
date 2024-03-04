@@ -3,8 +3,8 @@ server {
     listen 443 ssl;
     server_name vrscuola-auth.duckdns.org;
 
-    ssl_certificate /etc/certs/vrscuola-auth.duckdns.org/fullchain.pem;
-    ssl_certificate_key /etc/certs/vrscuola-auth.duckdns.org/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/vrscuola-auth.duckdns.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vrscuola-auth.duckdns.org/privkey.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
@@ -32,8 +32,8 @@ server {
     listen 443 ssl;
     server_name vrscuola.duckdns.org;
 
-    ssl_certificate /etc/certs/vrscuola.duckdns.org/fullchain.pem;
-    ssl_certificate_key /etc/certs/vrscuola.duckdns.org/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/vrscuola.duckdns.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vrscuola.duckdns.org/privkey.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
@@ -61,8 +61,8 @@ server {
     listen 443 ssl;
     server_name vrscuola-res.duckdns.org;
 
-    ssl_certificate /etc/certs/vrscuola-res.duckdns.org/fullchain.pem;
-    ssl_certificate_key /etc/certs/vrscuola-res.duckdns.org/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/vrscuola-res.duckdns.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vrscuola-res.duckdns.org/privkey.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
