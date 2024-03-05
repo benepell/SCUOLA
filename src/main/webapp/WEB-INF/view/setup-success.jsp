@@ -7,15 +7,8 @@
 <div class="card-container">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Codice di Registrazione Valido</h5>
       <div class="form-group">
         Configurazione salvata con successo
-      </div>
-      <div class="form-group">
-        Url SCUOLA: ${config.baseScuola}
-      </div>
-      <div class="form-group">
-        CODICE DI REGISTRAZIONE SCUOLA: ${config.codiceDiRegistrazioneScuola}
       </div>
     </div>
   </div>

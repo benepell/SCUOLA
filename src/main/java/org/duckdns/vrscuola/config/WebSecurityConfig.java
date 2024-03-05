@@ -115,14 +115,15 @@ public class WebSecurityConfig {
                         .requestMatchers("/test", "/test1", "/abilita-classe", "/abilita-sezione", "/abilita-visore",
                                 "/setup-visore", "/scan-visore", "/visore-selection", "/visore-remove", "/allievo-visore",
                                 "/classroom", "/classe", "/sezione", "/checkRes", "/chiudi-visore", "/diagnosi",
-                                "/generate-keycloak-credentials/**", "/setup", "/setup-state", "/setup/**", "/upload/**"
+                                "/generate-keycloak-credentials/**", "/upload/**"
                         ).access(roleAccessManager("admins"))
 
                         .requestMatchers("/**", "/oauth2/**", "/sso/login", "/error", "/errore", "/health", "/hello", "/config", "/update-env",
                                 "/initialize-devices/**", "/connectivity-devices/**", "/keycloak-users/**", "/basesetup",
                                 "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
                                 "/api-docs/**", "/v3/api-docs", "/swagger-resources/**", "/webjars/**", "/resources/**",
-                                "/questions/**", "/answers/**", "/list-questions/**", "/list-media/**", "/questions-view/**").permitAll()
+                                "/questions/**", "/answers/**", "/list-questions/**", "/list-media/**", "/questions-view/**",
+                                "/setup", "/setup-state", "/setup/**").permitAll()
 
                         .anyRequest().authenticated()
                 )

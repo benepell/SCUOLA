@@ -43,11 +43,10 @@ public class SetupController {
     @Autowired
     private ValidateCredentialService vService;
 
-    @RequestMapping(value = "setup", method = RequestMethod.GET, headers = "Host=localhost:5555")
+    @GetMapping(value = "setup")
     public String getIndex(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
-
         return "setup";
     }
 
@@ -61,19 +60,14 @@ public class SetupController {
     public String updateConfig(@ModelAttribute("setupModel") SetupModel setupModel, Model model) {
 
         String cod = setupModel.getCodiceDiRegistrazioneScuola();
-        String c = vService.generateCredentials(setupModel.getBaseScuola());
+       // String c = vService.generateCredentials(setupModel.getBaseScuola());
 
-        System.out.println(c + " " + cod);
+       // System.out.println(c + " " + cod);
 
+        // scrive il file di testo
+        cService.writeConfig(setupModel);
 
-        if (setupModel.getCodiceDiRegistrazioneScuola().equals(vService.generateCredentials(setupModel.getBaseScuola()))) {
-            // scrive il file di testo
-            cService.writeConfig(setupModel);
-            // restituiamo il nome della vista da visualizzare
-            return "setup-success";
-        }
-
-        return "setup-unsuccess";
+        return "setup-success";
 
     }
 

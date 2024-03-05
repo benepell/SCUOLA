@@ -30,7 +30,7 @@
         <jsp:include page="${content}" />
     </c:if>
 -->
-    <jsp:include page="common/minimal-footer.jspf" />
+    <jsp:include page="common/minimal-footer.jsp" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
