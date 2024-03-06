@@ -4,7 +4,7 @@ set -e
 
 SETUP_FILE=/var/www/html/risorse/files/CONFIGURAZIONI/global_env.sh
 MV_PATH=/opt/script/
-# Verifica se il file è presente
+# Verifica se il file è presente e se modificato entro 5 min
 if [ -f "${SETUP_FILE}" ] && [ $(find "${SETUP_FILE}" -mmin -5 | wc -l) -gt 0 ]; then
     mv ${SETUP_FILE} ${MV_PATH}
 
@@ -32,7 +32,7 @@ if [ -f "${SETUP_FILE}" ] && [ $(find "${SETUP_FILE}" -mmin -5 | wc -l) -gt 0 ];
     # applica trasformazione tomcat
     ./setup_replace_apache.sh
 
-    #avvia tomcat10
+    #avvia apache
     systemctl restart apache2
 
     echo "Installazione Completata";
