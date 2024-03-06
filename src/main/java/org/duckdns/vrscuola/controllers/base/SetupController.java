@@ -58,14 +58,8 @@ public class SetupController {
 
     @PostMapping("/update-env")
     public String updateConfig(@ModelAttribute("setupModel") SetupModel setupModel, Model model) {
-
-        String cod = setupModel.getCodiceDiRegistrazioneScuola();
-       // String c = vService.generateCredentials(setupModel.getBaseScuola());
-
-       // System.out.println(c + " " + cod);
-
-        // scrive il file di testo
         cService.writeConfig(setupModel);
+        model.addAttribute("setupModel", setupModel);
 
         return "setup-success";
 

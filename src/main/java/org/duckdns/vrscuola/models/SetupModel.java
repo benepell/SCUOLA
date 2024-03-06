@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Data
 public class SetupModel {
-    private String passwordServerScuola;
+    private String tokenDuckdns;
     private String codiceDiRegistrazioneScuola;
     private String baseScuola;
     private String baseKeycloak;
@@ -33,7 +33,7 @@ public class SetupModel {
 
     public Map<String, String> toMap() {
         Map<String, String> fields = new HashMap<>();
-        fields.put("passwordServerScuola", passwordServerScuola);
+        fields.put("tokenDuckdns", tokenDuckdns);
         fields.put("codiceDiRegistrazioneScuola", codiceDiRegistrazioneScuola);
         fields.put("baseScuola", baseScuola);
         fields.put("baseKeycloak", baseKeycloak);

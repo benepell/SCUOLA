@@ -24,13 +24,12 @@
     </title>
 
   </head>
-  <body>
+  <body style="margin-top: 30px">
 
    <!-- <c:if test="${not empty content}">
         <jsp:include page="${content}" />
     </c:if>
 -->
-    <jsp:include page="common/minimal-footer.jsp" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

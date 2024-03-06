@@ -8,9 +8,10 @@
         <div class="card-body">
           <h5 class="card-title">Autenticazione</h5>
           <div class="form-group">
-            <label for="PASSWORD_SERVER_SCUOLA">PASSWORD_SERVER_SCUOLA:</label>
-            <input type="text" class="form-control" id="PASSWORD_SERVER_SCUOLA" name="passwordServerScuola"
+            <label for="TOKEN_DUCKDNS">TOKEN_DUCKDNS:</label>
+            <input type="text" class="form-control" id="TOKEN_DUCKDNS" name="tokenDuckdns"
               value="">
+              <p><a href="https://www.duckdns.org/" target="_blank">Registrati su duckdns</a></p>
           </div>
           <div class="form-group">
             <label for="CODICE_DI_REGISTRAZIONE_SCUOLA">CODICE_DI_REGISTRAZIONE_SCUOLA:</label>
@@ -145,9 +146,8 @@ fetch(apiEndpoint)
     .then(response => response.json()) // Parse la risposta HTTP come JSON
     .then(data => {
       // Utilizza i campi del JSON per impostare il valore dell'input HTML
-      document.getElementById('PASSWORD_SERVER_SCUOLA').value = data.PASSWORD_SERVER_SCUOLA;
+      document.getElementById('TOKEN_DUCKDNS').value = data.TOKEN_DUCKDNS;
       document.getElementById('CODICE_DI_REGISTRAZIONE_SCUOLA').value = data.CODICE_DI_REGISTRAZIONE_SCUOLA;
-      document.getElementById('VERSIONE_SOFTWARE').value = data.VERSIONE_SOFTWARE;
       document.getElementById('BASE_SCUOLA').value = data.BASE_SCUOLA;
       document.getElementById('BASE_KEYCLOAK').value = data.BASE_KEYCLOAK;
       document.getElementById('BASE_RISORSE').value = data.BASE_RISORSE;
@@ -156,3 +156,5 @@ fetch(apiEndpoint)
       console.error('Errore durante il recupero del JSON:', error);
     });
 </script>
+<br/>
+ <jsp:include page="common/minimal-footer.jsp" />
