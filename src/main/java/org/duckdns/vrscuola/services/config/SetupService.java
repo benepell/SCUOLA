@@ -77,7 +77,7 @@ public class SetupService {
     public Map<String, String> checkConfigFile() {
 
         // Percorso completo del file di configurazione
-        String filePath = "/var/lib/tomcat10/" + configFile;
+        String filePath =  configFile;
 
         File file = new File(filePath);
 

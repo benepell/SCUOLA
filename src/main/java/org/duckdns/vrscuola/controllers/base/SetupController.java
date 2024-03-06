@@ -50,7 +50,7 @@ public class SetupController {
         return "setup";
     }
 
-    @RequestMapping(value = "setup-state", method = RequestMethod.GET, headers = "Host=localhost:5555")
+    @RequestMapping(value = "setup-state")
     @ResponseBody
     public Map<String, String> getSetupState() {
         return cService.checkConfigFile();
