@@ -2,7 +2,12 @@
 
 <%@ include file="common/minimal-base.jsp" %>
 
+
   <form action="/update-env" method="POST">
+    <div class="overlay">
+      Setup VrScuola
+    </div>
+
     <div class="card-container sortable">
       <div class="card">
         <div class="card-body">

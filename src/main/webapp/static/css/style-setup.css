@@ -1,0 +1,16 @@
+.overlay {
+    position: fixed; /* Posizione fissa sopra tutto il contenuto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Permette il click attraverso l'overlay */
+    z-index: 1000; /* Assicura che l'overlay sia sopra gli altri elementi */
+    color: gray; /* Colore del testo */
+    font-size: 4em; /* Dimensione del testo */
+    font-family: 'Arial', sans-serif; /* Stile del font */
+    opacity: 0.2; /* Trasparenza del testo */
+}

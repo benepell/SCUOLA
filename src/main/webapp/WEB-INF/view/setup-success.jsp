@@ -2,6 +2,9 @@
 <%@ include file="common/minimal-base.jsp" %>
 
 <br/><br/>
+<div class="overlay">
+  Setup VrScuola
+</div>
 <div class="card-container">
   <div class="card">
     <div class="card-body">

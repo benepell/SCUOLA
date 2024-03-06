@@ -15,6 +15,7 @@
 
     <!-- Altri CSS -->
     <link href="<c:url value="/static/css/minimal-main.css" />" rel="stylesheet">
+    <link href="<c:url value="/static/css/style-setup.css" />" rel="stylesheet">
 
 
     <title>
