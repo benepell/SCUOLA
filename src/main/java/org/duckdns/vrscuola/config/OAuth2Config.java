@@ -1,5 +1,6 @@
 package org.duckdns.vrscuola.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,29 +12,33 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 public class OAuth2Config {
 
 
-    @Value("${basename}")
-    private String baseName;
+    private final String baseName;
+    private final String issuerUri;
+    private final String provider;
+    private final String clientName;
+    private final String clientId;
+    private final String clientSecret;
+    private final String scope;
+    private final String authorizationGrantType;
 
-    @Value("${spring.security.oauth2.client.provider.external.issuer-uri}")
-    private String issuerUri;
-
-    @Value("${spring.security.oauth2.client.registration.external.provider}")
-    private String provider;
-
-    @Value("${spring.security.oauth2.client.registration.external.client-name}")
-    private String clientName;
-
-    @Value("${spring.security.oauth2.client.registration.external.client-id}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.external.client-secret}")
-    private String clientSecret;
-
-    @Value("${spring.security.oauth2.client.registration.external.scope}")
-    private String scope;
-
-    @Value("${spring.security.oauth2.client.registration.external.authorization-grant-type}")
-    private String authorizationGrantType;
+    @Autowired
+    public OAuth2Config(@Value("${basename}") String baseName,
+                        @Value("${spring.security.oauth2.client.provider.external.issuer-uri}") String issuerUri,
+                        @Value("${spring.security.oauth2.client.registration.external.provider}") String provider,
+                        @Value("${spring.security.oauth2.client.registration.external.client-name}") String clientName,
+                        @Value("${spring.security.oauth2.client.registration.external.client-id}") String clientId,
+                        @Value("${spring.security.oauth2.client.registration.external.client-secret}") String clientSecret,
+                        @Value("${spring.security.oauth2.client.registration.external.scope}") String scope,
+                        @Value("${spring.security.oauth2.client.registration.external.authorization-grant-type}") String authorizationGrantType) {
+        this.baseName = baseName;
+        this.issuerUri = issuerUri;
+        this.provider = provider;
+        this.clientName = clientName;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.scope = scope;
+        this.authorizationGrantType = authorizationGrantType;
+    }
 
     @Bean
     public InMemoryClientRegistrationRepository clientRegistrationRepository() {

@@ -36,41 +36,48 @@ import java.io.IOException;
 @RequestMapping("/")
 public class DiagnoseController {
 
-    @Value("${health.datasource.website}")
-    private String healthDataSourceWebsite;
-    @Value("${health.datasource.website.keycloak}")
-    private String healthDataSourceWebsiteKeycloak;
-    @Value("${health.datasource.website.risorse}")
-    private String healthdataSourceWebsiteRisorse;
-    @Value("${health.datasource.url}")
-    private String healthDataSourceUrl;
 
-    @Value("${health.datasource.username}")
-    private String healthDatasourceUsername;
-    @Value("${health.datasource.password}")
-    private String healthDatasourcePassword;
+    private final String healthDataSourceWebsite;
+    private final String healthDataSourceWebsiteKeycloak;
+    private final String healthDataSourceWebsiteRisorse;
+    private final String healthDataSourceUrl;
+    private final String healthDatasourceUsername;
+    private final String healthDatasourcePassword;
+    private final String linkKeycloak;
+    private final String linkRisorse;
 
-    @Value("${health.datasource.website.keycloak}")
-    private String linkKeycloak;
-
-    @Value("${health.datasource.website.risorse}")
-    private String linkRisorse;
-
+    private final DatabaseHealthCheckService databaseHealthCheckService;
+    private final ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService;
+    private final WebsiteHealthCheckService websiteHealthCheckService;
+    private final OperatingSystemHealthCheckService operatingSystemHealthCheckService;
+    private final EventLogPdfService eventLogPdfService;
 
     @Autowired
-    DatabaseHealthCheckService databaseHealthCheckService;
-
-    @Autowired
-    ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService;
-
-    @Autowired
-    WebsiteHealthCheckService websiteHealthCheckService;
-
-    @Autowired
-    OperatingSystemHealthCheckService operatingSystemHealthCheckService;
-
-    @Autowired
-    EventLogPdfService eventLogPdfService;
+    public DiagnoseController(@Value("${health.datasource.website}") String healthDataSourceWebsite,
+                              @Value("${health.datasource.website.keycloak}") String healthDataSourceWebsiteKeycloak,
+                              @Value("${health.datasource.website.risorse}") String healthDataSourceWebsiteRisorse,
+                              @Value("${health.datasource.url}") String healthDataSourceUrl,
+                              @Value("${health.datasource.username}") String healthDatasourceUsername,
+                              @Value("${health.datasource.password}") String healthDatasourcePassword,
+                              @Autowired DatabaseHealthCheckService databaseHealthCheckService,
+                              @Autowired ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService,
+                              @Autowired WebsiteHealthCheckService websiteHealthCheckService,
+                              @Autowired OperatingSystemHealthCheckService operatingSystemHealthCheckService,
+                              @Autowired EventLogPdfService eventLogPdfService) {
+        this.healthDataSourceWebsite = healthDataSourceWebsite;
+        this.healthDataSourceWebsiteKeycloak = healthDataSourceWebsiteKeycloak;
+        this.healthDataSourceWebsiteRisorse = healthDataSourceWebsiteRisorse;
+        this.healthDataSourceUrl = healthDataSourceUrl;
+        this.healthDatasourceUsername = healthDatasourceUsername;
+        this.healthDatasourcePassword = healthDatasourcePassword;
+        this.linkKeycloak = healthDataSourceWebsiteKeycloak;
+        this.linkRisorse = healthDataSourceWebsiteRisorse;
+        this.databaseHealthCheckService = databaseHealthCheckService;
+        this.resourceDirectoryHealthCheckService = resourceDirectoryHealthCheckService;
+        this.websiteHealthCheckService = websiteHealthCheckService;
+        this.operatingSystemHealthCheckService = operatingSystemHealthCheckService;
+        this.eventLogPdfService = eventLogPdfService;
+    }
 
     @GetMapping("/diagnosi")
     public String getDiagnose(Model model) throws IOException {
@@ -80,7 +87,7 @@ public class DiagnoseController {
         String resourceDirectoryStatus = resourceDirectoryHealthCheckService.checkResourceDirectory().get("status").toString();
         String websiteStatus = websiteHealthCheckService.checkWebsite(healthDataSourceWebsite).get("status").toString();
         String websiteKeycloakStatus = websiteHealthCheckService.checkWebsite(healthDataSourceWebsiteKeycloak).get("status").toString();
-        String websiteRisorseStatus = websiteHealthCheckService.checkWebsite(healthdataSourceWebsiteRisorse, healthDatasourceUsername, healthDatasourcePassword).get("status").toString();
+        String websiteRisorseStatus = websiteHealthCheckService.checkWebsite(healthDataSourceUrl, healthDatasourceUsername, healthDatasourcePassword).get("status").toString();
         String operatingSystemStatus = operatingSystemHealthCheckService.checkOperatingSystem().get("status").toString();
 
         model.addAttribute("databaseStatus", databaseStatus);

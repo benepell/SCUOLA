@@ -20,6 +20,7 @@ package org.duckdns.vrscuola.config;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +34,12 @@ import io.swagger.v3.oas.models.servers.Server;
 @Configuration
 public class OpenAPIConfig {
 
-    @Value("${basename}")
-    private String basename;
+    private final String basename;
+
+    @Autowired
+    public OpenAPIConfig(@Value("${basename}") String basename) {
+        this.basename = basename;
+    }
 
     @Bean
     public OpenAPI myOpenAPI() {

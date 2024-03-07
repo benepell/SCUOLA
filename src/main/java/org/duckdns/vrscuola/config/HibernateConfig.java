@@ -41,8 +41,12 @@ import java.util.Map;
 @EnableTransactionManagement
 public class HibernateConfig {
 
+    private final Environment env;
+
     @Autowired
-    Environment env;
+    public HibernateConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     @Primary

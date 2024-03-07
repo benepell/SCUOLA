@@ -38,22 +38,24 @@ import java.util.Arrays;
 @RequestMapping("/sezione")
 public class SezioneController {
 
-    @Autowired
-    KeycloakUserService keycloakUserService;
-    @Autowired
-    private ArgomentiDirService argomentiDirService;
+    private final KeycloakUserService keycloakUserService;
+    private final ArgomentiDirService argomentiDirService;
+    private final VRDeviceManagerOrderService orderService;
+    private final VRDeviceManageDetailService detailService;
+    private final StudentService studentService;
+    private final VRDeviceManageService manageService;
 
     @Autowired
-    VRDeviceManagerOrderService orderService;
-
-    @Autowired
-    VRDeviceManageDetailService detailService;
-
-    @Autowired
-    StudentService studentService;
-
-    @Autowired
-    VRDeviceManageService manageService;
+    public SezioneController(KeycloakUserService keycloakUserService, ArgomentiDirService argomentiDirService,
+                             VRDeviceManagerOrderService orderService, VRDeviceManageDetailService detailService,
+                             StudentService studentService, VRDeviceManageService manageService) {
+        this.keycloakUserService = keycloakUserService;
+        this.argomentiDirService = argomentiDirService;
+        this.orderService = orderService;
+        this.detailService = detailService;
+        this.studentService = studentService;
+        this.manageService = manageService;
+    }
 
 
     @PostMapping

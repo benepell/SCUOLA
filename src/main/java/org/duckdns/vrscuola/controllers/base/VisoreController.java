@@ -37,17 +37,19 @@ import java.util.*;
 @Controller
 public class VisoreController {
 
-    @Autowired
-    StudentService studentService;
+    private final StudentService studentService;
+    private final VRDeviceManageService manageService;
+    private final VRDeviceManageDetailService manageDetailService;
+    private final UsoVisorePdfService vPdfService;
 
     @Autowired
-    VRDeviceManageService manageService;
-
-    @Autowired
-    VRDeviceManageDetailService manageDetailService;
-
-    @Autowired
-    private UsoVisorePdfService vPdfService;
+    public VisoreController(StudentService studentService, VRDeviceManageService manageService,
+                            VRDeviceManageDetailService manageDetailService, UsoVisorePdfService vPdfService) {
+        this.studentService = studentService;
+        this.manageService = manageService;
+        this.manageDetailService = manageDetailService;
+        this.vPdfService = vPdfService;
+    }
 
     @PostMapping(value = "/visore-selection")
     @ResponseBody

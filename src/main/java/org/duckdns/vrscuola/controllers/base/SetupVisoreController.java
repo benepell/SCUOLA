@@ -42,29 +42,33 @@ import java.util.stream.Collectors;
 @Controller
 public class SetupVisoreController {
 
-    @Value("${health.datasource.website.keycloak}")
-    private String linkKeycloak;
-
-    @Value("${health.datasource.website.risorse}")
-    private String linkRisorse;
-
-    @Autowired
-    ReadOculusServices readOculusServices;
-
-    @Autowired
-    ValidateCredentialService validateCredentialService;
+    private final String linkKeycloak;
+    private final String linkRisorse;
+    private final ReadOculusServices readOculusServices;
+    private final ValidateCredentialService validateCredentialService;
+    private final VRDeviceInitServiceImpl initService;
+    private final VRDeviceInitRepository repository;
+    private final Utilities utilities;
+    private final UtilServiceImpl utilService;
 
     @Autowired
-    VRDeviceInitServiceImpl initService;
-
-    @Autowired
-    VRDeviceInitRepository repository;
-
-    @Autowired
-    Utilities utilities;
-
-    @Autowired
-    UtilServiceImpl utilService;
+    public SetupVisoreController(@Value("${health.datasource.website.keycloak}") String linkKeycloak,
+                                 @Value("${health.datasource.website.risorse}") String linkRisorse,
+                                 ReadOculusServices readOculusServices,
+                                 ValidateCredentialService validateCredentialService,
+                                 VRDeviceInitServiceImpl initService,
+                                 VRDeviceInitRepository repository,
+                                 Utilities utilities,
+                                 UtilServiceImpl utilService) {
+        this.linkKeycloak = linkKeycloak;
+        this.linkRisorse = linkRisorse;
+        this.readOculusServices = readOculusServices;
+        this.validateCredentialService = validateCredentialService;
+        this.initService = initService;
+        this.repository = repository;
+        this.utilities = utilities;
+        this.utilService = utilService;
+    }
 
     @RequestMapping(value = "setup-visore")
     public String getSetupVisoreClasse(Model model, HttpSession session, HttpServletResponse response) {

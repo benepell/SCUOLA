@@ -34,31 +34,39 @@ import java.util.Map;
 @RestController
 public class HealthCheckEndpointController {
 
-    @Value("${health.datasource.website}")
-    private String healthDataSourceWebsite;
-    @Value("${health.datasource.website.keycloak}")
-    private String healthDataSourceWebsiteKeycloak;
-    @Value("${health.datasource.website.risorse}")
-    private String healthdataSourceWebsiteRisorse;
-    @Value("${health.datasource.url}")
-    private String healthDataSourceUrl;
-
-    @Value("${health.datasource.username}")
-    private String healthDatasourceUsername;
-    @Value("${health.datasource.password}")
-    private String healthDatasourcePassword;
+    private final String healthDataSourceWebsite;
+    private final String healthDataSourceWebsiteKeycloak;
+    private final String healthDataSourceWebsiteRisorse;
+    private final String healthDataSourceUrl;
+    private final String healthDatasourceUsername;
+    private final String healthDatasourcePassword;
+    private final DatabaseHealthCheckService databaseHealthCheckService;
+    private final ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService;
+    private final WebsiteHealthCheckService websiteHealthCheckService;
+    private final OperatingSystemHealthCheckService operatingSystemHealthCheckService;
 
     @Autowired
-    DatabaseHealthCheckService databaseHealthCheckService;
-
-    @Autowired
-    ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService;
-
-    @Autowired
-    WebsiteHealthCheckService websiteHealthCheckService;
-
-    @Autowired
-    OperatingSystemHealthCheckService operatingSystemHealthCheckService;
+    public HealthCheckEndpointController(@Value("${health.datasource.website}") String healthDataSourceWebsite,
+                                         @Value("${health.datasource.website.keycloak}") String healthDataSourceWebsiteKeycloak,
+                                         @Value("${health.datasource.website.risorse}") String healthDataSourceWebsiteRisorse,
+                                         @Value("${health.datasource.url}") String healthDataSourceUrl,
+                                         @Value("${health.datasource.username}") String healthDatasourceUsername,
+                                         @Value("${health.datasource.password}") String healthDatasourcePassword,
+                                         DatabaseHealthCheckService databaseHealthCheckService,
+                                         ResourceDirectoryHealthCheckService resourceDirectoryHealthCheckService,
+                                         WebsiteHealthCheckService websiteHealthCheckService,
+                                         OperatingSystemHealthCheckService operatingSystemHealthCheckService) {
+        this.healthDataSourceWebsite = healthDataSourceWebsite;
+        this.healthDataSourceWebsiteKeycloak = healthDataSourceWebsiteKeycloak;
+        this.healthDataSourceWebsiteRisorse = healthDataSourceWebsiteRisorse;
+        this.healthDataSourceUrl = healthDataSourceUrl;
+        this.healthDatasourceUsername = healthDatasourceUsername;
+        this.healthDatasourcePassword = healthDatasourcePassword;
+        this.databaseHealthCheckService = databaseHealthCheckService;
+        this.resourceDirectoryHealthCheckService = resourceDirectoryHealthCheckService;
+        this.websiteHealthCheckService = websiteHealthCheckService;
+        this.operatingSystemHealthCheckService = operatingSystemHealthCheckService;
+    }
 
     @GetMapping("/health")
     public Map<String, Object> health() {
@@ -67,7 +75,7 @@ public class HealthCheckEndpointController {
         healthStatus.put("resourceDirectory", resourceDirectoryHealthCheckService.checkResourceDirectory());
         healthStatus.put("website", websiteHealthCheckService.checkWebsite(healthDataSourceWebsite));
         healthStatus.put("websiteKeycloak", websiteHealthCheckService.checkWebsite(healthDataSourceWebsiteKeycloak));
-        healthStatus.put("websiteRisorse", websiteHealthCheckService.checkWebsite(healthdataSourceWebsiteRisorse, healthDatasourceUsername, healthDatasourcePassword));
+        healthStatus.put("websiteRisorse", websiteHealthCheckService.checkWebsite(healthDataSourceWebsiteRisorse, healthDatasourceUsername, healthDatasourcePassword));
         healthStatus.put("operatingSystem", operatingSystemHealthCheckService.checkOperatingSystem());
         return healthStatus.toMap();
     }

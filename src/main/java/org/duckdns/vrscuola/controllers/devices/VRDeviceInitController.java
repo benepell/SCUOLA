@@ -40,27 +40,31 @@ import java.util.List;
 @RequestMapping("/initialize-devices")
 public class VRDeviceInitController {
 
-    @Autowired
-    VRDeviceInitServiceImpl initService;
+
+    private final VRDeviceInitServiceImpl initService;
+    private final Utilities utilities;
+    private final MessageServiceImpl messageServiceImpl;
+    private final ReadOculusServices rService;
+    private final ValidateCredentialService vService;
+    private final VRDeviceInitRepository repository;
+    private final UtilServiceImpl uService;
 
     @Autowired
-    Utilities utilities;
-
-    @SuppressWarnings("unused")
-    @Autowired
-    private MessageServiceImpl messageServiceImpl;
-
-    @Autowired
-    ReadOculusServices rService;
-
-    @Autowired
-    ValidateCredentialService vService;
-
-    @Autowired
-    VRDeviceInitRepository repository;
-
-    @Autowired
-    UtilServiceImpl uService;
+    public VRDeviceInitController(VRDeviceInitServiceImpl initService,
+                                  Utilities utilities,
+                                  MessageServiceImpl messageServiceImpl,
+                                  ReadOculusServices rService,
+                                  ValidateCredentialService vService,
+                                  VRDeviceInitRepository repository,
+                                  UtilServiceImpl uService) {
+        this.initService = initService;
+        this.utilities = utilities;
+        this.messageServiceImpl = messageServiceImpl;
+        this.rService = rService;
+        this.vService = vService;
+        this.repository = repository;
+        this.uService = uService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<?> add() {

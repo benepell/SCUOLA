@@ -38,10 +38,14 @@ import java.util.Map;
 @RequestMapping("/")
 public class SetupController {
 
+    private final SetupService cService;
+    private final ValidateCredentialService vService;
+
     @Autowired
-    private SetupService cService;
-    @Autowired
-    private ValidateCredentialService vService;
+    public SetupController(SetupService cService, ValidateCredentialService vService) {
+        this.cService = cService;
+        this.vService = vService;
+    }
 
     @GetMapping(value = "setup")
     public String getIndex(Model model) {

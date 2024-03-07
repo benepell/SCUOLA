@@ -40,24 +40,28 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/connectivity-devices")
 public class VRDeviceConnectivityController {
 
-    @Value("${keycloak.credentials.secret}")
-    private String code;
+
+    private final String code;
+    private final VRDeviceConnectivityServiceImpl cService;
+    private final VRDeviceInitServiceImpl iService;
+    private final Utilities utilities;
+    private final MessageServiceImpl messageServiceImpl;
+    private final UtilServiceImpl uService;
 
     @Autowired
-    VRDeviceConnectivityServiceImpl cService;
-
-    @Autowired
-    VRDeviceInitServiceImpl iService;
-
-    @Autowired
-    Utilities utilities;
-
-    @SuppressWarnings("unused")
-    @Autowired
-    private MessageServiceImpl messageServiceImpl;
-
-    @Autowired
-    UtilServiceImpl uService;
+    public VRDeviceConnectivityController(@Value("${keycloak.credentials.secret}") String code,
+                                          VRDeviceConnectivityServiceImpl cService,
+                                          VRDeviceInitServiceImpl iService,
+                                          Utilities utilities,
+                                          MessageServiceImpl messageServiceImpl,
+                                          UtilServiceImpl uService) {
+        this.code = code;
+        this.cService = cService;
+        this.iService = iService;
+        this.utilities = utilities;
+        this.messageServiceImpl = messageServiceImpl;
+        this.uService = uService;
+    }
 
     @PostMapping(value = "/username")
     public ResponseEntity<?> username(@Valid VRDeviceConnectivityRequest request) {

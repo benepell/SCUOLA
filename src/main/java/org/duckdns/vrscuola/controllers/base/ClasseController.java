@@ -32,11 +32,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/classe")
 public class ClasseController {
 
-    @Autowired
-    KeycloakUserService keycloakUserService;
+    private final KeycloakUserService keycloakUserService;
+    private final ValidateCredentialService validateCredentialService;
 
     @Autowired
-    ValidateCredentialService v;
+    public ClasseController(KeycloakUserService keycloakUserService, ValidateCredentialService validateCredentialService) {
+        this.keycloakUserService = keycloakUserService;
+        this.validateCredentialService = validateCredentialService;
+    }
 
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) throws Exception {

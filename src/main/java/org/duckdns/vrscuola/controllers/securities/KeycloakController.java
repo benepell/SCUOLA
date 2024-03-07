@@ -47,39 +47,43 @@ import java.util.stream.Collectors;
 @RestController
 public class KeycloakController {
 
-    @Value("${keycloak.auth-server-url}")
-    private String authServerUrl;
 
-    @Value("${keycloak.realm}")
-    private String realm;
-
-    @Value("${keycloak.resource}")
-    private String clientId;
-
-    @Value("${keycloak.credentials.secret}")
-    private String clientSecret;
-
-    @Value("${basename}")
-    private String basename;
-
-    @Value("${spring.security.oauth2.client.provider.external.issuer-uri}")
-    private String uriLink;
+    private final String authServerUrl;
+    private final String realm;
+    private final String clientId;
+    private final String clientSecret;
+    private final String basename;
+    private final String uriLink;
+    private final EventLogService logService;
+    private final StudentService studentService;
+    private final UsoVisorePdfService vPdfService;
+    private final VRDeviceManageDetailService manageDetailService;
+    private final KeycloakUserService kService;
 
     @Autowired
-    EventLogService logService;
-
-    @Autowired
-    StudentService studentService;
-
-    @Autowired
-    UsoVisorePdfService vPdfService;
-
-    @Autowired
-    VRDeviceManageDetailService manageDetailService;
-
-    @Autowired
-    KeycloakUserService kService;
-
+    public KeycloakController(@Value("${keycloak.auth-server-url}") String authServerUrl,
+                              @Value("${keycloak.realm}") String realm,
+                              @Value("${keycloak.resource}") String clientId,
+                              @Value("${keycloak.credentials.secret}") String clientSecret,
+                              @Value("${basename}") String basename,
+                              @Value("${spring.security.oauth2.client.provider.external.issuer-uri}") String uriLink,
+                              EventLogService logService,
+                              StudentService studentService,
+                              UsoVisorePdfService vPdfService,
+                              VRDeviceManageDetailService manageDetailService,
+                              KeycloakUserService kService) {
+        this.authServerUrl = authServerUrl;
+        this.realm = realm;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.basename = basename;
+        this.uriLink = uriLink;
+        this.logService = logService;
+        this.studentService = studentService;
+        this.vPdfService = vPdfService;
+        this.manageDetailService = manageDetailService;
+        this.kService = kService;
+    }
 
     @GetMapping("/_logout")
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws UnsupportedEncodingException, UnsupportedEncodingException {

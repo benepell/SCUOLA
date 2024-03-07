@@ -40,26 +40,28 @@ import java.util.Arrays;
 @RequestMapping("/")
 public class AbilitaController {
 
-    @Value("${health.datasource.website.keycloak}")
     private String linkKeycloak;
-
-    @Value("${health.datasource.website.risorse}")
     private String linkRisorse;
+    private final StudentService studentService;
+    private final VRDeviceManageService manageService;
+    private final EventLogService logService;
+    private final UtilService utilService;
+    private final KeycloakUserService kService;
 
     @Autowired
-    StudentService studentService;
-
-    @Autowired
-    VRDeviceManageService manageService;
-
-    @Autowired
-    EventLogService logService;
-
-    @Autowired
-    UtilService utilService;
-
-    @Autowired
-    KeycloakUserService kService;
+    public AbilitaController(StudentService studentService, VRDeviceManageService manageService,
+                             EventLogService logService, UtilService utilService,
+                             KeycloakUserService kService,
+                             @Value("${health.datasource.website.keycloak}") String linkKeycloak,
+                             @Value("${health.datasource.website.risorse}") String linkRisorse) {
+        this.studentService = studentService;
+        this.manageService = manageService;
+        this.logService = logService;
+        this.utilService = utilService;
+        this.kService = kService;
+        this.linkKeycloak = linkKeycloak;
+        this.linkRisorse = linkRisorse;
+    }
 
     @RequestMapping(value = "abilita-classe")
     public String getAbilitaClasse(Authentication authentication, Model model, HttpServletRequest request, HttpSession session) {

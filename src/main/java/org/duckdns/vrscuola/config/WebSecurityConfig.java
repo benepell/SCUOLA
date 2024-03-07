@@ -46,12 +46,15 @@ import java.util.*;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    private final ApplicationContext applicationContext;
+    private final String issuerUri;
+
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Value("${spring.security.oauth2.client.provider.external.issuer-uri}")
-    private String issuerUri;
-
+    public WebSecurityConfig(ApplicationContext applicationContext,
+                             @Value("${spring.security.oauth2.client.provider.external.issuer-uri}") String issuerUri) {
+        this.applicationContext = applicationContext;
+        this.issuerUri = issuerUri;
+    }
     @Bean
     public JwtDecoder jwtDecoder() {
         String jwkSetUri = issuerUri + "/protocol/openid-connect/certs";

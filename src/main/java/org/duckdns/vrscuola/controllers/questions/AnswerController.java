@@ -43,20 +43,19 @@ import java.util.Optional;
 @RestController
 public class AnswerController {
 
-    @Autowired
-    private AnswerService answerService;
-    @Autowired
-    private ScoreService scoreService;
+    private final AnswerService answerService;
+    private final ScoreService scoreService;
+    private final QuestionarioPdfService questionarioPdfService;
 
     @Autowired
-    private QuestionarioPdfService questionarioPdfService;
-
-    private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
+    public AnswerController(AnswerService answerService, ScoreService scoreService, QuestionarioPdfService questionarioPdfService) {
+        this.answerService = answerService;
+        this.scoreService = scoreService;
+        this.questionarioPdfService = questionarioPdfService;
+    }
 
     @PostMapping("/answers")
     public ResponseEntity<?> submitAnswer(@RequestBody AnswerModel answerDTO) {
-        logger.debug("Received answerDTO: {}", answerDTO);
-
         try {
             ResponseEntitie savedAnswer = answerService.initAndSave(answerDTO);
             scoreService.calculateAndSaveTotalScore(answerDTO);

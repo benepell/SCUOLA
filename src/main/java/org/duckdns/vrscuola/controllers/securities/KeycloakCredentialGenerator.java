@@ -30,11 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class KeycloakCredentialGenerator {
-    @Value("${keycloak.resource}")
-    private String resource;
+    private final String resource;
+    private final KeycloakCredentialService kService;
 
     @Autowired
-    KeycloakCredentialService kService;
+    public KeycloakCredentialGenerator(@Value("${keycloak.resource}") String resource,
+                                       KeycloakCredentialService kService) {
+        this.resource = resource;
+        this.kService = kService;
+    }
 
     @GetMapping("/generate-keycloak-credentials/{username}")
     public ResponseEntity<KeycloakCredentialResponse> generateKeycloakCredentials(@PathVariable String username) {

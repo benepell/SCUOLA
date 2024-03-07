@@ -50,23 +50,27 @@ import java.util.stream.Collectors;
 @RestController
 public class QuestionController {
 
-    @Autowired
-    KeycloakUserService kService;
-
-    @Value("${school.resource.txt}")
-    private String txtRes;
-
-    @Value("${health.datasource.website.risorse}")
-    private String linkRes;
+    private final KeycloakUserService kService;
+    private final String txtRes;
+    private final String linkRes;
+    private final QuestionService questionarioService;
+    private final Utilities utilities;
+    private final QuestionarioPdfService questionarioPdfService;
 
     @Autowired
-    private QuestionService questionarioService;
-
-    @Autowired
-    private Utilities utilities;
-
-    @Autowired
-    private QuestionarioPdfService questionarioPdfService;
+    public QuestionController(KeycloakUserService kService,
+                              @Value("${school.resource.txt}") String txtRes,
+                              @Value("${health.datasource.website.risorse}") String linkRes,
+                              QuestionService questionarioService,
+                              Utilities utilities,
+                              QuestionarioPdfService questionarioPdfService) {
+        this.kService = kService;
+        this.txtRes = txtRes;
+        this.linkRes = linkRes;
+        this.questionarioService = questionarioService;
+        this.utilities = utilities;
+        this.questionarioPdfService = questionarioPdfService;
+    }
 
     @GetMapping("/questions")
     public ResponseEntity<List<QuestionModelResponse>> getDomande(Authentication authentication, HttpServletResponse response,

@@ -32,8 +32,12 @@ import java.util.List;
 @Controller
 public class ArgomentiController {
 
+    private final ArgomentiDirService argomentiDirService;
+
     @Autowired
-    ArgomentiDirService argomentiDirService;
+    public ArgomentiController(ArgomentiDirService argomentiDirService) {
+        this.argomentiDirService = argomentiDirService;
+    }
 
     @GetMapping(value = "/argomenti/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getArgomentiAll(
