@@ -87,7 +87,7 @@ public class DiagnoseController {
         String resourceDirectoryStatus = resourceDirectoryHealthCheckService.checkResourceDirectory().get("status").toString();
         String websiteStatus = websiteHealthCheckService.checkWebsite(healthDataSourceWebsite).get("status").toString();
         String websiteKeycloakStatus = websiteHealthCheckService.checkWebsite(healthDataSourceWebsiteKeycloak).get("status").toString();
-        String websiteRisorseStatus = websiteHealthCheckService.checkWebsite(healthDataSourceUrl, healthDatasourceUsername, healthDatasourcePassword).get("status").toString();
+        String websiteRisorseStatus = websiteHealthCheckService.checkWebsite(healthDataSourceWebsiteRisorse, healthDatasourceUsername, healthDatasourcePassword).get("status").toString();
         String operatingSystemStatus = operatingSystemHealthCheckService.checkOperatingSystem().get("status").toString();
 
         model.addAttribute("databaseStatus", databaseStatus);
