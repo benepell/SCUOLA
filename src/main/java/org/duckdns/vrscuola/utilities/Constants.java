@@ -94,6 +94,5 @@ public interface Constants {
     boolean ENABLED_REMOVE_RECORDS = true;
     long MIN_REMOVE_RECORDS = 2;
     boolean QUESTIONS_RANDOM = true;
-    boolean VALIDATE_MAC_ADDRESS = false;
 
 }

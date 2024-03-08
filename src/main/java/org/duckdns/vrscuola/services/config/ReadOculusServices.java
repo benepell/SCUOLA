@@ -23,7 +23,6 @@ import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
 import org.duckdns.vrscuola.services.utils.UtilServiceImpl;
 import org.duckdns.vrscuola.utilities.Constants;
-import org.duckdns.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -47,9 +46,6 @@ public class ReadOculusServices {
     @Autowired
     UtilServiceImpl utilService;
 
-    @Autowired
-    private Utilities utilities;
-
     public List<InitParamModel> addOculus(ValidateCredentialService validateCredentialService) {
         List<InitParamModel> param = new ArrayList<>();
 
@@ -60,6 +56,7 @@ public class ReadOculusServices {
             String label;
             String mac;
             String code;
+            Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
 
             while ((line = fileReader.readLine()) != null) {
 
@@ -69,8 +66,9 @@ public class ReadOculusServices {
                 mac = sep[2];
                 code = utilService.isCodeActivation() ? sep[3] : Constants.NO_CODE;
 
-
-                if (!Constants.VALIDATE_MAC_ADDRESS || utilities.isValidMacAddr(mac)) {
+                Matcher matcher = macPattern.matcher(mac);
+                if (matcher.find()) {
+                    String macAddress = matcher.group();
                     // validation code here
                     if (utilService.isCodeActivation()) {
                         String s = validateCredentialService.generateVisorCode(mac);
@@ -78,7 +76,7 @@ public class ReadOculusServices {
                             InitParamModel initParamModel = new InitParamModel();
                             initParamModel.setClassroom(classroom);
                             initParamModel.setLabel(label);
-                            initParamModel.setMacAddress(mac);
+                            initParamModel.setMacAddress(macAddress);
                             initParamModel.setCode(code);
                             param.add(initParamModel);
 
@@ -88,7 +86,7 @@ public class ReadOculusServices {
                         InitParamModel initParamModel = new InitParamModel();
                         initParamModel.setClassroom(classroom);
                         initParamModel.setLabel(label);
-                        initParamModel.setMacAddress(mac);
+                        initParamModel.setMacAddress(macAddress);
                         initParamModel.setCode(code);
                         param.add(initParamModel);
 
@@ -119,6 +117,7 @@ public class ReadOculusServices {
             String classroom;
             String new_mac;
             String old_mac;
+            Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
 
             while ((line = fileReader.readLine()) != null) {
 
@@ -127,7 +126,9 @@ public class ReadOculusServices {
                 old_mac = sep[1];
                 new_mac = sep[2];
 
-                if (!Constants.VALIDATE_MAC_ADDRESS || utilities.isValidMacAddr(new_mac)) {
+
+                Matcher matcher = macPattern.matcher(new_mac);
+                if (matcher.find()) {
                     InitParamModel initParamModel = new InitParamModel();
                     initParamModel.setClassroom(classroom);
                     initParamModel.setMacAddress(new_mac);
