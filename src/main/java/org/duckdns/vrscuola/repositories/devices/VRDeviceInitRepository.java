@@ -85,11 +85,11 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.batteryLevel = :batteryLevel WHERE  i.macAddress = :mac  ")
-    void updateBatteryLevel(@Param("mac") String mac, @Param("batteryLevel") int batteryLevel);
+    void updateBatteryLevel(@Param("mac") String mac, @Param("batteryLevel") String batteryLevel);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE init i set i.eraOnline = :eraOnline WHERE  i.macAddress = :mac  ")
-    void updateEraOnline(@Param("mac") String mac, @Param("eraOnline") Instant eraOnline);
+    @Query(value = "UPDATE init i set i.eraOnline = :eraOnline, i.batteryLevel = :batteryLevel WHERE  i.macAddress = :mac  ")
+    void updateEraOnline(@Param("mac") String mac, @Param("eraOnline") Instant eraOnline,String batteryLevel);
 }
 

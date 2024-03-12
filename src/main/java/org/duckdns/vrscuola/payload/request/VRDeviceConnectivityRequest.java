@@ -39,6 +39,8 @@ public class VRDeviceConnectivityRequest {
     private String code;
     @Size(max = 255)
     private String note;
+    @Size(max = 255)
+    private String batteryLevel;
 
 
 }

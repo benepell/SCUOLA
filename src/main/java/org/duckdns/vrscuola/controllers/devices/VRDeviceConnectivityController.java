@@ -67,9 +67,10 @@ public class VRDeviceConnectivityController {
     public ResponseEntity<?> username(@Valid VRDeviceConnectivityRequest request) {
 
         String mac = request.getMacAddress();
+        String batteryLevel = request.getBatteryLevel();
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
-        iService.updateOnline(mac);
+        iService.updateOnline(mac, batteryLevel);
 
         if (!cService.valid(request.getMacAddress(), request.getCode())) {
             return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("connect.user.not.found"));
@@ -93,7 +94,7 @@ public class VRDeviceConnectivityController {
         String macAddress = request.getMacAddress();
         String note = request.getNote();
         String code = request.getCode();
-        int batteryLevel = request.getBatteryLevel();
+        String batteryLevel = request.getBatteryLevel();
 
         // dispositivo registrato
         if (!iService.valid(macAddress, code)) {
@@ -104,9 +105,9 @@ public class VRDeviceConnectivityController {
         cService.connect(utilities, macAddress, username, note, Constants.CONNECTED_IN_CONNECTED);
 
         // aggiorna stato batteria dispositivo
-        if (batteryLevel > 0) {
+       // if (batteryLevel > 0) {
             iService.updateBatteryLevel(macAddress, batteryLevel);
-        }
+       // }
 
         // ritorna label visore
         String visore = iService.label(macAddress);
@@ -119,7 +120,7 @@ public class VRDeviceConnectivityController {
 
         String macAddress = request.getMacAddress();
         String code = request.getCode();
-        int batteryLevel = request.getBatteryLevel();
+        String batteryLevel = request.getBatteryLevel();
 
         // dispositivo registrato
         if (!iService.valid(macAddress, code)) {
@@ -127,9 +128,9 @@ public class VRDeviceConnectivityController {
         }
 
         // aggiorna stato batteria dispositivo
-        if (batteryLevel > 0) {
+      //  if (batteryLevel > 0) {
             iService.updateBatteryLevel(macAddress, batteryLevel);
-        }
+       // }
 
         // ritorna label visore
         String argoment = cService.argomento(macAddress);

@@ -97,7 +97,7 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     }
 
     @Override
-    public void updateBatteryLevel(String macAddress, int batteryLevel) {
+    public void updateBatteryLevel(String macAddress, String batteryLevel) {
         try {
             iRepository.updateBatteryLevel(macAddress, batteryLevel);
         } catch (Exception e) {
@@ -112,9 +112,9 @@ public class VRDeviceInitServiceImpl implements VRDeviceInitService {
     }
 
     @Override
-    public void updateOnline(String macAddress) {
+    public void updateOnline(String macAddress, String batteryLevel) {
         Instant eraOnline = utilities.getEpoch();
-        iRepository.updateEraOnline(macAddress, eraOnline);
+        iRepository.updateEraOnline(macAddress, eraOnline, batteryLevel);
     }
 
     @Override

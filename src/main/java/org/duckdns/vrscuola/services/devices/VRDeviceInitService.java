@@ -36,8 +36,8 @@ public interface VRDeviceInitService {
 
     String label(String macAddress);
 
-    void updateBatteryLevel(String macAddress, int batteryLevel);
+    void updateBatteryLevel(String macAddress, String batteryLevel);
 
-    void updateOnline(String macAddress);
+    void updateOnline(String macAddress,String batteryLevel);
 
 }
