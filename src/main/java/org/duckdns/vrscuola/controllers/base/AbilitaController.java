@@ -164,8 +164,8 @@ public class AbilitaController {
         model.addAttribute("labelsSetup", String.join(",", labelsSetup));
         model.addAttribute("battSetup", String.join(",", battSetup));
 
-        model.addAttribute("utenti", linkKeycloak);
-        model.addAttribute("risorse", linkRisorse);
+       // model.addAttribute("utenti", linkKeycloak);
+       // model.addAttribute("risorse", linkRisorse);
         // fine aggiunto per stato-visori
 
         studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
