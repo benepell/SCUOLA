@@ -20,7 +20,9 @@ package org.duckdns.vrscuola.controllers.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.StudentService;
+import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.log.EventLogService;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
@@ -35,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -48,10 +52,15 @@ public class AbilitaController {
     private final UtilService utilService;
     private final KeycloakUserService kService;
 
+    private final VRDeviceInitServiceImpl initService;
+    private final VRDeviceInitRepository repository;
+
     @Autowired
     public AbilitaController(StudentService studentService, VRDeviceManageService manageService,
                              EventLogService logService, UtilService utilService,
                              KeycloakUserService kService,
+                             VRDeviceInitServiceImpl initService,
+                             VRDeviceInitRepository repository,
                              @Value("${health.datasource.website.keycloak}") String linkKeycloak,
                              @Value("${health.datasource.website.risorse}") String linkRisorse) {
         this.studentService = studentService;
@@ -59,6 +68,8 @@ public class AbilitaController {
         this.logService = logService;
         this.utilService = utilService;
         this.kService = kService;
+        this.initService = initService;
+        this.repository = repository;
         this.linkKeycloak = linkKeycloak;
         this.linkRisorse = linkRisorse;
     }
@@ -137,6 +148,25 @@ public class AbilitaController {
             return "redirect:/abilita-classe";
         }
 
+        // aggiunto per stato-visori
+        List<String> labelsSetup = repository.labelsSetup(classroom);
+        List<String> macsSetup = repository.macsSetup(classroom);
+        List<String> battSetup = repository.battSetup(classroom);
+
+        String macs = String.join(",", macsSetup);
+
+        if (Constants.ENABLED_ONLINE) {
+            List<Boolean> online = initService.isOnline(macs);
+            model.addAttribute("onlineSetup", String.join(",", online.stream().map(String::valueOf).collect(Collectors.toList())));
+        }
+
+        model.addAttribute("macsSetup", macs);
+        model.addAttribute("labelsSetup", String.join(",", labelsSetup));
+        model.addAttribute("battSetup", String.join(",", battSetup));
+
+        model.addAttribute("utenti", linkKeycloak);
+        model.addAttribute("risorse", linkRisorse);
+        // fine aggiunto per stato-visori
 
         studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
 

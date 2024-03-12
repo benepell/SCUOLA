@@ -60,9 +60,34 @@
 
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
 
+<style>
+.iframe-style {
+    height: 220px; /* Imposta l'altezza massima */
+    overflow-y: auto; /* Aggiunge la barra di scorrimento verticale se necessario */
+    margin: 20px 0; /* Margini esterni (opzionale) */
+    padding: 10px; /* Padding interno (opzionale) */
+}
 
+.no-pointer-events {
+    pointer-events: none; /* Disabilita gli eventi del mouse solo per questo contenitore */
+}
 
+.scale-content {
+    transform: scale(0.5);
+    transform-origin: top left; /* Aggiornato per evitare tagli del contenuto */
+    width: 200%; /* Aumenta la larghezza per compensare la riduzione della scala */
+}
+</style>
 
+<div class="iframe-style">
+    <!-- Div interno per applicare il ridimensionamento -->
+    <div class="scale-content">
+        <!-- Div che disabilita gli eventi del mouse -->
+        <div class="no-pointer-events">
+            <jsp:include page="stato-visori.jsp"></jsp:include>
+        </div>
+    </div>
+</div>
 
 <!-- Form per inviare il valore della classe selezionata -->
 <form id="form" method="post" action="/chiudi-visore">
