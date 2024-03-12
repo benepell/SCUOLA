@@ -38,7 +38,7 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM connect c WHERE ( c.macAddress = :mac )")
     Boolean existsByMacAddress(@Param("mac") String mac);
 
-    @Query(value = "SELECT username FROM connect c WHERE ( c.macAddress = :mac )")
+    @Query(value = "SELECT username FROM connect c WHERE ( c.macAddress = :mac and c.connected != 'disconnected' )")
     String existsUsername(@Param("mac") String mac);
 
     @Query("SELECT c.macAddress FROM connect c WHERE c.macAddress = :mac")
