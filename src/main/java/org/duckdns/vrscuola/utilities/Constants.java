@@ -64,7 +64,7 @@ public interface Constants {
     String EVENT_LOG_CLOSE_ALL_VISOR = "chiudi tutti visori";
     String EVENT_LOG_CHECK_RES = "verifica risorse";
     String EVENT_LOG_CHECK_INFO = "verifica informazioni";
-    String PREFIX_CLASSROOM = "aula";
+    String PREFIX_CLASSROOM = "lab";
     String CONFIG_EVENT_LOG_PDF = "event_log_pdf";
     String QUESTIONS_SEPARATOR = "|";
     String QUESTIONS_PREFIX_FILENAME = "test";
