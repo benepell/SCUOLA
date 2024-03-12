@@ -77,6 +77,11 @@ public class VRDeviceConnectivityController {
 
         String username = cService.viewConnect(utilities, mac, request.getNote());
 
+        // disabilita visore
+        if (username == null) {
+            return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("connect.user.not.found")));
+        }
+
         return ResponseEntity.ok(new MessageResponse(username));
 
     }
