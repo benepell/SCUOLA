@@ -236,8 +236,9 @@ function BootstrapCookieConsentSettings(props) {
     }
 
     function doNotAgree() {
-        setCookie(self.props.cookieName, JSON.stringify(gatherOptions(false)), self.props.cookieStorageDays)
+       // setCookie(self.props.cookieName, JSON.stringify(gatherOptions(false)), self.props.cookieStorageDays)
         self.$modal.modal("hide")
+
     }
 
     function saveSettings() {
