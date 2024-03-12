@@ -35,6 +35,6 @@ public class VRDeviceConnectivityArgRequest {
     @NotBlank
     @Size(max = 50)
     private String code;
-    private int batteryLevel;
+    private String batteryLevel;
 
 }
