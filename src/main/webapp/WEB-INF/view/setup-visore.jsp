@@ -33,37 +33,34 @@
 
 <jsp:include page="include/menu-alto.jsp"></jsp:include>
 
-<% if (setupVisori != null && setupVisori.length > 0 &&
-        labelVisori != null && labelVisori.length > 0) { %>
+<script>
+$(document).ready(function() {
+    function aggiornaContenuto() {
+        $.ajax({
+            url: '/aggiornaStatoVisori',
+            type: 'GET',
+            success: function(response) {
+                $('.no-pointer-events').html(response);
+            },
+            error: function(error) {
+                console.error("Errore durante l'aggiornamento dei visori: ", error);
+            }
+        });
+    }
 
-    <div class="container">
-        <% int margin = 0; %>
-        <% for (int j = 0; j <= Math.ceil(setupVisori.length / 4.0); j++) { %>
-            <div class="row" style="margin-top:<%=margin%>px;">
-                <% for (int i = 1 + j*4; i <= Math.min(setupVisori.length, 4 + j*4); i++) { %>
-                <%
-                   String onlineVisoreValue = onlineVisori != null ? onlineVisori[i-1] : "true" ;
+    setInterval(aggiornaContenuto, 5000); // Aggiorna ogni 5 secondi
+});
+</script>
 
-                %>
-                    <div class="col-md-3">
-                        <jsp:include page="include/setup-card-visore.jsp">
-                            <jsp:param name="nome_visore" value="<%=setupVisori[i-1]%>" />
-                            <jsp:param name="codice_visore" value="<%=labelVisori[i-1]%>" />
-                            <jsp:param name="batt_visore" value="<%=battVisori[i-1]%>" />
-                            <jsp:param name="online_visore" value="<%=onlineVisoreValue%>" />
-
-                        </jsp:include>
-                    </div>
-                <% } %>
-            </div>
-            <% margin = 325; %>
-             <script>
-             // Array per memorizzare le altezze del visore
-             var altezzaVisore = [];
-             </script>
-        <% } %>
+<div class="iframe-style">
+    <!-- Div interno per applicare il ridimensionamento -->
+    <div class="scale-content">
+        <!-- Div che disabilita gli eventi del mouse -->
+        <div class="no-pointer-events">
+            <jsp:include page="stato-visori.jsp"></jsp:include>
+        </div>
     </div>
-<% } %>
+</div>
 
 <div>
 <a href="#" onclick="send()" style="position: fixed; transform: rotate(90deg); top: 65px; right: 35px; background: none; border: none;" data-toggle="tooltip" data-placement="left" title="Procedi alla ricerca dei nuovi device">
