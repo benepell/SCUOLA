@@ -63,6 +63,7 @@
 <style>
 .iframe-style {
     height: 220px; /* Imposta l'altezza massima */
+    overflow: hidden;
     overflow-y: auto; /* Aggiunge la barra di scorrimento verticale se necessario */
     margin: 20px 0; /* Margini esterni (opzionale) */
     padding: 10px; /* Padding interno (opzionale) */
@@ -77,7 +78,28 @@
     transform-origin: top left; /* Aggiornato per evitare tagli del contenuto */
     width: 200%; /* Aumenta la larghezza per compensare la riduzione della scala */
 }
+
+
 </style>
+
+<script>
+$(document).ready(function() {
+    function aggiornaContenuto() {
+        $.ajax({
+            url: '/aggiornaStatoVisori',
+            type: 'GET',
+            success: function(response) {
+                $('.no-pointer-events').html(response);
+            },
+            error: function(error) {
+                console.error("Errore durante l'aggiornamento dei visori: ", error);
+            }
+        });
+    }
+
+    setInterval(aggiornaContenuto, 5000); // Aggiorna ogni 5 secondi
+});
+</script>
 
 <div class="iframe-style">
     <!-- Div interno per applicare il ridimensionamento -->

@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -174,5 +175,31 @@ public class AbilitaController {
 
         return "abilita-visore";
     }
+
+    @GetMapping(value = "/aggiornaStatoVisori")
+    public String aggiornaStatoVisori(HttpSession session, Model model) {
+        // Assumi che la logica per ottenere i dati aggiornati dei visori sia simile a quella in abilita-visore
+
+        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
+
+        List<String> labelsSetup = repository.labelsSetup(classroom);
+        List<String> macsSetup = repository.macsSetup(classroom);
+        List<String> battSetup = repository.battSetup(classroom);
+
+        String macs = String.join(",", macsSetup);
+
+        if (Constants.ENABLED_ONLINE) {
+            List<Boolean> online = initService.isOnline(macs);
+            model.addAttribute("onlineSetup", String.join(",", online.stream().map(String::valueOf).collect(Collectors.toList())));
+        }
+
+        model.addAttribute("macsSetup", macs);
+        model.addAttribute("labelsSetup", String.join(",", labelsSetup));
+        model.addAttribute("battSetup", String.join(",", battSetup));
+
+        // Nota: questo metodo deve ritornare una vista parziale, solo il contenuto che deve essere aggiornato asincronamente
+        return "stato-visori";
+    }
+
 
 }
