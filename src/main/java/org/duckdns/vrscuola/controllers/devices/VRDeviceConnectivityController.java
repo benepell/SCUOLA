@@ -34,6 +34,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -68,22 +71,29 @@ public class VRDeviceConnectivityController {
 
         String mac = request.getMacAddress();
         String batteryLevel = request.getBatteryLevel();
+        String username;
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("user", "");
+        responseMap.put("sec", "");
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
 
-        if (!cService.valid(request.getMacAddress(), request.getCode())) {
-            return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("connect.user.not.found"));
+        if (!cService.valid(request.getMacAddress())) {
+            return ResponseEntity.ok(responseMap);
         }
 
-        String username = cService.viewConnect(utilities, mac, request.getNote());
+        username = cService.viewConnect(utilities, mac, request.getNote());
 
         // disabilita visore
         if (username == null) {
-            return ResponseEntity.ok(new MessageResponse(messageServiceImpl.getMessage("connect.user.not.found")));
+            return ResponseEntity.ok(responseMap);
         }
 
-        return ResponseEntity.ok(new MessageResponse(username));
+        responseMap.put("username", username);
+        responseMap.put("sec", this.code);
+
+        return ResponseEntity.ok(responseMap);
 
     }
 

@@ -43,11 +43,7 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     }
 
     @Override
-    public boolean valid(String macAddress, String code) {
-        // codice di verifica
-        if (!this.code.equals(code)) {
-            return false;
-        }
+    public boolean valid(String macAddress) {
         // apparato registrato
         if (!iRepository.existsByMacAddress(macAddress)) {
             return false;

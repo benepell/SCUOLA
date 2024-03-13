@@ -24,7 +24,7 @@ public interface VRDeviceConnectivityService {
 
     String viewConnect(Utilities utilities, String macAddress, String note);
 
-    boolean valid(String macAddress, String code);
+    boolean valid(String macAddress);
 
     void connect(Utilities utilities, String macAddress, String username, String note, String connected);
 
