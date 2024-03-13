@@ -90,7 +90,7 @@ public class VRDeviceConnectivityController {
             return ResponseEntity.ok(responseMap);
         }
 
-        responseMap.put("username", username);
+        responseMap.put("user", username);
         responseMap.put("sec", this.code);
 
         return ResponseEntity.ok(responseMap);
