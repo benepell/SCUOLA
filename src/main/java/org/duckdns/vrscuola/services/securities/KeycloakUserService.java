@@ -208,6 +208,12 @@ public class KeycloakUserService {
         return Collections.emptyList();
     }
 
+    public  Map<String, Object> getUserInfoFromAccessToken(String accessToken){
+        Jwt jwt = jwtDecoder.decode(accessToken);
+        return jwt.getClaims();
+
+    }
+
     public boolean hasRoleInAccessToken(String accessToken, String role) {
         try {
             Jwt jwt = jwtDecoder.decode(accessToken);

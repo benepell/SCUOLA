@@ -162,28 +162,70 @@ public class KeycloakController {
 
     // A new endpoint to get the user's information in JSON format
     @GetMapping("/userinfo")
-    public Map<String, Object> getUserInfo(Authentication authentication, Principal principal, HttpSession session) {
-        String accessToken = kService.getAccessToken(authentication);
+    public Map<String, Object> getUserInfo(Authentication authentication, Principal principal, HttpSession session, HttpServletRequest request) {
 
         // Create a map to hold the user's information
         Map<String, Object> userInfo = new HashMap<>();
+        String accessToken = null;
+        List<String> listRoles = null;
 
-        List<String> listRoles = kService.getRolesFromAccessToken(accessToken);
-        userInfo.put("name", kService.getTokenAttribute(authentication, Constants.CLAIMS_NAME));
-        userInfo.put("preferred_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
-        userInfo.put("email", kService.getTokenAttribute(authentication, Constants.CLAIMS_EMAIL));
-        userInfo.put("roles", listRoles);
+        if (authentication != null) {
+            accessToken = kService.getAccessToken(authentication);
 
+            listRoles = kService.getRolesFromAccessToken(accessToken);
 
-        // Get the user's resource roles
-        // Get the user's resource roles
-        Map<String, Set<String>> resourceRoles = new HashMap<>();
-        listRoles.forEach(role -> {
-            // Assumi che ogni ruolo corrisponda a una risorsa specifica
-            // e aggiungilo a un Set di ruoli associati a quella risorsa
-            resourceRoles.computeIfAbsent(role, k -> new HashSet<>()).add(role);
-        });
-        userInfo.put("resource_roles", resourceRoles);
+            userInfo.put("name", kService.getTokenAttribute(authentication, Constants.CLAIMS_NAME));
+            userInfo.put("preferred_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
+            userInfo.put("email", kService.getTokenAttribute(authentication, Constants.CLAIMS_EMAIL));
+
+            if (listRoles != null) {
+                userInfo.put("roles", listRoles);
+                Map<String, Set<String>> resourceRoles = new HashMap<>();
+                listRoles.forEach(role -> {
+                    // Assumi che ogni ruolo corrisponda a una risorsa specifica
+                    // e aggiungilo a un Set di ruoli associati a quella risorsa
+                    resourceRoles.computeIfAbsent(role, k -> new HashSet<>()).add(role);
+                });
+                userInfo.put("resource_roles", resourceRoles);
+
+            }
+
+        } else {
+            String authorizationHeader = request.getHeader("Authorization");
+
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                accessToken = authorizationHeader.substring(7); // Rimuovi "Bearer " per ottenere solo il token
+            }
+
+            if (accessToken != null) {
+                Map<String, Object> claims = kService.getUserInfoFromAccessToken(accessToken);
+
+                // Ottieni informazioni base dell'utente
+                String name = (String) claims.getOrDefault("name", "");
+                String preferredUsername = (String) claims.getOrDefault("preferred_username", "");
+                String email = (String) claims.getOrDefault("email", "");
+
+                userInfo.put("name", name);
+                userInfo.put("preferred_username", preferredUsername);
+                userInfo.put("email", email);
+
+                // Ottieni i ruoli
+                Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+                List<String> roles = realmAccess != null && realmAccess.containsKey("roles")
+                        ? (List<String>) realmAccess.get("roles")
+                        : Collections.emptyList();
+
+                userInfo.put("roles", roles);
+
+                Map<String, Set<String>> resourceRoles = new HashMap<>();
+                roles.forEach(role -> {
+                    resourceRoles.computeIfAbsent(role, k -> new HashSet<>()).add(role);
+                });
+                userInfo.put("resource_roles", resourceRoles);
+
+            }
+
+        }
 
         logService.sendLog(session, Constants.EVENT_LOG_CHECK_INFO);
 
