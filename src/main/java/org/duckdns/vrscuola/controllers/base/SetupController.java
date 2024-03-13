@@ -47,7 +47,7 @@ public class SetupController {
         this.vService = vService;
     }
 
-    @GetMapping(value = "setup")
+    @RequestMapping(value = "setup", method = RequestMethod.GET, headers = "Host=setup2024:8081")
     public String getIndex(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
