@@ -90,6 +90,7 @@ function BootstrapCookieConsentSettings(props) {
         self.modalContent = `<!-- cookie banner => https://github.com/shaack/bootstrap-cookie-consent-settings -->
 <div class="modal-dialog modal-lg shadow" role="document">
     <div class="modal-content">
+    <a href="./static/page/cookie/g.html" class="corner-link">&nbsp;&nbsp;</a>
         <div class="modal-header">
             <h1 class="modal-title">${self.content.title}</h1>
         </div>
