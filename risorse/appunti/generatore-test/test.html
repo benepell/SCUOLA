@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Generator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        margin-top: 50px;
+        padding: 20px;
+    }
+    .card {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        margin: 20px auto;
+        padding: 30px;
+        max-width: 600px;
+    }
+    form {
+        max-width: 600px;
+        margin: auto;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+    textarea, input {
+        width: calc(100% - 12px);
+        padding: 6px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .answersContainer {
+        margin-bottom: 15px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    hr {
+        border: 0;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+    }
+    .removeButton {
+        background-color: #d05353;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .removeButton:hover {
+        background-color: #e82222;
+
+    }
+    #quizForm {
+        font-size: x-large;
+    }
+
+    .overlay {
+        position: fixed; /* Posizione fissa sopra tutto il contenuto */
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none; /* Permette il click attraverso l'overlay */
+        z-index: 1000; /* Assicura che l'overlay sia sopra gli altri elementi */
+        color: gray; /* Colore del testo */
+        font-size: 4em; /* Dimensione del testo */
+        font-family: 'Arial', sans-serif; /* Stile del font */
+        opacity: 0.2; /* Trasparenza del testo */
+    }
+
+</style>
+</head>
+<body>
+
+<div class="overlay">
+      Test VrScuola
+</div>
+
+<div class="card">
+    <form id="quizForm">
+        <div>
+            <label>Tipo del questionario:</label>
+            <input type="text" id="fileName" placeholder="tipologia del questionario: preliminare,intermedio,finale,etc..." style="width: 100%;">
+        </div>
+        <div>&nbsp;</div>
+        <div id="questionsContainer"></div>
+        <button type="button" onclick="addQuestion()" style="background-color: #4CAF50;">Aggiungi Domanda</button>
+        <button type="submit" style="background-color: #3ca8bb;">Genera File</button>
+    </form>
+</div>
+
+<script>
+    let questions = [];
+
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    function addQuestion() {
+        const questionDiv = document.createElement('div');
+        questionDiv.innerHTML = `
+            <div>
+                <label>Domanda:</label>
+                <textarea class="questionText" style="resize: vertical;"></textarea>
+            </div>
+            <div class="answersContainer">
+                <label>Risposte:</label>
+                <br>
+                <button type="button" onclick="addAnswer(this)" style="background-color: #4CAF50; color: white;">Aggiungi Risposta</button>
+            </div>
+            <div>
+                <label>Risposta Corretta:</label>
+                <input type="text" class="correctAnswer" style="width: 100%;">
+            </div>
+            <button class="removeButton" onclick="removeQuestion(this)">Elimina Domanda</button>
+            <hr>
+        `;
+        questionsContainer.appendChild(questionDiv);
+    }
+
+    function addAnswer(button) {
+        const answersContainer = button.parentNode;
+        const answerInput = document.createElement('input');
+        answerInput.setAttribute('type', 'text');
+        answerInput.setAttribute('placeholder', 'Risposta...');
+        answerInput.style.width = '100%';
+        answersContainer.insertBefore(answerInput, button);
+    }
+
+    function removeQuestion(button) {
+        const questionDiv = button.parentNode;
+        questionsContainer.removeChild(questionDiv);
+    }
+
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const fileName = document.getElementById('fileName').value.trim();
+
+        if (!fileName) {
+            alert("Inserisci il tipo del questionario");
+            return;
+        }
+
+        const questionElements = document.getElementsByClassName('questionText');
+        const answersElements = document.getElementsByClassName('answersContainer');
+        const correctAnswerElements = document.getElementsByClassName('correctAnswer');
+
+        for (let i = 0; i < questionElements.length; i++) {
+            const question = questionElements[i].value.trim();
+            const answersList = Array.from(answersElements[i].getElementsByTagName('input')).map(answer => answer.value.trim());
+            const correctAnswer = correctAnswerElements[i].value.trim();
+
+            if (!question) {
+                alert("Inserisci la domanda");
+                return;
+            }
+
+            if (!correctAnswer) {
+                alert("Inserisci la risposta corretta");
+                return;
+            }
+
+            if (answersList.length === 0) {
+                alert("Inserisci almeno una risposta");
+                return;
+            }
+
+            questions.push({
+                question: question,
+                answers: answersList,
+                correctAnswer: correctAnswer
+            });
+        }
+
+        generateTextFile(fileName);
+    });
+
+    function generateTextFile(fileName) {
+        let text = '';
+
+        questions.forEach((question, index) => {
+            text += `{domanda} ${question.question}\n`;
+            question.answers.forEach((answer, idx) => {
+                text += `${idx + 1}) ${answer}\n`;
+            });
+            text += `{corretta} ${question.correctAnswer}\n\n`;
+        });
+
+        const file = new Blob([text], {type: 'text/plain'});
+        const a = document.createElement('a');
+        const url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = 'test_' + fileName + '.txt';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+
+    window.onload = addQuestion;
+</script>
+
+</body>
+</html>
