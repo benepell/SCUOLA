@@ -41,6 +41,9 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query(value = "SELECT username FROM connect c WHERE ( c.macAddress = :mac and c.connected != 'disconnected' )")
     String existsUsername(@Param("mac") String mac);
 
+    @Query(value = "SELECT avatar FROM connect c WHERE ( c.macAddress = :mac)")
+    String findAvatar(@Param("mac") String mac);
+
     @Query("SELECT c.macAddress FROM connect c WHERE c.macAddress = :mac")
     String findMac(@Param("mac") String mac);
 
@@ -75,13 +78,13 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note, c.connected = :connected WHERE  c.macAddress = :macAddress  ")
-    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress, @Param("connected") String connected);
+    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.avatar = :avatar, c.connected = :connected WHERE  c.macAddress = :macAddress  ")
+    void updateByMacAddress(@Param("initDate") Instant initDate, @Param("username") String username, @Param("avatar") String avatar, @Param("macAddress") String macAddress, @Param("connected") String connected);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.note = :note, c.connected = :connected, c.argoment = :arg WHERE  c.macAddress = :macAddress  ")
-    void updateByMacAddress2(@Param("initDate") Instant initDate, @Param("username") String username, @Param("note") String note, @Param("macAddress") String macAddress, @Param("connected") String connected, @Param("arg") String arg);
+    @Query(value = "UPDATE connect c set c.initDate=:initDate,c.username = :username, c.avatar = :avatar, c.connected = :connected, c.argoment = :arg WHERE  c.macAddress = :macAddress  ")
+    void updateByMacAddress2(@Param("initDate") Instant initDate, @Param("username") String username, @Param("avatar") String avatar, @Param("macAddress") String macAddress, @Param("connected") String connected, @Param("arg") String arg);
 
     @Transactional
     @Modifying

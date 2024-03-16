@@ -20,9 +20,11 @@ package org.duckdns.vrscuola.services.devices;
 
 import org.duckdns.vrscuola.utilities.Utilities;
 
+import java.util.Map;
+
 public interface VRDeviceConnectivityService {
 
-    String viewConnect(Utilities utilities, String macAddress, String note);
+    Map<String, String> viewConnect(Utilities utilities, String macAddress, String note);
 
     boolean valid(String macAddress);
 

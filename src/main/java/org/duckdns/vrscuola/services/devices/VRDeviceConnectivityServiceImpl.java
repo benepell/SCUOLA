@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityService {
 
@@ -38,8 +41,11 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     VRDeviceInitRepository iRepository;
 
     @Override
-    public String viewConnect(Utilities utilities, String macAddress, String note) {
-        return cRepository.existsUsername(macAddress);
+    public Map<String, String>  viewConnect(Utilities utilities, String macAddress, String avatar) {
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("username",cRepository.existsUsername(macAddress));
+        responseMap.put("avatar",cRepository.findAvatar(macAddress));
+        return responseMap;
     }
 
     @Override
@@ -57,8 +63,8 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     }
 
     @Override
-    public void connect(Utilities utilities, String macAddress, String username, String note, String connected) {
-        cRepository.updateByMacAddress(utilities.getEpoch(), username, note, macAddress, connected);
+    public void connect(Utilities utilities, String macAddress, String username, String avatar, String connected) {
+        cRepository.updateByMacAddress(utilities.getEpoch(), username, avatar, macAddress, connected);
 
     }
 

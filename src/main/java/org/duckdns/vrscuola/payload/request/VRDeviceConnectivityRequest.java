@@ -35,7 +35,7 @@ public class VRDeviceConnectivityRequest {
     @Size(max = 15)
     private String label;
     @Size(max = 255)
-    private String note;
+    private String avatar;
     @Size(max = 255)
     private String batteryLevel;
 

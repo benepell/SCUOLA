@@ -71,10 +71,12 @@ public class VRDeviceConnectivityController {
 
         String mac = request.getMacAddress();
         String batteryLevel = request.getBatteryLevel();
+        String avatar = request.getAvatar();
         String username;
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("user", "");
+        responseMap.put("username", "");
         responseMap.put("sec", "");
+
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
@@ -83,15 +85,24 @@ public class VRDeviceConnectivityController {
             return ResponseEntity.ok(responseMap);
         }
 
-        username = cService.viewConnect(utilities, mac, request.getNote());
+        Map<String, String> map;
+
+        map = cService.viewConnect(utilities, mac, request.getAvatar());
+        String userMap = null;
+        String avatarMap = null;
 
         // disabilita visore
-        if (username == null) {
+        if (map == null && userMap == null) {
             return ResponseEntity.ok(responseMap);
         }
 
-        responseMap.put("user", username);
+        userMap = map.get("username").toString();
+        avatarMap = map.get("avatar").toString();
+
+        responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
+        responseMap.put("avatar", avatarMap);
+
 
         return ResponseEntity.ok(responseMap);
 
@@ -111,13 +122,19 @@ public class VRDeviceConnectivityController {
             return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("init.add.device.not.connect"));
         }
 
-        String usernameexist = cService.viewConnect(utilities, request.getMacAddress(), request.getNote());
+        Map<String, String> map = cService.viewConnect(utilities, request.getMacAddress(), request.getNote());
+        boolean usernameexist = map != null ? map.get("username").toString().length() > 3 : false;
+
+        if (!usernameexist) {
+            return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("init.add.device.not.connect"));
+        }
+
         cService.connect(utilities, macAddress, username, note, Constants.CONNECTED_IN_CONNECTED);
 
         // aggiorna stato batteria dispositivo
-       // if (batteryLevel > 0) {
-            iService.updateBatteryLevel(macAddress, batteryLevel);
-       // }
+        // if (batteryLevel > 0) {
+        iService.updateBatteryLevel(macAddress, batteryLevel);
+        // }
 
         // ritorna label visore
         String visore = iService.label(macAddress);
@@ -138,9 +155,9 @@ public class VRDeviceConnectivityController {
         }
 
         // aggiorna stato batteria dispositivo
-      //  if (batteryLevel > 0) {
-            iService.updateBatteryLevel(macAddress, batteryLevel);
-       // }
+        //  if (batteryLevel > 0) {
+        iService.updateBatteryLevel(macAddress, batteryLevel);
+        // }
 
         // ritorna label visore
         String argoment = cService.argomento(macAddress);
