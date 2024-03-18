@@ -27,7 +27,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ArgomentiController {
@@ -40,14 +42,17 @@ public class ArgomentiController {
     }
 
     @GetMapping(value = "/argomenti/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String>> getArgomentiAll(
-            @RequestParam(name = "aula", defaultValue = "") String aula,
+    public ResponseEntity<?> getArgomentiAll(
+            @RequestParam(name = "lab", defaultValue = "") String lab,
             @RequestParam(name = "classe", defaultValue = "") String classe,
             @RequestParam(name = "sezione", defaultValue = "") String sezione) {
 
         try {
-            List<String> args = argomentiDirService.getArgomentiAll(aula, classe, sezione);
-            return ResponseEntity.ok(args);
+            List<String> args = argomentiDirService.getArgomentiAll(lab, classe, sezione);
+            Map<String, Object> argsMap = new HashMap<>();
+            argsMap.put("message", args);
+
+            return ResponseEntity.ok(argsMap);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
