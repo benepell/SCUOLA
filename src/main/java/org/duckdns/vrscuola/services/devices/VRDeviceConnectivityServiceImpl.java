@@ -41,10 +41,10 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     VRDeviceInitRepository iRepository;
 
     @Override
-    public Map<String, String>  viewConnect(Utilities utilities, String macAddress, String avatar) {
+    public Map<String, String> viewConnect(Utilities utilities, String macAddress, String avatar) {
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("username",cRepository.existsUsername(macAddress));
-        responseMap.put("avatar",cRepository.findAvatar(macAddress));
+        responseMap.put("username", cRepository.existsUsername(macAddress));
+        responseMap.put("avatar", avatar != null ? avatar : cRepository.findAvatar(macAddress));
         return responseMap;
     }
 

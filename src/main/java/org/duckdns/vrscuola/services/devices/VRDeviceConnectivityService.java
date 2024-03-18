@@ -24,7 +24,7 @@ import java.util.Map;
 
 public interface VRDeviceConnectivityService {
 
-    Map<String, String> viewConnect(Utilities utilities, String macAddress, String note);
+    Map<String, String> viewConnect(Utilities utilities, String macAddress, String avatar);
 
     boolean valid(String macAddress);
 
