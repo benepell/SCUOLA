@@ -270,5 +270,17 @@ public class KeycloakUserService {
         return null;
     }
 
+    public boolean isAccessTokenValid(String accessToken) {
+        try {
+            Jwt jwt = jwtDecoder.decode(accessToken); // Tenta di decodificare il token.
+            Map<String, Object> claims = jwt.getClaims(); // Ottiene le claims del token.
+            return true; // Il token è stato decodificato correttamente, quindi è valido.
+
+        } catch (Exception e) {
+            // log.error("Errore durante la decodifica del token JWT", e);
+            return false; // Si è verificato un errore durante la decodifica, il token non è valido.
+        }
+    }
+
 
 }

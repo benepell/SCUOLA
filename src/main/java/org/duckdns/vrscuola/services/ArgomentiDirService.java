@@ -32,7 +32,7 @@ public class ArgomentiDirService {
         List<String> argomenti = new ArrayList<>();
         File argomentiDirectory = new File(basePath, "ARGOMENTI");
         if (argomentiDirectory != null && argomentiDirectory.isDirectory()) {
-            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-") && !file.getName().matches("^aula\\d+$"))) {
+            for (File argomentoDirectory : argomentiDirectory.listFiles(file -> file.isDirectory() && !file.getName().startsWith("-") && !file.getName().matches("^lab\\d+$"))) {
                 argomenti.add(argomentoDirectory.getName());
             }
         }

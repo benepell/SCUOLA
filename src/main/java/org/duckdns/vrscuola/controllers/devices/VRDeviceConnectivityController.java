@@ -25,6 +25,7 @@ import org.duckdns.vrscuola.payload.request.VRDeviceConnectivityRequest;
 import org.duckdns.vrscuola.payload.response.MessageResponse;
 import org.duckdns.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
+import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.services.utils.MessageServiceImpl;
 import org.duckdns.vrscuola.services.utils.UtilServiceImpl;
 import org.duckdns.vrscuola.utilities.Constants;
@@ -51,19 +52,23 @@ public class VRDeviceConnectivityController {
     private final MessageServiceImpl messageServiceImpl;
     private final UtilServiceImpl uService;
 
+    private final KeycloakUserService kService;
+
     @Autowired
     public VRDeviceConnectivityController(@Value("${keycloak.credentials.secret}") String code,
                                           VRDeviceConnectivityServiceImpl cService,
                                           VRDeviceInitServiceImpl iService,
                                           Utilities utilities,
                                           MessageServiceImpl messageServiceImpl,
-                                          UtilServiceImpl uService) {
+                                          UtilServiceImpl uService,
+                                          KeycloakUserService kService) {
         this.code = code;
         this.cService = cService;
         this.iService = iService;
         this.utilities = utilities;
         this.messageServiceImpl = messageServiceImpl;
         this.uService = uService;
+        this.kService = kService;
     }
 
     @PostMapping(value = "/username")
@@ -141,26 +146,28 @@ public class VRDeviceConnectivityController {
     }
 
     @PostMapping(value = "/subject")
-    public ResponseEntity<?> subject(@Valid VRDeviceConnectivityArgRequest request) {
+    public ResponseEntity<?> subject(@Valid VRDeviceConnectivityArgRequest request, @RequestHeader("Authorization") String authorizationHeader) {
 
-        String macAddress = request.getMacAddress();
-        String code = request.getCode();
-        String batteryLevel = request.getBatteryLevel();
+        String accessToken = null;
+        String res = "";
 
-        // dispositivo registrato
-        if (!iService.valid(macAddress, code)) {
-            return uService.responseMsgKo(ResponseEntity.badRequest(), messageServiceImpl.getMessage("init.add.device.not.connect"));
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            accessToken = authorizationHeader.substring(7); // Rimuovi "Bearer " per ottenere solo il token
+
+            if (accessToken != null && kService.isAccessTokenValid(accessToken)) {
+
+                // token valido
+                String macAddress = request.getMacAddress();
+                String batteryLevel = request.getBatteryLevel();
+
+                iService.updateBatteryLevel(macAddress, batteryLevel);
+
+                // ritorna label visore
+                res = cService.argomento(macAddress);
+            }
         }
 
-        // aggiorna stato batteria dispositivo
-        //  if (batteryLevel > 0) {
-        iService.updateBatteryLevel(macAddress, batteryLevel);
-        // }
-
-        // ritorna label visore
-        String argoment = cService.argomento(macAddress);
-
-        return ResponseEntity.ok(new MessageResponse(argoment));
+        return ResponseEntity.ok(new MessageResponse(res));
     }
 
 }
