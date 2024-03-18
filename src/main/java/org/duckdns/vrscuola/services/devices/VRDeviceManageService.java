@@ -90,7 +90,7 @@ public class VRDeviceManageService {
                 vrDeviceConnectivityEntitie.setInitDate(utilities.getEpoch());
                 vrDeviceConnectivityEntitie.setMacAddress(macAddress);
                 vrDeviceConnectivityEntitie.setUsername(username);
-                vrDeviceConnectivityEntitie.setNote(note);
+               // vrDeviceConnectivityEntitie.setNote(note);
                 vrDeviceConnectivityEntitie.setConnected(Constants.CONNECTED_IN_PENDING);
 
                 if (arg != null) {

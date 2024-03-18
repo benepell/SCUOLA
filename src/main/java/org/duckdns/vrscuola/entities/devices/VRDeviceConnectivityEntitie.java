@@ -43,7 +43,7 @@ public class VRDeviceConnectivityEntitie implements Serializable {
     @Column(unique = true) // Impedisce l'inserimento di valori duplicati a username
     private String username;
 
-    private String note;
+    private String avatar;
     private String connected;
     private String argoment;
 

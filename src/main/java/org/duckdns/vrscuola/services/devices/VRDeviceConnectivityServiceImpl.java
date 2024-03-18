@@ -44,7 +44,16 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     public Map<String, String> viewConnect(Utilities utilities, String macAddress, String avatar) {
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("username", cRepository.existsUsername(macAddress));
-        responseMap.put("avatar", avatar != null ? avatar : cRepository.findAvatar(macAddress));
+
+        String strAvatar;
+        if (avatar != null) {
+            strAvatar = avatar;
+            cRepository.updateAvatar(strAvatar, macAddress);
+        } else {
+            strAvatar = cRepository.findAvatar(macAddress);
+        }
+
+        responseMap.put("avatar", strAvatar);
         return responseMap;
     }
 

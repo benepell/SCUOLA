@@ -50,7 +50,7 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query("SELECT  c.username FROM connect c WHERE c.connected != 'disconnected'")
     String[] findAllUsers();
 
-    @Query("SELECT c.id, c.macAddress, c.initDate, c.username, c.note, c.connected, c.argoment FROM connect c")
+    @Query("SELECT c.id, c.macAddress, c.initDate, c.username, c.avatar, c.connected, c.argoment FROM connect c")
     List<Object[]> findAllUsername();
 
     default List<VRDeviceConnectivityModel> findAllConnectivityModels() {
@@ -90,6 +90,12 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Modifying
     @Query(value = "UPDATE connect c set c.initDate=:initDate, c.argoment = :argoment WHERE c.macAddress = :macAddress  ")
     void updateArgomentByVisore(@Param("initDate") Instant initDate, @Param("argoment") String argoment, @Param("macAddress") String macAddress);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE connect c set c.avatar=:avatar WHERE c.macAddress = :macAddress  ")
+    void updateAvatar(@Param("avatar") String avatar, @Param("macAddress") String macAddress);
+
 
     @Transactional
     @Modifying

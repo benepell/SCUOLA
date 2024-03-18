@@ -71,11 +71,11 @@ public class VRDeviceConnectivityController {
 
         String mac = request.getMacAddress();
         String batteryLevel = request.getBatteryLevel();
-        String avatar = request.getAvatar();
+        String avatar = request.getAvatar() != null ? request.getAvatar() : "";
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("username", "");
         responseMap.put("sec", "");
-        responseMap.put("avatar", "");
+        responseMap.put("avatar", avatar);
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
@@ -91,21 +91,14 @@ public class VRDeviceConnectivityController {
         String avatarMap = null;
 
         // disabilita visore
-        if (map == null && userMap == null) {
+        if (map == null) {
             return ResponseEntity.ok(responseMap);
         }
 
         userMap = map.get("username").toString();
+        avatarMap = map.get("avatar") != null ? map.get("avatar").toString() : "";
 
-        if (avatar != null) {
-            responseMap.put("avatar", avatar);
-
-        } else {
-            avatarMap = map.get("avatar").toString();
-            responseMap.put("avatar", avatarMap);
-
-        }
-
+        responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
 
