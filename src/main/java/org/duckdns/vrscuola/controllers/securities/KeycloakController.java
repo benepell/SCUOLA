@@ -137,7 +137,7 @@ public class KeycloakController {
         if (idTokenHint == null || idTokenHint.isEmpty()) {
             // Gestisci l'errore: l'idTokenHint non è disponibile
             // Potresti reindirizzare l'utente a una pagina di errore o registrare l'errore.
-            return new RedirectView("/error"); // Sostituire con il percorso appropriato
+            return new RedirectView("/"); // Sostituire con il percorso appropriato
         }
 
         // Prepara l'URL per il logout di Keycloak
