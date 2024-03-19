@@ -86,6 +86,7 @@ public class VRDeviceConnectivityController {
         iService.updateOnline(mac, batteryLevel);
 
         if (!cService.valid(request.getMacAddress())) {
+            responseMap.put("state", "ko");
             return ResponseEntity.ok(responseMap);
         }
 
@@ -97,6 +98,7 @@ public class VRDeviceConnectivityController {
 
         // disabilita visore
         if (map == null) {
+            responseMap.put("state", "ko");
             return ResponseEntity.ok(responseMap);
         }
 
@@ -106,6 +108,8 @@ public class VRDeviceConnectivityController {
         responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
+        responseMap.put("state", "ok");
+
 
         return ResponseEntity.ok(responseMap);
 
