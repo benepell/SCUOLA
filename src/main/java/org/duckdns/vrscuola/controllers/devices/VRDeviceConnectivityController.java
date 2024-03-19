@@ -158,9 +158,6 @@ public class VRDeviceConnectivityController {
 
                 // token valido
                 String macAddress = request.getMacAddress();
-                String batteryLevel = request.getBatteryLevel();
-
-                iService.updateBatteryLevel(macAddress, batteryLevel);
 
                 // ritorna label visore
                 res = cService.argomento(macAddress);

@@ -32,9 +32,5 @@ public class VRDeviceConnectivityArgRequest {
     @NotBlank
     @Size(max = 17)
     private String macAddress;
-    @NotBlank
-    @Size(max = 50)
-    private String code;
-    private String batteryLevel;
 
 }
