@@ -84,9 +84,18 @@ public class VRDeviceConnectivityController {
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
+        if (mac == null) {
+            responseMap.put("state",Constants.STATE_NOT_FOUND);
+            return ResponseEntity.ok(responseMap);
+        }
 
-        if (!cService.valid(request.getMacAddress())) {
-            responseMap.put("state", "ko");
+        if (!cService. existsByMacAddress(mac)) {
+            responseMap.put("state",Constants.STATE_NOT_LISTED);
+            return ResponseEntity.ok(responseMap);
+        }
+
+        if (!cService.valid(mac)) {
+            responseMap.put("state",Constants.STATE_NOT_USED);
             return ResponseEntity.ok(responseMap);
         }
 
@@ -98,7 +107,7 @@ public class VRDeviceConnectivityController {
 
         // disabilita visore
         if (map == null) {
-            responseMap.put("state", "ko");
+            responseMap.put("state",Constants.STATE_KO);
             return ResponseEntity.ok(responseMap);
         }
 
@@ -108,8 +117,7 @@ public class VRDeviceConnectivityController {
         responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
-        responseMap.put("state", "ok");
-
+        responseMap.put("state",Constants.STATE_OK);
 
         return ResponseEntity.ok(responseMap);
 

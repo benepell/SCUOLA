@@ -85,6 +85,13 @@ public interface Constants {
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";
     String NO_CODE = "nocode";
+
+    String STATE_NOT_FOUND = "mac-address-not-found";
+    String STATE_NOT_LISTED = "mac-address-not-listed";
+    String STATE_NOT_USED = "mac-address-not-used";
+    String STATE_OK = "ok";
+    String STATE_KO = "ko";
+
     int BATTERY_LEVEL_MAX = 100;
     int BATTERY_LEVEL = 20;
 

@@ -28,6 +28,8 @@ public interface VRDeviceConnectivityService {
 
     boolean valid(String macAddress);
 
+    boolean existsByMacAddress(String macAddress);
+
     void connect(Utilities utilities, String macAddress, String username, String note, String connected);
 
     String argomento(String argomento);

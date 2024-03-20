@@ -59,16 +59,17 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
 
     @Override
     public boolean valid(String macAddress) {
-        // apparato registrato
-        if (!iRepository.existsByMacAddress(macAddress)) {
-            return false;
-        }
         // ultima condizione verificata allora true
         // collegamento professore aggionamento campo username in base a macaddress
-        if (cRepository.existsByMacAddress(macAddress)) {
-            return true;
-        }
-        return false;
+        return cRepository.existsByMacAddress(macAddress);
+    }
+
+
+    @Override
+    public boolean existsByMacAddress(String macAddress) {
+        // apparato registrato
+        return iRepository.existsByMacAddress(macAddress);
+
     }
 
     @Override
