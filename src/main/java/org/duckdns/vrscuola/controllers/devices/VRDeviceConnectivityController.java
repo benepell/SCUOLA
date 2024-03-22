@@ -77,10 +77,13 @@ public class VRDeviceConnectivityController {
         String mac = request.getMacAddress();
         String batteryLevel = request.getBatteryLevel();
         String avatar = request.getAvatar() != null ? request.getAvatar() : "";
+        String lab = "";
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("username", "");
         responseMap.put("sec", "");
         responseMap.put("avatar", avatar);
+        responseMap.put("lab", lab);
+
 
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
@@ -113,11 +116,14 @@ public class VRDeviceConnectivityController {
 
         userMap = map.get("username").toString();
         avatarMap = map.get("avatar") != null ? map.get("avatar").toString() : "";
+        lab = map.get("lab") != null ?  "lab" + map.get("lab").toString() : "";;
+
 
         responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
         responseMap.put("state",Constants.STATE_OK);
+        responseMap.put("lab", lab);
 
         return ResponseEntity.ok(responseMap);
 

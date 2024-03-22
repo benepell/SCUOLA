@@ -77,6 +77,9 @@ public interface VRDeviceInitRepository extends JpaRepository<VRDeviceInitEntiti
     @Query(value = "SELECT macAddress FROM init i WHERE i.label =:label")
     String findMac(@Param("label") String label);
 
+    @Query("SELECT i.classroom FROM init i WHERE i.macAddress = :mac")
+    String findLab(@Param("mac") String mac);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE init i set i.macAddress = :newmac, i.note = :note, i.code = :code, i.classroom = :classroom WHERE  i.macAddress = :oldmac  ")

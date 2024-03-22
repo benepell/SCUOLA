@@ -23,22 +23,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 import org.duckdns.vrscuola.utilities.Constants;
 import org.duckdns.vrscuola.utilities.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ResourceController {
 
+    @Value("${school.resource.base}")
+    private String resBase;
+
+    @Value("${health.datasource.website.risorse}")
+    private String resResources;
+
+    @Autowired
+    private ExecutorService taskExecutor;
     private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
 
     @GetMapping(value = "/resources/files", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +65,8 @@ public class ResourceController {
                             Thread thread = new Thread(() -> {
                                 String hash = FileUtils.calculateHash(file);
                                 if (file.isFile()) {
-                                    ResourceInfo resource = new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath());
+                                    ResourceInfo resource = new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath(),
+                                            getUrlFromDir(directory.getPath(), file.getName()));
                                     synchronized (resources) {
                                         resources.add(resource);
                                     }
@@ -96,7 +106,8 @@ public class ResourceController {
                                 List<ResourceInfo> results = new ArrayList<>();
                                 String hash = FileUtils.calculateHash(file);
                                 if (file.isFile()) {
-                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath(),
+                                            getUrlFromDir(directory.getPath(), file.getName())));
                                 } else if (file.isDirectory()) {
                                     results.addAll(getAllResourcesInDirectory(file));
                                 }
@@ -120,6 +131,22 @@ public class ResourceController {
         return ResponseEntity.ok(resources);
     }
 
+    @GetMapping(value = "/resources/arg-filter", produces = "application/json")
+    public CompletableFuture<ResponseEntity<List<ResourceInfo>>> getFilterResources(
+            @RequestParam(name = "lab", defaultValue = "") String lab,
+            @RequestParam(name = "classe", defaultValue = "") String classe,
+            @RequestParam(name = "sezione", defaultValue = "") String sezione,
+            @RequestParam(name = "arg", defaultValue = "") String arg
+    ) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<ResourceInfo> allResources = getAllResources().getBody();
+            String pathToFilter = "/ARGOMENTI/" + lab + "/" + classe + "/" + sezione + "/" + arg;
+            List<ResourceInfo> filteredResources = filterResourcesByPath(allResources, pathToFilter);
+            return ResponseEntity.ok(filteredResources);
+        }, taskExecutor);
+    }
+
+
     private List<ResourceInfo> getAllResourcesInDirectory(File directory) {
         List<ResourceInfo> resources = new ArrayList<>();
         try {
@@ -137,7 +164,8 @@ public class ResourceController {
                                 List<ResourceInfo> results = new ArrayList<>();
                                 String hash = FileUtils.calculateHash(file);
                                 if (file.isFile()) {
-                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash, directory.getPath()));
+                                    results.add(new ResourceInfo(file.getName(), file.length(), getMimeType(file), hash,
+                                            directory.getPath(), getUrlFromDir(directory.getPath(), file.getName())));
                                 } else if (file.isDirectory()) {
                                     results.addAll(getAllResourcesInDirectory(file));
                                 }
@@ -178,13 +206,16 @@ public class ResourceController {
         private String hash;
 
         private String dir;
+        private String url;
 
-        public ResourceInfo(String name, long size, String type, String hash, String dir) {
+
+        public ResourceInfo(String name, long size, String type, String hash, String dir, String url) {
             this.name = name;
             this.size = size;
             this.type = type;
             this.hash = hash;
             this.dir = dir;
+            this.url = url;
         }
 
         public String getName() {
@@ -206,5 +237,19 @@ public class ResourceController {
         public String getDir() {
             return dir;
         }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
+    private String getUrlFromDir(String dir, String name) {
+        return dir != null ? dir.replaceAll(resBase.substring(0, resBase.length() - 1 - "/files".length()), resResources) + "/" + name : "";
+    }
+
+    private List<ResourceInfo> filterResourcesByPath(List<ResourceInfo> resources, String path) {
+        return resources.stream()
+                .filter(resource -> resource.getDir().contains(path))
+                .collect(Collectors.toList());
     }
 }

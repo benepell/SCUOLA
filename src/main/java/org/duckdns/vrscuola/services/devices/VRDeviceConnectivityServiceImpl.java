@@ -53,7 +53,11 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
             strAvatar = cRepository.findAvatar(macAddress);
         }
 
+        String lab = iRepository.findLab(macAddress);
+
         responseMap.put("avatar", strAvatar);
+        responseMap.put("lab", lab);
+
         return responseMap;
     }
 
