@@ -1,0 +1,35 @@
+publiccodeYmlVersion: '0.2'
+name: VRScuola
+applicationSuite: Istruzione e Formazione
+url: "https://github.com/benepell/scuola"
+landingURL: "https://vrscuola.duckdns.org"
+isBasedOn: "https://github.com/benepell/scuola"
+releaseDate: '2024-03-22'
+platforms:
+  - web
+  - android
+categories:
+  - education
+description:
+  it:
+    shortDescription: "Un progetto innovativo dedicato alla promozione dell'istruzione attraverso la realtà aumentata."
+    features:
+      - "Molteplici ambienti virtuali per l'educazione."
+      - "Personalizzazione delle aule in base alle esigenze didattiche."
+      - "Interazione tra aule per una collaborazione senza precedenti."
+      - "Accessibilità e interattività elevate per un'apprendimento immersivo."
+legal:
+  license: Apache-2.0
+developmentStatus: stable
+intendedAudience:
+  scope: 'national'
+  countries:
+    - it
+localisation:
+  availableLanguages:
+    - it
+maintenance:
+  type: "community"
+  contacts:
+    - name: Benedetto Pellerito
+      email: "benedettopellerito@gmail.com"
