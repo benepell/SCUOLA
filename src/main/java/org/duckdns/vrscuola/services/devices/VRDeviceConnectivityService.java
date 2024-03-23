@@ -18,8 +18,10 @@
 
 package org.duckdns.vrscuola.services.devices;
 
+import org.duckdns.vrscuola.models.DeviceInfo;
 import org.duckdns.vrscuola.utilities.Utilities;
 
+import java.util.List;
 import java.util.Map;
 
 public interface VRDeviceConnectivityService {
@@ -33,4 +35,6 @@ public interface VRDeviceConnectivityService {
     void connect(Utilities utilities, String macAddress, String username, String note, String connected);
 
     String argomento(String argomento);
+
+    List<DeviceInfo> getInfo(String mac);
 }

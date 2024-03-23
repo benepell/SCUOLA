@@ -53,6 +53,9 @@ public interface VRDeviceConnectivityRepository extends JpaRepository<VRDeviceCo
     @Query("SELECT c.id, c.macAddress, c.initDate, c.username, c.avatar, c.connected, c.argoment FROM connect c")
     List<Object[]> findAllUsername();
 
+    @Query(value = "SELECT i.classroom, c.username, c.argoment FROM init i JOIN connect c ON i.macAddress = c.macAddress WHERE i.macAddress = :mac",nativeQuery = true)
+    List<Object[]> findInfo(@Param("mac") String mac);
+
     default List<VRDeviceConnectivityModel> findAllConnectivityModels() {
         List<Object[]> connectivityDataList = findAllUsername();
         List<VRDeviceConnectivityModel> connectivityModelList = new ArrayList<>();

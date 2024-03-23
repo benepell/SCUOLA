@@ -18,6 +18,7 @@
 
 package org.duckdns.vrscuola.services.devices;
 
+import org.duckdns.vrscuola.models.DeviceInfo;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.utilities.Utilities;
@@ -25,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -86,4 +89,31 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
     public String argomento(String argomento) {
         return cRepository.argomentByMacAddress(argomento);
     }
+
+    @Override
+    public List<DeviceInfo> getInfo(String mac) {
+        List<Object[]> results = cRepository.findInfo(mac);
+        DeviceInfo deviceInfo = new DeviceInfo();
+        List<DeviceInfo> deviceInfos = new ArrayList<>();
+
+        results.stream().forEach(result -> {
+            String classroom = String.valueOf(result[0]);
+            String username = String.valueOf(result[1]);
+            String arg = result[2] != null ? String.valueOf(result[2]) : "";
+            String lab = "lab" + classroom;
+
+            String[] str = username.split("-");
+            String classe = str[0];
+            String sezione = str[1];
+
+            deviceInfo.setLab(lab);
+            deviceInfo.setUsername(username);
+            deviceInfo.setClasse(classe);
+            deviceInfo.setSezione(sezione);
+            deviceInfo.setArg(arg);
+        });
+
+        return deviceInfos;
+    }
+
 }
