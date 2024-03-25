@@ -126,7 +126,7 @@ public class WebSecurityConfig {
                                 "/argomento-visore", "/static/**", "/favicon.ico", "/argomenti/**", "/swagger-ui/**",
                                 "/api-docs/**", "/v3/api-docs", "/swagger-resources/**", "/webjars/**", "/resources/**",
                                 "/questions/**", "/answers/**", "/list-questions/**", "/list-media/**", "/questions-view/**",
-                                "/setup", "/setup-state", "/setup/**").permitAll()
+                                "/setup", "/setup-state", "/setup/**","/performance/stats").permitAll()
 
                         .anyRequest().authenticated()
                 )
