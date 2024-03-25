@@ -61,17 +61,17 @@
         <% } %>
     </div>
 
-    <div class="container" style="display: flex; justify-content: space-between; margin-top: 20px;">
-        <div>
-            <img src="${pageContext.request.contextPath}/performance/memoryUsageChart" alt="Grafico Utilizzo Memoria Heap">
-        </div>
-        <div>
-            <img src="${pageContext.request.contextPath}/performance/diskSpaceChart" alt="Grafico Statistiche Disk">
-        </div>
-        <div>
-            <img src="${pageContext.request.contextPath}/performance/requestsChart" alt="Grafico Statistiche Richieste">
-        </div>
-    </div>
+ <div class="container" style="display: flex; justify-content: space-between; margin-top: 20px;">
+     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+         <img src="${pageContext.request.contextPath}/performance/memoryUsageChart" alt="Grafico Utilizzo Memoria Heap" style="display: block; width: 100%; height: auto;">
+     </div>
+     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+         <img src="${pageContext.request.contextPath}/performance/diskSpaceChart" alt="Grafico Statistiche Disk" style="display: block; width: 100%; height: auto;">
+     </div>
+     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+         <img src="${pageContext.request.contextPath}/performance/requestsChart" alt="Grafico Statistiche Richieste" style="display: block; width: 100%; height: auto;">
+     </div>
+ </div>
 
 <% } %>
 
