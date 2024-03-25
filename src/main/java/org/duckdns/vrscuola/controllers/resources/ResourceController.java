@@ -22,10 +22,14 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
+import org.duckdns.vrscuola.models.DeviceInfo;
+import org.duckdns.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
 import org.duckdns.vrscuola.utilities.Constants;
 import org.duckdns.vrscuola.utilities.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +52,9 @@ public class ResourceController {
 
     @Autowired
     private ExecutorService taskExecutor;
+
+    @Autowired
+    private VRDeviceConnectivityServiceImpl cService;
     private static final Path RESOURCE_DIR = Paths.get(Constants.PATH_RESOURCE_DIR);
 
     @GetMapping(value = "/resources/files", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -132,17 +139,21 @@ public class ResourceController {
     }
 
     @GetMapping(value = "/resources/arg-filter", produces = "application/json")
-    public CompletableFuture<ResponseEntity<List<ResourceInfo>>> getFilterResources(
-            @RequestParam(name = "lab", defaultValue = "") String lab,
-            @RequestParam(name = "classe", defaultValue = "") String classe,
-            @RequestParam(name = "sezione", defaultValue = "") String sezione,
-            @RequestParam(name = "arg", defaultValue = "") String arg
+    public CompletableFuture<ResponseEntity<?>> getFilterResources(
+            @RequestParam(name = "macAddress", defaultValue = "") String mac
     ) {
         return CompletableFuture.supplyAsync(() -> {
+            List<DeviceInfo> dev = cService.getInfo(mac);
             List<ResourceInfo> allResources = getAllResources().getBody();
-            String pathToFilter = "/ARGOMENTI/" + lab + "/" + classe + "/" + sezione + "/" + arg;
+            String pathToFilter = dev.size() > 0 ?
+                    ("/ARGOMENTI/" + dev.get(0).getLab() + "/" + dev.get(0).getClasse() + "/" + dev.get(0).getSezione() + "/" + dev.get(0).getArg()) : "";
             List<ResourceInfo> filteredResources = filterResourcesByPath(allResources, pathToFilter);
-            return ResponseEntity.ok(filteredResources);
+
+            Map<String, Object> argsMap = new HashMap<>();
+            argsMap.put("message", filteredResources);
+
+            return ResponseEntity.ok(argsMap);
+
         }, taskExecutor);
     }
 
