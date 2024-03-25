@@ -34,11 +34,16 @@ public class PerformanceStatsController {
         MemoryUsage heapMemoryUsage = memoryMXBean.getHeapMemoryUsage();
         MemoryUsage nonHeapMemoryUsage = memoryMXBean.getNonHeapMemoryUsage();
 
-        stats.put("heapMemoryUsed", heapMemoryUsage.getUsed());
-        stats.put("heapMemoryMax", heapMemoryUsage.getMax());
-        stats.put("nonHeapMemoryUsed", nonHeapMemoryUsage.getUsed());
-        stats.put("nonHeapMemoryMax", nonHeapMemoryUsage.getMax());
+        double heapMemoryUsedMb = heapMemoryUsage.getUsed() / 1024.0 / 1024.0;
+        double heapMemoryMaxMb = heapMemoryUsage.getMax() / 1024.0 / 1024.0;
+        double nonHeapMemoryUsedMb = nonHeapMemoryUsage.getUsed() / 1024.0 / 1024.0;
+        double nonHeapMemoryMaxMb = nonHeapMemoryUsage.getMax() == -1 ? -1 : nonHeapMemoryUsage.getMax() / 1024.0 / 1024.0;
 
+        // Arrotondamento e formattazione come stringa con due cifre decimali
+        stats.put("heapMemoryUsedMb", String.format("%.2f MB", heapMemoryUsedMb));
+        stats.put("heapMemoryMaxMb", String.format("%.2f MB", heapMemoryMaxMb));
+        stats.put("nonHeapMemoryUsedMb", String.format("%.2f MB", nonHeapMemoryUsedMb));
+        stats.put("nonHeapMemoryMaxMb", nonHeapMemoryUsage.getMax() == -1 ? "Unlimited" : String.format("%.2f MB", nonHeapMemoryMaxMb));
 
         // Accessi contemporanei e statistiche negli ultimi intervalli di tempo
         stats.put("activeRequests", concurrentRequestFilter.getActiveRequests());
