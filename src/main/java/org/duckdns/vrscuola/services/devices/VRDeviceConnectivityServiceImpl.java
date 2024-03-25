@@ -111,6 +111,8 @@ public class VRDeviceConnectivityServiceImpl implements VRDeviceConnectivityServ
             deviceInfo.setClasse(classe);
             deviceInfo.setSezione(sezione);
             deviceInfo.setArg(arg);
+
+            deviceInfos.add(deviceInfo);
         });
 
         return deviceInfos;
