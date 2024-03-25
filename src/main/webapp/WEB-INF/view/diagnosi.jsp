@@ -60,6 +60,19 @@
              </script>
         <% } %>
     </div>
+
+    <div class="container" style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <div>
+            <img src="${pageContext.request.contextPath}/performance/memoryUsageChart" alt="Grafico Utilizzo Memoria Heap">
+        </div>
+        <div>
+            <img src="${pageContext.request.contextPath}/performance/diskSpaceChart" alt="Grafico Statistiche Disk">
+        </div>
+        <div>
+            <img src="${pageContext.request.contextPath}/performance/requestsChart" alt="Grafico Statistiche Richieste">
+        </div>
+    </div>
+
 <% } %>
 
 <div>
