@@ -61,17 +61,17 @@
         <% } %>
     </div>
 
- <div class="container" style="display: flex; justify-content: space-between; margin-top: 20px;">
-     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
-         <img src="${pageContext.request.contextPath}/performance/memoryUsageChart" alt="Grafico Utilizzo Memoria Heap" style="display: block; width: 100%; height: auto;">
-     </div>
-     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
-         <img src="${pageContext.request.contextPath}/performance/diskSpaceChart" alt="Grafico Statistiche Disk" style="display: block; width: 100%; height: auto;">
-     </div>
-     <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
-         <img src="${pageContext.request.contextPath}/performance/requestsChart" alt="Grafico Statistiche Richieste" style="display: block; width: 100%; height: auto;">
-     </div>
- </div>
+<div class="container" style="display: flex; justify-content: space-between; margin-top: 20px;">
+    <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+        <img id="memoryUsageChart" src="" alt="Grafico Utilizzo Memoria Heap" style="display: block; width: 100%; height: auto;">
+    </div>
+    <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+        <img id="diskSpaceChart" src="" alt="Grafico Statistiche Disk" style="display: block; width: 100%; height: auto;">
+    </div>
+    <div style="border: 2px solid #666; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+        <img id="requestsChart" src="" alt="Grafico Statistiche Richieste" style="display: block; width: 100%; height: auto;">
+    </div>
+</div>
 
 <% } %>
 
@@ -129,4 +129,20 @@ $(document).ready(function() {
             document.getElementById('form').submit();
           }
 
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        function updateCharts() {
+            var contextPath = "${pageContext.request.contextPath}"; // Assicurati che questa sia la corretta variabile del contesto JSP
+
+            $('#memoryUsageChart').attr('src', contextPath + '/performance/memoryUsageChart?' + new Date().getTime());
+            $('#diskSpaceChart').attr('src', contextPath + '/performance/diskSpaceChart?' + new Date().getTime());
+            $('#requestsChart').attr('src', contextPath + '/performance/requestsChart?' + new Date().getTime());
+        }
+
+        // Aggiorna le immagini subito e poi ogni 10 secondi
+        updateCharts();
+        setInterval(updateCharts, 10000);
+    });
     </script>
