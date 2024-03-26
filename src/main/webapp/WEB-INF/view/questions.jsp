@@ -11,12 +11,9 @@
         <div class="container">
             <h2 style="text-align: center;">Questionario</h2>
             <form id="questionForm" method="post"
-                  data-aula="${aula}"
-                  data-classe="${classe}"
-                  data-sezione="${sezione}"
-                  data-argomento="${argomento}"
-                  data-username="${username}"
-                  data-text="${text}">
+                 data-mac="${macAddress}"
+                 data-text="${text}">
+
                 <c:forEach var="question" items="${questions}" varStatus="status">
                     <div class="question">
                         <h3>${question.domanda}</h3>

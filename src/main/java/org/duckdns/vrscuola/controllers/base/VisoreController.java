@@ -171,7 +171,9 @@ public class VisoreController {
         session.setAttribute("id_argomento", ìd_argomento);
         session.setAttribute("argomento", argomento);
         session.setAttribute("visore", visore);
-        manageService.updateArgoment(visore, argomento, session);
+        if (session != null) {
+            manageService.updateArgoment(visore, argomento, session);
+        }
         return "abilita-visore";
     }
 

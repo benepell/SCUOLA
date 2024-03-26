@@ -19,8 +19,10 @@
 package org.duckdns.vrscuola.controllers.questions;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.duckdns.vrscuola.models.DeviceInfo;
 import org.duckdns.vrscuola.models.QuestionModel;
 import org.duckdns.vrscuola.payload.response.QuestionModelResponse;
+import org.duckdns.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
 import org.duckdns.vrscuola.services.pdf.QuestionarioPdfService;
 import org.duckdns.vrscuola.services.questions.QuestionService;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
@@ -49,7 +51,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class QuestionController {
-
     private final KeycloakUserService kService;
     private final String txtRes;
     private final String linkRes;
@@ -57,79 +58,106 @@ public class QuestionController {
     private final Utilities utilities;
     private final QuestionarioPdfService questionarioPdfService;
 
+    private final VRDeviceConnectivityServiceImpl cService;
+
     @Autowired
     public QuestionController(KeycloakUserService kService,
                               @Value("${school.resource.txt}") String txtRes,
                               @Value("${health.datasource.website.risorse}") String linkRes,
                               QuestionService questionarioService,
                               Utilities utilities,
-                              QuestionarioPdfService questionarioPdfService) {
+                              QuestionarioPdfService questionarioPdfService, VRDeviceConnectivityServiceImpl cService) {
         this.kService = kService;
         this.txtRes = txtRes;
         this.linkRes = linkRes;
         this.questionarioService = questionarioService;
         this.utilities = utilities;
         this.questionarioPdfService = questionarioPdfService;
+        this.cService = cService;
     }
 
     @GetMapping("/questions")
     public ResponseEntity<List<QuestionModelResponse>> getDomande(Authentication authentication, HttpServletResponse response,
-                                                                  @RequestParam(required = true) String aula,
-                                                                  @RequestParam(required = true) String classe,
-                                                                  @RequestParam(required = true) String sezione,
-                                                                  @RequestParam(required = true) String argomento,
-                                                                  @RequestParam(required = true) String username,
+                                                                  @RequestParam(required = true) String macAddress,
                                                                   @RequestParam(required = false) String text
     ) {
-        try {
 
-            String textName = Constants.QUESTIONS_PREFIX_FILENAME + "_" + (text != null ? text : "finale") + ".txt";
+        String aula = null;
+        String classe = null;
+        String sezione = null;
+        String argomento = null;
+        String username = null;
 
-            String fileDomande = txtRes + Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
-                    aula + "/" +
-                    classe + "/" +
-                    sezione + "/" +
-                    argomento + "/" + textName;
-
-            String baselink = linkRes + "/" +
-                    Constants.QUESTIONS_PREFIX_FILES + "/" +
-                    Constants.QUESTIONS_PREFIX_TEST + "/" +
-                    Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
-                    aula + "/" +
-                    classe + "/" +
-                    sezione + "/" +
-                    argomento + "/";
-
-            List<QuestionModel> domandeConRisposta = questionarioService.leggiDomandeDaFile(fileDomande, baselink);
-
-            String hash = FileUtils.calculateHash(new File(fileDomande));
-            List<QuestionModel> tmpResponse = questionarioService.scriviDomandeInDb(domandeConRisposta, username, hash, textName);
-
-            // Trasformare tmpResponse  per rimuovere rispostecorrette dalla lista
-            List<QuestionModelResponse> responses = tmpResponse.stream()
-                    .map(question -> new QuestionModelResponse(
-                            question.getId(),
-                            question.getDomanda(),
-                            question.getMedia(),
-                            question.getRisposte()
-                    ))
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(responses);
-
-        } catch (IOException e) {
-            return ResponseEntity.ok(new ArrayList<>());
+        List<DeviceInfo> dev = cService.getInfo(macAddress);
+        if (!dev.isEmpty()) {
+            DeviceInfo firstDevice = dev.get(0);
+            aula = firstDevice.getLab();
+            classe = firstDevice.getClasse();
+            sezione = firstDevice.getSezione();
+            argomento = firstDevice.getArg();
+            username = firstDevice.getUsername();
         }
+
+
+        String textName = Constants.QUESTIONS_PREFIX_FILENAME + "_" + (text != null ? text : "finale") + ".txt";
+
+        String fileDomande = txtRes + Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
+                aula + "/" +
+                classe + "/" +
+                sezione + "/" +
+                argomento + "/" + textName;
+
+        String baselink = linkRes + "/" +
+                Constants.QUESTIONS_PREFIX_FILES + "/" +
+                Constants.QUESTIONS_PREFIX_TEST + "/" +
+                Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
+                aula + "/" +
+                classe + "/" +
+                sezione + "/" +
+                argomento + "/";
+
+        List<QuestionModel> domandeConRisposta = questionarioService.leggiDomandeDaFile(fileDomande, baselink);
+
+        String hash = FileUtils.calculateHash(new File(fileDomande));
+        List<QuestionModel> tmpResponse = questionarioService.scriviDomandeInDb(domandeConRisposta, username, hash, textName);
+
+        // Trasformare tmpResponse  per rimuovere rispostecorrette dalla lista
+        List<QuestionModelResponse> responses = tmpResponse.stream()
+                .map(question -> new QuestionModelResponse(
+                        question.getId(),
+                        question.getDomanda(),
+                        question.getMedia(),
+                        question.getRisposte()
+                ))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(responses);
+
+
     }
 
     @GetMapping("/list-questions")
     public ResponseEntity<List<String>> listQuestionnaires(
-            @RequestParam(required = true) String aula,
-            @RequestParam(required = true) String classe,
-            @RequestParam(required = true) String sezione,
-            @RequestParam(required = true) String argomento,
+            @RequestParam(required = true) String macAddress,
             @RequestParam(required = false) String text
     ) {
+
+        String aula = null;
+        String classe = null;
+        String sezione = null;
+        String argomento = null;
+        String username = null;
+
+        List<DeviceInfo> dev = cService.getInfo(macAddress);
+        if (!dev.isEmpty()) {
+            DeviceInfo firstDevice = dev.get(0);
+            aula = firstDevice.getLab();
+            classe = firstDevice.getClasse();
+            sezione = firstDevice.getSezione();
+            argomento = firstDevice.getArg();
+            username = firstDevice.getUsername();
+        }
+
         try {
 
             String questionnairesPath = txtRes + Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
@@ -154,12 +182,26 @@ public class QuestionController {
 
     @GetMapping("/list-media")
     public ResponseEntity<List<String>> listMedia(
-            @RequestParam(required = true) String aula,
-            @RequestParam(required = true) String classe,
-            @RequestParam(required = true) String sezione,
-            @RequestParam(required = true) String argomento,
+            @RequestParam(required = true) String macAddress,
             @RequestParam(required = false) String text
     ) {
+
+        String aula = null;
+        String classe = null;
+        String sezione = null;
+        String argomento = null;
+        String username = null;
+
+        List<DeviceInfo> dev = cService.getInfo(macAddress);
+        if (!dev.isEmpty()) {
+            DeviceInfo firstDevice = dev.get(0);
+            aula = firstDevice.getLab();
+            classe = firstDevice.getClasse();
+            sezione = firstDevice.getSezione();
+            argomento = firstDevice.getArg();
+            username = firstDevice.getUsername();
+        }
+
         try {
 
             String questionnairesPath = txtRes + Constants.QUESTIONS_PREFIX_DOMANDE + "/" +
@@ -184,12 +226,26 @@ public class QuestionController {
 
     @GetMapping("/questions-view")
     public ModelAndView getQuestionsForJsp(Authentication authentication,
-                                           @RequestParam(required = true) String aula,
-                                           @RequestParam(required = true) String classe,
-                                           @RequestParam(required = true) String sezione,
-                                           @RequestParam(required = true) String argomento,
-                                           @RequestParam(required = true) String username,
-                                           @RequestParam(required = false) String text) throws IOException {
+                                           @RequestParam(required = true) String macAddress,
+                                           @RequestParam(required = false) String text
+    ) throws IOException {
+
+        String aula = null;
+        String classe = null;
+        String sezione = null;
+        String argomento = null;
+        String username = null;
+
+        List<DeviceInfo> dev = cService.getInfo(macAddress);
+        if (!dev.isEmpty()) {
+            DeviceInfo firstDevice = dev.get(0);
+            aula = firstDevice.getLab();
+            classe = firstDevice.getClasse();
+            sezione = firstDevice.getSezione();
+            argomento = firstDevice.getArg();
+            username = firstDevice.getUsername();
+        }
+
         ModelAndView modelAndView = new ModelAndView("questions"); // Indica il nome della tua pagina JSP (senza l'estensione .jsp)
 
         // Aggiungi qui la logica per recuperare i dati che vuoi passare alla tua pagina JSP
@@ -217,11 +273,7 @@ public class QuestionController {
 
 
         // Passa i valori alla vista
-        modelAndView.addObject("aula", aula);
-        modelAndView.addObject("classe", classe);
-        modelAndView.addObject("sezione", sezione);
-        modelAndView.addObject("argomento", argomento);
-        modelAndView.addObject("username", username);
+        modelAndView.addObject("macAddress", macAddress);
         modelAndView.addObject("text", textName);
         modelAndView.addObject("questions", tmpResponse);
 

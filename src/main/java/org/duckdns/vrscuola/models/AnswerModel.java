@@ -24,6 +24,7 @@ import java.util.List;
 
 @Data
 public class AnswerModel {
+    private String macAddress;
     private String aula;
     private String classe;
     private String sezione;

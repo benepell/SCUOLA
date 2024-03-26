@@ -118,8 +118,16 @@ public class QuestionService {
     }
 
 
-    public List<QuestionModel> leggiDomandeDaFile(String percorsoFile, String baselink) throws IOException {
-        List<String> linee = Files.readAllLines(Paths.get(percorsoFile));
+    public List<QuestionModel> leggiDomandeDaFile(String percorsoFile, String baselink)  {
+
+        List<String> linee;
+        try {
+            linee = Files.readAllLines(Paths.get(percorsoFile));
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura del file: " + e.getMessage());
+            return new ArrayList<>();
+        }
+
         List<QuestionModel> domande = new ArrayList<>();
         String domanda = null;
         String media = null; // Inizializza media qui per tener traccia dell'URL per ogni domanda

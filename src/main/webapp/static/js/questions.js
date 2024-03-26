@@ -15,18 +15,14 @@
           });
 
           // Prepara il JSON da inviare
-          const formData = {
-              aula: form.dataset.aula,
-              classe: form.dataset.classe,
-              sezione: form.dataset.sezione,
-              argomento: form.dataset.argomento,
-              text: form.dataset.text,
-              username: form.dataset.username,
-              questionAnswers: Object.keys(selectedAnswers).map(questionId => ({
-                  questionId: questionId,
-                  answerIds: selectedAnswers[questionId]
-              }))
-          };
+         const formData = {
+               macAddress: form.dataset.mac,
+               text: form.dataset.text,
+               questionAnswers: Object.keys(selectedAnswers).map(questionId => ({
+                   questionId: questionId,
+                   answerIds: selectedAnswers[questionId]
+               }))
+           };
            // Invia i dati al server
            fetch('/answers', {
                method: 'POST',

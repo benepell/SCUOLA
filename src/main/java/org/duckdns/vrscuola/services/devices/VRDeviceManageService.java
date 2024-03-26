@@ -121,25 +121,32 @@ public class VRDeviceManageService {
     }
 
     public void updateArgoment(String label, String argoment, HttpSession session) {
-        // controlla se macAddress ha un visore associato
-        String macAddress = iRepository.findMac(label);
-        if (macAddress == null) {
+        if (session == null) {
+            // Se la sessione è null, non procedere ulteriormente
             return;
         }
 
-        String arg = "";
-        if (argoment == null) {
-            // recupera argomento del visore da session
-            arg = (String) session.getAttribute("arg");
-            // se non e' presente in session usa quello di default
-            arg = arg != null ? arg : defaultArgoment;
-        } else {
-            arg = argoment;
-            // imposta una variabile di sessione per l'argomento
-            session.setAttribute("arg", argoment);
-
+        // Cerca il macAddress associato al label fornito
+        String macAddress = iRepository.findMac(label);
+        if (macAddress == null) {
+            // Se non esiste un macAddress associato, non procedere ulteriormente
+            return;
         }
 
+        String arg = argoment;
+        if (arg == null) {
+            // Se 'argoment' è null, prova a recuperarlo dalla sessione
+            arg = (String) session.getAttribute("arg");
+            if (arg == null) {
+                // Se non è presente nella sessione, usa il valore di default
+                arg = defaultArgoment; // Assicurati che 'defaultArgoment' sia dichiarato e inizializzato
+            }
+        } else {
+            // Se 'argoment' non è null, imposta il suo valore nella sessione
+            session.setAttribute("arg", argoment);
+        }
+
+        // Aggiorna l'argomento per il visore identificato da 'macAddress'
         cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
     }
 
