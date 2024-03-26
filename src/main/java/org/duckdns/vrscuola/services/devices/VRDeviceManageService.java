@@ -133,16 +133,10 @@ public class VRDeviceManageService {
             return;
         }
 
-        String arg = argoment;
+        String arg = argoment != null ? argoment : (String) session.getAttribute("arg");
         if (arg == null) {
-            // Se 'argoment' è null, prova a recuperarlo dalla sessione
-            arg = (String) session.getAttribute("arg");
-            if (arg == null) {
-                // Se non è presente nella sessione, usa il valore di default
-                arg = defaultArgoment; // Assicurati che 'defaultArgoment' sia dichiarato e inizializzato
-            }
-        } else {
-            // Se 'argoment' non è null, imposta il suo valore nella sessione
+            arg = defaultArgoment; // Assicurati che 'defaultArgoment' sia dichiarato e inizializzato
+        } else if (argoment != null) {
             session.setAttribute("arg", argoment);
         }
 
