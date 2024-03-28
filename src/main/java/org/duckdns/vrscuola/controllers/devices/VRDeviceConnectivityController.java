@@ -88,17 +88,17 @@ public class VRDeviceConnectivityController {
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
         if (mac == null) {
-            responseMap.put("state",Constants.STATE_NOT_FOUND);
+            responseMap.put("state", Constants.STATE_NOT_FOUND);
             return ResponseEntity.ok(responseMap);
         }
 
-        if (!cService. existsByMacAddress(mac)) {
-            responseMap.put("state",Constants.STATE_NOT_LISTED);
+        if (!cService.existsByMacAddress(mac)) {
+            responseMap.put("state", Constants.STATE_NOT_LISTED);
             return ResponseEntity.ok(responseMap);
         }
 
         if (!cService.valid(mac)) {
-            responseMap.put("state",Constants.STATE_NOT_USED);
+            responseMap.put("state", Constants.STATE_NOT_USED);
             return ResponseEntity.ok(responseMap);
         }
 
@@ -110,19 +110,24 @@ public class VRDeviceConnectivityController {
 
         // disabilita visore
         if (map == null) {
-            responseMap.put("state",Constants.STATE_KO);
+            responseMap.put("state", Constants.STATE_KO);
             return ResponseEntity.ok(responseMap);
         }
 
-        userMap = map.get("username").toString();
+        userMap = map.get("username") != null ? map.get("username").toString() : "";
         avatarMap = map.get("avatar") != null ? map.get("avatar").toString() : "";
-        lab = map.get("lab") != null ?  "lab" + map.get("lab").toString() : "";;
+        lab = map.get("lab") != null ? "lab" + map.get("lab").toString() : "";
+        ;
 
+        if (userMap == "") {
+            responseMap.put("state", Constants.STATE_NOT_USED);
+            return ResponseEntity.ok(responseMap);
+        }
 
         responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
-        responseMap.put("state",Constants.STATE_OK);
+        responseMap.put("state", Constants.STATE_OK);
         responseMap.put("lab", lab);
 
         return ResponseEntity.ok(responseMap);
