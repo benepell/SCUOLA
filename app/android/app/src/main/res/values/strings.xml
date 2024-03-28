@@ -1,23 +1,3 @@
 <resources>
     <string name="app_name">VrScuola</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">VrScuola</string>
-    <string name="nav_header_subtitle">https://vrscuola.duckdns.org</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Credits</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-
-    <string name="menu_aule">Aule</string>
-    <string name="menu_classe">Classi</string>
-    <string name="menu_visori">Visori</string>
-    <string name="menu_risorse">Risorse</string>
-    <string name="menu_utenti">Utenti</string>
-    <string name="menu_diagnosi">Diagnosi</string>
-    <string name="menu_logout">Logout</string>
-
-
 </resources>
