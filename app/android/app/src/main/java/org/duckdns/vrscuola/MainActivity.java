@@ -2,7 +2,9 @@ package org.duckdns.vrscuola;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -14,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
     private static final String BASE_URL = "https://vrscuola.duckdns.org";
-    private static final int INITIAL_SCALE = 180;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -31,8 +32,18 @@ public class MainActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setInitialScale(INITIAL_SCALE);
+        setInitialScaleForWebView();
         webView.loadUrl(BASE_URL);
+    }
+
+    private void setInitialScaleForWebView() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int screenWidth = size.x;
+        int contentWidthInPixels = 1920; // larghezza ideale del contenuto
+        int scale = (int) (100.0 * screenWidth / contentWidthInPixels);
+        webView.setInitialScale(scale);
     }
 
     @Override
