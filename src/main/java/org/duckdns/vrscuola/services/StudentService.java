@@ -18,9 +18,10 @@
 
 package org.duckdns.vrscuola.services;
 
-import jakarta.servlet.http.HttpSession;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.utilities.Constants;
@@ -62,12 +63,13 @@ public class StudentService {
         this.classroom = classroom;
     }
 
-    public Optional<String> setVisore(String allievo, HttpSession session) {
+    public Optional<String> setVisore(String allievo, SessionDBService se) {
         if (!allievi.contains(allievo)) {
             return Optional.empty(); // student not found
         }
 
-        Map<String, String> visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             visoreAllievo = new HashMap<>();
         }
@@ -77,23 +79,25 @@ public class StudentService {
 
         if (visore.isPresent()) {
             visoreAllievo.put(allievo, visore.get());
-            session.setAttribute("visoreAllievo", visoreAllievo);
+            se.setAttribute("visoreAllievo", visoreAllievo);
             return visore;
         } else {
             return Optional.empty(); // no available headset
         }
     }
 
-    public boolean freeVisore(String allievo, HttpSession session) {
-        Map<String, String> visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
+    public boolean freeVisore(String allievo, SessionDBService se) {
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             return false;
         }
         return visoreAllievo.remove(allievo) != null;
     }
 
-    public Optional<String> getVisore(String allievo, HttpSession session) {
-        Map<String, String> visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
+    public Optional<String> getVisore(String allievo, SessionDBService se) {
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             return Optional.empty();
         }
@@ -104,23 +108,25 @@ public class StudentService {
         return visori != null ? String.valueOf(visori.size()) : "";
     }
 
-    public String getNumVisoriOccupati(HttpSession session) {
-        Map<String, String> visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
+    public String getNumVisoriOccupati(SessionDBService se) {
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         return visoreAllievo != null ? String.valueOf(visoreAllievo.size()) : "";
     }
 
-    public String getNumVisoriLiberi(HttpSession session) {
+    public String getNumVisoriLiberi(SessionDBService se) {
         Map<String, String> visoreAllievo = new HashMap<>();
-        visoreAllievo = (Map<String, String>) session.getAttribute("visoreAllievo");
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             visoreAllievo = new HashMap<>();
         }
         return visori != null && visoreAllievo != null ? String.valueOf(visori.size() - visoreAllievo.size()) : "";
     }
 
-    public void cleanVisori(HttpSession session) {
-        if (session != null && session.getAttribute("visoreAllievo") != null) {
-            session.removeAttribute("visoreAllievo");
+    public void cleanVisori(SessionDBService se) {
+        if (se.getAttribute("visoreAllievo", String.class) != null) {
+            se.removeAttribute("visoreAllievo");
         }
     }
 
@@ -146,7 +152,7 @@ public class StudentService {
         return 0;
     }
 
-    public void closeAllVisor(String[] users, VRDeviceManageDetailService detailService, HttpSession session) {
+    public void closeAllVisor(String[] users, VRDeviceManageDetailService detailService, SessionDBService se) {
 
         if (users == null || users.length == 0) {
             return;
@@ -158,7 +164,7 @@ public class StudentService {
         }
 
         // rimuove gli allievi da sessione
-        session.removeAttribute("visoreAllievo");
+        se.removeAttribute("visoreAllievo");
 
         // rimuove i visori da connect
         cRepository.removeAll();

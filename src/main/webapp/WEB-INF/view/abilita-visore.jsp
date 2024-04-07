@@ -10,8 +10,8 @@
 
 <%
     int codiceVisore = 0;
-    String[] allievi = (String[])session.getAttribute("alunni");
-    String[] username = (String[])session.getAttribute("username");
+    String[] allievi = (String[])request.getAttribute("alunni");
+    String[] username = (String[])request.getAttribute("usernameSelected");
     String users = username != null ? String.join(",", username) : "";
 
 %>
@@ -218,7 +218,7 @@ $(document).ready(function() {
 
 <%-- Modale per la visualizzazione del visore --%>
 <%
-    List<String> linkList = (List<String>) session.getAttribute("argoments");
+    List<String> linkList = (List<String>) request.getAttribute("argoments");
 
     if(linkList == null) {
         linkList = new ArrayList<>();

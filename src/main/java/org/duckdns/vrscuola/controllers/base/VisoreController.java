@@ -19,8 +19,8 @@
 package org.duckdns.vrscuola.controllers.base;
 
 import com.lowagie.text.DocumentException;
-import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.StudentService;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.pdf.UsoVisorePdfService;
@@ -42,23 +42,26 @@ public class VisoreController {
     private final VRDeviceManageDetailService manageDetailService;
     private final UsoVisorePdfService vPdfService;
 
+    private final SessionDBService sService;
+
     @Autowired
     public VisoreController(StudentService studentService, VRDeviceManageService manageService,
-                            VRDeviceManageDetailService manageDetailService, UsoVisorePdfService vPdfService) {
+                            VRDeviceManageDetailService manageDetailService, UsoVisorePdfService vPdfService, SessionDBService sService) {
         this.studentService = studentService;
         this.manageService = manageService;
         this.manageDetailService = manageDetailService;
         this.vPdfService = vPdfService;
+        this.sService = sService;
     }
 
     @PostMapping(value = "/visore-selection")
     @ResponseBody
-    public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
+    public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo) {
         Map<String, String> response = new HashMap<>();
 
         if (Constants.ENABLED_ONLINE) {
-            String classroom = session.getAttribute("classroomSelected").toString();
-            String[] alu = (String[]) session.getAttribute("alunni");
+            String classroom = sService.getAttribute("classroomSelected", String.class).toString();
+            String[] alu = (String[]) sService.getAttribute("alunni", String[].class);
             String[] vis = manageService.allDevices(classroom);
             studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
         }
@@ -69,8 +72,8 @@ public class VisoreController {
             response.put("visore", dbVisore);
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
-            response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
-            response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
+            response.put("num_visore_disp", studentService.getNumVisoriLiberi(sService));
+            response.put("num_visore_occup", studentService.getNumVisoriOccupati(sService));
 
             String firstVisore = studentService.getFirstVisore();
             if (firstVisore != null) {
@@ -80,12 +83,12 @@ public class VisoreController {
             }
 
         } else {
-            studentService.setVisore(allievo, session);
-            Optional<String> res = studentService.getVisore(allievo, session);
+            studentService.setVisore(allievo, sService);
+            Optional<String> res = studentService.getVisore(allievo, sService);
 
             String visore = res.isPresent() ? res.get() : "0";
 
-            boolean state = manageService.enableDevice(visore, username, session);
+            boolean state = manageService.enableDevice(visore, username, sService);
             if (state) {
                 manageDetailService.startTime(username);
             }
@@ -94,8 +97,8 @@ public class VisoreController {
                 response.put("visore", visore);
                 response.put("allievo", allievo);
                 response.put("num_visore", studentService.getNumVisori());
-                response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
-                response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
+                response.put("num_visore_disp", studentService.getNumVisoriLiberi(sService));
+                response.put("num_visore_occup", studentService.getNumVisoriOccupati(sService));
                 response.put("primo_visore", studentService.getFirstVisore());
 
             } else {
@@ -108,9 +111,9 @@ public class VisoreController {
 
     @PostMapping(value = "/visore-remove")
     @ResponseBody
-    public Map<String, String> handleVisoreRemove(@RequestParam("username") String username, @RequestParam("allievo") String allievo, HttpSession session) {
+    public Map<String, String> handleVisoreRemove(@RequestParam("username") String username, @RequestParam("allievo") String allievo) {
 
-        Optional<String> res = studentService.getVisore(allievo, session);
+        Optional<String> res = studentService.getVisore(allievo, sService);
         String visore = res.isPresent() ? res.get() : "0";
 
         if (visore.equals("0")) {
@@ -119,7 +122,7 @@ public class VisoreController {
                 visore = dbVisore;
             }
         }
-        studentService.freeVisore(allievo, session);
+        studentService.freeVisore(allievo, sService);
 
         boolean state = manageService.removeDevice(visore, username);
         if (state) {
@@ -131,8 +134,8 @@ public class VisoreController {
             response.put("visore", "0");
             response.put("allievo", allievo);
             response.put("num_visore", studentService.getNumVisori());
-            response.put("num_visore_disp", studentService.getNumVisoriLiberi(session));
-            response.put("num_visore_occup", studentService.getNumVisoriOccupati(session));
+            response.put("num_visore_disp", studentService.getNumVisoriLiberi(sService));
+            response.put("num_visore_occup", studentService.getNumVisoriOccupati(sService));
         } else {
             response.put("visore", "0");
         }
@@ -141,7 +144,7 @@ public class VisoreController {
     }
 
     @PostMapping(value = "/chiudi-visore")
-    public String handleCloseAllVisor(@RequestParam("username") String username, HttpSession session) throws IOException {
+    public String handleCloseAllVisor(@RequestParam("username") String username) throws IOException {
         try {
             // stampa tutti gli utenti che hanno un visore per chiudere la sessione
             vPdfService.save();
@@ -152,28 +155,27 @@ public class VisoreController {
 
         if (username != null) {
             String[] users = username.split(",");
-            studentService.closeAllVisor(users, manageDetailService, session);
+            studentService.closeAllVisor(users, manageDetailService, sService);
         }
 
         return "redirect:/abilita-classe";
     }
 
     @PostMapping(value = "/allievo-visore")
-    public String handleAllievoVisoreSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected, @RequestParam("visorSelected") String visorSelected, HttpSession session) {
-        session.setAttribute("classSelected", classSelected);
-        session.setAttribute("sectionSelected", sectionSelected);
-        session.setAttribute("visorSelected", visorSelected);
+    public String handleAllievoVisoreSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected, @RequestParam("visorSelected") String visorSelected) {
+        sService.setAttribute("classSelected", classSelected);
+        sService.setAttribute("sectionSelected", sectionSelected);
+        sService.setAttribute("visorSelected", visorSelected);
         return "abilita-visore";
     }
 
     @PostMapping(value = "/argomento-visore")
-    public String argomentoVisoreSelection(@RequestParam("argomento") String argomento, @RequestParam("id_argomento") String ìd_argomento, @RequestParam("visore") String visore, HttpSession session) {
-        session.setAttribute("id_argomento", ìd_argomento);
-        session.setAttribute("argomento", argomento);
-        session.setAttribute("visore", visore);
-        if (session != null) {
-            manageService.updateArgoment(visore, argomento, session);
-        }
+    public String argomentoVisoreSelection(@RequestParam("argomento") String argomento, @RequestParam("id_argomento") String ìd_argomento, @RequestParam("visore") String visore) {
+        sService.setAttribute("id_argomento", ìd_argomento);
+        sService.setAttribute("argomento", argomento);
+        sService.setAttribute("visore", visore);
+        manageService.updateArgoment(visore, argomento, sService);
+
         return "abilita-visore";
     }
 

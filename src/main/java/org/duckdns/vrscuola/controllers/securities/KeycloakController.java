@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.models.RisorsePhpModel;
 import org.duckdns.vrscuola.services.StudentService;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.services.log.EventLogService;
 import org.duckdns.vrscuola.services.pdf.UsoVisorePdfService;
@@ -60,6 +61,8 @@ public class KeycloakController {
     private final VRDeviceManageDetailService manageDetailService;
     private final KeycloakUserService kService;
 
+    private final SessionDBService sService;
+
     @Autowired
     public KeycloakController(@Value("${keycloak.auth-server-url}") String authServerUrl,
                               @Value("${keycloak.realm}") String realm,
@@ -71,7 +74,7 @@ public class KeycloakController {
                               StudentService studentService,
                               UsoVisorePdfService vPdfService,
                               VRDeviceManageDetailService manageDetailService,
-                              KeycloakUserService kService) {
+                              KeycloakUserService kService, SessionDBService sService) {
         this.authServerUrl = authServerUrl;
         this.realm = realm;
         this.clientId = clientId;
@@ -83,6 +86,7 @@ public class KeycloakController {
         this.vPdfService = vPdfService;
         this.manageDetailService = manageDetailService;
         this.kService = kService;
+        this.sService = sService;
     }
 
     @GetMapping("/_logout")
@@ -109,9 +113,9 @@ public class KeycloakController {
                 }
 
                 // chiude tutti i visori
-                studentService.closeAllVisor(username, manageDetailService, session);
+                studentService.closeAllVisor(username, manageDetailService, sService);
 
-                logService.sendLog(session, Constants.EVENT_LOG_OUT);
+              //  logService.sendLog(session, Constants.EVENT_LOG_OUT);
                 session.invalidate();
             }
         }
@@ -162,7 +166,7 @@ public class KeycloakController {
 
     // A new endpoint to get the user's information in JSON format
     @GetMapping("/userinfo")
-    public Map<String, Object> getUserInfo(Authentication authentication, Principal principal, HttpSession session, HttpServletRequest request) {
+    public Map<String, Object> getUserInfo(Authentication authentication, Principal principal,  HttpServletRequest request) {
 
         // Create a map to hold the user's information
         Map<String, Object> userInfo = new HashMap<>();
@@ -227,7 +231,7 @@ public class KeycloakController {
 
         }
 
-        logService.sendLog(session, Constants.EVENT_LOG_CHECK_INFO);
+        logService.sendLog(sService, Constants.EVENT_LOG_CHECK_INFO);
 
         return userInfo;
     }

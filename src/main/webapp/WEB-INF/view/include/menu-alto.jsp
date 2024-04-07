@@ -23,7 +23,7 @@
 %>
 
 <%
-    Boolean isCloseVisorLogout = request.getAttribute("isCloseVisorLogout") != null ? (Boolean)request.getAttribute("isCloseVisorLogout") : false;
+    Boolean isCloseVisorLogout = session.getAttribute("isCloseVisorLogout") != null ? (Boolean)session.getAttribute("isCloseVisorLogout") : false;
     String scuola = request.getAttribute("scuola") != null ? (String)request.getAttribute("scuola") : "";
     String risorse = request.getAttribute("risorse") != null ? (String)request.getAttribute("risorse") : "";
     String utenti = request.getAttribute("utenti") != null ? (String)request.getAttribute("utenti") : "";

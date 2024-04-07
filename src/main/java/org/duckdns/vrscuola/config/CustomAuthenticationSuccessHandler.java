@@ -24,11 +24,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         if (authentication.getPrincipal() instanceof OidcUser) {
             OidcUser oidcUser = (OidcUser) authentication.getPrincipal();
             String idTokenValue = oidcUser.getIdToken().getTokenValue(); // Ottenere il token ID come stringa
+            String user = oidcUser.getName();
 
             // Salva l'idToken in sessione se disponibile
             if (idTokenValue != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("idToken", idTokenValue);
+            }
+
+            if (user != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("main_username", user);
             }
         }
 

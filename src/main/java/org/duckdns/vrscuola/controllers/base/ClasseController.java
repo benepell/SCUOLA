@@ -18,11 +18,12 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
-import jakarta.servlet.http.HttpSession;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,16 +36,19 @@ public class ClasseController {
     private final KeycloakUserService keycloakUserService;
     private final ValidateCredentialService validateCredentialService;
 
+    private final SessionDBService sService;
+
     @Autowired
-    public ClasseController(KeycloakUserService keycloakUserService, ValidateCredentialService validateCredentialService) {
+    public ClasseController(KeycloakUserService keycloakUserService, ValidateCredentialService validateCredentialService, SessionDBService sService) {
         this.keycloakUserService = keycloakUserService;
         this.validateCredentialService = validateCredentialService;
+        this.sService = sService;
     }
 
     @PostMapping
-    public String handleClasseSelection(@RequestParam("classSelected") String classSelected, HttpSession session) throws Exception {
-        session.setAttribute("classSelected", classSelected);
-        session.setAttribute("allSections", keycloakUserService.filterClasses(classSelected));
+    public String handleClasseSelection(@RequestParam("classSelected") String classSelected) throws Exception {
+        sService.setAttribute("classSelected", classSelected);
+        sService.setAttribute("allSections", keycloakUserService.filterClasses(classSelected));
         return "redirect:/abilita-sezione";
     }
 

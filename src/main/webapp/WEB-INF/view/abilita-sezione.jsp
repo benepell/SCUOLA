@@ -27,7 +27,7 @@
 
   <%
     String[] classes = {"1", "2", "3", "4", "5"};
-    String[] letters = session.getAttribute("allSections") != null ? (String[])session.getAttribute("allSections") : new String[0];
+   String[] letters = (String[]) request.getAttribute("allSections");
   %>
 
   <!-- codice sezione -->
@@ -38,7 +38,7 @@
     <!-- barra centrale -->
     <div class="mysez-barra-centrale">
       <% for(String cl : classes) {
-      String c = (String)session.getAttribute("classSelected");
+      String c = (String)request.getAttribute("classSelected");
       String clazz =  c != null && c.equals(cl) ? "active": "";
 
        %>

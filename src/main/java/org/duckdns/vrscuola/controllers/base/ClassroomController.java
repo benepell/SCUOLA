@@ -20,6 +20,8 @@ package org.duckdns.vrscuola.controllers.base;
 
 
 import jakarta.servlet.http.HttpSession;
+import org.duckdns.vrscuola.services.config.SessionDBService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ClassroomController {
+
+    @Autowired
+    private SessionDBService sService;
+
     @PostMapping(value = "classroom")
     public String handleClasseSelection(@RequestParam("classroomSelected") String classroomSelected, HttpSession session) throws Exception {
+        sService.setAttribute("classroomSelected", classroomSelected);
         session.setAttribute("classroomSelected", classroomSelected);
         return "redirect:/abilita-sezione";
     }

@@ -18,9 +18,9 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
-import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.services.ArgomentiDirService;
 import org.duckdns.vrscuola.services.StudentService;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageDetailService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.devices.VRDeviceManagerOrderService;
@@ -44,40 +44,42 @@ public class SezioneController {
     private final VRDeviceManageDetailService detailService;
     private final StudentService studentService;
     private final VRDeviceManageService manageService;
+    private final SessionDBService sService;
 
     @Autowired
     public SezioneController(KeycloakUserService keycloakUserService, ArgomentiDirService argomentiDirService,
                              VRDeviceManagerOrderService orderService, VRDeviceManageDetailService detailService,
-                             StudentService studentService, VRDeviceManageService manageService) {
+                             StudentService studentService, VRDeviceManageService manageService, SessionDBService sService) {
         this.keycloakUserService = keycloakUserService;
         this.argomentiDirService = argomentiDirService;
         this.orderService = orderService;
         this.detailService = detailService;
         this.studentService = studentService;
         this.manageService = manageService;
+        this.sService = sService;
     }
 
 
     @PostMapping
-    public String handleClasseSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected, HttpSession session) {
+    public String handleClasseSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected) {
         try {
-            session.setAttribute("classSelected", classSelected);
-            session.setAttribute("sectionSelected", sectionSelected);
+            sService.setAttribute("classroomSelected", classSelected);
+            sService.setAttribute("sectionSelected", sectionSelected);
 
             keycloakUserService.initFilterSections(classSelected, sectionSelected);
             String[] alunni = keycloakUserService.filterSectionsAllievi();
             String[] username = keycloakUserService.filterSectionsUsername();
 
-            String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
+            String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
 
-            session.setAttribute("usernameSelected", username);
+            sService.setAttribute("usernameSelected", username);
             // cancella i dati precedenti se cambia classe in connec sovrascrivi i dati precedenti
             if (username != null && username.length > 0) {
                 int row = studentService.deleteUserNotClass(username[0]);
                 if (row > 0) {
-                    String[] alu = (String[]) session.getAttribute("alunni");
+                    String[] alu = (String[]) sService.getAttribute("alunni", String[].class);
                     String[] vis = manageService.allDevices(classroom);
-                    studentService.cleanVisori(session);
+                    studentService.cleanVisori(sService);
                     if (alu != null && alu.length > 0 && vis != null && vis.length > 0) {
                         studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
                     }
@@ -87,9 +89,9 @@ public class SezioneController {
             orderService.initOrder(alunni, username, detailService);
             String[] alunniOrdinati = orderService.getAlunni();
             String[] usernameOrdinati = orderService.getUsername();
-            session.setAttribute("alunni", alunniOrdinati);
-            session.setAttribute("username", usernameOrdinati);
-            session.setAttribute("argoments", argomentiDirService.getArgomentiAll(Constants.PREFIX_CLASSROOM + classroom, classSelected, sectionSelected));
+            sService.setAttribute("alunni", alunniOrdinati);
+            sService.setAttribute("username", usernameOrdinati);
+            sService.setAttribute("argoments", argomentiDirService.getArgomentiAll(Constants.PREFIX_CLASSROOM + classroom, classSelected, sectionSelected));
 
         } catch (Exception e) {
             e.printStackTrace();

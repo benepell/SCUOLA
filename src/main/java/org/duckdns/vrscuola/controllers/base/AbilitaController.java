@@ -18,10 +18,12 @@
 
 package org.duckdns.vrscuola.controllers.base;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.StudentService;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.devices.VRDeviceManageService;
 import org.duckdns.vrscuola.services.log.EventLogService;
@@ -56,6 +58,8 @@ public class AbilitaController {
     private final VRDeviceInitServiceImpl initService;
     private final VRDeviceInitRepository repository;
 
+    private final SessionDBService sService;
+
     @Autowired
     public AbilitaController(StudentService studentService, VRDeviceManageService manageService,
                              EventLogService logService, UtilService utilService,
@@ -63,7 +67,8 @@ public class AbilitaController {
                              VRDeviceInitServiceImpl initService,
                              VRDeviceInitRepository repository,
                              @Value("${health.datasource.website.keycloak}") String linkKeycloak,
-                             @Value("${health.datasource.website.risorse}") String linkRisorse) {
+                             @Value("${health.datasource.website.risorse}") String linkRisorse,
+                             SessionDBService sService) {
         this.studentService = studentService;
         this.manageService = manageService;
         this.logService = logService;
@@ -73,10 +78,11 @@ public class AbilitaController {
         this.repository = repository;
         this.linkKeycloak = linkKeycloak;
         this.linkRisorse = linkRisorse;
+        this.sService = sService;
     }
 
     @RequestMapping(value = "abilita-classe")
-    public String getAbilitaClasse(Authentication authentication, Model model, HttpServletRequest request, HttpSession session) {
+    public String getAbilitaClasse(Authentication authentication, Model model, HttpServletRequest request) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -87,15 +93,15 @@ public class AbilitaController {
         model.addAttribute("titolo", "Abilita Classe");
         model.addAttribute("content", "/WEB-INF/view/abilita-classe.jsp");
 
-        session.setAttribute("isTablet", utilService.isTablet(request));
+        sService.setAttribute("isTablet", utilService.isTablet(request));
 
-        session.setAttribute("main_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
+        sService.setAttribute("main_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
 
         return "abilita-classe";
     }
 
     @RequestMapping(value = "abilita-sezione")
-    public String getAbilitaSezione(Model model, HttpSession session) {
+    public String getAbilitaSezione(Model model) {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");
@@ -106,11 +112,14 @@ public class AbilitaController {
         model.addAttribute("titolo", "Abilita Sezione");
         model.addAttribute("content", "/WEB-INF/view/abilita-sezione.jsp");
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
+        String classroom = sService.getAttribute("classSelected", String.class) != null ? sService.getAttribute("classSelected", String.class).toString() : "";
 
-        if (classroom.isEmpty()) {
-            return "redirect:/abilita-classe";
-        }
+        model.addAttribute("classSelected", classroom);
+
+        String[] letters = (String[]) sService.getAttribute("allSections", String[].class);
+
+        // Aggiungi al modello. Se letters è null, crea un nuovo array vuoto.
+        model.addAttribute("allSections", letters != null ? letters : new String[0]);
 
         return "abilita-sezione";
     }
@@ -126,13 +135,21 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
 
-        String[] alu = (String[]) session.getAttribute("alunni");
+        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
+
+        String[] alu = (String[]) sService.getAttribute("alunni", String[].class);
         String[] vis = manageService.allDevices(classroom);
-        String[] users = session.getAttribute("usernameSelected") != null ? session.getAttribute("usernameSelected").toString().split(",") : null;
+        String[] users = sService.getAttribute("usernameSelected", String[].class) != null ? (String[]) sService.getAttribute("usernameSelected", String[].class) : null;
 
-        model.addAttribute("username", users);
+        model.addAttribute("alunni", alu);
+        model.addAttribute("usernameSelected", users);
+
+        TypeReference<List<String>> typeRef2 = new TypeReference<List<String>>() {
+        };
+        List<String> argoments = (List<String>) sService.getAttribute("argoments", typeRef2);
+
+        model.addAttribute("argoments", argoments);
 
         // elimina visori se il tempo trascorso è superiore al max definito
         if (Constants.ENABLED_REMOVE_RECORDS) {
@@ -165,22 +182,22 @@ public class AbilitaController {
         model.addAttribute("labelsSetup", String.join(",", labelsSetup));
         model.addAttribute("battSetup", String.join(",", battSetup));
 
-       // model.addAttribute("utenti", linkKeycloak);
-       // model.addAttribute("risorse", linkRisorse);
+        // model.addAttribute("utenti", linkKeycloak);
+        // model.addAttribute("risorse", linkRisorse);
         // fine aggiunto per stato-visori
 
         studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
 
-        logService.sendLog(session, Constants.EVENT_LOG_ENABLE_VISOR);
+        //  logService.sendLog(sService, Constants.EVENT_LOG_ENABLE_VISOR);
 
         return "abilita-visore";
     }
 
     @GetMapping(value = "/aggiornaStatoVisori")
-    public String aggiornaStatoVisori(HttpSession session, Model model) {
+    public String aggiornaStatoVisori(Model model) {
         // Assumi che la logica per ottenere i dati aggiornati dei visori sia simile a quella in abilita-visore
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
+        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
 
         List<String> labelsSetup = repository.labelsSetup(classroom);
         List<String> macsSetup = repository.macsSetup(classroom);

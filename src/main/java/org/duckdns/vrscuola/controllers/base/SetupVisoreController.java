@@ -19,10 +19,10 @@
 package org.duckdns.vrscuola.controllers.base;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.models.InitParamModel;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
 import org.duckdns.vrscuola.services.config.ReadOculusServices;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.securities.ValidateCredentialService;
 import org.duckdns.vrscuola.services.utils.UtilServiceImpl;
@@ -51,6 +51,8 @@ public class SetupVisoreController {
     private final Utilities utilities;
     private final UtilServiceImpl utilService;
 
+    private final SessionDBService sService;
+
     @Autowired
     public SetupVisoreController(@Value("${health.datasource.website.keycloak}") String linkKeycloak,
                                  @Value("${health.datasource.website.risorse}") String linkRisorse,
@@ -59,7 +61,7 @@ public class SetupVisoreController {
                                  VRDeviceInitServiceImpl initService,
                                  VRDeviceInitRepository repository,
                                  Utilities utilities,
-                                 UtilServiceImpl utilService) {
+                                 UtilServiceImpl utilService, SessionDBService sService) {
         this.linkKeycloak = linkKeycloak;
         this.linkRisorse = linkRisorse;
         this.readOculusServices = readOculusServices;
@@ -68,10 +70,11 @@ public class SetupVisoreController {
         this.repository = repository;
         this.utilities = utilities;
         this.utilService = utilService;
+        this.sService = sService;
     }
 
     @RequestMapping(value = "setup-visore")
-    public String getSetupVisoreClasse(Model model, HttpSession session, HttpServletResponse response) {
+    public String getSetupVisoreClasse(Model model, HttpServletResponse response) {
 
         // Aggiungi questi headers per prevenire la cache
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
@@ -81,7 +84,7 @@ public class SetupVisoreController {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
-        String classroom = session != null && session.getAttribute("classroomSelected") != null ? session.getAttribute("classroomSelected").toString() : "";
+        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
 
         if (classroom.isEmpty()) {
             return "redirect:/abilita-classe";

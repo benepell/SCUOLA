@@ -23,6 +23,7 @@ import org.duckdns.vrscuola.entities.log.EventLogEntitie;
 import org.duckdns.vrscuola.repositories.log.EventLogRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class EventLogService {
     @Autowired
     EventLogRepository eventLogsRepository;
 
-    public void sendLog(HttpSession session, String evt) {
+    public void sendLog(SessionDBService se, String evt) {
     /*
         EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
@@ -56,7 +57,7 @@ public class EventLogService {
 
     }
 
-    public void sendLog(HttpSession session, String evt, String note) {
+    public void sendLog(SessionDBService se, String evt, String note) {
         /*
         EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 

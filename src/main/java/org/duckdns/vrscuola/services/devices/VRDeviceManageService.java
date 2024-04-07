@@ -18,10 +18,10 @@
 
 package org.duckdns.vrscuola.services.devices;
 
-import jakarta.servlet.http.HttpSession;
 import org.duckdns.vrscuola.entities.devices.VRDeviceConnectivityEntitie;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceConnectivityRepository;
 import org.duckdns.vrscuola.repositories.devices.VRDeviceInitRepository;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
 import org.duckdns.vrscuola.utilities.Constants;
 import org.duckdns.vrscuola.utilities.Utilities;
@@ -52,7 +52,7 @@ public class VRDeviceManageService {
     @Autowired
     Utilities utilities;
 
-    public boolean enableDevice(String label, String username, HttpSession session) {
+    public boolean enableDevice(String label, String username, SessionDBService se) {
         // controlla se macAddress ha un visore associato
         String macAddress = iRepository.findMac(label);
         if (macAddress == null) {
@@ -74,7 +74,7 @@ public class VRDeviceManageService {
             String arg = null;
             if (!label.equals("0") || !label.equals("1")) {
                 // recupera argomento del visore da session
-                arg = (String) session.getAttribute("arg");
+                arg = (String) se.getAttribute("arg", String.class);
                 // se non e' presente in session usa quello di default
                 arg = arg != null ? arg : defaultArgoment;
             }
@@ -120,11 +120,7 @@ public class VRDeviceManageService {
         return true;
     }
 
-    public void updateArgoment(String label, String argoment, HttpSession session) {
-        if (session == null) {
-            // Se la sessione è null, non procedere ulteriormente
-            return;
-        }
+    public void updateArgoment(String label, String argoment, SessionDBService se) {
 
         // Cerca il macAddress associato al label fornito
         String macAddress = iRepository.findMac(label);
@@ -133,11 +129,18 @@ public class VRDeviceManageService {
             return;
         }
 
-        String arg = argoment != null ? argoment : (String) session.getAttribute("arg");
+        String arg = argoment;
         if (arg == null) {
-            arg = defaultArgoment; // Assicurati che 'defaultArgoment' sia dichiarato e inizializzato
+            Object sessionArg = se.getAttribute("arg", String.class);
+            if (sessionArg instanceof String) {
+                arg = (String) sessionArg;
+            }
+        }
+
+        if (arg == null) {
+            arg = defaultArgoment; // Make sure 'defaultArgoment' is declared and initialized elsewhere
         } else if (argoment != null) {
-            session.setAttribute("arg", argoment);
+            se.setAttribute("arg", argoment);
         }
 
         // Aggiorna l'argomento per il visore identificato da 'macAddress'
