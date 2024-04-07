@@ -50,7 +50,7 @@ public class VRDeviceInitEntitie implements Serializable {
 
     private Instant eraOnline;
 
-    @OneToMany(mappedBy = "init", fetch = FetchType.LAZY)
+   /* @OneToMany(mappedBy = "init", fetch = FetchType.LAZY)
     private List<VRDeviceConnectivityEntitie> connectivities;
-
+*/
 }

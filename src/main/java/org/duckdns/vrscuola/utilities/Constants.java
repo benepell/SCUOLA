@@ -97,6 +97,8 @@ public interface Constants {
 
     int QUESTIONS_HOURS_AGO = 6;
     boolean ENABLED_ONLINE = false;
+
+    boolean DB_CLEAN_STARTUP = true;
     long MIN_ONLINE_ERA = 5;
     boolean ENABLED_REMOVE_RECORDS = true;
     long MIN_REMOVE_RECORDS = 2;

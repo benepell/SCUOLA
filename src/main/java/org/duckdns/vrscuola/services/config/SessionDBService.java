@@ -30,7 +30,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if (username == null || username.isEmpty() || lab == null || lab.isEmpty()) return;
+        if ( !existUsername() || !existLab()) return;
 
         String jsonValue = serializeObjectToJson(value);
 
@@ -54,7 +54,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if (username == null || username.isEmpty() || lab == null || lab.isEmpty()) return;
+        if ( !existUsername() || !existLab()) return;
 
         sessionRepository.removeAttribute(name, username, lab);
     }
@@ -64,7 +64,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if (username == null || username.isEmpty() || lab == null || lab.isEmpty()) return null;
+        if ( !existUsername() || !existLab()) return null;
 
         String jsonValue = sessionRepository.getAttribute(name, username, lab);
         if (jsonValue == null) {
@@ -108,12 +108,22 @@ public class SessionDBService {
         }
     }
 
+    public boolean existUsername() {
+        String username = getUsername();
+        return !(username == null || username.isEmpty());
+    }
+
+    public boolean existLab() {
+        String lab = getLab();
+        return !(lab == null || lab.isEmpty());
+    }
+
     private String getUsername() {
-        return (String) httpSession.getAttribute("main_username");
+        return httpSession.getAttribute("main_username") != null ? (String) httpSession.getAttribute("main_username") : null;
     }
 
     private String getLab() {
-        return (String) httpSession.getAttribute("classroomSelected");
+        return httpSession.getAttribute("classroomSelected") != null ? (String) httpSession.getAttribute("classroomSelected") : null;
     }
 
     /*

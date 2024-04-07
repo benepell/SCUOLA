@@ -47,9 +47,10 @@ public class VRDeviceConnectivityEntitie implements Serializable {
     private String connected;
     private String argoment;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "init_id")
     private VRDeviceInitEntitie init;
-
+*/
     // Metodi getter e setter
 }

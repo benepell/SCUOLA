@@ -90,7 +90,7 @@ public class VRDeviceManageService {
                 vrDeviceConnectivityEntitie.setInitDate(utilities.getEpoch());
                 vrDeviceConnectivityEntitie.setMacAddress(macAddress);
                 vrDeviceConnectivityEntitie.setUsername(username);
-               // vrDeviceConnectivityEntitie.setNote(note);
+                // vrDeviceConnectivityEntitie.setNote(note);
                 vrDeviceConnectivityEntitie.setConnected(Constants.CONNECTED_IN_PENDING);
 
                 if (arg != null) {
@@ -123,7 +123,13 @@ public class VRDeviceManageService {
     public void updateArgoment(String label, String argoment, SessionDBService se) {
 
         // Cerca il macAddress associato al label fornito
-        String macAddress = iRepository.findMac(label);
+        String macAddress = null;
+
+        try {
+            // Aggiorna l'argomento per il visore identificato da 'macAddress'
+            macAddress = iRepository.findMac(label);
+        } catch (Exception e) {
+        }
         if (macAddress == null) {
             // Se non esiste un macAddress associato, non procedere ulteriormente
             return;
@@ -143,8 +149,12 @@ public class VRDeviceManageService {
             se.setAttribute("arg", argoment);
         }
 
-        // Aggiorna l'argomento per il visore identificato da 'macAddress'
-        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+        try {
+            // Aggiorna l'argomento per il visore identificato da 'macAddress'
+            cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+
+        } catch (Exception e) {
+        }
     }
 
     public boolean deleteArgoment(String label) {

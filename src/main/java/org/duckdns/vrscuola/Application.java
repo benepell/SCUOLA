@@ -18,10 +18,17 @@
 
 package org.duckdns.vrscuola;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.duckdns.vrscuola.utilities.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
@@ -32,5 +39,23 @@ public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+
+    @Component
+    class DatabaseInitializer {
+
+        @PersistenceContext
+        private EntityManager entityManager;
+
+        @EventListener(ApplicationReadyEvent.class)
+        @Transactional
+        public void initializeDatabase() {
+            if (Constants.DB_CLEAN_STARTUP){
+                entityManager.createNativeQuery("DELETE FROM custom_session").executeUpdate();
+                entityManager.createNativeQuery("DELETE FROM connect").executeUpdate();
+                entityManager.createNativeQuery("UPDATE init SET eraOnline = null").executeUpdate();
+            }
+
+        }
     }
 }
