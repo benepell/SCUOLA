@@ -145,8 +145,19 @@ public class ResourceController {
         return CompletableFuture.supplyAsync(() -> {
             List<DeviceInfo> dev = cService.getInfo(mac);
             List<ResourceInfo> allResources = getAllResources().getBody();
-            String pathToFilter = dev.size() > 0 ?
-                    ("/ARGOMENTI/" + dev.get(0).getLab() + "/" + dev.get(0).getClasse() + "/" + dev.get(0).getSezione() + "/" + dev.get(0).getArg()) : "";
+
+            String pathToFilter = "";
+
+            if (dev.size() > 0) {
+                String arg = dev.get(0).getArg();
+                if (arg.equals("introduzione")) {
+                    pathToFilter = "/ARGOMENTI/introduzione";
+                } else {
+                    pathToFilter = ("/ARGOMENTI/" + dev.get(0).getLab() + "/" + dev.get(0).getClasse() + "/" + dev.get(0).getSezione() + "/" + dev.get(0).getArg());
+                }
+            }
+
+
             List<ResourceInfo> filteredResources = filterResourcesByPath(allResources, pathToFilter);
 
             Map<String, Object> argsMap = new HashMap<>();

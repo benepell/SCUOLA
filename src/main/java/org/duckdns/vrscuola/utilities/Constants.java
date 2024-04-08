@@ -81,6 +81,10 @@ public interface Constants {
     String QUESTIONS_PREF_UPPERCASE_REPORT = "REPORT";
     String QUESTIONS_CORRECT_RESPONSE = "Risposta corretta";
     String RESOURCES_INTEST_PNG = "intestazione.png";
+
+    String RESOURCES_FOLDER_IMG = "IMMAGINI";
+    String RESOURCES_FOLDER_VISOR = "VISORI";
+
     String CLAIMS_NAME = "name";
     String CLAIMS_EMAIL = "email";
     String CLAIMS_PREF_USERNAME = "preferred_username";

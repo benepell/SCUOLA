@@ -50,7 +50,7 @@ public class ReadOculusServices {
         List<InitParamModel> param = new ArrayList<>();
 
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.ADD_OCULUS_CONF));
+            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.ADD_OCULUS_CONF));
             String line;
             String classroom;
             String label;
@@ -97,7 +97,8 @@ public class ReadOculusServices {
 
             fileReader.close();
 
-            renameFile(confPath + Constants.ADD_OCULUS_CONF, confPath + Constants.ADD_OCULUS_DONE);
+            renameFile(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.ADD_OCULUS_CONF,
+                    confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.ADD_OCULUS_DONE);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -112,19 +113,24 @@ public class ReadOculusServices {
         List<InitParamModel> param = new ArrayList<>();
 
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.CHANGE_OCULUS_CONF));
+            BufferedReader fileReader = new BufferedReader(new FileReader(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.CHANGE_OCULUS_CONF));
             String line;
-            String classroom;
-            String new_mac;
-            String old_mac;
+            String classroom = null;
+            String new_mac = null;
+            String old_mac = null;
             Pattern macPattern = Pattern.compile("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})");
 
             while ((line = fileReader.readLine()) != null) {
 
                 String[] sep = line.split(",");
-                classroom = sep[0];
-                old_mac = sep[1];
-                new_mac = sep[2];
+                if (sep.length <  3){
+                    return param;
+                } else {
+                    classroom = sep[0];
+                    old_mac = sep[1];
+                    new_mac = sep[2];
+
+                }
 
 
                 Matcher matcher = macPattern.matcher(new_mac);
@@ -143,7 +149,8 @@ public class ReadOculusServices {
 
             fileReader.close();
 
-            renameFile(confPath + Constants.CHANGE_OCULUS_CONF, confPath + Constants.CHANGE_OCULUS_DONE);
+            renameFile(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.CHANGE_OCULUS_CONF,
+                    confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.CHANGE_OCULUS_DONE);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -153,11 +160,11 @@ public class ReadOculusServices {
     }
 
     public boolean existAddFile() {
-        return checkFileExists(confPath + Constants.ADD_OCULUS_CONF);
+        return checkFileExists(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.ADD_OCULUS_CONF);
     }
 
     public boolean existUpdateFile() {
-        return checkFileExists(confPath + Constants.CHANGE_OCULUS_CONF);
+        return checkFileExists(confPath + Constants.RESOURCES_FOLDER_VISOR + "/" + Constants.CHANGE_OCULUS_CONF);
     }
 
 
