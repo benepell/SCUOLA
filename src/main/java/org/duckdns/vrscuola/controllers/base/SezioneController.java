@@ -90,7 +90,7 @@ public class SezioneController {
             String[] alunniOrdinati = orderService.getAlunni();
             String[] usernameOrdinati = orderService.getUsername();
             sService.setAttribute("alunni", alunniOrdinati);
-            sService.setAttribute("username", usernameOrdinati);
+            sService.setAttribute("usernameSelected", usernameOrdinati);
             sService.setAttribute("argoments", argomentiDirService.getArgomentiAll(Constants.PREFIX_CLASSROOM + classroom, classSelected, sectionSelected));
 
         } catch (Exception e) {
