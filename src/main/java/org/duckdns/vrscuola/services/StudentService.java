@@ -68,8 +68,9 @@ public class StudentService {
             return Optional.empty(); // student not found
         }
 
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
-        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
+        Map<String, String> visoreAllievo = se.getAttribute("visoreAllievo", typeRef) != null ? (Map<String, String>) se.getAttribute("visoreAllievo", typeRef) : null;
         if (visoreAllievo == null) {
             visoreAllievo = new HashMap<>();
         }
@@ -87,7 +88,8 @@ public class StudentService {
     }
 
     public boolean freeVisore(String allievo, SessionDBService se) {
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
         Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             return false;
@@ -96,8 +98,9 @@ public class StudentService {
     }
 
     public Optional<String> getVisore(String allievo, SessionDBService se) {
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
-        Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
+        Map<String, String> visoreAllievo = se.getAttribute("visoreAllievo", typeRef) != null ? (Map<String, String>) se.getAttribute("visoreAllievo", typeRef) : null;
         if (visoreAllievo == null) {
             return Optional.empty();
         }
@@ -109,14 +112,16 @@ public class StudentService {
     }
 
     public String getNumVisoriOccupati(SessionDBService se) {
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
         Map<String, String> visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         return visoreAllievo != null ? String.valueOf(visoreAllievo.size()) : "";
     }
 
     public String getNumVisoriLiberi(SessionDBService se) {
         Map<String, String> visoreAllievo = new HashMap<>();
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
         visoreAllievo = (Map<String, String>) se.getAttribute("visoreAllievo", typeRef);
         if (visoreAllievo == null) {
             visoreAllievo = new HashMap<>();

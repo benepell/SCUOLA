@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Map;
 
 @Service
 public class SessionDBService {
@@ -80,7 +81,28 @@ public class SessionDBService {
         }
     }
 
-    private String serializeObjectToJson(Object value) {
+    public void modifyAttribute(String name, String keyToRemove) {
+        String username = getUsername();
+        String lab = getLab();
+
+        if ( !existUsername() || !existLab()) return;
+
+        ObjectMapper mapper = new ObjectMapper();
+        // Deserializza il valore JSON in una mappa
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        Map<String, String> map = (Map<String, String>) getAttribute(name, typeRef);
+
+        // Rimuove la chiave specificata, se presente
+        if (map.containsKey(keyToRemove)) {
+            map.remove(keyToRemove);
+
+            // Aggiorna il record nel database con il nuovo valore JSON
+            setAttribute(name,map);
+        }
+
+    }
+
+        private String serializeObjectToJson(Object value) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(value);

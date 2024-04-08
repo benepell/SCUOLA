@@ -59,12 +59,12 @@ public class VisoreController {
     public Map<String, String> handleVisoreSelection(@RequestParam("username") String username, @RequestParam("allievo") String allievo) {
         Map<String, String> response = new HashMap<>();
 
-        if (Constants.ENABLED_ONLINE) {
+      //  if (Constants.ENABLED_ONLINE) {
             String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : null;
             String[] alu = sService.getAttribute("alunni", String[].class) != null ? (String[]) sService.getAttribute("alunni", String[].class) : null;
             String[] vis = manageService.allDevices(classroom);
             studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
-        }
+       // }
 
         String dbVisore = studentService.dbVisori(username);
 
@@ -124,6 +124,7 @@ public class VisoreController {
         }
         studentService.freeVisore(allievo, sService);
 
+        sService.modifyAttribute("visoreAllievo", allievo);
         boolean state = manageService.removeDevice(visore, username);
         if (state) {
             manageDetailService.endTime(username);
