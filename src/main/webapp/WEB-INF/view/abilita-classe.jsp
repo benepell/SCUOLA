@@ -58,19 +58,6 @@
           var classe = data[i].classe;
           classi.push(classe);
         }
-        // Disabilita i pulsanti delle classi non presenti nell'array
-        $("button").each(function () {
-          var classe = $(this).attr("data-classe");
-          if (classi.indexOf(classe) === -1) {
-            $(this).css("display", "none");
-            $(this).siblings("h3").hide(); // Nascondi il testo back
-            $(this)
-              .closest(".my-card")
-              .find(".my-card-front")
-              .find("h3")
-              .hide(); // Nascondi il div my-card-front
-          }
-        });
       },
     });
   });

@@ -31,7 +31,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if ( !existUsername() || !existLab()) return;
+        if (!existUsername() || !existLab()) return;
 
         String jsonValue = serializeObjectToJson(value);
 
@@ -55,7 +55,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if ( !existUsername() || !existLab()) return;
+        if (!existUsername() || !existLab()) return;
 
         sessionRepository.removeAttribute(name, username, lab);
     }
@@ -65,7 +65,7 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if ( !existUsername() || !existLab()) return null;
+        if (!existUsername() || !existLab()) return null;
 
         String jsonValue = sessionRepository.getAttribute(name, username, lab);
         if (jsonValue == null) {
@@ -85,11 +85,12 @@ public class SessionDBService {
         String username = getUsername();
         String lab = getLab();
 
-        if ( !existUsername() || !existLab()) return;
+        if (!existUsername() || !existLab()) return;
 
         ObjectMapper mapper = new ObjectMapper();
         // Deserializza il valore JSON in una mappa
-        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {};
+        TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+        };
         Map<String, String> map = (Map<String, String>) getAttribute(name, typeRef);
 
         // Rimuove la chiave specificata, se presente
@@ -97,12 +98,12 @@ public class SessionDBService {
             map.remove(keyToRemove);
 
             // Aggiorna il record nel database con il nuovo valore JSON
-            setAttribute(name,map);
+            setAttribute(name, map);
         }
 
     }
 
-        private String serializeObjectToJson(Object value) {
+    private String serializeObjectToJson(Object value) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(value);

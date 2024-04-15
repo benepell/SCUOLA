@@ -95,8 +95,6 @@ public class AbilitaController {
 
         sService.setAttribute("isTablet", utilService.isTablet(request));
 
-        sService.setAttribute("main_username", kService.getTokenAttribute(authentication, Constants.CLAIMS_PREF_USERNAME));
-
         return "abilita-classe";
     }
 
@@ -144,6 +142,12 @@ public class AbilitaController {
 
         model.addAttribute("alunni", alu);
         model.addAttribute("usernameSelected", users);
+
+        String classr = sService.getAttribute("classSelected", String.class) != null ? sService.getAttribute("classSelected", String.class).toString() : "";
+        model.addAttribute("classSelected", classr);
+
+        String sectionSelected = sService.getAttribute("sectionSelected", String.class) != null ? sService.getAttribute("sectionSelected", String.class).toString() : "";
+        model.addAttribute("sectionSelected", sectionSelected);
 
         TypeReference<List<String>> typeRef2 = new TypeReference<List<String>>() {
         };
