@@ -50,7 +50,6 @@ public class SessionDBService {
         }
     }
 
-    @Transactional(readOnly = true)
     public void removeAttribute(String name) {
         String username = getUsername();
         String lab = getLab();
