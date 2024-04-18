@@ -19,9 +19,13 @@
 package org.duckdns.vrscuola.services.pdf;
 
 
-import com.lowagie.text.*;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
 import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.duckdns.vrscuola.entities.log.EventLogEntitie;
@@ -140,7 +144,7 @@ public class EventLogPdfService {
                 document.add(png);
             }
 
-            Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            Font font = com.lowagie.text.FontFactory.getFont(FontFactory.HELVETICA_BOLD);
             font.setSize(18);
             font.setColor(Color.BLACK);
 

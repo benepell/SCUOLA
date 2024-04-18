@@ -121,10 +121,6 @@ public class VRDeviceManageService {
     }
 
     public void updateArgoment(String label, String argoment, SessionDBService se) {
-        // Verifica che 'label' non sia null
-        if (label == null) {
-            throw new IllegalArgumentException("Label cannot be null.");
-        }
 
         // Cerca il macAddress associato al label fornito
         String macAddress = iRepository.findMac(label);
@@ -137,27 +133,18 @@ public class VRDeviceManageService {
         if (arg == null) {
             // Recupera l'argomento dalla sessione se 'argoment' è null
             Object sessionArg = se.getAttribute("arg", String.class);
-            if (sessionArg == null) {
-                throw new IllegalStateException("Session attribute 'arg' not found.");
-            }
-            if (!(sessionArg instanceof String)) {
-                // Se 'sessionArg' non è una stringa, genera un'eccezione
-                throw new IllegalStateException("Session attribute 'arg' is not a string.");
-            }
-            arg = (String) sessionArg;
+            arg = sessionArg != null ? (String) sessionArg : null;
         }
 
-       if (argoment != null) {
+        if (argoment != null) {
             se.setAttribute("arg", argoment);
         }
 
-        if (utilities == null) {
-            // Assicurati che 'utilities' sia stato inizializzato
-            throw new IllegalStateException("Utilities object is not initialized.");
-        }
-
         // Aggiorna l'argomento per il visore identificato da 'macAddress'
-        cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+        try {
+            cRepository.updateArgomentByVisore(utilities.getEpoch(), arg, macAddress);
+        }catch (Exception e){}
+
     }
 
     public boolean deleteArgoment(String label) {

@@ -63,7 +63,7 @@ public class SezioneController {
     @PostMapping
     public String handleClasseSelection(@RequestParam("classSelected") String classSelected, @RequestParam("sectionSelected") String sectionSelected) {
         try {
-            sService.setAttribute("classroomSelected", classSelected);
+            sService.setAttribute("classSelected", classSelected);
             sService.setAttribute("sectionSelected", sectionSelected);
 
             keycloakUserService.initFilterSections(classSelected, sectionSelected);

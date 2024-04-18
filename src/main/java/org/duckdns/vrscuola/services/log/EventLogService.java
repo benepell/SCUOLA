@@ -38,41 +38,51 @@ public class EventLogService {
     @Autowired
     EventLogRepository eventLogsRepository;
 
+    @Autowired
+    SessionDBService sService;
+
     public void sendLog(SessionDBService se, String evt) {
-    /*
-        EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
-        String username = (String) session.getAttribute("main_username");
-        if (username != null) {
-            eventLogsEntitie.setUsername(username);
-        } else {
-            eventLogsEntitie.setUsername("anonymous");
+        try {
+            EventLogEntitie eventLogsEntitie = new EventLogEntitie();
+
+            String username = sService.getAttribute("main_username", String.class) != null ? (String) sService.getAttribute("main_username", String.class) : null;
+            if (username != null) {
+                eventLogsEntitie.setUsername(username);
+            } else {
+                eventLogsEntitie.setUsername("anonymous");
+            }
+
+            eventLogsEntitie.setEvent(evt);
+            eventLogsEntitie.setEventDate(Instant.now());
+            eventLogsRepository.save(eventLogsEntitie);
+
+        } catch (Exception e) {
         }
-
-        eventLogsEntitie.setEvent(evt);
-        eventLogsEntitie.setEventDate(Instant.now());
-        eventLogsRepository.save(eventLogsEntitie);
-
-     */
 
     }
 
     public void sendLog(SessionDBService se, String evt, String note) {
-        /*
-        EventLogEntitie eventLogsEntitie = new EventLogEntitie();
 
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            eventLogsEntitie.setUsername(username);
-        } else {
-            eventLogsEntitie.setUsername("anonymous");
+        try {
+            EventLogEntitie eventLogsEntitie = new EventLogEntitie();
+
+            String username = sService.getAttribute("username", String.class) != null ? (String) sService.getAttribute("username", String.class) : null;
+
+            if (username != null) {
+                eventLogsEntitie.setUsername(username);
+            } else {
+                eventLogsEntitie.setUsername("anonymous");
+            }
+
+            eventLogsEntitie.setEvent(evt);
+            eventLogsEntitie.setEventDate(Instant.now());
+            eventLogsEntitie.setNote(note);
+            eventLogsRepository.save(eventLogsEntitie);
+
+        } catch (Exception e) {
         }
 
-        eventLogsEntitie.setEvent(evt);
-        eventLogsEntitie.setEventDate(Instant.now());
-        eventLogsEntitie.setNote(note);
-        eventLogsRepository.save(eventLogsEntitie);
-*/
     }
 }
 

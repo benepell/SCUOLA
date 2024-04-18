@@ -18,13 +18,18 @@
                      <span class="tick-batt">
                         <!-- qui codice battVisore -->
                         <%
-                        int batteryLevel = 0;
-                        if (request != null) {
-                            String battVisore = request.getParameter("batt_visore");
-                            if (battVisore != null && !battVisore.isEmpty()){
-                                batteryLevel = Integer.parseInt(battVisore);
-                            }
-                        }
+                      int batteryLevel = 0;
+                      if (request != null) {
+                          String battVisore = request.getParameter("batt_visore");
+                          if (battVisore != null && !battVisore.isEmpty()) {
+                              try {
+                                  batteryLevel = Integer.parseInt(battVisore);
+                              } catch (NumberFormatException e) {
+                                  // valore di default a batteryLevel se necessario
+                                  batteryLevel = 0;
+                              }
+                          }
+                      }
 
                         String cssWidth = "120px";
                         Utilities obj = new Utilities();

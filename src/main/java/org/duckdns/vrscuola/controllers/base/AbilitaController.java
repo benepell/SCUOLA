@@ -133,8 +133,11 @@ public class AbilitaController {
         model.addAttribute("utenti", linkKeycloak);
         model.addAttribute("risorse", linkRisorse);
 
+        String classroom = session.getAttribute("classroomSelected") != null ? (String) session.getAttribute("classroomSelected") : null;
+        if (classroom != null) {
+            sService.setAttribute("classroomSelected", classroom);
 
-        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
+        }
 
         String[] alu = (String[]) sService.getAttribute("alunni", String[].class);
         String[] vis = manageService.allDevices(classroom);
@@ -192,7 +195,7 @@ public class AbilitaController {
 
         studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);
 
-        //  logService.sendLog(sService, Constants.EVENT_LOG_ENABLE_VISOR);
+        logService.sendLog(sService, Constants.EVENT_LOG_ENABLE_VISOR);
 
         return "abilita-visore";
     }
