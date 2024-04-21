@@ -69,8 +69,6 @@ public class EventLogService {
 
             if (username != null) {
                 eventLogsEntitie.setUsername(username);
-            } else {
-                eventLogsEntitie.setUsername("anonymous");
             }
 
             eventLogsEntitie.setEvent(evt);
