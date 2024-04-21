@@ -49,8 +49,6 @@ public class EventLogService {
             String username = sService.getAttribute("main_username", String.class) != null ? (String) sService.getAttribute("main_username", String.class) : null;
             if (username != null) {
                 eventLogsEntitie.setUsername(username);
-            } else {
-                eventLogsEntitie.setUsername("anonymous");
             }
 
             eventLogsEntitie.setEvent(evt);

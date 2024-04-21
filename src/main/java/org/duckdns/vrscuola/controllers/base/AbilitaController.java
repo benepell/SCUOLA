@@ -99,7 +99,12 @@ public class AbilitaController {
     }
 
     @RequestMapping(value = "abilita-sezione")
-    public String getAbilitaSezione(Model model) {
+    public String getAbilitaSezione(Model model, HttpSession session) {
+
+        if (session != null && session.getAttribute("main_username") != null) {
+            sService.setAttribute("main_username", (String) session.getAttribute("main_username"));
+        }
+
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Autenticati per utilizzare i servizi");
         model.addAttribute("response", "stringaresponse");

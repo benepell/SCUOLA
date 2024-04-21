@@ -115,7 +115,7 @@ public class KeycloakController {
                 // chiude tutti i visori
                 studentService.closeAllVisor(username, manageDetailService, sService);
 
-              //  logService.sendLog(session, Constants.EVENT_LOG_OUT);
+                logService.sendLog(sService, Constants.EVENT_LOG_OUT);
                 session.invalidate();
             }
         }

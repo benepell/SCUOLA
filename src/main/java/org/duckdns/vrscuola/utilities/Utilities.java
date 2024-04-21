@@ -106,8 +106,9 @@ public class Utilities {
     }
 
     public String getIntestazionePng() {
-        return conf + "/" + Constants.RESOURCES_INTEST_PNG;
+        return conf + "/" + Constants.RESOURCES_FOLDER_IMG + "/" + Constants.RESOURCES_INTEST_PNG;
     }
+
 
 
 }
