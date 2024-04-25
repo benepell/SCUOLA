@@ -127,7 +127,7 @@ public class EventLogPdfService {
 
             File filex = new File(fileName);
             if (!filex.exists()) {
-                filex.getParentFile().mkdirs(); // Crea le directory se non esistono
+               // filex.getParentFile().mkdirs(); // Crea le directory se non esistono
                 filex.createNewFile(); // Crea il file
             }
 
