@@ -123,7 +123,7 @@ public class AbilitaController {
         model.addAttribute("titolo", "Abilita Sezione");
         model.addAttribute("content", "/WEB-INF/view/abilita-sezione.jsp");
 
-        String classroom = sService.getAttribute("classSelected", String.class) != null ? sService.getAttribute("classSelected", String.class).toString() : "";
+        String classroom = sService.getLab();
 
         model.addAttribute("classSelected", classroom);
 
@@ -217,7 +217,7 @@ public class AbilitaController {
     public String aggiornaStatoVisori(Model model) {
         // Assumi che la logica per ottenere i dati aggiornati dei visori sia simile a quella in abilita-visore
 
-        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
+        String classroom = sService.getLab();
 
         List<String> labelsSetup = repository.labelsSetup(classroom);
         List<String> macsSetup = repository.macsSetup(classroom);

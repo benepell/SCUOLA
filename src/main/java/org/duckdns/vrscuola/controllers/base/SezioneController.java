@@ -70,7 +70,7 @@ public class SezioneController {
             String[] alunni = keycloakUserService.filterSectionsAllievi();
             String[] username = keycloakUserService.filterSectionsUsername();
 
-            String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
+            String classroom = sService.getLab();
 
             sService.setAttribute("usernameSelected", username);
             // cancella i dati precedenti se cambia classe in connec sovrascrivi i dati precedenti

@@ -60,7 +60,7 @@ public class VisoreController {
         Map<String, String> response = new HashMap<>();
 
       //  if (Constants.ENABLED_ONLINE) {
-            String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : null;
+            String classroom = sService.getLab();
             String[] alu = sService.getAttribute("alunni", String[].class) != null ? (String[]) sService.getAttribute("alunni", String[].class) : null;
             String[] vis = manageService.allDevices(classroom);
             studentService.init(Arrays.asList(alu), Arrays.asList(vis), classroom);

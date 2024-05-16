@@ -84,7 +84,7 @@ public class SetupVisoreController {
         model.addAttribute("intestazione", "Benvenuti nel sito Vr Scuola");
         model.addAttribute("saluti", "Gestione dei visori");
 
-        String classroom = sService.getAttribute("classroomSelected", String.class) != null ? sService.getAttribute("classroomSelected", String.class).toString() : "";
+        String classroom = sService.getLab();
 
         if (classroom.isEmpty()) {
             return "redirect:/abilita-classe";

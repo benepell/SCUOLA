@@ -308,7 +308,7 @@ public class QuestionarioPdfService {
                 answerDTO.getSezione().toLowerCase() + "/" +
                 answerDTO.getArgomento().toLowerCase() + "/" +
                 datetime2 + "_" +
-                (answerDTO.getText() != null ? answerDTO.getText().replaceAll(".txt", "") : Constants.QUESTIONS_PREFIX_FILENAME.concat("_finale")) +
+                (answerDTO.getText() != null ? answerDTO.getText().replaceAll(".txt","") : Constants.QUESTIONS_PREFIX_FILENAME.concat("_finale") ) +
                 ".pdf";
 
 
@@ -317,7 +317,7 @@ public class QuestionarioPdfService {
             generatePdfQuestionario(domande, filePath, username, dataInizio, datefine, score);
             generateSummaryPdfQuestionario(filePathSummary);
         } catch (DocumentException | IOException e) {
-            throw new RuntimeException("Errore nella generazione del PDF" + e.getMessage(), e);
+            throw new RuntimeException("Errore nella generazione del PDF", e);
         }
     }
 }
