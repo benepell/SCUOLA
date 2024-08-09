@@ -140,11 +140,11 @@ public class SessionDBService {
         return !(lab == null || lab.isEmpty());
     }
 
-    public String getUsername() {
+    private String getUsername() {
         return httpSession.getAttribute("main_username") != null ? (String) httpSession.getAttribute("main_username") : null;
     }
 
-    public String getLab() {
+    private String getLab() {
         return httpSession.getAttribute("classroomSelected") != null ? (String) httpSession.getAttribute("classroomSelected") : null;
     }
 

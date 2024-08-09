@@ -35,11 +35,8 @@ public class ClassroomController {
 
     @PostMapping(value = "classroom")
     public String handleClasseSelection(@RequestParam("classroomSelected") String classroomSelected, HttpSession session) throws Exception {
-        if (!classroomSelected.isEmpty()) {
-            sService.setAttribute("classroomSelected", classroomSelected);
-            session.setAttribute("classroomSelected", classroomSelected);
-
-        }
+        sService.setAttribute("classroomSelected", classroomSelected);
+        session.setAttribute("classroomSelected", classroomSelected);
         return "redirect:/abilita-sezione";
     }
 }

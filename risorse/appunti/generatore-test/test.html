@@ -1,100 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Generator</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            margin-top: 50px;
-            padding: 20px;
-        }
-        .card {
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            margin: 20px auto;
-            padding: 30px;
-            max-width: 600px;
-        }
-        form {
-            max-width: 600px;
-            margin: auto;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-        textarea, input {
-            width: calc(100% - 12px);
-            padding: 6px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .answersContainer {
-            margin-bottom: 15px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        hr {
-            border: 0;
-            border-top: 1px solid #eee;
-            margin: 20px 0;
-        }
-        .removeButton {
-            background-color: #d05353;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .removeButton:hover {
-            background-color: #e82222;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Generator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        margin-top: 50px;
+        padding: 20px;
+    }
+    .card {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        margin: 20px auto;
+        padding: 30px;
+        max-width: 600px;
+    }
+    form {
+        max-width: 600px;
+        margin: auto;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+    textarea, input {
+        width: calc(100% - 12px);
+        padding: 6px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .answersContainer {
+        margin-bottom: 15px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    hr {
+        border: 0;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+    }
+    .removeButton {
+        background-color: #d05353;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .removeButton:hover {
+        background-color: #e82222;
 
-        }
-        #quizForm {
-            font-size: x-large;
-        }
+    }
+    #quizForm {
+        font-size: x-large;
+    }
 
-        .overlay {
-            position: fixed; /* Posizione fissa sopra tutto il contenuto */
-            top: 50px;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none; /* Permette il click attraverso l'overlay */
-            z-index: 1000; /* Assicura che l'overlay sia sopra gli altri elementi */
-            color: gray; /* Colore del testo */
-            font-size: 4em; /* Dimensione del testo */
-            font-family: 'Arial', sans-serif; /* Stile del font */
-            opacity: 0.2; /* Trasparenza del testo */
-        }
+    .overlay {
+        position: fixed; /* Posizione fissa sopra tutto il contenuto */
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none; /* Permette il click attraverso l'overlay */
+        z-index: 1000; /* Assicura che l'overlay sia sopra gli altri elementi */
+        color: gray; /* Colore del testo */
+        font-size: 4em; /* Dimensione del testo */
+        font-family: 'Arial', sans-serif; /* Stile del font */
+        opacity: 0.2; /* Trasparenza del testo */
+    }
 
-    </style>
+</style>
 </head>
 <body>
 
 <div class="overlay">
-    Test VrScuola
+      Test VrScuola
 </div>
 
 <div class="card">
@@ -122,11 +122,6 @@
                 <label>Domanda:</label>
                 <textarea class="questionText" style="resize: vertical;"></textarea>
             </div>
-            <div>
-                <button type="button" onclick="toggleMediaInput(this)" style="margin-bottom: 12px; background-color: #e86d22; color: white;">Media</button>
-                <input type="text" class="mediaText" placeholder="nome della risorsa media (esempio: image.png)" style="width: 100%; display: none;">
-            </div>
-			<div>&nbsp;</div>
             <div class="answersContainer">
                 <label>Risposte:</label>
                 <br>
@@ -134,7 +129,7 @@
             </div>
             <div>
                 <label>Risposta Corretta:</label>
-                <input type="text" placeholder="numero della risposta corretta per esempio 1" class="correctAnswer" style="width: 100%;">
+                <input type="text" class="correctAnswer" style="width: 100%;">
             </div>
             <button class="removeButton" onclick="removeQuestion(this)">Elimina Domanda</button>
             <hr>
@@ -149,15 +144,6 @@
         answerInput.setAttribute('placeholder', 'Risposta...');
         answerInput.style.width = '100%';
         answersContainer.insertBefore(answerInput, button);
-    }
-
-    function toggleMediaInput(button) {
-        const mediaInput = button.nextElementSibling;
-        if (mediaInput.style.display === 'none') {
-            mediaInput.style.display = 'block';
-        } else {
-            mediaInput.style.display = 'none';
-        }
     }
 
     function removeQuestion(button) {
@@ -176,15 +162,11 @@
         }
 
         const questionElements = document.getElementsByClassName('questionText');
-        const mediaElements = document.getElementsByClassName('mediaText');
         const answersElements = document.getElementsByClassName('answersContainer');
         const correctAnswerElements = document.getElementsByClassName('correctAnswer');
 
-        questions = [];
-
         for (let i = 0; i < questionElements.length; i++) {
             const question = questionElements[i].value.trim();
-            const media = mediaElements[i].value.trim();
             const answersList = Array.from(answersElements[i].getElementsByTagName('input')).map(answer => answer.value.trim());
             const correctAnswer = correctAnswerElements[i].value.trim();
 
@@ -205,7 +187,6 @@
 
             questions.push({
                 question: question,
-                media: media,
                 answers: answersList,
                 correctAnswer: correctAnswer
             });
@@ -218,11 +199,7 @@
         let text = '';
 
         questions.forEach((question, index) => {
-            text += `{domanda} ${question.question}`;
-            if (question.media) {
-                text += ` {media:${question.media}}`;
-            }
-            text += '\n';
+            text += `{domanda} ${question.question}\n`;
             question.answers.forEach((answer, idx) => {
                 text += `${idx + 1}) ${answer}\n`;
             });
