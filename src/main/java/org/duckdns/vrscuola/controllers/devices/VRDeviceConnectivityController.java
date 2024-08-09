@@ -19,10 +19,13 @@
 package org.duckdns.vrscuola.controllers.devices;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.duckdns.vrscuola.payload.request.VRDeviceConnectivityArgRequest;
 import org.duckdns.vrscuola.payload.request.VRDeviceConnectivityConnectRequest;
 import org.duckdns.vrscuola.payload.request.VRDeviceConnectivityRequest;
 import org.duckdns.vrscuola.payload.response.MessageResponse;
+import org.duckdns.vrscuola.services.config.SessionDBService;
 import org.duckdns.vrscuola.services.devices.VRDeviceConnectivityServiceImpl;
 import org.duckdns.vrscuola.services.devices.VRDeviceInitServiceImpl;
 import org.duckdns.vrscuola.services.securities.KeycloakUserService;
@@ -32,6 +35,7 @@ import org.duckdns.vrscuola.utilities.Constants;
 import org.duckdns.vrscuola.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +55,10 @@ public class VRDeviceConnectivityController {
     private final Utilities utilities;
     private final MessageServiceImpl messageServiceImpl;
     private final UtilServiceImpl uService;
-
+    private final SessionDBService sService;
     private final KeycloakUserService kService;
+
+    private static final Logger Log = LogManager.getLogger(VRDeviceConnectivityController.class.getName());
 
     @Autowired
     public VRDeviceConnectivityController(@Value("${keycloak.credentials.secret}") String code,
@@ -60,7 +66,7 @@ public class VRDeviceConnectivityController {
                                           VRDeviceInitServiceImpl iService,
                                           Utilities utilities,
                                           MessageServiceImpl messageServiceImpl,
-                                          UtilServiceImpl uService,
+                                          UtilServiceImpl uService, SessionDBService sService,
                                           KeycloakUserService kService) {
         this.code = code;
         this.cService = cService;
@@ -68,6 +74,7 @@ public class VRDeviceConnectivityController {
         this.utilities = utilities;
         this.messageServiceImpl = messageServiceImpl;
         this.uService = uService;
+        this.sService = sService;
         this.kService = kService;
     }
 
@@ -77,7 +84,7 @@ public class VRDeviceConnectivityController {
         String mac = request.getMacAddress();
         String batteryLevel = request.getBatteryLevel();
         String avatar = request.getAvatar() != null ? request.getAvatar() : "";
-        String lab = "";
+        String lab = sService.getLab();
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("username", "");
         responseMap.put("sec", "");
@@ -88,17 +95,17 @@ public class VRDeviceConnectivityController {
         // richiesta visore avvenuta aggiona il valore di eraOnline
         iService.updateOnline(mac, batteryLevel);
         if (mac == null) {
-            responseMap.put("state", Constants.STATE_NOT_FOUND);
+            responseMap.put("state",Constants.STATE_NOT_FOUND);
             return ResponseEntity.ok(responseMap);
         }
 
-        if (!cService.existsByMacAddress(mac)) {
-            responseMap.put("state", Constants.STATE_NOT_LISTED);
+        if (!cService. existsByMacAddress(mac)) {
+            responseMap.put("state",Constants.STATE_NOT_LISTED);
             return ResponseEntity.ok(responseMap);
         }
 
         if (!cService.valid(mac)) {
-            responseMap.put("state", Constants.STATE_NOT_USED);
+            responseMap.put("state",Constants.STATE_NOT_USED);
             return ResponseEntity.ok(responseMap);
         }
 
@@ -110,20 +117,18 @@ public class VRDeviceConnectivityController {
 
         // disabilita visore
         if (map == null) {
-            responseMap.put("state", Constants.STATE_KO);
+            responseMap.put("state",Constants.STATE_KO);
             return ResponseEntity.ok(responseMap);
         }
 
         userMap = map.get("username") != null ? map.get("username").toString() : "";
         avatarMap = map.get("avatar") != null ? map.get("avatar").toString() : "";
-        lab = map.get("lab") != null ? "lab" + map.get("lab").toString() : "";
-        ;
-
-        if (userMap == "") {
+/*
+        if (userMap == "" || userMap == null) {
             responseMap.put("state", Constants.STATE_NOT_USED);
             return ResponseEntity.ok(responseMap);
         }
-
+*/
         responseMap.put("avatar", avatarMap);
         responseMap.put("username", userMap);
         responseMap.put("sec", this.code);
@@ -174,20 +179,102 @@ public class VRDeviceConnectivityController {
         String accessToken = null;
         String res = "";
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            accessToken = authorizationHeader.substring(7); // Rimuovi "Bearer " per ottenere solo il token
+        try {
+            Log.info("Received request for subject endpoint");
 
+            // Verifica che l'header di autorizzazione non sia nullo e inizi con "Bearer "
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                accessToken = authorizationHeader.substring(7); // Rimuovi "Bearer " per ottenere solo il token
+                Log.info("Authorization header is valid");
+            } else {
+                Log.error("Invalid or missing Authorization header");
+                throw new InvalidAuthorizationHeaderException("Authorization header is missing or invalid");
+            }
+
+            // Verifica che l'access token non sia nullo e sia valido
             if (accessToken != null && kService.isAccessTokenValid(accessToken)) {
-
-                // token valido
+                Log.info("Access token is valid");
                 String macAddress = request.getMacAddress();
 
-                // ritorna label visore
-                res = cService.argomento(macAddress);
+                // Verifica che l'indirizzo MAC non sia nullo o vuoto
+                if (macAddress != null && !macAddress.isEmpty()) {
+                    Log.info("MAC address is valid");
+                    res = cService.argomento(macAddress);
+                    Log.info("Successfully retrieved argument for MAC address");
+                } else {
+                    Log.error("MAC address is missing or empty");
+                    throw new InvalidMacAddressException("MAC address is missing or empty");
+                }
+            } else {
+                Log.error("Invalid or expired access token");
+                throw new InvalidAccessTokenException("Access token is invalid or expired");
             }
+
+            return ResponseEntity.ok(new MessageResponse(res));
+        } catch (InvalidAuthorizationHeaderException | InvalidAccessTokenException | InvalidMacAddressException e) {
+            Log.warn("Client error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            Log.error("An unexpected error occurred", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("An unexpected error occurred"));
+        }
+    }
+
+    // Eccezioni personalizzate
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    class InvalidAuthorizationHeaderException extends RuntimeException {
+        public InvalidAuthorizationHeaderException(String message) {
+            super(message);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    class InvalidAccessTokenException extends RuntimeException {
+        public InvalidAccessTokenException(String message) {
+            super(message);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    class InvalidMacAddressException extends RuntimeException {
+        public InvalidMacAddressException(String message) {
+            super(message);
+        }
+    }
+
+    // Classi di risposta
+    class MessageResponse {
+        public String getMessage() {
+            return message;
         }
 
-        return ResponseEntity.ok(new MessageResponse(res));
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        private String message;
+
+        public MessageResponse(String message) {
+            this.message = message;
+        }
+
     }
+
+    class ErrorResponse {
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
+
+        private String error;
+
+        public ErrorResponse(String error) {
+            this.error = error;
+        }
+    }
+
 
 }
